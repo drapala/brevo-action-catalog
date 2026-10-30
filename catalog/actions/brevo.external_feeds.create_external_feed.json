@@ -135,7 +135,7 @@
   ],
   "preconditions": [],
   "postcondition": {
-    "check_with": "brevo.external_feeds.get_external_feed_uuid",
+    "check_with": "brevo.external_feeds.get_external_feed_by_uuid",
     "assert": "the entity exists and its fields equal the inputs that were sent"
   },
   "side_effects": {

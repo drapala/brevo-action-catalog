@@ -312,7 +312,7 @@
     "requires_confirmation": true
   },
   {
-    "id": "brevo.companies.get_companies",
+    "id": "brevo.companies.get_all_companies",
     "label": "Get all Companies",
     "area": "Companies",
     "entity": "company",
@@ -364,7 +364,7 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.companies.link_and_unlink_company_contact_and_deal",
+    "id": "brevo.companies.link_and_unlink_company_with_contact_and_deal",
     "label": "Link and Unlink company with contact and deal",
     "area": "Companies",
     "entity": "company",
@@ -871,7 +871,7 @@
     "requires_confirmation": true
   },
   {
-    "id": "brevo.conversations.delete_message_sent_agent",
+    "id": "brevo.conversations.delete_message_sent_by_agent",
     "label": "Delete a message sent by an agent",
     "area": "Conversations",
     "entity": "message",
@@ -975,7 +975,7 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.conversations.update_message_sent_agent",
+    "id": "brevo.conversations.update_message_sent_by_agent",
     "label": "Update a message sent by an agent",
     "area": "Conversations",
     "entity": "message",
@@ -1131,6 +1131,32 @@
     "requires_confirmation": true
   },
   {
+    "id": "brevo.deals.get_all_deals",
+    "label": "Get all deals",
+    "area": "Deals",
+    "entity": "deal",
+    "operation_class": "read",
+    "route_kinds": [
+      "documented_api"
+    ],
+    "verification": "documented",
+    "free_plan": "unknown",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.deals.get_all_pipelines",
+    "label": "Get all pipelines",
+    "area": "Deals",
+    "entity": "all",
+    "operation_class": "read",
+    "route_kinds": [
+      "documented_api"
+    ],
+    "verification": "documented",
+    "free_plan": "unknown",
+    "requires_confirmation": false
+  },
+  {
     "id": "brevo.deals.get_deal",
     "label": "Get a deal",
     "area": "Deals",
@@ -1146,19 +1172,6 @@
   {
     "id": "brevo.deals.get_deal_attributes",
     "label": "Get deal attributes",
-    "area": "Deals",
-    "entity": "deal",
-    "operation_class": "read",
-    "route_kinds": [
-      "documented_api"
-    ],
-    "verification": "documented",
-    "free_plan": "unknown",
-    "requires_confirmation": false
-  },
-  {
-    "id": "brevo.deals.get_deals",
-    "label": "Get all deals",
     "area": "Deals",
     "entity": "deal",
     "operation_class": "read",
@@ -1196,19 +1209,6 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.deals.get_pipelines",
-    "label": "Get all pipelines",
-    "area": "Deals",
-    "entity": "deals",
-    "operation_class": "read",
-    "route_kinds": [
-      "documented_api"
-    ],
-    "verification": "documented",
-    "free_plan": "unknown",
-    "requires_confirmation": false
-  },
-  {
     "id": "brevo.deals.import_deals_creation_and_updation",
     "label": "Import deals(creation and updation)",
     "area": "Deals",
@@ -1222,7 +1222,7 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.deals.link_and_unlink_deal_contacts_and_companies",
+    "id": "brevo.deals.link_and_unlink_deal_with_contacts_and_companies",
     "label": "Link and Unlink a deal with contacts and companies",
     "area": "Deals",
     "entity": "deal",
@@ -1781,8 +1781,8 @@
     "requires_confirmation": true
   },
   {
-    "id": "brevo.external_feeds.get_external_feed_uuid",
-    "label": "Get external feed details",
+    "id": "brevo.external_feeds.get_all_external_feeds",
+    "label": "Get all external feeds",
     "area": "External Feeds",
     "entity": "feed",
     "operation_class": "read",
@@ -1794,8 +1794,8 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.external_feeds.get_external_feeds",
-    "label": "Get all external feeds",
+    "id": "brevo.external_feeds.get_external_feed_by_uuid",
+    "label": "Get external feed details",
     "area": "External Feeds",
     "entity": "feed",
     "operation_class": "read",
@@ -1846,10 +1846,10 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.files.get_file_details",
-    "label": "Get file details",
+    "id": "brevo.files.get_all_files",
+    "label": "Get all files",
     "area": "Files",
-    "entity": "data",
+    "entity": "file",
     "operation_class": "read",
     "route_kinds": [
       "documented_api"
@@ -1859,10 +1859,10 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.files.get_files",
-    "label": "Get all files",
+    "id": "brevo.files.get_file_details",
+    "label": "Get file details",
     "area": "Files",
-    "entity": "file",
+    "entity": "data",
     "operation_class": "read",
     "route_kinds": [
       "documented_api"
@@ -1911,7 +1911,7 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.inbound_parsing.get_inbound_email_events_uuid",
+    "id": "brevo.inbound_parsing.get_inbound_email_events_by_uuid",
     "label": "Fetch all events history for one particular received email.",
     "area": "Inbound Parsing",
     "entity": "event",
@@ -1963,7 +1963,7 @@
     "requires_confirmation": true
   },
   {
-    "id": "brevo.master_account.create_new_group_sub_accounts",
+    "id": "brevo.master_account.create_new_group_of_sub_accounts",
     "label": "Create a new group of sub-accounts",
     "area": "Master account",
     "entity": "group",
@@ -2106,7 +2106,7 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.master_account.get_details_requested_master_account",
+    "id": "brevo.master_account.get_details_of_requested_master_account",
     "label": "Get the details of requested master account",
     "area": "Master account",
     "entity": "master_account",
@@ -2132,7 +2132,7 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.master_account.get_list_sub_accounts_master_account",
+    "id": "brevo.master_account.get_list_of_all_sub_accounts_of_master_account",
     "label": "Get the list of all the sub-accounts of the master account.",
     "area": "Master account",
     "entity": "sub_account",
@@ -2184,7 +2184,7 @@
     "requires_confirmation": true
   },
   {
-    "id": "brevo.master_account.list_ips",
+    "id": "brevo.master_account.list_of_all_ips",
     "label": "List of all IPs",
     "area": "Master account",
     "entity": "ip",
@@ -2223,7 +2223,7 @@
     "requires_confirmation": true
   },
   {
-    "id": "brevo.master_account.update_group_sub_accounts",
+    "id": "brevo.master_account.update_group_of_sub_accounts",
     "label": "Update a group of sub-accounts",
     "area": "Master account",
     "entity": "group",
@@ -2288,8 +2288,8 @@
     "requires_confirmation": true
   },
   {
-    "id": "brevo.notes.get_note",
-    "label": "Get a note",
+    "id": "brevo.notes.get_all_notes",
+    "label": "Get all notes",
     "area": "Notes",
     "entity": "note",
     "operation_class": "read",
@@ -2301,8 +2301,8 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.notes.get_notes",
-    "label": "Get all notes",
+    "id": "brevo.notes.get_note",
+    "label": "Get a note",
     "area": "Notes",
     "entity": "note",
     "operation_class": "read",
@@ -2756,7 +2756,7 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.senders.validate_sender_otp",
+    "id": "brevo.senders.validate_sender_by_otp",
     "label": "Validate a sender using OTP",
     "area": "Senders",
     "entity": "sender",
@@ -2938,20 +2938,7 @@
     "requires_confirmation": true
   },
   {
-    "id": "brevo.tasks.get_task",
-    "label": "Get a task",
-    "area": "Tasks",
-    "entity": "task",
-    "operation_class": "read",
-    "route_kinds": [
-      "documented_api"
-    ],
-    "verification": "documented",
-    "free_plan": "unknown",
-    "requires_confirmation": false
-  },
-  {
-    "id": "brevo.tasks.get_task_types",
+    "id": "brevo.tasks.get_all_task_types",
     "label": "Get all task types",
     "area": "Tasks",
     "entity": "task_type",
@@ -2964,8 +2951,21 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.tasks.get_tasks",
+    "id": "brevo.tasks.get_all_tasks",
     "label": "Get all tasks",
+    "area": "Tasks",
+    "entity": "task",
+    "operation_class": "read",
+    "route_kinds": [
+      "documented_api"
+    ],
+    "verification": "documented",
+    "free_plan": "unknown",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.tasks.get_task",
+    "label": "Get a task",
     "area": "Tasks",
     "entity": "task",
     "operation_class": "read",
@@ -3055,7 +3055,7 @@
     "requires_confirmation": true
   },
   {
-    "id": "brevo.tier.get_list_tier_groups",
+    "id": "brevo.tier.get_list_of_tier_groups",
     "label": "List tier groups",
     "area": "Tier",
     "entity": "tier_group",
@@ -3172,7 +3172,7 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.transactional_emails.delete_scheduled_email_id",
+    "id": "brevo.transactional_emails.delete_scheduled_email_by_id",
     "label": "Delete scheduled emails by batchId or messageId",
     "area": "Transactional emails",
     "entity": "transactional_email",
@@ -3250,7 +3250,7 @@
     "requires_confirmation": false
   },
   {
-    "id": "brevo.transactional_emails.get_scheduled_email_id",
+    "id": "brevo.transactional_emails.get_scheduled_email_by_id",
     "label": "Fetch scheduled emails by batchId or messageId",
     "area": "Transactional emails",
     "entity": "scheduled_email",

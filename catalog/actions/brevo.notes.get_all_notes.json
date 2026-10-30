@@ -1,53 +1,27 @@
 {
-  "id": "brevo.tasks.get_tasks",
+  "id": "brevo.notes.get_all_notes",
   "product": "brevo",
-  "area": "Tasks",
-  "entity": "task",
+  "area": "Notes",
+  "entity": "note",
   "operation_class": "read",
-  "label": "Get all tasks",
-  "description": "Retrieve a paginated list of CRM tasks with optional filtering by task type, status, date range, assignee, and linked entities (contacts, deals, companies). Results are sorted by creation date in descending order by default, with a default limit of 50 tasks per page.",
+  "label": "Get all notes",
+  "description": "Retrieve a paginated list of CRM notes with optional filtering by entity type, entity IDs, and date range. Results are sorted by creation date in descending order by default, with a default limit of 50 notes per page.",
   "inputs": {
     "schema": {
       "type": "object",
       "properties": {
-        "filter[type]": {
-          "type": "string",
-          "description": "Filter by task type (ID)"
-        },
-        "filter[status]": {
+        "entity": {
           "enum": [
-            "done",
-            "undone"
+            "companies",
+            "deals",
+            "contacts"
           ],
           "type": "string",
-          "description": "Filter by task status"
+          "description": "Filter by note entity type"
         },
-        "filter[date]": {
-          "enum": [
-            "overdue",
-            "today",
-            "tomorrow",
-            "week",
-            "range"
-          ],
+        "entityIds": {
           "type": "string",
-          "description": "Filter by date"
-        },
-        "filter[assignTo]": {
-          "type": "string",
-          "description": "Filter by the \"assignTo\" ID. You can utilize account emails for the \"assignTo\" attribute."
-        },
-        "filter[contacts]": {
-          "type": "string",
-          "description": "Filter by contact ids"
-        },
-        "filter[deals]": {
-          "type": "string",
-          "description": "Filter by deals ids"
-        },
-        "filter[companies]": {
-          "type": "string",
-          "description": "Filter by companies ids"
+          "description": "Filter by note entity IDs"
         },
         "dateFrom": {
           "type": "integer",
@@ -75,10 +49,6 @@
           ],
           "type": "string",
           "description": "Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed"
-        },
-        "sortBy": {
-          "type": "string",
-          "description": "The field used to sort field names."
         }
       }
     },
@@ -87,17 +57,43 @@
   },
   "outputs": {
     "schema": {
-      "description": "List of tasks",
-      "properties": {
-        "items": {
-          "description": "List of tasks",
-          "items": {
+      "description": "List of notes",
+      "items": {
+        "description": "Note Details",
+        "properties": {
+          "id": {
             "description": "(nested schema truncated)"
           },
-          "type": "array"
-        }
+          "text": {
+            "description": "(nested schema truncated)"
+          },
+          "contactIds": {
+            "description": "(nested schema truncated)"
+          },
+          "companyIds": {
+            "description": "(nested schema truncated)"
+          },
+          "dealIds": {
+            "description": "(nested schema truncated)"
+          },
+          "authorId": {
+            "description": "(nested schema truncated)"
+          },
+          "createdAt": {
+            "description": "(nested schema truncated)"
+          },
+          "updatedAt": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "required": [
+          {
+            "description": "(nested schema truncated)"
+          }
+        ],
+        "type": "object"
       },
-      "type": "object"
+      "type": "array"
     },
     "produces_entity": null
   },
@@ -105,22 +101,16 @@
     {
       "kind": "documented_api",
       "method": "GET",
-      "url": "https://api.brevo.com/v3/crm/tasks",
+      "url": "https://api.brevo.com/v3/crm/notes",
       "auth": "header api-key",
       "params": {
-        "filter[type]": "query",
-        "filter[status]": "query",
-        "filter[date]": "query",
-        "filter[assignTo]": "query",
-        "filter[contacts]": "query",
-        "filter[deals]": "query",
-        "filter[companies]": "query",
+        "entity": "query",
+        "entityIds": "query",
         "dateFrom": "query",
         "dateTo": "query",
         "offset": "query",
         "limit": "query",
-        "sort": "query",
-        "sortBy": "query"
+        "sort": "query"
       },
       "success_status": [
         200
@@ -149,7 +139,7 @@
   "sources": [
     {
       "kind": "openapi",
-      "ref": "swagger_definition_v3.yml#/paths//crm/tasks/get"
+      "ref": "swagger_definition_v3.yml#/paths//crm/notes/get"
     }
   ]
 }

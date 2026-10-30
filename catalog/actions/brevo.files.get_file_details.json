@@ -23,7 +23,7 @@
       {
         "input": "id",
         "entity": "data",
-        "find_with": "brevo.files.get_file_details",
+        "find_with": null,
         "create_with": null
       }
     ],

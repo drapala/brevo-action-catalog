@@ -23,7 +23,7 @@
       {
         "input": "id",
         "entity": "note",
-        "find_with": "brevo.notes.get_notes",
+        "find_with": "brevo.notes.get_all_notes",
         "create_with": "brevo.notes.create_note"
       }
     ],

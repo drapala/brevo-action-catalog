@@ -1,5 +1,5 @@
 {
-  "id": "brevo.deals.get_deals",
+  "id": "brevo.deals.get_all_deals",
   "product": "brevo",
   "area": "Deals",
   "entity": "deal",

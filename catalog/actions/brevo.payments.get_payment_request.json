@@ -23,7 +23,7 @@
       {
         "input": "id",
         "entity": "request",
-        "find_with": "brevo.payments.get_payment_request",
+        "find_with": null,
         "create_with": "brevo.payments.create_payment_request"
       }
     ],

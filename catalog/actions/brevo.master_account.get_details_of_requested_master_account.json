@@ -1,5 +1,5 @@
 {
-  "id": "brevo.master_account.get_details_requested_master_account",
+  "id": "brevo.master_account.get_details_of_requested_master_account",
   "product": "brevo",
   "area": "Master account",
   "entity": "master_account",

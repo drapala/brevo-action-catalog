@@ -23,7 +23,7 @@
       {
         "input": "id",
         "entity": "message",
-        "find_with": "brevo.conversations.get_message",
+        "find_with": null,
         "create_with": null
       }
     ],

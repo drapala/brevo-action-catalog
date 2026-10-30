@@ -24,7 +24,7 @@
         "input": "id",
         "entity": "group",
         "find_with": "brevo.master_account.get_sub_account_groups",
-        "create_with": "brevo.master_account.create_new_group_sub_accounts"
+        "create_with": "brevo.master_account.create_new_group_of_sub_accounts"
       }
     ],
     "credential_ref": "brevo_api_key"

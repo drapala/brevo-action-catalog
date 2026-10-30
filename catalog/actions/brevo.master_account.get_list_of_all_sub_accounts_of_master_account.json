@@ -1,5 +1,5 @@
 {
-  "id": "brevo.master_account.get_list_sub_accounts_master_account",
+  "id": "brevo.master_account.get_list_of_all_sub_accounts_of_master_account",
   "product": "brevo",
   "area": "Master account",
   "entity": "sub_account",

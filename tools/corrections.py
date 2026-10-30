@@ -26,7 +26,8 @@ START = "<!-- corrections:start -->"
 END = "<!-- corrections:end -->"
 
 ERRED_BY = ["ai_agent", "ai_generated_code", "brevo_platform", "human", "tooling"]
-CAUGHT_BY = ["human", "live_verifier", "reviewer_agent", "agent_self_check", "brevo_platform"]
+CAUGHT_BY = ["human", "catalog_lint", "live_verifier", "reviewer_agent", "agent_self_check", "brevo_platform"]
+AUTOMATED = {"catalog_lint", "live_verifier", "reviewer_agent"}
 
 
 def head() -> str:
@@ -61,22 +62,25 @@ def load() -> list[dict]:
 
 def block() -> str:
     entries = load()
-    caught = Counter(e["caught_by"] for e in entries)
-    erred = Counter(e["erred_by"] for e in entries)
+    auto = sum(1 for e in entries if e["caught_by"] in AUTOMATED)
+    by_agent = sum(1 for e in entries if e["caught_by"] == "agent_self_check")
+    by_human = sum(1 for e in entries if e["caught_by"] == "human")
+    by_platform = sum(1 for e in entries if e["caught_by"] == "brevo_platform")
+    open_n = sum(1 for e in entries if e.get("status", "fixed") == "open")
     lines = [
         START,
-        f"{len(entries)} corrections. Caught by: "
-        + ", ".join(f"{k.replace('_', ' ')} {v}" for k, v in caught.most_common())
-        + ". Source of the error: "
-        + ", ".join(f"{k.replace('_', ' ')} {v}" for k, v in erred.most_common())
-        + ".",
+        f"{len(entries)} corrections: {auto} caught by automated checks, {by_agent} by the agent during the session, "
+        f"{by_human} by a human, {by_platform} by Brevo itself. Open: {open_n}.",
         "",
-        "| ID | Phase | What went wrong | Caught by | Fix |",
-        "|---|---|---|---|---|",
+        "| ID | Phase | What went wrong | Caught by | Status | Fix |",
+        "|---|---|---|---|---|---|",
     ]
     for e in entries:
         what = e["what"] + (f" Evidence: `{e['evidence']}`." if e.get("evidence") else "")
-        lines.append(f"| {e['id']} | {e['phase']} | {what} | {e['caught_by'].replace('_', ' ')} | {e['fix']} |")
+        status = e.get("status", "fixed")
+        if e.get("now_checked_by"):
+            status += f", now caught by check {e['now_checked_by']}"
+        lines.append(f"| {e['id']} | {e['phase']} | {what} | {e['caught_by'].replace('_', ' ')} | {status} | {e['fix']} |")
     lines.append(END)
     return "\n".join(lines)
 
@@ -101,6 +105,60 @@ def check() -> int:
     return 0
 
 
+def save(entries: list[dict]) -> None:
+    LEDGER.write_text("".join(json.dumps(e, ensure_ascii=False) + "\n" for e in entries))
+
+
+def sync(findings: list[dict], source: str, checks: set[str]) -> list[str]:
+    """Open one entry per failing check, update it while it fails, close it when it passes.
+
+    Only the checks in `checks` are judged, so a partial run never closes an
+    entry it did not re-examine.
+    """
+    entries = load()
+    errors: dict[str, list[dict]] = {}
+    for f in findings:
+        if f["severity"] == "error":
+            errors.setdefault(f["check"], []).append(f)
+    changed = []
+    now = datetime.now(timezone.utc).isoformat(timespec="minutes")
+    for check in sorted(checks):
+        open_entry = next((e for e in entries if e.get("check") == check and e.get("status") == "open"), None)
+        found = errors.get(check, [])
+        if found:
+            examples = "; ".join(f["message"] for f in found[:3])
+            what = f"Check {check} failed on {len(found)} entries, for example: {examples}."
+            if open_entry:
+                if open_entry["what"] != what:
+                    open_entry.update(what=what, targets=[f["target"] for f in found])
+                    changed.append(f"updated {open_entry['id']}")
+            else:
+                entry = {
+                    "id": f"C{len(entries) + 1:03d}", "at": now, "phase": "automated check",
+                    "erred_by": "ai_generated_code", "what": what, "caught_by": source,
+                    "fix": "open: the agent fixes the cause and the same check closes this entry",
+                    "evidence": None, "commit": head(), "status": "open", "check": check,
+                    "targets": [f["target"] for f in found],
+                }
+                entries.append(entry)
+                changed.append(f"opened {entry['id']} ({check}, {len(found)} findings)")
+        elif open_entry:
+            open_entry.update(status="fixed", fixed_at=now, fixed_commit=head())
+            if open_entry["fix"].startswith("open:"):
+                open_entry["fix"] = f"Check {check} passes again at commit {head()}."
+            changed.append(f"closed {open_entry['id']} ({check})")
+    save(entries)
+    return changed
+
+
+def annotate(entry_id: str, fix: str) -> None:
+    entries = load()
+    for e in entries:
+        if e["id"] == entry_id:
+            e["fix"] = fix
+    save(entries)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -114,10 +172,16 @@ def main() -> None:
     a.add_argument("--at")
     sub.add_parser("render")
     sub.add_parser("check")
+    n = sub.add_parser("annotate")
+    n.add_argument("entry_id")
+    n.add_argument("--fix", required=True)
     args = parser.parse_args()
     if args.cmd == "add":
         add(args)
     elif args.cmd == "render":
+        render()
+    elif args.cmd == "annotate":
+        annotate(args.entry_id, args.fix)
         render()
     else:
         raise SystemExit(check())

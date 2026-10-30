@@ -1,8 +1,8 @@
 {
-  "id": "brevo.deals.get_pipelines",
+  "id": "brevo.deals.get_all_pipelines",
   "product": "brevo",
   "area": "Deals",
-  "entity": "deals",
+  "entity": "all",
   "operation_class": "read",
   "label": "Get all pipelines",
   "description": "Retrieve the list of all deal pipelines configured for your account, including each pipeline''s stages and settings. If no pipelines have been configured yet, a default pipeline is automatically created and returned.",

@@ -1,5 +1,5 @@
 {
-  "id": "brevo.tier.get_list_tier_groups",
+  "id": "brevo.tier.get_list_of_tier_groups",
   "product": "brevo",
   "area": "Tier",
   "entity": "tier_group",

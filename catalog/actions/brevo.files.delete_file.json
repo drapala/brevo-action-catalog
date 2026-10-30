@@ -23,7 +23,7 @@
       {
         "input": "id",
         "entity": "file",
-        "find_with": "brevo.files.get_files",
+        "find_with": "brevo.files.get_all_files",
         "create_with": "brevo.files.upload_file"
       }
     ],

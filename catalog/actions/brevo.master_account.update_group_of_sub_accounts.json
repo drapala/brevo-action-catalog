@@ -1,15 +1,19 @@
 {
-  "id": "brevo.master_account.create_new_group_sub_accounts",
+  "id": "brevo.master_account.update_group_of_sub_accounts",
   "product": "brevo",
   "area": "Master account",
   "entity": "group",
-  "operation_class": "create",
-  "label": "Create a new group of sub-accounts",
-  "description": "This endpoint allows to create a group of sub-accounts",
+  "operation_class": "update",
+  "label": "Update a group of sub-accounts",
+  "description": "This endpoint allows to update a group of sub-accounts",
   "inputs": {
     "schema": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "description": "Id of the group"
+        },
         "groupName": {
           "description": "The name of the group of sub-accounts",
           "example": "My group",
@@ -40,38 +44,36 @@
         }
       },
       "required": [
-        "groupName"
+        "id"
       ]
     },
-    "entity_refs": [],
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "group",
+        "find_with": "brevo.master_account.get_sub_account_groups",
+        "create_with": "brevo.master_account.create_new_group_of_sub_accounts"
+      }
+    ],
     "credential_ref": "brevo_api_key"
   },
   "outputs": {
-    "schema": {
-      "properties": {
-        "id": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "produces_entity": {
-      "entity": "group",
-      "id_field": "id"
-    }
+    "schema": null,
+    "produces_entity": null
   },
   "routes": [
     {
       "kind": "documented_api",
-      "method": "POST",
-      "url": "https://api.brevo.com/v3/corporate/group",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/corporate/group/{id}",
       "auth": "header api-key",
       "params": {
+        "id": "path",
         "groupName": "body",
         "subAccountIds": "body"
       },
       "success_status": [
-        201
+        204
       ]
     }
   ],
@@ -84,9 +86,9 @@
   },
   "side_effects": {
     "reversible": true,
-    "undo_with": "brevo.master_account.delete_group",
+    "undo_with": "brevo.master_account.update_group_of_sub_accounts",
     "external_effect": "none",
-    "idempotent": null,
+    "idempotent": true,
     "requires_confirmation": false
   },
   "availability": {
@@ -104,7 +106,7 @@
   "sources": [
     {
       "kind": "openapi",
-      "ref": "swagger_definition_v3.yml#/paths//corporate/group/post"
+      "ref": "swagger_definition_v3.yml#/paths//corporate/group/{id}/put"
     }
   ]
 }

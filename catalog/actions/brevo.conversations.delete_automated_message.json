@@ -23,7 +23,7 @@
       {
         "input": "id",
         "entity": "pushed_message",
-        "find_with": "brevo.conversations.get_automated_message",
+        "find_with": null,
         "create_with": null
       }
     ],

@@ -23,7 +23,7 @@
       {
         "input": "id",
         "entity": "company",
-        "find_with": "brevo.companies.get_companies",
+        "find_with": "brevo.companies.get_all_companies",
         "create_with": "brevo.companies.create_company"
       }
     ],

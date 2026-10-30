@@ -1,5 +1,5 @@
 {
-  "id": "brevo.transactional_emails.get_scheduled_email_id",
+  "id": "brevo.transactional_emails.get_scheduled_email_by_id",
   "product": "brevo",
   "area": "Transactional emails",
   "entity": "scheduled_email",
@@ -65,7 +65,7 @@
       {
         "input": "identifier",
         "entity": "scheduled_email",
-        "find_with": "brevo.transactional_emails.get_scheduled_email_id",
+        "find_with": null,
         "create_with": null
       }
     ],

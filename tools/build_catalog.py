@@ -19,6 +19,9 @@ from pathlib import Path
 import jsonschema
 import yaml
 
+import catalog_lint
+import corrections
+
 ROOT = Path(__file__).resolve().parent.parent
 DRAFTS = ROOT / "build/openapi_actions"
 UI = ROOT / "sources/ui_actions"
@@ -189,8 +192,14 @@ def main() -> None:
         "curated_entries": n_curated,
         "by_area": {a: dict(c) for a, c in sorted(areas.items())},
     }
+    findings = catalog_lint.as_dicts(catalog_lint.lint(actions))
+    coverage["lint"] = dict(Counter(f"{f['check']} ({f['severity']})" for f in findings))
+    (ROOT / "catalog/lint.json").write_text(json.dumps(findings, indent=2, ensure_ascii=False) + "\n")
     (ROOT / "catalog/coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
     print(json.dumps({k: v for k, v in coverage.items() if k != "by_area"}, indent=2))
+    for change in corrections.sync(findings, "catalog_lint", {"L001", "L002", "L003", "L004", "L005"}):
+        print("ledger:", change)
+    corrections.render()
 
 
 if __name__ == "__main__":

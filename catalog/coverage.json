@@ -111,5 +111,9 @@
     "WhatsApp Campaigns": {
       "documented": 9
     }
+  },
+  "lint": {
+    "G001 (gap)": 38,
+    "G002 (gap)": 25
   }
 }

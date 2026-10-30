@@ -1,5 +1,5 @@
 {
-  "id": "brevo.senders.validate_sender_otp",
+  "id": "brevo.senders.validate_sender_by_otp",
   "product": "brevo",
   "area": "Senders",
   "entity": "sender",

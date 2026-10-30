@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -127,21 +128,7 @@ PARAM_ENTITY = {
     "groupId": "sub_account_group",
 }
 
-STOPWORDS = {
-    "a",
-    "an",
-    "the",
-    "of",
-    "your",
-    "all",
-    "on",
-    "by",
-    "in",
-    "with",
-    "s",
-    "based",
-    "its",
-}
+STOPWORDS = {"a", "an", "the", "s", "its", "your", "based"}
 
 
 def slug(text: str) -> str:
@@ -364,6 +351,17 @@ def main() -> None:
     for d in drafts:
         by_entity[d["entity"]].append(d)
 
+    def find_lister(entity: str):
+        """A read that lists the entity and needs no other ID, or None when the API has no such route."""
+        candidates = [
+            d for d in by_entity.get(entity, [])
+            if d["oclass"] == "read"
+            and not any(loc == "path" and name in d["inputs"].get("required", []) for name, loc in d["params"].items())
+        ]
+        if not candidates:
+            return None
+        return min(candidates, key=lambda d: len(d["path"]))["id"]
+
     def find_action(entity: str, oclass: str, single: bool | None = None):
         candidates = []
         for d in by_entity.get(entity, []):
@@ -402,7 +400,7 @@ def main() -> None:
                 {
                     "input": pname,
                     "entity": ent,
-                    "find_with": find_action(ent, "read", single=False) or find_action(ent, "read"),
+                    "find_with": find_lister(ent),
                     "create_with": find_action(ent, "create"),
                 }
             )
@@ -503,6 +501,13 @@ def main() -> None:
         )
     INDEX.write_text(json.dumps(sorted(index, key=lambda x: x["id"]), indent=2, ensure_ascii=False) + "\n")
     print(f"wrote {len(index)} actions")
+    sys.path.insert(0, str(ROOT / "tools"))
+    import catalog_lint
+    import corrections
+
+    noop = catalog_lint.generator_noop(Path(__file__), OUT, ROOT / "build/generator_stamp.json")
+    for change in corrections.sync(catalog_lint.as_dicts(noop), "catalog_lint", {"L006"}):
+        print("ledger:", change)
 
 
 if __name__ == "__main__":

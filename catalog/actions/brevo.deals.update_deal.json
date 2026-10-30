@@ -85,7 +85,7 @@
       {
         "input": "id",
         "entity": "deal",
-        "find_with": "brevo.deals.get_deals",
+        "find_with": "brevo.deals.get_all_deals",
         "create_with": "brevo.deals.create_deal"
       }
     ],

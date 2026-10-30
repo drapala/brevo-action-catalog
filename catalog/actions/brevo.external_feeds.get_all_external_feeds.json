@@ -1,5 +1,5 @@
 {
-  "id": "brevo.external_feeds.get_external_feeds",
+  "id": "brevo.external_feeds.get_all_external_feeds",
   "product": "brevo",
   "area": "External Feeds",
   "entity": "feed",

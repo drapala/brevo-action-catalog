@@ -1,5 +1,5 @@
 {
-  "id": "brevo.files.get_files",
+  "id": "brevo.files.get_all_files",
   "product": "brevo",
   "area": "Files",
   "entity": "file",

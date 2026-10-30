@@ -24,7 +24,7 @@
       {
         "input": "uuid",
         "entity": "feed",
-        "find_with": "brevo.external_feeds.get_external_feeds",
+        "find_with": "brevo.external_feeds.get_all_external_feeds",
         "create_with": "brevo.external_feeds.create_external_feed"
       }
     ],
@@ -50,7 +50,7 @@
   ],
   "preconditions": [],
   "postcondition": {
-    "check_with": "brevo.external_feeds.get_external_feed_uuid",
+    "check_with": "brevo.external_feeds.get_external_feed_by_uuid",
     "assert": "the read returns 404"
   },
   "side_effects": {

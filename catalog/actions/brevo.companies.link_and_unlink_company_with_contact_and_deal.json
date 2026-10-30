@@ -1,11 +1,11 @@
 {
-  "id": "brevo.deals.link_and_unlink_deal_contacts_and_companies",
+  "id": "brevo.companies.link_and_unlink_company_with_contact_and_deal",
   "product": "brevo",
-  "area": "Deals",
-  "entity": "deal",
+  "area": "Companies",
+  "entity": "company",
   "operation_class": "update",
-  "label": "Link and Unlink a deal with contacts and companies",
-  "description": "Link or unlink contacts and companies with a specific deal in a single request. You can simultaneously link new contacts/companies and unlink existing ones by providing the respective ID arrays in the request body.",
+  "label": "Link and Unlink company with contact and deal",
+  "description": "Link or unlink contacts and deals with a specific company in a single request. You can simultaneously link new contacts/deals and unlink existing ones by providing the respective ID arrays in the request body.",
   "inputs": {
     "schema": {
       "type": "object",
@@ -13,28 +13,8 @@
         "id": {
           "type": "string"
         },
-        "linkCompanyIds": {
-          "description": "Company ids to be linked with deal",
-          "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
-          ],
-          "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
-          },
-          "type": "array"
-        },
         "linkContactIds": {
-          "description": "Contact ids for contacts to be linked with deal",
+          "description": "Contact ids for contacts to be linked with company",
           "example": [
             {
               "description": "(nested schema truncated)"
@@ -56,8 +36,8 @@
           },
           "type": "array"
         },
-        "unlinkCompanyIds": {
-          "description": "Company ids to be unlinked from deal",
+        "linkDealsIds": {
+          "description": "Deal ids for deals to be linked with company",
           "example": [
             {
               "description": "(nested schema truncated)"
@@ -77,7 +57,7 @@
           "type": "array"
         },
         "unlinkContactIds": {
-          "description": "Contact ids for contacts to be unlinked from deal",
+          "description": "Contact ids for contacts to be unlinked from company",
           "example": [
             {
               "description": "(nested schema truncated)"
@@ -98,6 +78,26 @@
             }
           },
           "type": "array"
+        },
+        "unlinkDealsIds": {
+          "description": "Deal ids for deals to be unlinked from company",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
         }
       },
       "required": [
@@ -107,9 +107,9 @@
     "entity_refs": [
       {
         "input": "id",
-        "entity": "deal",
-        "find_with": "brevo.deals.get_deals",
-        "create_with": "brevo.deals.create_deal"
+        "entity": "company",
+        "find_with": "brevo.companies.get_all_companies",
+        "create_with": "brevo.companies.create_company"
       }
     ],
     "credential_ref": "brevo_api_key"
@@ -122,14 +122,14 @@
     {
       "kind": "documented_api",
       "method": "PATCH",
-      "url": "https://api.brevo.com/v3/crm/deals/link-unlink/{id}",
+      "url": "https://api.brevo.com/v3/companies/link-unlink/{id}",
       "auth": "header api-key",
       "params": {
         "id": "path",
-        "linkCompanyIds": "body",
         "linkContactIds": "body",
-        "unlinkCompanyIds": "body",
-        "unlinkContactIds": "body"
+        "linkDealsIds": "body",
+        "unlinkContactIds": "body",
+        "unlinkDealsIds": "body"
       },
       "success_status": [
         204
@@ -138,12 +138,12 @@
   ],
   "preconditions": [],
   "postcondition": {
-    "check_with": "brevo.deals.get_deal",
+    "check_with": "brevo.companies.get_company",
     "assert": "the entity exists and its fields equal the inputs that were sent"
   },
   "side_effects": {
     "reversible": true,
-    "undo_with": "brevo.deals.link_and_unlink_deal_contacts_and_companies",
+    "undo_with": "brevo.companies.link_and_unlink_company_with_contact_and_deal",
     "external_effect": "none",
     "idempotent": null,
     "requires_confirmation": false
@@ -161,7 +161,7 @@
   "sources": [
     {
       "kind": "openapi",
-      "ref": "swagger_definition_v3.yml#/paths//crm/deals/link-unlink/{id}/patch"
+      "ref": "swagger_definition_v3.yml#/paths//companies/link-unlink/{id}/patch"
     }
   ]
 }

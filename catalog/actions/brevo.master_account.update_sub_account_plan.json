@@ -63,7 +63,7 @@
       {
         "input": "id",
         "entity": "sub_account",
-        "find_with": "brevo.master_account.get_list_sub_accounts_master_account",
+        "find_with": "brevo.master_account.get_list_of_all_sub_accounts_of_master_account",
         "create_with": "brevo.master_account.create_new_sub_account_under_master_account"
       }
     ],

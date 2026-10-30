@@ -24,7 +24,7 @@
       {
         "input": "campaignId",
         "entity": "ab_test_campaign_result",
-        "find_with": "brevo.email_campaigns.get_ab_test_campaign_result",
+        "find_with": null,
         "create_with": null
       }
     ],

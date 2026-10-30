@@ -133,7 +133,7 @@
       {
         "input": "id",
         "entity": "task",
-        "find_with": "brevo.tasks.get_tasks",
+        "find_with": "brevo.tasks.get_all_tasks",
         "create_with": "brevo.tasks.create_task"
       }
     ],

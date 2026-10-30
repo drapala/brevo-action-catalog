@@ -34,7 +34,7 @@
       {
         "input": "passId",
         "entity": "pass",
-        "find_with": "brevo.wallet.get_wallet_pass_install_url",
+        "find_with": null,
         "create_with": null
       },
       {

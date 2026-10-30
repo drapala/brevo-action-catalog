@@ -38,7 +38,7 @@
       {
         "input": "identifier",
         "entity": "campaign_stat",
-        "find_with": "brevo.contacts.get_contact_stats",
+        "find_with": null,
         "create_with": null
       }
     ],

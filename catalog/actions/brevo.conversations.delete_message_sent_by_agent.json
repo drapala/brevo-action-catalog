@@ -1,29 +1,29 @@
 {
-  "id": "brevo.transactional_emails.delete_scheduled_email_id",
+  "id": "brevo.conversations.delete_message_sent_by_agent",
   "product": "brevo",
-  "area": "Transactional emails",
-  "entity": "transactional_email",
+  "area": "Conversations",
+  "entity": "message",
   "operation_class": "delete",
-  "label": "Delete scheduled emails by batchId or messageId",
-  "description": "Delete scheduled batch of emails by batchId or single scheduled email by messageId",
+  "label": "Delete a message sent by an agent",
+  "description": "Delete a message sent by an agent. Only messages of type `agent` can be deleted.",
   "inputs": {
     "schema": {
       "type": "object",
       "properties": {
-        "identifier": {
+        "id": {
           "type": "string",
-          "description": "The `batchId` of scheduled emails batch (must be a valid UUIDv4) or the `messageId` of scheduled email (enclosed in angle brackets with @ sign, e.g. `<...@domain>`)."
+          "description": "ID of the message"
         }
       },
       "required": [
-        "identifier"
+        "id"
       ]
     },
     "entity_refs": [
       {
-        "input": "identifier",
-        "entity": "transactional_email",
-        "find_with": "brevo.transactional_emails.get_transac_emails_list",
+        "input": "id",
+        "entity": "message",
+        "find_with": null,
         "create_with": null
       }
     ],
@@ -37,19 +37,21 @@
     {
       "kind": "documented_api",
       "method": "DELETE",
-      "url": "https://api.brevo.com/v3/smtp/email/{identifier}",
+      "url": "https://api.brevo.com/v3/conversations/messages/{id}",
       "auth": "header api-key",
       "params": {
-        "identifier": "path"
+        "id": "path"
       },
       "success_status": [
         204
       ]
     }
   ],
-  "preconditions": [],
+  "preconditions": [
+    "Conversations chat widget installed (needed before any call in this area)"
+  ],
   "postcondition": {
-    "check_with": "brevo.transactional_emails.get_transac_email_content",
+    "check_with": "brevo.conversations.get_message",
     "assert": "the read returns 404"
   },
   "side_effects": {
@@ -61,7 +63,9 @@
   },
   "availability": {
     "free_plan": "unknown",
-    "requires": []
+    "requires": [
+      "Conversations chat widget installed"
+    ]
   },
   "verification": {
     "status": "documented",
@@ -72,7 +76,7 @@
   "sources": [
     {
       "kind": "openapi",
-      "ref": "swagger_definition_v3.yml#/paths//smtp/email/{identifier}/delete (deleteScheduledEmailById)"
+      "ref": "swagger_definition_v3.yml#/paths//conversations/messages/{id}/delete"
     }
   ]
 }

@@ -138,7 +138,7 @@
     "Events tracking enabled (needed before any call in this area)"
   ],
   "postcondition": {
-    "check_with": "brevo.inbound_parsing.get_inbound_email_events_uuid",
+    "check_with": "brevo.inbound_parsing.get_inbound_email_events_by_uuid",
     "assert": "the entity exists and its fields equal the inputs that were sent"
   },
   "side_effects": {

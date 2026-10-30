@@ -1,5 +1,5 @@
 {
-  "id": "brevo.companies.get_companies",
+  "id": "brevo.companies.get_all_companies",
   "product": "brevo",
   "area": "Companies",
   "entity": "company",

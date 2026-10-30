@@ -24,7 +24,7 @@
       {
         "input": "campaignId",
         "entity": "shared_url",
-        "find_with": "brevo.email_campaigns.get_shared_template_url",
+        "find_with": null,
         "create_with": null
       }
     ],

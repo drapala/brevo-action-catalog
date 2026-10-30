@@ -1,11 +1,11 @@
 {
-  "id": "brevo.master_account.list_ips",
+  "id": "brevo.tasks.get_all_task_types",
   "product": "brevo",
-  "area": "Master account",
-  "entity": "ip",
+  "area": "Tasks",
+  "entity": "task_type",
   "operation_class": "read",
-  "label": "List of all IPs",
-  "description": "This endpoint allows you to retrieve the list of active IPs on your Admin account",
+  "label": "Get all task types",
+  "description": "Retrieve the list of all available task types, such as Email, Call, Meeting, Todo, Lunch, Deadline, and LinkedIn. If no task types exist yet, the default set is automatically created and returned. Use the task type ID when creating or updating tasks.",
   "inputs": {
     "schema": {
       "type": "object",
@@ -16,19 +16,27 @@
   },
   "outputs": {
     "schema": {
+      "description": "List of task types",
       "items": {
         "properties": {
-          "domain": {
+          "id": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
             "type": {
               "description": "(nested schema truncated)"
             }
           },
-          "ip": {
-            "type": {
+          "title": {
+            "description": {
               "description": "(nested schema truncated)"
-            }
-          },
-          "transactional": {
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
             "type": {
               "description": "(nested schema truncated)"
             }
@@ -44,7 +52,7 @@
     {
       "kind": "documented_api",
       "method": "GET",
-      "url": "https://api.brevo.com/v3/corporate/ip",
+      "url": "https://api.brevo.com/v3/crm/tasktypes",
       "auth": "header api-key",
       "params": {},
       "success_status": [
@@ -52,9 +60,7 @@
       ]
     }
   ],
-  "preconditions": [
-    "Enterprise master account (needed before any call in this area)"
-  ],
+  "preconditions": [],
   "postcondition": null,
   "side_effects": {
     "reversible": true,
@@ -65,9 +71,7 @@
   },
   "availability": {
     "free_plan": "unknown",
-    "requires": [
-      "Enterprise master account"
-    ]
+    "requires": []
   },
   "verification": {
     "status": "documented",
@@ -78,7 +82,7 @@
   "sources": [
     {
       "kind": "openapi",
-      "ref": "swagger_definition_v3.yml#/paths//corporate/ip/get"
+      "ref": "swagger_definition_v3.yml#/paths//crm/tasktypes/get"
     }
   ]
 }

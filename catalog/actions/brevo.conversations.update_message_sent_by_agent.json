@@ -1,5 +1,5 @@
 {
-  "id": "brevo.conversations.update_message_sent_agent",
+  "id": "brevo.conversations.update_message_sent_by_agent",
   "product": "brevo",
   "area": "Conversations",
   "entity": "message",
@@ -28,7 +28,7 @@
       {
         "input": "id",
         "entity": "message",
-        "find_with": "brevo.conversations.get_message",
+        "find_with": null,
         "create_with": null
       }
     ],
@@ -393,7 +393,7 @@
   },
   "side_effects": {
     "reversible": true,
-    "undo_with": "brevo.conversations.update_message_sent_agent",
+    "undo_with": "brevo.conversations.update_message_sent_by_agent",
     "external_effect": "none",
     "idempotent": true,
     "requires_confirmation": false
