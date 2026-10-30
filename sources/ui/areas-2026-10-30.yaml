@@ -1,0 +1,146 @@
+# UI walk, free plan account, 2026-10-30.
+# For each area of the main menu: where it lands, what a user can click, whether the free plan
+# gates it, and which internal services the web app calls on load (query strings and IDs removed,
+# analytics and tracking hosts removed). None of these hosts is api.brevo.com/v3.
+areas:
+  - area: Contacts
+    ui_url: https://app.brevo.com/contact/list
+    gate: none
+    actions_visible: [Create a contact, Import contacts, Load a list or a segment, Add filter, Customize columns]
+    internal_calls:
+      - GET https://contacts-api.brevo.com/contact/backend/settings
+      - GET https://contacts-api.brevo.com/contact/backend/settings/get-attributes
+      - GET https://contacts-api.brevo.com/contact/backend/contacts/lists_and_segments
+      - GET https://contacts-api-v2.brevo.com/v3/app/objects/contact/attributes
+      - POST https://segments-api.brevo.com/segment/count
+      - GET https://views-manager-service.brevo.com/view/listing/visible
+      - GET https://contact-service-api.brevo.com/v1/consent-groups/status
+  - area: Lists
+    ui_url: https://app.brevo.com/contact/list-listing
+    gate: none
+    actions_visible: [Create a list, Recalculate now, more list actions]
+    internal_calls:
+      - GET https://contacts-api-v2.brevo.com/lists/get-folders
+      - GET https://contacts-api-v2.brevo.com/lists/get-lists
+  - area: Segments
+    ui_url: https://app.brevo.com/contact/segment
+    gate: none
+    public_api: read only (GET /contacts/segments). Create, edit and delete exist only in the web app.
+    actions_visible: [Create a segment]
+    internal_calls:
+      - GET https://segments-api.brevo.com/segment/folder/listing
+      - GET https://segments-api.brevo.com/segment/listing
+      - POST https://segments-api.brevo.com/segment/count
+  - area: Companies
+    ui_url: https://app.brevo.com/companies
+    gate: none
+    actions_visible: [Import companies, Create company, Add filter, Customize columns]
+    internal_calls:
+      - GET https://crm-backend-api.brevo.com/crm/backend/attributes
+      - GET https://crm-backend-api.brevo.com/crm/backend/pipeline/details
+      - GET https://crm-backend-api.brevo.com/crm/backend/accounts
+      - GET https://crm-backend-api.brevo.com/crm/backend/organization/config
+  - area: Deals
+    ui_url: https://app.brevo.com/crm/deals
+    gate: "setup: redirects to /crm/onboarding ('Start for free'), the Sales CRM app must be activated first"
+    internal_calls:
+      - GET https://crm-backend-api.brevo.com/crm/backend/pipeline/pipeline-template
+      - GET https://crm-backend-api.brevo.com/crm/backend/tasktypes
+  - area: Tasks
+    ui_url: https://app.brevo.com/tasks
+    gate: "setup: redirects to /crm/onboarding, same activation as Deals"
+  - area: Custom objects
+    ui_url: https://app.brevo.com/objects
+    gate: "paid: redirects to /objects/upgrade ('Upgrade to unlock custom objects')"
+    internal_calls:
+      - GET https://unified-objects.brevo.com/app/objects/plan
+  - area: Email campaigns
+    ui_url: https://app.brevo.com/campaigns/listing
+    gate: "none for drafts; sending needs a verified phone"
+    internal_calls:
+      - GET https://email-campaigns-backend.brevo.com/email-campaign/api/campaigns
+      - GET https://email-campaigns-backend.brevo.com/email-campaign/api/config
+      - GET https://folder-engine.brevo.com/folders/layers
+      - GET https://tag-engine.brevo.com/tags
+  - area: Forms
+    ui_url: https://app.brevo.com/contact/forms-app/subscription
+    gate: none
+    public_api: none
+    internal_calls:
+      - GET https://forms-api.brevo.com/forms-api/account
+      - GET https://forms-api.brevo.com/forms-api/forms
+  - area: Templates (marketing email)
+    ui_url: https://app.brevo.com/templates/listing
+    gate: none
+    actions_visible: [Create folder, Create template]
+    internal_calls:
+      - GET https://email-campaigns-backend.brevo.com/email-template/api/templates
+      - GET https://editor-api.brevo.com/editor-api/localization/languages
+  - area: Automations
+    ui_url: https://app.brevo.com/automation/automations
+    gate: "none, lands on onboarding until the first automation exists"
+    public_api: none (only POST /events can trigger an automation)
+    actions_visible: [Create your first automation]
+    internal_calls:
+      - GET https://workflow-apis.brevo.com/v1/workflow/metaInfo
+      - GET https://automation-engine-http-public.brevo.com/processing-details
+      - GET https://workflow-apis.brevo.com/v1/sidebar/contactCount
+  - area: Transactional email
+    ui_url: https://app.brevo.com/transactional/email/real-time
+    gate: none
+    actions_visible: [SMTP settings, API Settings, Config with Postfix, Config with PHP]
+    internal_calls:
+      - GET https://transactional-app-backend.brevo.com/api/email/realtime/wizard/status
+      - GET https://transactional-app-backend.brevo.com/api/email/realtime/smtp/credentials
+  - area: Transactional email logs
+    ui_url: https://app.brevo.com/transactional/email/logs
+    gate: none
+    actions_visible: [Refresh, Download CSV, More filters]
+    internal_calls:
+      - GET https://transactional-app-backend.brevo.com/api/email/logs/filters/data
+      - POST https://transactional-app-backend.brevo.com/api/email/logs
+  - area: Transactional SMS
+    ui_url: https://app.brevo.com/transactional/sms/real-time
+    gate: "setup: configuration wizard"
+    internal_calls:
+      - GET https://transactional-app-backend-sms.brevo.com/api/sms/realtime/wizard/status
+  - area: Meetings
+    ui_url: https://app.brevo.com/meetings/offer/all
+    gate: "setup: redirects to /meetings/onboarding"
+    public_api: none
+    internal_calls:
+      - GET https://meetings-api.brevo.com/plan/
+  - area: Commerce
+    ui_url: https://app.brevo.com/ecommerce
+    gate: "setup: connect a store or install a plugin"
+    internal_calls:
+      - GET https://analytics-api.brevo.com/v1/ecommerce-onboarding
+      - GET https://app-store-backend.brevo.com/apps
+  - area: Loyalty
+    ui_url: https://app.brevo.com/loyalty
+    gate: "paid: 'Upgrade to Enterprise'"
+    internal_calls:
+      - GET https://loyalty-api.brevo.com/loyalty/programs
+  - area: Conversions
+    ui_url: https://app.brevo.com/conversions/listing
+    gate: "paid: Upgrade"
+    public_api: none
+  - area: Analytics studio
+    ui_url: https://app.brevo.com/analytics
+    gate: "paid: Upgrade (Professional)"
+    public_api: none
+  - area: Phone
+    ui_url: https://app.brevo.com/phone/onboarding
+    gate: "paid: 'Get package'"
+    public_api: none
+  - area: Marketing statistics
+    ui_url: https://app.brevo.com/marketing-reports/statistics
+    gate: none
+    actions_visible: [Export (.csv file)]
+    internal_calls:
+      - GET https://marketing-report-statistics.brevo.com/campaigns/statistics
+      - GET https://marketing-report-statistics.brevo.com/campaigns/calendar
+  - area: Settings, API keys
+    ui_url: https://app.brevo.com/settings/keys/api
+    gate: "creating an API key requires a verified phone number"
+    public_api: none for your own account (only master accounts can create keys for sub-accounts)

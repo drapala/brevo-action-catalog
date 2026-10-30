@@ -1,0 +1,16 @@
+name: templates-and-campaigns
+description: Transactional template and a draft email campaign. Nothing is sent. Everything created is deleted.
+steps:
+  - {name: account, action: brevo.account.get_account, assert: {status: 200}}
+  - {name: create_template, action: brevo.transactional_emails.create_smtp_template, inputs: {templateName: "${prefix}-template-${ts}", subject: "Catalog test ${ts}", sender: {email: "${account.response.email}"}, htmlContent: "<p>Hello {{ params.name }}</p>"}, assert: {status: 201}}
+  - {name: read_template, action: brevo.transactional_emails.get_smtp_template, inputs: {templateId: "${create_template.response.id}"}, assert: {status: 200, equals: {name: "${prefix}-template-${ts}", subject: "Catalog test ${ts}"}}}
+  - {name: update_template, action: brevo.transactional_emails.update_smtp_template, inputs: {templateId: "${create_template.response.id}", subject: "Catalog test updated ${ts}", isActive: false}, assert: {status: 204}}
+  - {name: read_template_after_update, action: brevo.transactional_emails.get_smtp_template, inputs: {templateId: "${create_template.response.id}"}, assert: {status: 200, equals: {subject: "Catalog test updated ${ts}", isActive: false}}}
+  - {name: create_campaign, action: brevo.email_campaigns.create_email_campaign, inputs: {name: "${prefix}-campaign-${ts}", subject: "Catalog campaign ${ts}", sender: {email: "${account.response.email}"}, htmlContent: "<p>Draft only</p>"}, assert: {status: 201}}
+  - {name: read_campaign, action: brevo.email_campaigns.get_email_campaign, inputs: {campaignId: "${create_campaign.response.id}"}, assert: {status: 200, equals: {name: "${prefix}-campaign-${ts}", status: draft}}}
+  - {name: update_campaign, action: brevo.email_campaigns.update_email_campaign, inputs: {campaignId: "${create_campaign.response.id}", subject: "Catalog campaign updated ${ts}"}, assert: {status: 204}}
+  - {name: read_campaign_after_update, action: brevo.email_campaigns.get_email_campaign, inputs: {campaignId: "${create_campaign.response.id}"}, assert: {status: 200, equals: {subject: "Catalog campaign updated ${ts}"}}}
+  - {name: delete_campaign, action: brevo.email_campaigns.delete_email_campaign, inputs: {campaignId: "${create_campaign.response.id}"}, assert: {status: 204}, stop_on_fail: false}
+  - {name: campaign_gone, action: brevo.email_campaigns.get_email_campaign, inputs: {campaignId: "${create_campaign.response.id}"}, assert: {status: 404}, stop_on_fail: false}
+  - {name: delete_template, action: brevo.transactional_emails.delete_smtp_template, inputs: {templateId: "${create_template.response.id}"}, assert: {status: 204}, stop_on_fail: false}
+  - {name: template_gone, action: brevo.transactional_emails.get_smtp_template, inputs: {templateId: "${create_template.response.id}"}, assert: {status: 404}, stop_on_fail: false}
