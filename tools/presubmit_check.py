@@ -2,7 +2,8 @@
 
 1. No credential in any tracked file (Brevo keys, bearer tokens, cookies).
 2. Every action in the catalog validates against the schema.
-3. The public repository URL answers 200 to a client that is not logged in.
+3. The corrections table in docs/AI_LOG.md matches docs/corrections.jsonl.
+4. The public repository URL answers 200 to a client that is not logged in.
 
 Usage: presubmit_check.py [repo_url]
 """
@@ -36,7 +37,7 @@ def tracked_files() -> list[Path]:
 def check_secrets() -> list[str]:
     hits = []
     for path in tracked_files():
-        if path.suffix in {".png", ".jpg", ".pdf", ".mp4"} or not path.exists():
+        if path.suffix in {".png", ".jpg", ".pdf", ".mp4"} or not path.exists() or path == Path(__file__).resolve():
             continue
         text = path.read_text(errors="ignore")
         for pattern in SECRET_PATTERNS:
@@ -62,8 +63,13 @@ def check_public(url: str) -> list[str]:
     return [] if status == 200 else [f"{url} answered {status} to a logged-out client"]
 
 
+def check_ledger() -> list[str]:
+    out = subprocess.run([sys.executable, str(ROOT / "tools/corrections.py"), "check"], capture_output=True, text=True)
+    return [] if out.returncode == 0 else [out.stdout.strip()]
+
+
 def main() -> int:
-    problems = check_secrets() + check_schema()
+    problems = check_secrets() + check_schema() + check_ledger()
     if len(sys.argv) > 1:
         problems += check_public(sys.argv[1])
     for problem in problems:
