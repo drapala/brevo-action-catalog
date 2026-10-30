@@ -52,6 +52,18 @@ The difference between sources 2 and 1 is the main finding: what a user can do i
 - Every run writes an evidence file: request, status, response summary, assertion result. No credentials in evidence.
 - The verifier is the same code an agent would use to execute, so a verified entry is executable by construction.
 
+## Rules the catalog follows
+
+| Rule | Where it is enforced | What it prevents |
+|---|---|---|
+| No action is `verified` without a live postcondition. | `tools/build_catalog.py` sets the status only from `evidence/runs.jsonl`. | An agent trusting an action because a document or a model said so. |
+| Uncertainty is a status, never a guess. | `documented`, `observed`, `gated`, `failed`, and `free_plan: unknown`. | A paid-only action presented as runnable. |
+| Every input tells the agent where its value comes from. | `entity_refs` name the action that lists or creates each referenced ID. | An ID guessed instead of looked up. |
+| A retried create is never assumed safe. | `side_effects.idempotent`. Brevo has no idempotency keys, so a create says to search before a retry. | A duplicate contact or campaign after a timeout. |
+| Anything that reaches people asks first. | `requires_confirmation` on sends, invitations and deletes. | A test email sent to a real list. |
+| Every live call leaves a record, and no record holds a credential. | `tools/brevo_exec.py` writes one evidence line per call. `tools/presubmit_check.py` scans for keys. | A claim nobody can check, or a leaked key. |
+| Every failed check becomes a correction with its reason. | `catalog/curation.yaml` rejects an entry without `why`. | The same wrong entry coming back when the spec is regenerated. |
+
 ## Priorities
 
 1. Free-plan areas a user touches every week: contacts, lists, attributes, segments and folders, email campaigns, templates, senders and domains, transactional email, CRM (companies, deals, tasks, notes), webhooks.
