@@ -188,6 +188,7 @@ def scenario(file: str) -> int:
     run = f"{spec['name']}-{int(time.time())}"
     ctx: dict = {"run": run, "prefix": FIXTURE_PREFIX, "ts": str(int(time.time()))}
     failures = 0
+    findings = []
     with client() as c:
         for step in spec["steps"]:
             inputs = render(step.get("inputs") or {}, ctx)
@@ -207,9 +208,17 @@ def scenario(file: str) -> int:
             print(f"{'PASS' if ok else 'FAIL'} {step['name']:28} {step['action']} {status} {'' if ok else why}")
             if not ok:
                 failures += 1
+                findings.append({"check": f"V-{spec['name']}", "target": step["action"], "severity": "error",
+                                 "message": f"step {step['name']} ({step['action']}): {why}"})
                 if step.get("stop_on_fail", True):
                     break
             time.sleep(step.get("wait", 0.3))
+    sys.path.insert(0, str(ROOT / "tools"))
+    import corrections
+
+    for change in corrections.sync(findings, "live_verifier", {f"V-{spec['name']}"}):
+        print("ledger:", change)
+    corrections.render()
     return failures
 
 
