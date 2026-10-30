@@ -1,0 +1,115 @@
+{
+  "id": "brevo.process.get_processes",
+  "product": "brevo",
+  "area": "Process",
+  "entity": "process",
+  "operation_class": "read",
+  "label": "Get background processes",
+  "description": "Retrieves a list of background processes from your Brevo account with filtering and pagination. **Use this to:** - Monitor background process activity and status - Track long-running operations and tasks - Find process IDs for detailed status checking - Review process history and performance - Identify failed or stuck processes for troubleshooting **Key information returned:** - Process details (ID, name, status) - Export download URLs for completed export processes - Import details with CSV report URLs for completed import processes - Total count of processes for pagination **Important consid",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 10,
+          "format": "int64",
+          "maximum": 50,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Number limitation for the result returned"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Beginning point in the list to retrieve from."
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation.\nDefault order is **descending** if `sort` is not passed"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "count": {
+          "description": "Total number of processes available on your account",
+          "example": 198,
+          "format": "int64",
+          "type": "integer"
+        },
+        "processes": {
+          "description": "List of background processes on your account",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "count",
+        "processes"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/processes",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "offset": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//processes/get (getProcesses)"
+    }
+  ]
+}

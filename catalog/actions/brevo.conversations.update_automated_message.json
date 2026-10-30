@@ -1,0 +1,419 @@
+{
+  "id": "brevo.conversations.update_automated_message",
+  "product": "brevo",
+  "area": "Conversations",
+  "entity": "pushed_message",
+  "operation_class": "update",
+  "label": "Update an automated message",
+  "description": "Update the text of an automated (pushed) message. The `text` and `html` fields of the message will be updated.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID of the message"
+        },
+        "text": {
+          "description": "The new message text.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "pushed_message",
+        "find_with": "brevo.conversations.get_automated_message",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "a Conversations message",
+      "properties": {
+        "agentId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "agentName": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "agentUserpic": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "attachments": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "bcc": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "cc": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "createdAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "minimum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "file": {
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "forwardedToSourceStatus": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "from": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "html": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "integrations": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "isBot": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "isMissed": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "isMissedByVisitor": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "isPushed": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "isTrigger": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "rawUnsafeHtml": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "receivedFrom": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "replyTo": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "sourceMessageId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "subject": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "text": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "to": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "type": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "isSentViaJsApi": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "messageType": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "isForward": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "source": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "visitorId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/conversations/pushedMessages/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path",
+        "text": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Conversations chat widget installed (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.conversations.get_automated_message",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.conversations.update_automated_message",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Conversations chat widget installed"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//conversations/pushedMessages/{id}/put"
+    }
+  ]
+}

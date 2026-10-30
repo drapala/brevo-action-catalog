@@ -1,0 +1,109 @@
+{
+  "id": "brevo.balance.delete_balance_limit",
+  "product": "brevo",
+  "area": "Balance",
+  "entity": "limit",
+  "operation_class": "delete",
+  "label": "Delete balance limit",
+  "description": "Delete balance limit",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program Id"
+        },
+        "bdid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Balance Definition Id"
+        },
+        "blid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Balance Limit Id"
+        }
+      },
+      "required": [
+        "pid",
+        "bdid",
+        "blid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "bdid",
+        "entity": "bdid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "blid",
+        "entity": "blid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/loyalty/balance/programs/{pid}/balance-definitions/{bdid}/limits/{blid}",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "bdid": "path",
+        "blid": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.balance.get_balance_limit",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/balance/programs/{pid}/balance-definitions/{bdid}/limits/{blid}/delete (deleteBalanceLimit)"
+    }
+  ]
+}

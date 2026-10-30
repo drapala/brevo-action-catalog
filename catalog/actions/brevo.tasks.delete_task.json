@@ -1,0 +1,77 @@
+{
+  "id": "brevo.tasks.delete_task",
+  "product": "brevo",
+  "area": "Tasks",
+  "entity": "task",
+  "operation_class": "delete",
+  "label": "Delete a task",
+  "description": "Permanently delete a CRM task by its identifier. This removes the task and cancels any associated reminders. The requesting user must be the task assignee or have manage permission on tasks.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "task",
+        "find_with": "brevo.tasks.get_tasks",
+        "create_with": "brevo.tasks.create_task"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/crm/tasks/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.tasks.get_task",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/tasks/{id}/delete"
+    }
+  ]
+}

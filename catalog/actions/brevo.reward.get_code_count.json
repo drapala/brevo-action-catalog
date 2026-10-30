@@ -1,0 +1,102 @@
+{
+  "id": "brevo.reward.get_code_count",
+  "product": "brevo",
+  "area": "Reward",
+  "entity": "codes_count",
+  "operation_class": "read",
+  "label": "Get code count",
+  "description": "Get code count",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "cpid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Code Pool ID"
+        }
+      },
+      "required": [
+        "pid",
+        "cpid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "cpid",
+        "entity": "cpid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "count": {
+          "description": "Number of codes",
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/loyalty/offer/programs/{pid}/code-pools/{cpid}/codes-count",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "cpid": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/offer/programs/{pid}/code-pools/{cpid}/codes-count/get (getCodeCount)"
+    }
+  ]
+}

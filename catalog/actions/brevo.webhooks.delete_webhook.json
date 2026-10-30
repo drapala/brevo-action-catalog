@@ -1,0 +1,79 @@
+{
+  "id": "brevo.webhooks.delete_webhook",
+  "product": "brevo",
+  "area": "Webhooks",
+  "entity": "webhook",
+  "operation_class": "delete",
+  "label": "Delete a webhook",
+  "description": "Permanently deletes a webhook and stops all event notifications. Use this to: - Remove unused or obsolete webhook configurations - Clean up webhook endpoints and subscriptions - Stop event notifications to specific URLs - Maintain organized webhook management Key information returned: - Success confirmation of webhook deletion",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "webhookId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the webhook"
+        }
+      },
+      "required": [
+        "webhookId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "webhookId",
+        "entity": "webhook",
+        "find_with": "brevo.webhooks.get_webhooks",
+        "create_with": "brevo.webhooks.create_webhook"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/webhooks/{webhookId}",
+      "auth": "header api-key",
+      "params": {
+        "webhookId": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.webhooks.get_webhook",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//webhooks/{webhookId}/delete (deleteWebhook)"
+    }
+  ]
+}

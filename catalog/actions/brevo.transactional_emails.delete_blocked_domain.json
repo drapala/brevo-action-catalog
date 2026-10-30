@@ -1,0 +1,75 @@
+{
+  "id": "brevo.transactional_emails.delete_blocked_domain",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "blocked_domain",
+  "operation_class": "delete",
+  "label": "Unblock an existing domain from the list of blocked domains",
+  "description": "Unblocks an existing domain from the list of blocked domains",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "The name of the domain to be deleted"
+        }
+      },
+      "required": [
+        "domain"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "domain",
+        "entity": "domain",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/smtp/blockedDomains/{domain}",
+      "auth": "header api-key",
+      "params": {
+        "domain": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/blockedDomains/{domain}/delete (deleteBlockedDomain)"
+    }
+  ]
+}

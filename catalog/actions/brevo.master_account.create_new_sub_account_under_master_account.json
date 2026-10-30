@@ -1,0 +1,137 @@
+{
+  "id": "brevo.master_account.create_new_sub_account_under_master_account",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "sub_account",
+  "operation_class": "create",
+  "label": "Create a new sub-account under a master account.",
+  "description": "This endpoint will create a new sub-account under a master account",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "companyName": {
+          "description": "Set the name of the sub-account company",
+          "type": "string"
+        },
+        "email": {
+          "description": "Email address for the organization",
+          "type": "string"
+        },
+        "groupIds": {
+          "description": "Set the group(s) for the sub-account",
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "language": {
+          "description": "Set the language of the sub-account",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "timezone": {
+          "description": "Set the timezone of the sub-account",
+          "type": "string"
+        }
+      },
+      "required": [
+        "companyName",
+        "email"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "ID of the sub-account created",
+          "example": 5,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "sub_account",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/corporate/subAccount",
+      "auth": "header api-key",
+      "params": {
+        "companyName": "body",
+        "email": "body",
+        "groupIds": "body",
+        "language": "body",
+        "timezone": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.master_account.get_sub_account_details",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.master_account.delete_sub_account",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/subAccount/post"
+    }
+  ]
+}

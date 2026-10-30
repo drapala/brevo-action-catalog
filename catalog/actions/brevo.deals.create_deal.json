@@ -1,0 +1,149 @@
+{
+  "id": "brevo.deals.create_deal",
+  "product": "brevo",
+  "area": "Deals",
+  "entity": "deal",
+  "operation_class": "create",
+  "label": "Create a deal",
+  "description": "Create a new deal in the CRM with the specified name, attributes, and optional associations to contacts and companies. You can assign the deal to a specific pipeline and stage by providing `pipeline` and `deal_stage` attribute IDs, which can be retrieved from the pipeline details endpoint.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "attributes": {
+          "description": "Attributes for deal creation To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you want to create a deal on a specific pipeline and stage you can use the following attributes `pipeline` and `deal_stage`. Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`\n",
+          "example": {
+            "amount": {
+              "description": "(nested schema truncated)"
+            },
+            "deal_owner": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "linkedCompaniesIds": {
+          "description": "Company ids to be linked with deal",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "linkedContactsIds": {
+          "description": "Contact ids to be linked with deal",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Name of deal",
+          "example": "Deal: Connect with company",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "Created deal id",
+      "properties": {
+        "id": {
+          "description": "Unique deal id",
+          "example": "61a5cd07ca1347c82306ad06",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "deal",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/crm/deals",
+      "auth": "header api-key",
+      "params": {
+        "attributes": "body",
+        "linkedCompaniesIds": "body",
+        "linkedContactsIds": "body",
+        "name": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.deals.get_deal",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.deals.delete_deal",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/deals/post"
+    }
+  ]
+}

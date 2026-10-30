@@ -1,0 +1,233 @@
+{
+  "id": "brevo.companies.update_company",
+  "product": "brevo",
+  "area": "Companies",
+  "entity": "company",
+  "operation_class": "update",
+  "label": "Update a company",
+  "description": "Update an existing company''s attributes, name, linked contacts, or linked deals. Note that passing `linkedContactsIds` or `linkedDealsIds` replaces the entire list of associations, so omitted IDs will be removed. The company name cannot be set to an empty string.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "attributes": {
+          "description": "Attributes for company update",
+          "example": {
+            "category": {
+              "description": "(nested schema truncated)"
+            },
+            "date": {
+              "description": "(nested schema truncated)"
+            },
+            "domain": {
+              "description": "(nested schema truncated)"
+            },
+            "industry": {
+              "description": "(nested schema truncated)"
+            },
+            "number_of_contacts": {
+              "description": "(nested schema truncated)"
+            },
+            "number_of_employees": {
+              "description": "(nested schema truncated)"
+            },
+            "owner": {
+              "description": "(nested schema truncated)"
+            },
+            "phone_number": {
+              "description": "(nested schema truncated)"
+            },
+            "revenue": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "countryCode": {
+          "description": "Country code if phone_number is passed in attributes.",
+          "example": 91,
+          "format": "int64",
+          "type": "integer"
+        },
+        "linkedContactsIds": {
+          "description": "Warning - Using PATCH on linkedContactIds replaces the list of linked contacts. Omitted IDs will be removed.",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "linkedDealsIds": {
+          "description": "Warning - Using PATCH on linkedDealsIds replaces the list of linked deals. Omitted IDs will be removed.",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Name of company",
+          "example": "company",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "company",
+        "find_with": "brevo.companies.get_companies",
+        "create_with": "brevo.companies.create_company"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "Company Details",
+      "properties": {
+        "attributes": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "linkedContactsIds": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "linkedDealsIds": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PATCH",
+      "url": "https://api.brevo.com/v3/companies/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path",
+        "attributes": "body",
+        "countryCode": "body",
+        "linkedContactsIds": "body",
+        "linkedDealsIds": "body",
+        "name": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.companies.get_company",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.companies.update_company",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//companies/{id}/patch"
+    }
+  ]
+}

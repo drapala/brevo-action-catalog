@@ -1,0 +1,78 @@
+{
+  "id": "brevo.domains.delete_domain",
+  "product": "brevo",
+  "area": "Domains",
+  "entity": "sender_domain",
+  "operation_class": "delete",
+  "label": "Delete a sender domain",
+  "description": "Deletes a domain from Brevo. Use this to: - Remove existing domains - Clean up unused domain configurations - Remove test domains Key information returned: - Success confirmation message",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "domainName": {
+          "type": "string",
+          "description": "Domain name"
+        }
+      },
+      "required": [
+        "domainName"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "domainName",
+        "entity": "sender_domain",
+        "find_with": "brevo.domains.get_domains",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/senders/domains/{domainName}",
+      "auth": "header api-key",
+      "params": {
+        "domainName": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.domains.get_domain_configuration",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/domains/{domainName}/delete (deleteDomain)"
+    }
+  ]
+}

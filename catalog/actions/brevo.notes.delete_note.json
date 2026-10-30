@@ -1,0 +1,78 @@
+{
+  "id": "brevo.notes.delete_note",
+  "product": "brevo",
+  "area": "Notes",
+  "entity": "note",
+  "operation_class": "delete",
+  "label": "Delete a note",
+  "description": "Permanently delete a CRM note by its identifier. This removes the note and unlinks it from any associated contacts, companies, or deals.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Note ID to delete"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "note",
+        "find_with": "brevo.notes.get_notes",
+        "create_with": "brevo.notes.create_note"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/crm/notes/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.notes.get_note",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/notes/{id}/delete"
+    }
+  ]
+}

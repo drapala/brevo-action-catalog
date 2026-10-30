@@ -1,0 +1,110 @@
+{
+  "id": "brevo.email_campaigns.send_report",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "email_campaign",
+  "operation_class": "action",
+  "label": "Send the report of a campaign",
+  "description": "A PDF will be sent to the specified email addresses",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the campaign"
+        },
+        "email": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "language": {
+          "default": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "campaignId",
+        "email"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "email_campaign",
+        "find_with": "brevo.email_campaigns.get_email_campaigns",
+        "create_with": "brevo.email_campaigns.create_email_campaign"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/emailCampaigns/{campaignId}/sendReport",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path",
+        "email": "body",
+        "language": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "sends_email",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//emailCampaigns/{campaignId}/sendReport/post (sendReport)"
+    }
+  ]
+}

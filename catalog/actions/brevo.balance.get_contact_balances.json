@@ -1,0 +1,147 @@
+{
+  "id": "brevo.balance.get_contact_balances",
+  "product": "brevo",
+  "area": "Balance",
+  "entity": "contact_balance",
+  "operation_class": "read",
+  "label": "Get balance list",
+  "description": "Returns contact balances for a given balance definition across all subscriptions.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program Id"
+        },
+        "includeInternal": {
+          "type": "boolean",
+          "description": "Include balances tied to internal definitions."
+        },
+        "limit": {
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Limit the number of records returned"
+        },
+        "offset": {
+          "minimum": 0,
+          "type": "integer",
+          "description": "Skip a number of records"
+        },
+        "sort": {
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort order"
+        },
+        "sortField": {
+          "enum": [
+            "updatedAt",
+            "value"
+          ],
+          "type": "string",
+          "description": "Field to sort by"
+        },
+        "balanceDefinitionId": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Balance Definition ID (required)"
+        }
+      },
+      "required": [
+        "pid",
+        "balanceDefinitionId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "balanceDefinitionId": {
+          "type": "string"
+        },
+        "balances": {
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "count": {
+          "type": "integer"
+        },
+        "loyaltyProgramId": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/loyalty/balance/programs/{pid}/contact-balances",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "includeInternal": "query",
+        "limit": "query",
+        "offset": "query",
+        "sort": "query",
+        "sortField": "query",
+        "balanceDefinitionId": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/balance/programs/{pid}/contact-balances/get (getContactBalances)"
+    }
+  ]
+}

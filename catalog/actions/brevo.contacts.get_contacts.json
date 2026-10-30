@@ -1,0 +1,157 @@
+{
+  "id": "brevo.contacts.get_contacts",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact",
+  "operation_class": "read",
+  "label": "Get all the contacts",
+  "description": "Retrieve all contacts from your Brevo account with support for pagination, filtering, and sorting. Results default to 50 contacts per page (maximum 1000) sorted in descending order of creation, and can be filtered by modification date, creation date, contact IDs (up to 20), list IDs, segment ID, or contact attributes using the equals operator. Note that either listIds or segmentId can be passed but not both simultaneously.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 1000,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document of the page"
+        },
+        "modifiedSince": {
+          "type": "string",
+          "description": "Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**"
+        },
+        "createdSince": {
+          "type": "string",
+          "description": "Filter (urlencoded) the contacts created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        },
+        "ids": {
+          "items": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "maxItems": 20,
+          "type": "array",
+          "description": "Filter by a list of contact IDs. You can pass a **maximum of 20 IDs**. All elements must be integers."
+        },
+        "segmentId": {
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer",
+          "description": "Id of the segment. **Either listIds or segmentId can be passed.** Must be a positive integer (minimum value of 1)."
+        },
+        "listIds": {
+          "items": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "type": "array",
+          "description": "Ids of the list. **Either listIds or segmentId can be passed.**"
+        },
+        "filter": {
+          "type": "string",
+          "description": "Filter the contacts on the basis of attributes. **Allowed operator: equals. For multiple-choice options, the filter will apply an AND condition between the options. For category attributes, the filter will work with both id and value. (e.g. filter=equals(FIRSTNAME,\"Antoine\"), filter=equals(B1, true), filter=equals(DOB, \"1989-11-23\"), filter=equals(GENDER, \"1\"), filter=equals(GENDER, \"MALE\"), filte"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "contacts": {
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "count": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "contacts",
+        "count"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/contacts",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "offset": "query",
+        "modifiedSince": "query",
+        "createdSince": "query",
+        "sort": "query",
+        "ids": "query",
+        "segmentId": "query",
+        "listIds": "query",
+        "filter": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/get (getContacts)"
+    }
+  ]
+}

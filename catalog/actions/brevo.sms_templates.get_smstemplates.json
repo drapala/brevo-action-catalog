@@ -1,0 +1,107 @@
+{
+  "id": "brevo.sms_templates.get_smstemplates",
+  "product": "brevo",
+  "area": "SMS Templates",
+  "entity": "sms_template",
+  "operation_class": "read",
+  "label": "Return all your created SMS templates",
+  "description": "Return all your created SMS templates",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number of documents returned per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document in the page"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "description": "Count of transactional sms templates",
+          "example": 1,
+          "format": "int64",
+          "type": "integer"
+        },
+        "templates": {
+          "type": "array",
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            },
+            "properties": {
+              "description": "(nested schema truncated)"
+            }
+          }
+        }
+      }
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/transactionalSMS/templates",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "offset": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//transactionalSMS/templates/get (getSMSTemplates)"
+    }
+  ]
+}

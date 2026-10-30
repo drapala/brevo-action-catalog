@@ -1,0 +1,88 @@
+{
+  "id": "brevo.transactional_emails.send_test_template",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "email_template",
+  "operation_class": "action",
+  "label": "Send a template to your test list",
+  "description": "Send a test email of the specified transactional template to one or more recipients. Provide an array of email addresses in the `emailTo` field; if left empty, the test mail is sent to your entire test list. You can send a maximum of 50 test emails per day, and all provided email addresses must be valid.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "templateId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the template"
+        },
+        "emailTo": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "templateId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "templateId",
+        "entity": "email_template",
+        "find_with": "brevo.transactional_emails.get_smtp_templates",
+        "create_with": "brevo.transactional_emails.create_smtp_template"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/smtp/templates/{templateId}/sendTest",
+      "auth": "header api-key",
+      "params": {
+        "templateId": "path",
+        "emailTo": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "sends_email",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/templates/{templateId}/sendTest/post (sendTestTemplate)"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+name: contacts-lifecycle
+description: Folder, list and contact, end to end. Each write is read back. Everything created is deleted.
+steps:
+  - name: create_folder
+    action: brevo.contacts.create_folder
+    inputs: {name: "${prefix}-folder-${ts}"}
+    assert: {status: 201}
+    proves: create_folder returns the new folder id
+  - name: read_folder
+    action: brevo.contacts.get_folder
+    inputs: {folderId: "${create_folder.response.id}"}
+    assert: {status: 200, equals: {name: "${prefix}-folder-${ts}"}}
+    proves: the folder exists with the name that was sent
+  - name: create_list
+    action: brevo.contacts.create_list
+    inputs: {name: "${prefix}-list-${ts}", folderId: "${create_folder.response.id}"}
+    assert: {status: 201}
+  - name: read_list
+    action: brevo.contacts.get_list
+    inputs: {listId: "${create_list.response.id}"}
+    assert: {status: 200, equals: {name: "${prefix}-list-${ts}", folderId: "${create_folder.response.id}"}}
+  - name: update_list
+    action: brevo.contacts.update_list
+    inputs: {listId: "${create_list.response.id}", name: "${prefix}-list-renamed-${ts}"}
+    assert: {status: 204}
+  - name: read_list_after_update
+    action: brevo.contacts.get_list
+    inputs: {listId: "${create_list.response.id}"}
+    assert: {status: 200, equals: {name: "${prefix}-list-renamed-${ts}"}}
+  - name: create_contact
+    action: brevo.contacts.create_contact
+    inputs: {email: "${prefix}-${ts}@example.com", attributes: {FIRSTNAME: "Catalog"}}
+    assert: {status: 201}
+  - name: read_contact
+    action: brevo.contacts.get_contact_info
+    inputs: {identifier: "${prefix}-${ts}@example.com"}
+    assert: {status: 200, equals: {email: "${prefix}-${ts}@example.com", attributes.FIRSTNAME: "Catalog"}}
+  - name: update_contact
+    action: brevo.contacts.update_contact
+    inputs: {identifier: "${prefix}-${ts}@example.com", attributes: {FIRSTNAME: "Catalog2"}}
+    assert: {status: 204}
+  - name: read_contact_after_update
+    action: brevo.contacts.get_contact_info
+    inputs: {identifier: "${prefix}-${ts}@example.com"}
+    assert: {status: 200, equals: {attributes.FIRSTNAME: "Catalog2"}}
+  - name: add_contact_to_list
+    action: brevo.contacts.add_contact_to_list
+    inputs: {listId: "${create_list.response.id}", body: {emails: ["${prefix}-${ts}@example.com"]}}
+    assert: {status: 201}
+  - name: list_has_contact
+    action: brevo.contacts.get_contacts_from_list
+    inputs: {listId: "${create_list.response.id}"}
+    assert: {status: 200, list_contains: {path: contacts, field: email, value: "${prefix}-${ts}@example.com"}}
+    proves: add_contact_to_list took effect
+  - name: remove_contact_from_list
+    action: brevo.contacts.remove_contact_from_list
+    inputs: {listId: "${create_list.response.id}", body: {emails: ["${prefix}-${ts}@example.com"]}}
+    assert: {status: 201}
+  - name: delete_contact
+    action: brevo.contacts.delete_contact
+    inputs: {identifier: "${prefix}-${ts}@example.com"}
+    assert: {status: 204}
+  - name: contact_gone
+    action: brevo.contacts.get_contact_info
+    inputs: {identifier: "${prefix}-${ts}@example.com"}
+    assert: {status: 404}
+    proves: delete_contact took effect
+  - name: delete_list
+    action: brevo.contacts.delete_list
+    inputs: {listId: "${create_list.response.id}"}
+    assert: {status: 204}
+  - name: list_gone
+    action: brevo.contacts.get_list
+    inputs: {listId: "${create_list.response.id}"}
+    assert: {status: 404}
+  - name: delete_folder
+    action: brevo.contacts.delete_folder
+    inputs: {folderId: "${create_folder.response.id}"}
+    assert: {status: 204}
+  - name: folder_gone
+    action: brevo.contacts.get_folder
+    inputs: {folderId: "${create_folder.response.id}"}
+    assert: {status: 404}

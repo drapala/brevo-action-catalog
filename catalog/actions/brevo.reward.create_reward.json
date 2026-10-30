@@ -1,0 +1,148 @@
+{
+  "id": "brevo.reward.create_reward",
+  "product": "brevo",
+  "area": "Reward",
+  "entity": "offer",
+  "operation_class": "create",
+  "label": "Create a reward",
+  "description": "Creates a new reward in the loyalty program.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "name": {
+          "description": "Internal name of the reward",
+          "maxLength": 128,
+          "type": "string"
+        },
+        "publicDescription": {
+          "description": "Public facing description of the reward",
+          "maxLength": 500,
+          "type": "string"
+        },
+        "publicImage": {
+          "description": "URL of the public image for the reward",
+          "format": "uri",
+          "type": "string"
+        },
+        "publicName": {
+          "description": "Public facing name of the reward",
+          "maxLength": 128,
+          "type": "string"
+        }
+      },
+      "required": [
+        "pid",
+        "name"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "Unique identifier for the reward",
+          "format": "uuid",
+          "type": "string"
+        },
+        "loyaltyProgramId": {
+          "description": "Loyalty program to which the reward belongs",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the reward",
+          "type": "string"
+        },
+        "publicDescription": {
+          "description": "Public description of the reward",
+          "type": "string"
+        },
+        "publicImage": {
+          "description": "Public image URL of the reward",
+          "type": "string"
+        },
+        "publicName": {
+          "description": "Public name of the reward",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "Timestamp when the reward was created",
+          "format": "date-time",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "Timestamp when the reward was last updated",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "offer",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/offer/programs/{pid}/offers",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "name": "body",
+        "publicDescription": "body",
+        "publicImage": "body",
+        "publicName": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/offer/programs/{pid}/offers/post (createReward)"
+    }
+  ]
+}

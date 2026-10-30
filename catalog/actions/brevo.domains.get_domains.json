@@ -1,0 +1,98 @@
+{
+  "id": "brevo.domains.get_domains",
+  "product": "brevo",
+  "area": "Domains",
+  "entity": "sender_domain",
+  "operation_class": "read",
+  "label": "Get the list of all sender domains",
+  "description": "Retrieves all domains associated with the account. Use this to: - List all domains - Verify domain existence - Check domain authentication and verification status - Monitor domain configuration and provider information - Review domain creation history and ownership Key information returned: - Domain details (ID, name, authentication status) - Verification and authentication states - Associated IP addresses and DNS providers - Creator information and creation timestamps - Pagination information for large domain lists",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "domains": {
+          "description": "List of the domains available in your account",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "count": {
+          "description": "Total number of domains",
+          "example": 23,
+          "type": "integer"
+        },
+        "current_page": {
+          "description": "Current page number",
+          "example": 1,
+          "type": "integer"
+        },
+        "total_pages": {
+          "description": "Total number of pages",
+          "example": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "domains",
+        "count",
+        "current_page",
+        "total_pages"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/senders/domains",
+      "auth": "header api-key",
+      "params": {},
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/domains/get (getDomains)"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "id": "brevo.sms_campaigns.get_sms_campaign",
+  "product": "brevo",
+  "area": "SMS Campaigns",
+  "entity": "sms_campaign",
+  "operation_class": "read",
+  "label": "Get an SMS campaign",
+  "description": "Retrieve detailed information about a specific SMS campaign by its ID, including campaign content, sender, recipients with list names, statistics (delivered, sent, bounces, unsubscriptions, answered), and tags. Unlike the list endpoint, recipients are returned as objects with id and name fields rather than plain IDs.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the SMS campaign"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "sms_campaign",
+        "find_with": "brevo.sms_campaigns.get_sms_campaigns",
+        "create_with": "brevo.sms_campaigns.create_sms_campaign"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "allOf": [
+        {
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        {
+          "properties": {
+            "recipients": {
+              "description": "(nested schema truncated)"
+            },
+            "statistics": {
+              "description": "(nested schema truncated)"
+            },
+            "tags": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/smsCampaigns/{campaignId}",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smsCampaigns/{campaignId}/get (getSmsCampaign)"
+    }
+  ]
+}

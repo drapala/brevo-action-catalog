@@ -1,0 +1,293 @@
+{
+  "id": "brevo.reward.redeem_voucher",
+  "product": "brevo",
+  "area": "Reward",
+  "entity": "reward",
+  "operation_class": "create",
+  "label": "Create redeem voucher request",
+  "description": "Creates a request to redeem a voucher.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "attributedRewardId": {
+          "description": "Unique identifier for the attributed reward",
+          "format": "uuid",
+          "type": "string"
+        },
+        "code": {
+          "description": "Redemption code for the reward",
+          "type": "string"
+        },
+        "contactId": {
+          "description": "Unique identifier for the contact",
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "loyaltySubscriptionId": {
+          "description": "Identifier for the loyalty subscription",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": {},
+          "description": "Additional metadata associated with the redeem request",
+          "type": "object"
+        },
+        "order": {
+          "allOf": [
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "description": "Order details for the redemption"
+        },
+        "rewardId": {
+          "description": "Unique identifier for the reward",
+          "format": "uuid",
+          "type": "string"
+        },
+        "ttl": {
+          "description": "Time to live in seconds for the redemption request",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "autoComplete": {
+          "description": "Whether the redemption should be automatically completed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "pid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "cancelledAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "completedAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "contactId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "createdAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "debitTransactionId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "expiresAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "loyaltyProgramId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "meta": {
+          "additionalProperties": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "rejectReason": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "rejectedAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "rewardAttributionId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "status": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "updatedAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "reward",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/offer/programs/{pid}/rewards/redeem",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "attributedRewardId": "body",
+        "code": "body",
+        "contactId": "body",
+        "loyaltySubscriptionId": "body",
+        "meta": "body",
+        "order": "body",
+        "rewardId": "body",
+        "ttl": "body",
+        "autoComplete": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.reward.get_reward_information",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.reward.revoke_vouchers",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/offer/programs/{pid}/rewards/redeem/post (redeemVoucher)"
+    }
+  ]
+}

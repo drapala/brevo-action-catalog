@@ -1,0 +1,88 @@
+{
+  "id": "brevo.email_campaigns.send_test_email",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "email_campaign",
+  "operation_class": "action",
+  "label": "Send an email campaign to your test list",
+  "description": "Send a test version of an email campaign to specified email addresses or your entire test list. If the emailTo array is left empty, the test mail will be sent to all addresses in your test list. You can send a maximum of 50 test emails per day.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the campaign"
+        },
+        "emailTo": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "email_campaign",
+        "find_with": "brevo.email_campaigns.get_email_campaigns",
+        "create_with": "brevo.email_campaigns.create_email_campaign"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/emailCampaigns/{campaignId}/sendTest",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path",
+        "emailTo": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "sends_email",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//emailCampaigns/{campaignId}/sendTest/post (sendTestEmail)"
+    }
+  ]
+}

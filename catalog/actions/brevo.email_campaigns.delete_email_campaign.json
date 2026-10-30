@@ -1,0 +1,79 @@
+{
+  "id": "brevo.email_campaigns.delete_email_campaign",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "email_campaign",
+  "operation_class": "delete",
+  "label": "Delete an email campaign",
+  "description": "Delete an email campaign by its campaign ID. Only campaigns that have not been scheduled can be deleted; attempting to delete a campaign that has already been scheduled will return a 403 permission denied error. Related data in templates, newsletter builder, and schedule collections is also cleaned up.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the campaign"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "email_campaign",
+        "find_with": "brevo.email_campaigns.get_email_campaigns",
+        "create_with": "brevo.email_campaigns.create_email_campaign"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/emailCampaigns/{campaignId}",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.email_campaigns.get_email_campaign",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//emailCampaigns/{campaignId}/delete (deleteEmailCampaign)"
+    }
+  ]
+}

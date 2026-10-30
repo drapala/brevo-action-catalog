@@ -1,0 +1,154 @@
+{
+  "id": "brevo.contacts.get_folder",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "folder",
+  "operation_class": "read",
+  "label": "Returns a folder's details",
+  "description": "<Note>Ongoing changes for this endpoint. We're dropping support for the response attributes totalSubscribers and totalBlacklisted. These are non breaking changes. The default value for the attributes will be 0.</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "folderId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the folder"
+        }
+      },
+      "required": [
+        "folderId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "folderId",
+        "entity": "folder",
+        "find_with": "brevo.contacts.get_folders",
+        "create_with": "brevo.contacts.create_folder"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "name": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "totalBlacklisted": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "totalSubscribers": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "uniqueSubscribers": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "totalBlacklisted",
+        "totalSubscribers",
+        "uniqueSubscribers"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/contacts/folders/{folderId}",
+      "auth": "header api-key",
+      "params": {
+        "folderId": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/folders/{folderId}/get (getFolder)"
+    }
+  ]
+}

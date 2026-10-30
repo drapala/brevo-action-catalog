@@ -1,0 +1,155 @@
+{
+  "id": "brevo.tasks.get_tasks",
+  "product": "brevo",
+  "area": "Tasks",
+  "entity": "task",
+  "operation_class": "read",
+  "label": "Get all tasks",
+  "description": "Retrieve a paginated list of CRM tasks with optional filtering by task type, status, date range, assignee, and linked entities (contacts, deals, companies). Results are sorted by creation date in descending order by default, with a default limit of 50 tasks per page.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "filter[type]": {
+          "type": "string",
+          "description": "Filter by task type (ID)"
+        },
+        "filter[status]": {
+          "enum": [
+            "done",
+            "undone"
+          ],
+          "type": "string",
+          "description": "Filter by task status"
+        },
+        "filter[date]": {
+          "enum": [
+            "overdue",
+            "today",
+            "tomorrow",
+            "week",
+            "range"
+          ],
+          "type": "string",
+          "description": "Filter by date"
+        },
+        "filter[assignTo]": {
+          "type": "string",
+          "description": "Filter by the \"assignTo\" ID. You can utilize account emails for the \"assignTo\" attribute."
+        },
+        "filter[contacts]": {
+          "type": "string",
+          "description": "Filter by contact ids"
+        },
+        "filter[deals]": {
+          "type": "string",
+          "description": "Filter by deals ids"
+        },
+        "filter[companies]": {
+          "type": "string",
+          "description": "Filter by companies ids"
+        },
+        "dateFrom": {
+          "type": "integer",
+          "description": "dateFrom to date range filter type (timestamp in milliseconds)"
+        },
+        "dateTo": {
+          "type": "integer",
+          "description": "dateTo to date range filter type (timestamp in milliseconds)"
+        },
+        "offset": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document of the page"
+        },
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "sort": {
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed"
+        },
+        "sortBy": {
+          "type": "string",
+          "description": "The field used to sort field names."
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "List of tasks",
+      "properties": {
+        "items": {
+          "description": "List of tasks",
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/crm/tasks",
+      "auth": "header api-key",
+      "params": {
+        "filter[type]": "query",
+        "filter[status]": "query",
+        "filter[date]": "query",
+        "filter[assignTo]": "query",
+        "filter[contacts]": "query",
+        "filter[deals]": "query",
+        "filter[companies]": "query",
+        "dateFrom": "query",
+        "dateTo": "query",
+        "offset": "query",
+        "limit": "query",
+        "sort": "query",
+        "sortBy": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/tasks/get"
+    }
+  ]
+}

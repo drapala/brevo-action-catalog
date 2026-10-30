@@ -1,0 +1,499 @@
+{
+  "id": "brevo.balance.update_balance_definition",
+  "product": "brevo",
+  "area": "Balance",
+  "entity": "balance_definition",
+  "operation_class": "update",
+  "label": "Update balance definition",
+  "description": "Updates Balance definition",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program Id"
+        },
+        "bdid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Balance Definition Id"
+        },
+        "balanceAvailabilityDurationModifier": {
+          "description": "Defines when the balance expires within the selected duration.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "balanceAvailabilityDurationUnit": {
+          "description": "Unit of time for balance validity.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "balanceAvailabilityDurationValue": {
+          "description": "Number of time units before the balance expires.",
+          "type": "integer"
+        },
+        "balanceExpirationDate": {
+          "description": "Expiration date (`dd/mm` format) or empty if not applicable.",
+          "type": "string"
+        },
+        "balanceOptionAmountOvertakingStrategy": {
+          "description": "Defines whether partial credit is allowed when reaching max balance.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "balanceOptionCreditRounding": {
+          "description": "Rounding strategy for credit transactions.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "balanceOptionDebitRounding": {
+          "description": "Rounding strategy for debit transactions.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "description": {
+          "description": "Short description of the balance definition.",
+          "maxLength": 256,
+          "type": "string"
+        },
+        "imageRef": {
+          "description": "URL of an optional image reference.",
+          "type": "string"
+        },
+        "maxAmount": {
+          "description": "Maximum allowable balance amount.",
+          "type": "number"
+        },
+        "maxCreditAmountLimit": {
+          "description": "Maximum credit allowed per operation.",
+          "type": "number"
+        },
+        "maxDebitAmountLimit": {
+          "description": "Maximum debit allowed per operation.",
+          "type": "number"
+        },
+        "meta": {
+          "additionalProperties": true,
+          "description": "Optional metadata for the balance definition.",
+          "example": {
+            "isInternal": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "properties": {
+            "isInternal": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "minAmount": {
+          "description": "Minimum allowable balance amount.",
+          "type": "number"
+        },
+        "name": {
+          "description": "Name of the balance definition.",
+          "maxLength": 128,
+          "type": "string"
+        },
+        "unit": {
+          "description": "Unit of balance measurement.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "pid",
+        "bdid",
+        "name",
+        "unit"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "bdid",
+        "entity": "bdid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "name": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "description": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "imageRef": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "meta": {
+          "additionalProperties": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "unit": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "minAmount": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "maxAmount": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "maxCreditAmountLimit": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "maxDebitAmountLimit": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "balanceOptionAmountOvertakingStrategy": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "balanceOptionCreditRounding": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "balanceOptionDebitRounding": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "balanceAvailabilityDurationValue": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "balanceAvailabilityDurationUnit": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "balanceAvailabilityDurationModifier": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "balanceExpirationDate": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "createdAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "updatedAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "deletedAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/loyalty/balance/programs/{pid}/balance-definitions/{bdid}",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "bdid": "path",
+        "balanceAvailabilityDurationModifier": "body",
+        "balanceAvailabilityDurationUnit": "body",
+        "balanceAvailabilityDurationValue": "body",
+        "balanceExpirationDate": "body",
+        "balanceOptionAmountOvertakingStrategy": "body",
+        "balanceOptionCreditRounding": "body",
+        "balanceOptionDebitRounding": "body",
+        "description": "body",
+        "imageRef": "body",
+        "maxAmount": "body",
+        "maxCreditAmountLimit": "body",
+        "maxDebitAmountLimit": "body",
+        "meta": "body",
+        "minAmount": "body",
+        "name": "body",
+        "unit": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.balance.get_balance_definition",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.balance.update_balance_definition",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/balance/programs/{pid}/balance-definitions/{bdid}/put (updateBalanceDefinition)"
+    }
+  ]
+}

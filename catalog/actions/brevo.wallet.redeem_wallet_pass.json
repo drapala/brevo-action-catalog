@@ -1,0 +1,164 @@
+{
+  "id": "brevo.wallet.redeem_wallet_pass",
+  "product": "brevo",
+  "area": "Wallet",
+  "entity": "pass",
+  "operation_class": "action",
+  "label": "Redeem a wallet pass",
+  "description": "Record that a wallet pass installation was scanned or redeemed. This issues a `wallet_pass_scanned` event that can trigger automations and update contact segments (for example to track store visits, event attendance or loyalty check-ins). The request body is optional; any details supplied (location, amount spent, event tag, custom data) are carried on the event.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "installationId": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Installation ID. The unique identifier of the pass installation being redeemed (as issued when the contact added the pass to their wallet)."
+        },
+        "amountSpent": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "customData": {
+          "additionalProperties": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "eventTag": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "location": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "installationId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "installationId",
+        "entity": "installation",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "message": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "success": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "success",
+        "message"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/wallet/passes/{installationId}/redeem",
+      "auth": "header api-key",
+      "params": {
+        "installationId": "path",
+        "amountSpent": "body",
+        "customData": "body",
+        "eventTag": "body",
+        "location": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Wallet passes configured (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Wallet passes configured"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//wallet/passes/{installationId}/redeem/post (redeemWalletPass)"
+    }
+  ]
+}

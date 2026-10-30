@@ -1,0 +1,223 @@
+{
+  "id": "brevo.whats_app_campaigns.get_whats_app_campaign",
+  "product": "brevo",
+  "area": "WhatsApp Campaigns",
+  "entity": "whatsapp_campaign",
+  "operation_class": "read",
+  "label": "Get a WhatsApp campaign",
+  "description": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below. [Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note> <Note>This API requires the List and Segment ids as recipients in Body params.You can use the below Contact endpoints to get the required information. [Get all the Lists](https://developers.brevo.com/reference/getlists-1) [Get all the Segments](https://developers.brevo.com/reference/getsegments)</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the campaign"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "whatsapp_campaign",
+        "find_with": "brevo.whats_app_campaigns.get_whats_app_campaigns",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "campaignName": {
+          "description": "Name of the WhatsApp Campaign",
+          "example": "Test Campaign",
+          "type": "string"
+        },
+        "campaignStatus": {
+          "description": "Status of the WhatsApp Campaign",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "draft",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "Creation UTC date-time of the WhatsApp campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2017-06-01T12:30:00Z",
+          "type": "string"
+        },
+        "id": {
+          "description": "ID of the WhatsApp Campaign",
+          "example": 1672035851100690,
+          "format": "int64",
+          "type": "integer"
+        },
+        "modifiedAt": {
+          "description": "UTC date-time of last modification of the WhatsApp campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2017-05-01T12:30:00Z",
+          "type": "string"
+        },
+        "scheduledAt": {
+          "description": "UTC date-time on which WhatsApp campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format",
+          "example": "2017-06-01T12:30:00Z",
+          "type": "string"
+        },
+        "recipients": {
+          "description": "Recipients of the WhatsApp Campaign",
+          "properties": {
+            "excludedLists": {
+              "description": "(nested schema truncated)"
+            },
+            "includedLists": {
+              "description": "(nested schema truncated)"
+            },
+            "segments": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "senderNumber": {
+          "description": "Sender of the WhatsApp Campaign",
+          "example": 9368207029,
+          "type": "string"
+        },
+        "stats": {
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "template": {
+          "properties": {
+            "body_variables": {
+              "description": "(nested schema truncated)"
+            },
+            "button_type": {
+              "description": "(nested schema truncated)"
+            },
+            "category": {
+              "description": "(nested schema truncated)"
+            },
+            "components": {
+              "description": "(nested schema truncated)"
+            },
+            "contains_button": {
+              "description": "(nested schema truncated)"
+            },
+            "display_header": {
+              "description": "(nested schema truncated)"
+            },
+            "header_type": {
+              "description": "(nested schema truncated)"
+            },
+            "header_variables": {
+              "description": "(nested schema truncated)"
+            },
+            "hide_footer": {
+              "description": "(nested schema truncated)"
+            },
+            "language": {
+              "description": "(nested schema truncated)"
+            },
+            "name": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "campaignName",
+        "campaignStatus",
+        "senderNumber",
+        "recipients",
+        "createdAt",
+        "template",
+        "modifiedAt"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/whatsappCampaigns/{campaignId}",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "WhatsApp Business account connected (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "WhatsApp Business account connected"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//whatsappCampaigns/{campaignId}/get (getWhatsAppCampaign)"
+    }
+  ]
+}

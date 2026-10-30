@@ -1,0 +1,115 @@
+{
+  "total_actions": 292,
+  "by_verification": {
+    "documented": 292
+  },
+  "by_route_kind": {
+    "documented_api": 292
+  },
+  "without_public_api": 0,
+  "curated_entries": 0,
+  "by_area": {
+    "Account": {
+      "documented": 2
+    },
+    "Balance": {
+      "documented": 18
+    },
+    "Companies": {
+      "documented": 11
+    },
+    "ConsentGroups": {
+      "documented": 5
+    },
+    "Contacts": {
+      "documented": 30
+    },
+    "Conversations": {
+      "documented": 10
+    },
+    "Coupons": {
+      "documented": 5
+    },
+    "Custom Objects": {
+      "documented": 4
+    },
+    "Deals": {
+      "documented": 11
+    },
+    "Domains": {
+      "documented": 5
+    },
+    "Ecommerce": {
+      "documented": 18
+    },
+    "Email Campaigns": {
+      "documented": 13
+    },
+    "Event": {
+      "documented": 3
+    },
+    "External Feeds": {
+      "documented": 5
+    },
+    "Files": {
+      "documented": 5
+    },
+    "Inbound Parsing": {
+      "documented": 3
+    },
+    "Master account": {
+      "documented": 26
+    },
+    "Notes": {
+      "documented": 5
+    },
+    "Payments": {
+      "documented": 3
+    },
+    "Process": {
+      "documented": 2
+    },
+    "Program": {
+      "documented": 12
+    },
+    "Reward": {
+      "documented": 10
+    },
+    "SMS Campaigns": {
+      "documented": 10
+    },
+    "SMS Templates": {
+      "documented": 1
+    },
+    "Senders": {
+      "documented": 7
+    },
+    "Tasks": {
+      "documented": 6
+    },
+    "Tier": {
+      "documented": 10
+    },
+    "Transactional SMS": {
+      "documented": 5
+    },
+    "Transactional WhatsApp": {
+      "documented": 2
+    },
+    "Transactional emails": {
+      "documented": 22
+    },
+    "User": {
+      "documented": 6
+    },
+    "Wallet": {
+      "documented": 2
+    },
+    "Webhooks": {
+      "documented": 6
+    },
+    "WhatsApp Campaigns": {
+      "documented": 9
+    }
+  }
+}

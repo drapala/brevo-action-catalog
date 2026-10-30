@@ -1,0 +1,83 @@
+{
+  "id": "brevo.master_account.delete_sub_account",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "sub_account",
+  "operation_class": "delete",
+  "label": "Delete a sub-account",
+  "description": "Permanently deletes a sub-account from the corporate master account. Once deleted, all data associated with the sub-account organization is removed and cannot be recovered, so ensure the sub-account is no longer needed before proceeding.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the sub-account organization to be deleted"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "sub_account",
+        "find_with": "brevo.master_account.get_list_sub_accounts_master_account",
+        "create_with": "brevo.master_account.create_new_sub_account_under_master_account"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/corporate/subAccount/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.master_account.get_sub_account_details",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/subAccount/{id}/delete"
+    }
+  ]
+}

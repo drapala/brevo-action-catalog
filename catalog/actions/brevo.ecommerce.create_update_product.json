@@ -1,0 +1,202 @@
+{
+  "id": "brevo.ecommerce.create_update_product",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "product",
+  "operation_class": "create",
+  "label": "Create/Update a product",
+  "description": "Create a new ecommerce product or update an existing one, identified by the mandatory `id` field. When `updateEnabled` is `false` (the default), the endpoint inserts a new product and returns `201`; if the product ID already exists, a `400` error is returned. When `updateEnabled` is `true`, the endpoint performs an upsert, returning `201` for a new product or `204` for an update. The `name` field is mandatory for creation but optional for updates. Product images are downloaded, validated (max 5 MB, formats: jpeg, jpg, png, bmp, gif, webp), and re-hosted on S3. The `metaInfo` object supports up",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "brand": {
+          "description": "Brand of the product",
+          "example": "Adidas",
+          "type": "string",
+          "maxLength": 128
+        },
+        "categories": {
+          "description": "Category ID-s of the product",
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "deletedAt": {
+          "description": "UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of the product deleted from the shop's database",
+          "example": "2017-05-12T12:30:00Z",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description of the product",
+          "example": "Shoes for sports",
+          "type": "string",
+          "maxLength": 3000
+        },
+        "id": {
+          "description": "Product ID for which you requested the details",
+          "example": "P11",
+          "format": "string",
+          "type": "string"
+        },
+        "imageUrl": {
+          "description": "Absolute URL to the cover image of the product",
+          "example": "http://mydomain.com/product-absoulte-url/img.jpeg",
+          "format": "string",
+          "type": "string"
+        },
+        "isDeleted": {
+          "description": "product deleted from the shop's database",
+          "example": true,
+          "type": "boolean"
+        },
+        "metaInfo": {
+          "additionalProperties": {
+            "oneOf": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "description": "Meta data of product such as description, vendor, producer, stock level. The total characters of cumulative metaInfo shall not exceed **20000 characters**.",
+          "example": {
+            "brand": {
+              "description": "(nested schema truncated)"
+            },
+            "description": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "name": {
+          "description": "**Mandatory in case of creation**. Name of the product, as displayed in the shop",
+          "example": "Iphone 11",
+          "type": "string"
+        },
+        "parentId": {
+          "description": "Parent product id of the product",
+          "format": "string",
+          "type": "string"
+        },
+        "price": {
+          "description": "Price of the product",
+          "format": "float",
+          "type": "number"
+        },
+        "alternativePrice": {
+          "description": "Alternative price of the product",
+          "format": "float",
+          "type": "number"
+        },
+        "sku": {
+          "description": "Product identifier from the shop",
+          "format": "string",
+          "type": "string"
+        },
+        "stock": {
+          "description": "Current stock value of the product from the shop's database",
+          "example": 100,
+          "type": "number"
+        },
+        "updateEnabled": {
+          "default": false,
+          "description": "Facilitate to update the existing product in the same request (updateEnabled = true)",
+          "example": false,
+          "type": "boolean"
+        },
+        "url": {
+          "description": "URL to the product",
+          "example": "http://mydomain.com/product/electronics/product1",
+          "format": "string",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "ID of the product when a new product is created",
+          "example": "P11",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "product",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/products",
+      "auth": "header api-key",
+      "params": {
+        "brand": "body",
+        "categories": "body",
+        "deletedAt": "body",
+        "description": "body",
+        "id": "body",
+        "imageUrl": "body",
+        "isDeleted": "body",
+        "metaInfo": "body",
+        "name": "body",
+        "parentId": "body",
+        "price": "body",
+        "alternativePrice": "body",
+        "sku": "body",
+        "stock": "body",
+        "updateEnabled": "body",
+        "url": "body"
+      },
+      "success_status": [
+        201,
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.ecommerce.get_product_info",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//products/post (createUpdateProduct)"
+    }
+  ]
+}

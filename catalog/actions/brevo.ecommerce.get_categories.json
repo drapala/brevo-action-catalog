@@ -1,0 +1,142 @@
+{
+  "id": "brevo.ecommerce.get_categories",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "category",
+  "operation_class": "read",
+  "label": "Return all your categories",
+  "description": "Retrieve a paginated list of all ecommerce categories stored in your Brevo account. Results are sorted by creation date in descending order by default, and can be filtered by category IDs, name, modification date, creation date, or deletion status. The response includes a `count` field with the total number of matching categories, and pagination defaults to 50 categories per page (maximum 100).",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 100,
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document in the page"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        },
+        "ids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Filter by category ids"
+        },
+        "name": {
+          "type": "string",
+          "description": "Filter by category name"
+        },
+        "modifiedSince": {
+          "type": "string",
+          "description": "Filter (urlencoded) the categories modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**"
+        },
+        "createdSince": {
+          "type": "string",
+          "description": "Filter (urlencoded) the categories created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**"
+        },
+        "isDeleted": {
+          "type": "string",
+          "description": "Filter categories by their deletion status. If `false` is passed, only categories that are not deleted will be returned."
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "categories": {
+          "items": {
+            "allOf": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "count": {
+          "description": "Number of categories",
+          "example": 17655,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "categories",
+        "count"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/categories",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "offset": "query",
+        "sort": "query",
+        "ids": "query",
+        "name": "query",
+        "modifiedSince": "query",
+        "createdSince": "query",
+        "isDeleted": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//categories/get (getCategories)"
+    }
+  ]
+}

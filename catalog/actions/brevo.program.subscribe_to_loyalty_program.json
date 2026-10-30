@@ -1,0 +1,148 @@
+{
+  "id": "brevo.program.subscribe_to_loyalty_program",
+  "product": "brevo",
+  "area": "Program",
+  "entity": "subscription",
+  "operation_class": "create",
+  "label": "Create subscription",
+  "description": "Subscribes to a loyalty program",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+        },
+        "contactId": {
+          "description": "Required contact ID; must be greater than 0.",
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "loyaltySubscriptionId": {
+          "description": "Optional subscription ID (max length 64).",
+          "maxLength": 64,
+          "type": "string"
+        },
+        "creationDate": {
+          "description": "Optional creation date in ISO 8601 format (YYYY-MM-DDThh:mm:ss.ffffff+HH:MM). Must be in the past.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": {},
+          "description": "Optional metadata associated with the subscription.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "pid",
+        "contactId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "organizationId": {
+          "description": "Unique identifier of the organization.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "loyaltyProgramId": {
+          "description": "Unique identifier of the loyalty program.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "versionId": {
+          "description": "Version number of the subscription.",
+          "type": "integer"
+        },
+        "contactId": {
+          "description": "Unique identifier of the contact.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "loyaltySubscriptionId": {
+          "description": "Unique identifier of the subscription.",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": {},
+          "description": "Metadata associated with the subscription.",
+          "type": "object"
+        },
+        "createdAt": {
+          "description": "Timestamp when the subscription was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "Timestamp when the subscription was last updated.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/config/programs/{pid}/subscriptions",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "contactId": "body",
+        "loyaltySubscriptionId": "body",
+        "creationDate": "body",
+        "meta": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/config/programs/{pid}/subscriptions/post (subscribeToLoyaltyProgram)"
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "id": "brevo.email_campaigns.get_ab_test_campaign_result",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "ab_test_campaign_result",
+  "operation_class": "read",
+  "label": "Get an A/B test email campaign results",
+  "description": "Obtain winning version of an A/B test email campaign",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the A/B test campaign"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "ab_test_campaign_result",
+        "find_with": "brevo.email_campaigns.get_ab_test_campaign_result",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "clickRate": {
+          "description": "Click rate for current winning version",
+          "example": "70%",
+          "type": "string"
+        },
+        "clickedLinks": {
+          "properties": {
+            "Version A": {
+              "description": "(nested schema truncated)"
+            },
+            "Version B": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        },
+        "openRate": {
+          "description": "Open rate for current winning version",
+          "example": "70%",
+          "type": "string"
+        },
+        "statistics": {
+          "properties": {
+            "clicks": {
+              "description": "(nested schema truncated)"
+            },
+            "complaints": {
+              "description": "(nested schema truncated)"
+            },
+            "hardBounces": {
+              "description": "(nested schema truncated)"
+            },
+            "openers": {
+              "description": "(nested schema truncated)"
+            },
+            "softBounces": {
+              "description": "(nested schema truncated)"
+            },
+            "unsubscribed": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        },
+        "winningCriteria": {
+          "description": "Criteria chosen for winning version (Open/Click)",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "Open",
+          "type": "string"
+        },
+        "winningSubjectLine": {
+          "description": "Subject Line of current winning version",
+          "example": "Subject Line A",
+          "type": "string"
+        },
+        "winningVersion": {
+          "description": "Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "A",
+          "type": "string"
+        },
+        "winningVersionRate": {
+          "description": "Open/Click rate for the winner version",
+          "example": "70%",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/emailCampaigns/{campaignId}/abTestCampaignResult",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//emailCampaigns/{campaignId}/abTestCampaignResult/get (getAbTestCampaignResult)"
+    }
+  ]
+}

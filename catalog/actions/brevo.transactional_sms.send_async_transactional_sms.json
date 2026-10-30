@@ -1,0 +1,96 @@
+{
+  "id": "brevo.transactional_sms.send_async_transactional_sms",
+  "product": "brevo",
+  "area": "Transactional SMS",
+  "entity": "transactional_sms",
+  "operation_class": "action",
+  "label": "Send SMS message asynchronously to a mobile number",
+  "description": "<Note>If the user includes stop code in the Transactional SMS, then it will be switched to Marketing SMS automatically and it will be interpreted as a Marketing SMS. To send Transactional SMS as Transactional, it is important not to use stop code. Note: For adding a stop code, client has to add reply STOP to [STOP_CODE] and the [STOP_CODE] will be replaced with the number.</Note> <Note title=\"For end users in France\">Transactional SMS can be sent at any time without time restrictions. However, if a message is categorized as Marketing, it must adhere to specific time restrictions. Messages sent",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "allOf": [
+            {
+              "type": {
+                "description": "(nested schema truncated)"
+              },
+              "properties": {
+                "description": "(nested schema truncated)"
+              },
+              "required": {
+                "description": "(nested schema truncated)"
+              }
+            },
+            {
+              "oneOf": {
+                "description": "(nested schema truncated)"
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "body"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "messageId": {
+          "example": 1511882900176220,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "messageId"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/transactionalSMS/send",
+      "auth": "header api-key",
+      "params": {
+        "body": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "sends_sms",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//transactionalSMS/send/post (sendAsyncTransactionalSms)"
+    }
+  ]
+}

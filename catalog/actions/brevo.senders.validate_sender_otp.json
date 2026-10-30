@@ -1,0 +1,85 @@
+{
+  "id": "brevo.senders.validate_sender_otp",
+  "product": "brevo",
+  "area": "Senders",
+  "entity": "sender",
+  "operation_class": "action",
+  "label": "Validate a sender using OTP",
+  "description": "Validates a sender using the OTP (One-Time Password) received via email. Use this to: - Complete sender verification process - Activate a newly created sender - Verify ownership of the sender email address - Enable the sender for use in email campaigns Key information returned: - Success confirmation of sender verification - Sender activation status",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "senderId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the sender"
+        },
+        "otp": {
+          "description": "6 digit OTP received on email",
+          "example": 123456,
+          "type": "integer",
+          "minimum": 100000,
+          "maximum": 999999
+        }
+      },
+      "required": [
+        "senderId",
+        "otp"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "senderId",
+        "entity": "sender",
+        "find_with": "brevo.senders.get_senders",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/senders/{senderId}/validate",
+      "auth": "header api-key",
+      "params": {
+        "senderId": "path",
+        "otp": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/{senderId}/validate/put (validateSenderByOTP)"
+    }
+  ]
+}

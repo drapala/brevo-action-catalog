@@ -1,0 +1,144 @@
+{
+  "id": "brevo.deals.update_deal",
+  "product": "brevo",
+  "area": "Deals",
+  "entity": "deal",
+  "operation_class": "update",
+  "label": "Update a deal",
+  "description": "Update an existing deal''s attributes, name, linked contacts, or linked companies. Note that passing `linkedContactsIds` or `linkedCompaniesIds` replaces the entire list of associations, so omitted IDs will be removed. To move a deal to a different pipeline or stage, provide both the `pipeline` and `deal_stage` attribute IDs.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "attributes": {
+          "description": "Attributes for deal update To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you wish to update the pipeline of a deal you need to provide the `pipeline` and the `deal_stage` Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`\n",
+          "example": {
+            "amount": {
+              "description": "(nested schema truncated)"
+            },
+            "deal_owner": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "linkedCompaniesIds": {
+          "description": "Warning - Using PATCH on linkedCompaniesIds replaces the list of linked companies. Omitted IDs will be removed.",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "linkedContactsIds": {
+          "description": "Warning - Using PATCH on linkedContactIds replaces the list of linked contacts. Omitted IDs will be removed.",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Name of deal",
+          "example": "Deal: Connect with client",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "deal",
+        "find_with": "brevo.deals.get_deals",
+        "create_with": "brevo.deals.create_deal"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PATCH",
+      "url": "https://api.brevo.com/v3/crm/deals/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path",
+        "attributes": "body",
+        "linkedCompaniesIds": "body",
+        "linkedContactsIds": "body",
+        "name": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.deals.get_deal",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.deals.update_deal",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/deals/{id}/patch"
+    }
+  ]
+}

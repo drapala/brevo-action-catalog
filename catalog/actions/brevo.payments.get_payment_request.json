@@ -1,0 +1,164 @@
+{
+  "id": "brevo.payments.get_payment_request",
+  "product": "brevo",
+  "area": "Payments",
+  "entity": "request",
+  "operation_class": "read",
+  "label": "Get payment request details",
+  "description": "Retrieve the details of a specific payment request by its ID. The response includes the reference, status (created, sent, reminderSent, or paid), cart details, notification configuration, contact ID, and the number of reminders sent. Returns a `404` error if no payment request matches the provided ID.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Id of the payment Request"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "request",
+        "find_with": "brevo.payments.get_payment_request",
+        "create_with": "brevo.payments.create_payment_request"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "cart": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "configuration": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "contactId": {
+          "description": "Brevo ID of the contact requested to pay.\n",
+          "example": 43,
+          "format": "int64",
+          "type": "integer"
+        },
+        "notification": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "numberOfRemindersSent": {
+          "description": "number of reminders sent.\n",
+          "example": 5,
+          "format": "int64",
+          "type": "integer"
+        },
+        "reference": {
+          "description": "Reference of the payment request, it will appear on the payment page.\n",
+          "example": "Invoice #INV0001\n",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status of the payment request.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "paid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference",
+        "status",
+        "cart",
+        "notification"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/payments/requests/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Brevo Payments activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Brevo Payments activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//payments/requests/{id}/get (getPaymentRequest)"
+    }
+  ]
+}

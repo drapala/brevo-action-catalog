@@ -1,0 +1,146 @@
+{
+  "id": "brevo.webhooks.update_webhook",
+  "product": "brevo",
+  "area": "Webhooks",
+  "entity": "webhook",
+  "operation_class": "update",
+  "label": "Update a webhook",
+  "description": "Updates an existing webhook configuration and event subscriptions. Use this to: - Modify webhook event subscriptions and triggers - Update webhook URL and endpoint configuration - Change authentication settings and credentials - Adjust custom headers and request parameters - Enable or disable specific webhook events Key information returned: - Success confirmation of webhook updates",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "webhookId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the webhook"
+        },
+        "auth": {
+          "description": "Add authentication on webhook url",
+          "properties": {
+            "token": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "batched": {
+          "description": "To send batched webhooks",
+          "example": true,
+          "type": "boolean"
+        },
+        "description": {
+          "description": "Description of the webhook",
+          "example": "Webhook triggered on contact hardbounce",
+          "type": "string"
+        },
+        "domain": {
+          "description": "Inbound domain of webhook, used in case of event type `inbound`",
+          "example": "example.com",
+          "type": "string"
+        },
+        "events": {
+          "description": "- Events triggering the webhook. Possible values for\n**Transactional** type webhook: #### `sent` OR `request`,\n`delivered`, `hardBounce`, `softBounce`, `blocked`, `spam`,\n`invalid`, `deferred`, `click`, `opened`, `uniqueOpened` and\n`unsubscribed` - Possible values for **Marketing** type webhook:\n#### `spam`, `opened`, `click`, `hardBounce`, `softBounce`,\n`unsubscribed`, `listAddition` & `delivered` - Possible values\nfor **Inbound** type webhook: #### `inboundEmailProcessed`\n#### `reply`",
+          "items": {
+            "enum": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "headers": {
+          "description": "Custom headers to be send with webhooks",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "url": {
+          "description": "URL of the webhook",
+          "example": "http://requestb.in/173lyyx1",
+          "format": "url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "webhookId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "webhookId",
+        "entity": "webhook",
+        "find_with": "brevo.webhooks.get_webhooks",
+        "create_with": "brevo.webhooks.create_webhook"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/webhooks/{webhookId}",
+      "auth": "header api-key",
+      "params": {
+        "webhookId": "path",
+        "auth": "body",
+        "batched": "body",
+        "description": "body",
+        "domain": "body",
+        "events": "body",
+        "headers": "body",
+        "url": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.webhooks.get_webhook",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.webhooks.update_webhook",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//webhooks/{webhookId}/put (updateWebhook)"
+    }
+  ]
+}

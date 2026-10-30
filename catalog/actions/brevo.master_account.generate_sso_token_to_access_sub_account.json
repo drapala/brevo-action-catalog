@@ -1,0 +1,136 @@
+{
+  "id": "brevo.master_account.generate_sso_token_to_access_sub_account",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "sub_account",
+  "operation_class": "action",
+  "label": "Generate SSO token to access sub-account",
+  "description": "This endpoint generates an sso token to authenticate and access a sub-account of the master using the account endpoint https://account-app.brevo.com/account/login/sub-account/sso/[token], where [token] will be replaced by the actual token.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "description": "User email of sub-account organization",
+          "example": "vipin+subaccount@brevo.com",
+          "type": "string"
+        },
+        "id": {
+          "description": "Id of the sub-account organization",
+          "example": 3232323,
+          "format": "int64",
+          "type": "integer"
+        },
+        "target": {
+          "description": "**Set target after login success** * **automation** - Redirect\nto Automation after login * **email_campaign** - Redirect to\nEmail Campaign after login * **contacts** - Redirect to Contacts\nafter login * **landing_pages** - Redirect to Landing Pages\nafter login * **email_transactional** - Redirect to Email\nTransactional after login * **senders** - Redirect to Senders\nafter login * **sms_campaign** - Redirect to Sms Campaign after\nlogin * **sms_transactional** - Redirect to Sms Transactional\nafter login",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "contacts",
+          "type": "string"
+        },
+        "url": {
+          "description": "Set the full target URL after login success. The user will land\ndirectly on this target URL after login",
+          "example": "https://app.brevo.com/senders/domain/list",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "token": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/corporate/subAccount/ssoToken",
+      "auth": "header api-key",
+      "params": {
+        "email": "body",
+        "id": "body",
+        "target": "body",
+        "url": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "changes_account",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/subAccount/ssoToken/post"
+    }
+  ]
+}

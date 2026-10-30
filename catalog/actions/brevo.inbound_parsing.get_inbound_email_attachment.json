@@ -1,0 +1,79 @@
+{
+  "id": "brevo.inbound_parsing.get_inbound_email_attachment",
+  "product": "brevo",
+  "area": "Inbound Parsing",
+  "entity": "attachment",
+  "operation_class": "read",
+  "label": "Retrieve inbound attachment with download token.",
+  "description": "This endpoint will retrieve inbound attachment with download token.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "downloadToken": {
+          "type": "string",
+          "description": "Token to fetch a particular attachment"
+        }
+      },
+      "required": [
+        "downloadToken"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "downloadToken",
+        "entity": "download_token",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/inbound/attachments/{downloadToken}",
+      "auth": "header api-key",
+      "params": {
+        "downloadToken": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Inbound parsing webhook configured (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Inbound parsing webhook configured"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//inbound/attachments/{downloadToken}/get (getInboundEmailAttachment)"
+    }
+  ]
+}

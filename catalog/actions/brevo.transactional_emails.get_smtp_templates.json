@@ -1,0 +1,115 @@
+{
+  "id": "brevo.transactional_emails.get_smtp_templates",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "email_template",
+  "operation_class": "read",
+  "label": "Get the list of email templates",
+  "description": "Retrieve a paginated list of all transactional email templates (including automation templates) with their details such as name, subject, sender, status, HTML content, and timestamps. Results default to 50 per page (max 1000) and are sorted in descending creation order unless overridden. You can filter by active/inactive status using `templateStatus` and by editor type using `editorType` (currently only `richTextEditor` is supported).",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "templateStatus": {
+          "type": "boolean",
+          "description": "Filter on the status of the template. Active = true, inactive = false"
+        },
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 1000,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number of documents returned per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document in the page"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        },
+        "editorType": {
+          "enum": [
+            "richTextEditor"
+          ],
+          "type": "string",
+          "description": "Filter on the editor type used to create the template. Currently only `richTextEditor` is supported as a filter value."
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "count": {
+          "description": "Count of transactional email templates",
+          "example": 1,
+          "format": "int64",
+          "type": "integer"
+        },
+        "templates": {
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/smtp/templates",
+      "auth": "header api-key",
+      "params": {
+        "templateStatus": "query",
+        "limit": "query",
+        "offset": "query",
+        "sort": "query",
+        "editorType": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/templates/get (getSmtpTemplates)"
+    }
+  ]
+}

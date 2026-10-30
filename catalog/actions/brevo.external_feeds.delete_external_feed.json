@@ -1,0 +1,79 @@
+{
+  "id": "brevo.external_feeds.delete_external_feed",
+  "product": "brevo",
+  "area": "External Feeds",
+  "entity": "feed",
+  "operation_class": "delete",
+  "label": "Delete external feed",
+  "description": "Deletes an external feed from your Brevo account. **Use this to:** - Remove external feeds that are no longer needed - Clean up unused data sources - Remove test or outdated feeds - Maintain organized feed library **Key information returned:** - Success confirmation message **Important considerations:** - This action is PERMANENT and cannot be undone - Feed configuration and history will be lost - Check if feed is used in active campaigns before deletion - Remove feed references from email templates - Consider deactivating instead of deleting if unsure",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "format": "uuidv4",
+          "type": "string",
+          "description": "UUID of the feed to delete"
+        }
+      },
+      "required": [
+        "uuid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "uuid",
+        "entity": "feed",
+        "find_with": "brevo.external_feeds.get_external_feeds",
+        "create_with": "brevo.external_feeds.create_external_feed"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/feeds/{uuid}",
+      "auth": "header api-key",
+      "params": {
+        "uuid": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.external_feeds.get_external_feed_uuid",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//feeds/{uuid}/delete (deleteExternalFeed)"
+    }
+  ]
+}

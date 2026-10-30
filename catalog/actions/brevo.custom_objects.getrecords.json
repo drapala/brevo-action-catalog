@@ -1,0 +1,137 @@
+{
+  "id": "brevo.custom_objects.getrecords",
+  "product": "brevo",
+  "area": "Custom Objects",
+  "entity": "record",
+  "operation_class": "read",
+  "label": "Get the list of object records and total records count for an object.",
+  "description": "<Note title=\"Enterprise access only\">Custom objects are only available to Enterprise plans. This feature is in beta. These are subject to change.</Note> This API retrieves a list of object records along with their associated records and provides the total count of records for the specified object. **Note**: Contact as object type is not supported in this endpoint.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "object_type": {
+          "example": "vehicle",
+          "type": "string",
+          "description": "Object type for the records to retrieve. Must be a previously created custom object type. Contact as object type is not supported in this endpoint."
+        },
+        "limit": {
+          "format": "int64",
+          "maximum": 1000,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number of records returned per page"
+        },
+        "page_num": {
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer",
+          "description": "Page number for pagination. It's used to fetch the object records on a provided page number. Must be a valid positive integer."
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort order, must be 'asc' or 'desc'. Default to 'desc' if not provided."
+        },
+        "association": {
+          "enum": [
+            "true",
+            "false"
+          ],
+          "type": "string",
+          "description": "Whether to include associations, must be 'true' or 'false'. Default to 'false' if not provided."
+        }
+      },
+      "required": [
+        "object_type",
+        "limit",
+        "page_num"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "object_type",
+        "entity": "object_type",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "count": {
+          "description": "Total number of object records for an object type.",
+          "example": 350,
+          "format": "int64",
+          "type": "integer"
+        },
+        "records": {
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/objects/{object_type}/records",
+      "auth": "header api-key",
+      "params": {
+        "object_type": "path",
+        "limit": "query",
+        "page_num": "query",
+        "sort": "query",
+        "association": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Custom objects enabled (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Custom objects enabled"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//objects/{object_type}/records/get (getrecords)"
+    }
+  ]
+}

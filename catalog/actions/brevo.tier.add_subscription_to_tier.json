@@ -1,0 +1,145 @@
+{
+  "id": "brevo.tier.add_subscription_to_tier",
+  "product": "brevo",
+  "area": "Tier",
+  "entity": "tier",
+  "operation_class": "create",
+  "label": "Assign a tier",
+  "description": "Manually assigns a tier to a specific membership.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "cid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Contact ID"
+        },
+        "tid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Tier ID"
+        }
+      },
+      "required": [
+        "pid",
+        "cid",
+        "tid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "cid",
+        "entity": "cid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "tid",
+        "entity": "tid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "contactId": {
+          "description": "Contact to which the tier is assigned",
+          "type": "integer"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "groupId": {
+          "description": "Group Id to which the tier is associated",
+          "format": "uuid",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique identifier for the assigned tier",
+          "format": "uuid",
+          "type": "string"
+        },
+        "loyaltyProgramId": {
+          "description": "Associated loyalty program Id",
+          "format": "uuid",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": {},
+          "description": "object",
+          "type": "object"
+        },
+        "updatedAt": {
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "tier",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/tier/programs/{pid}/contacts/{cid}/tiers/{tid}",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "cid": "path",
+        "tid": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.tier.delete_tier",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/tier/programs/{pid}/contacts/{cid}/tiers/{tid}/post (addSubscriptionToTier)"
+    }
+  ]
+}

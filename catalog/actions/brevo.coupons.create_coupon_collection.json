@@ -1,0 +1,118 @@
+{
+  "id": "brevo.coupons.create_coupon_collection",
+  "product": "brevo",
+  "area": "Coupons",
+  "entity": "coupon_collection",
+  "operation_class": "create",
+  "label": "Create а coupon collection",
+  "description": "Create a new coupon collection with a name and a default coupon value. You can optionally set an expiration date in RFC3339 format and configure alert thresholds to receive email notifications when remaining coupons or remaining days before expiration fall below a specified number. The collection ID is auto-generated as a UUID and returned in the response.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "defaultCoupon": {
+          "description": "Default coupons collection name",
+          "example": "Winter",
+          "type": "string"
+        },
+        "expirationDate": {
+          "description": "Specify an expiration date for the coupon collection in RFC3339 format. Use null to remove the expiration date.",
+          "example": "2022-01-02T00:00:00Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the coupons collection",
+          "example": "10%OFF",
+          "type": "string"
+        },
+        "remainingCouponsAlert": {
+          "description": "Send a notification alert (email) when the remaining coupons count is equal or fall bellow this number. Use null to disable alerts.",
+          "example": 5,
+          "type": "integer"
+        },
+        "remainingDaysAlert": {
+          "description": "Send a notification alert (email) when the remaining days until the expiration date are equal or fall bellow this number. Use null to disable alerts.",
+          "example": 5,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "defaultCoupon"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "The id of the created collection",
+          "example": "23befbae-1505-47a8-bd27-e30ef739f32c",
+          "format": "uuidv4",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "coupon_collection",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/couponCollections",
+      "auth": "header api-key",
+      "params": {
+        "defaultCoupon": "body",
+        "expirationDate": "body",
+        "name": "body",
+        "remainingCouponsAlert": "body",
+        "remainingDaysAlert": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.coupons.get_coupon_collection",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//couponCollections/post (createCouponCollection)"
+    }
+  ]
+}

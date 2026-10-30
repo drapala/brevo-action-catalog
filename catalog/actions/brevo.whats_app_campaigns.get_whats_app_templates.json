@@ -1,0 +1,133 @@
+{
+  "id": "brevo.whats_app_campaigns.get_whats_app_templates",
+  "product": "brevo",
+  "area": "WhatsApp Campaigns",
+  "entity": "whatsapp_template",
+  "operation_class": "read",
+  "label": "Return all your created WhatsApp templates",
+  "description": "Retrieve a paginated list of all your WhatsApp templates with their status, category, language, and metadata. Results can be filtered by creation date range and optionally by source (Automation or Conversations), with a default limit of 50 and maximum of 100 per page. The sort order defaults to descending by modification date.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used**. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the templates created. **Prefer to pass your timezone in date-time format for accurate result**"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used**. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the templates created. **Prefer to pass your timezone in date-time format for accurate result**"
+        },
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document in the page"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record modification. Default order is **descending** if `sort` is not passed"
+        },
+        "source": {
+          "enum": [
+            "Automation",
+            "Conversations"
+          ],
+          "type": "string",
+          "description": "source of the template"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "count": {
+          "description": "Number of whatsApp templates retrieved",
+          "example": 24,
+          "format": "int64",
+          "type": "integer"
+        },
+        "templates": {
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/whatsappCampaigns/template-list",
+      "auth": "header api-key",
+      "params": {
+        "startDate": "query",
+        "endDate": "query",
+        "limit": "query",
+        "offset": "query",
+        "sort": "query",
+        "source": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "WhatsApp Business account connected (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "WhatsApp Business account connected"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//whatsappCampaigns/template-list/get (getWhatsAppTemplates)"
+    }
+  ]
+}

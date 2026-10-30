@@ -1,0 +1,185 @@
+{
+  "id": "brevo.contacts.request_contact_export",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact",
+  "operation_class": "action",
+  "label": "Export contacts",
+  "description": "It returns the background process ID which on completion calls the notify URL that you have set in the input. File will be available in csv. When no contact matches the filter, no export process is created: the endpoint answers `200` with an empty object instead of `202` with a processId. A recurring export should treat that as \"nothing to do\" rather than as a failure, and must not assume a processId is always present.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "customContactFilter": {
+          "description": "Set the filter for the contacts to be exported.\n",
+          "properties": {
+            "actionForContacts": {
+              "description": "(nested schema truncated)"
+            },
+            "actionForEmailCampaigns": {
+              "description": "(nested schema truncated)"
+            },
+            "actionForSmsCampaigns": {
+              "description": "(nested schema truncated)"
+            },
+            "createdSince": {
+              "description": "(nested schema truncated)"
+            },
+            "emailCampaignId": {
+              "description": "(nested schema truncated)"
+            },
+            "listId": {
+              "description": "(nested schema truncated)"
+            },
+            "modifiedSince": {
+              "description": "(nested schema truncated)"
+            },
+            "segmentId": {
+              "description": "(nested schema truncated)"
+            },
+            "smsCampaignId": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "disableNotification": {
+          "default": false,
+          "description": "To avoid generating the email notification upon contact export, pass **true**",
+          "example": false,
+          "type": "boolean"
+        },
+        "exportAttributes": {
+          "description": "List of all the attributes that you want to export. **These attributes must be present in your contact database. It is required if exportMandatoryAttributes is set false. ** For example: **['fname', 'lname', 'email']**\n",
+          "items": {
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "exportMandatoryAttributes": {
+          "default": true,
+          "description": "To export mandatory attributes like EMAIL, ADDED_TIME, MODIFIED_TIME",
+          "example": false,
+          "type": "boolean"
+        },
+        "exportMetadata": {
+          "description": "Export metadata of contacts such as _listIds, ADDED_TIME, MODIFIED_TIME.",
+          "items": {
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "exportDateInUTC": {
+          "type": "boolean",
+          "description": "Specifies whether the date fields createdAt, modifiedAt in the exported data should be returned in UTC format.",
+          "example": true,
+          "default": false
+        },
+        "exportSubscriptionStatus": {
+          "description": "Export subscription status of contacts for email & sms marketting. Pass email_marketing to obtain the marketing email subscription status & sms_marketing to retrieve the marketing SMS status of the contact.",
+          "items": {
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "notifyUrl": {
+          "description": "Webhook that will be called once the export process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479",
+          "example": "http://requestb.in/173lyyx1",
+          "format": "url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "customContactFilter"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "processId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "processId"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/contacts/export",
+      "auth": "header api-key",
+      "params": {
+        "customContactFilter": "body",
+        "disableNotification": "body",
+        "exportAttributes": "body",
+        "exportMandatoryAttributes": "body",
+        "exportMetadata": "body",
+        "exportDateInUTC": "body",
+        "exportSubscriptionStatus": "body",
+        "notifyUrl": "body"
+      },
+      "success_status": [
+        202
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/export/post (requestContactExport)"
+    }
+  ]
+}

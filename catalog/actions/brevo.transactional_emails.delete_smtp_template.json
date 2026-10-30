@@ -1,0 +1,79 @@
+{
+  "id": "brevo.transactional_emails.delete_smtp_template",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "email_template",
+  "operation_class": "delete",
+  "label": "Delete an inactive email template",
+  "description": "Permanently delete a transactional email template by its numeric ID. Only inactive templates can be deleted; attempting to delete an active template returns a 405 error. To deactivate a template before deletion, use `PUT /smtp/templates/{templateId}` with `isActive` set to `false`. Deletion also removes associated newsletter template data and triggers asynchronous cleanup of shared assets.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "templateId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the template"
+        }
+      },
+      "required": [
+        "templateId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "templateId",
+        "entity": "email_template",
+        "find_with": "brevo.transactional_emails.get_smtp_templates",
+        "create_with": "brevo.transactional_emails.create_smtp_template"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/smtp/templates/{templateId}",
+      "auth": "header api-key",
+      "params": {
+        "templateId": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.transactional_emails.get_smtp_template",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/templates/{templateId}/delete (deleteSmtpTemplate)"
+    }
+  ]
+}

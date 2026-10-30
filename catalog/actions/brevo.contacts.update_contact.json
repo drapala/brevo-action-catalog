@@ -1,0 +1,198 @@
+{
+  "id": "brevo.contacts.update_contact",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact",
+  "operation_class": "update",
+  "label": "Update a contact",
+  "description": "<Note>Follow this format when passing a \"SMS\" phone number as an attribute. Accepted Number Formats 91xxxxxxxxxx +91xxxxxxxxxx 0091xxxxxxxxxx</Note> There are 2 ways to update a contact <br><br> Option 1- https://api.brevo.com/v3/contacts/{identifier} <br><br> Option 2- https://api.brevo.com/v3/contacts/{identifier}?identifierType={} <br> <br> Option 1 only works if identifierType is email_id (for EMAIL) or contact_id (for ID of the contact),where you can directly pass the value of EMAIL and ID of the contact. <br><br> Option 2 works for all identifierType, use email_id for EMAIL attribute, co",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "Email (urlencoded) OR ID of the contact OR EXT_ID attribute (urlencoded) OR its SMS attribute value OR its WHATSAPP attribute value OR its LANDLINE_NUMBER attribute value"
+        },
+        "identifierType": {
+          "enum": [
+            "email_id",
+            "contact_id",
+            "ext_id",
+            "phone_id",
+            "whatsapp_id",
+            "landline_number_id"
+          ],
+          "type": "string",
+          "description": "email_id for Email, contact_id for ID of the contact, ext_id for EXT_ID attribute, phone_id for SMS attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute"
+        },
+        "attributes": {
+          "additionalProperties": {
+            "oneOf": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "description": "Pass the set of attributes to be updated. **These attributes must be present in your account**. To update existing email address of a contact with the new one please pass EMAIL in attributes. For example, **{ \"EMAIL\":\"newemail@domain.com\", \"FNAME\":\"Ellie\", \"LNAME\":\"Roger\", \"COUNTRIES\":[\"India\",\"China\"]}**. The attribute's parameter should be passed in capital letter while updating a contact. Values that don't match the attribute type (e.g. text or string in a date attribute) will be ignored .Keep in mind transactional attributes can be updated the same way as normal attributes. Mobile Number in **SMS** field should be passed with proper country code. For example: **{\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"}**\n",
+          "example": {
+            "COUNTRIES": {
+              "description": "(nested schema truncated)"
+            },
+            "EMAIL": {
+              "description": "(nested schema truncated)"
+            },
+            "FNAME": {
+              "description": "(nested schema truncated)"
+            },
+            "LNAME": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "emailBlacklisted": {
+          "description": "Set/unset this field to blacklist/allow the contact for emails (emailBlacklisted = true)",
+          "example": false,
+          "type": "boolean"
+        },
+        "ext_id": {
+          "description": "Pass your own Id to update ext_id of a contact.",
+          "example": "updateExternalId",
+          "type": "string"
+        },
+        "listIds": {
+          "description": "Ids of the lists to add the contact to",
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "smsBlacklisted": {
+          "description": "Set/unset this field to blacklist/allow the contact for SMS (smsBlacklisted = true)",
+          "example": true,
+          "type": "boolean"
+        },
+        "smtpBlacklistSender": {
+          "description": "transactional email forbidden sender for contact. Use only for email Contact",
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "unlinkListIds": {
+          "description": "Ids of the lists to remove the contact from",
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "forceMerge": {
+          "default": false,
+          "description": "When true, if the contact being updated shares an identifier (email, SMS, ext_id, whatsapp, landline) with an existing contact, the two contacts are force-merged. The contact with the most recent `last_modified` timestamp is retained; the other is deleted. When false (default), a 4xx error is returned on identifier conflict.",
+          "example": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "identifier"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "identifier",
+        "entity": "contact",
+        "find_with": "brevo.contacts.get_contacts",
+        "create_with": "brevo.contacts.create_contact"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/contacts/{identifier}",
+      "auth": "header api-key",
+      "params": {
+        "identifier": "path",
+        "identifierType": "query",
+        "attributes": "body",
+        "emailBlacklisted": "body",
+        "ext_id": "body",
+        "listIds": "body",
+        "smsBlacklisted": "body",
+        "smtpBlacklistSender": "body",
+        "unlinkListIds": "body",
+        "forceMerge": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.contacts.get_contact_info",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.contacts.update_contact",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/{identifier}/put (updateContact)"
+    }
+  ]
+}

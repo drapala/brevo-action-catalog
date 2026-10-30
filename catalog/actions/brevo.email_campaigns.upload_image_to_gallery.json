@@ -1,0 +1,84 @@
+{
+  "id": "brevo.email_campaigns.upload_image_to_gallery",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "image",
+  "operation_class": "create",
+  "label": "Upload an image to your account's image gallery",
+  "description": "Upload an image to your account''s image gallery by providing an absolute URL to the image. The maximum allowed image size is 2MB and supported formats are jpeg, jpg, png, bmp, and gif; local file uploads are not supported.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "imageUrl": {
+          "description": "The absolute url of the image (**no local file**). Maximum allowed size for image is **2MB**. Allowed extensions for images are: #### jpeg, jpg, png, bmp, gif.\n",
+          "example": "https://somedomain.com/image1.jpg",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name shown in your Brevo image gallery. Include the file extension, e.g. product-banner.png",
+          "example": "product-banner.png",
+          "type": "string"
+        }
+      },
+      "required": [
+        "imageUrl"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "url": {
+          "description": "URL of the image uploaded",
+          "example": "https://img.mailinblue.com/100000/images/rnb/original/62casdase8wewq9df1c2f27c.jpeg",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/emailCampaigns/images",
+      "auth": "header api-key",
+      "params": {
+        "imageUrl": "body",
+        "name": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//emailCampaigns/images/post (uploadImageToGallery)"
+    }
+  ]
+}

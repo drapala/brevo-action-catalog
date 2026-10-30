@@ -1,0 +1,195 @@
+{
+  "id": "brevo.reward.create_voucher",
+  "product": "brevo",
+  "area": "Reward",
+  "entity": "reward",
+  "operation_class": "create",
+  "label": "Create a voucher",
+  "description": "Create a voucher and attribute it to a specific membership.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "code": {
+          "description": "Code generated to attribute reward to a contact",
+          "maxLength": 128,
+          "type": "string"
+        },
+        "contactId": {
+          "description": "Contact to attribute the reward",
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "expirationDate": {
+          "description": "Reward expiration date",
+          "type": "string"
+        },
+        "loyaltySubscriptionId": {
+          "description": "One of contactId or loyaltySubscriptionId is required",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": {},
+          "description": "Offer meta information (key/value object)",
+          "type": "object"
+        },
+        "rewardId": {
+          "description": "Reward id",
+          "format": "uuid",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value of the selected reward config",
+          "format": "double",
+          "maximum": 99999999.99,
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "validFrom": {
+          "description": "Date from which the voucher becomes valid. Accepts RFC 3339 or DD/MM/YYYY HH:MM AM/PM format. Converted to UTC using the organization's timezone.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pid",
+        "rewardId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "code": {
+          "description": "Generated code",
+          "type": "string"
+        },
+        "consumedAt": {
+          "description": "Timestamp for when this reward was consumed",
+          "type": "string"
+        },
+        "contactId": {
+          "description": "Id of the contact that attributed the reward",
+          "format": "int64",
+          "type": "integer"
+        },
+        "createdAt": {
+          "description": "Timestamp for when this reward was created",
+          "format": "date-time",
+          "type": "string"
+        },
+        "expirationDate": {
+          "description": "Expiration date of the reward",
+          "format": "date-time",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique identifier",
+          "format": "uuid",
+          "type": "string"
+        },
+        "loyaltyProgramId": {
+          "description": "Loyalty Program Id to which attributed reward belongs",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": {},
+          "description": "Additional data to define the reward",
+          "type": "object"
+        },
+        "rewardId": {
+          "description": "Unique identifier for the reward",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "Timestamp for when this reward was updated",
+          "format": "date-time",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value of the selected reward config",
+          "format": "double",
+          "type": "number"
+        },
+        "validFrom": {
+          "description": "Date from which the voucher becomes valid",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "reward",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/offer/programs/{pid}/rewards/attribute",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "code": "body",
+        "contactId": "body",
+        "expirationDate": "body",
+        "loyaltySubscriptionId": "body",
+        "meta": "body",
+        "rewardId": "body",
+        "value": "body",
+        "validFrom": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.reward.get_reward_information",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.reward.revoke_vouchers",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/offer/programs/{pid}/rewards/attribute/post (createVoucher)"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "id": "brevo.transactional_sms.get_sms_events",
+  "product": "brevo",
+  "area": "Transactional SMS",
+  "entity": "event",
+  "operation_class": "read",
+  "label": "Get all your SMS activity (unaggregated events)",
+  "description": "Retrieve a paginated list of individual SMS event records (unaggregated), including event type, phone number, message ID, timestamp, tag, and reason or reply content where applicable. Results default to 50 per page (max 100) and are sorted in descending order unless overridden. Filter by date range (`startDate`/`endDate`), past `days` (not compatible with date range), specific `event` type (e.g. delivered, bounces, replies), `phoneNumber`, or `tags`. Bounce events include the failure reason, and reply events include the reply content.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the report"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the report"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document of the page"
+        },
+        "days": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Number of days in the past including today (positive integer). **Not compatible with 'startDate' and 'endDate'**"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Filter the report for a specific phone number"
+        },
+        "event": {
+          "enum": [
+            "bounces",
+            "hardBounces",
+            "softBounces",
+            "delivered",
+            "sent",
+            "accepted",
+            "unsubscription",
+            "replies",
+            "blocked",
+            "rejected",
+            "skipped"
+          ],
+          "type": "string",
+          "description": "Filter the report for specific events"
+        },
+        "tags": {
+          "type": "string",
+          "description": "Filter the report for specific tags passed as a serialized urlencoded array"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "events": {
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/transactionalSMS/statistics/events",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "startDate": "query",
+        "endDate": "query",
+        "offset": "query",
+        "days": "query",
+        "phoneNumber": "query",
+        "event": "query",
+        "tags": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//transactionalSMS/statistics/events/get (getSmsEvents)"
+    }
+  ]
+}

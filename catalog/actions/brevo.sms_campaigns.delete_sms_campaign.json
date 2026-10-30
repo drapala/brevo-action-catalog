@@ -1,0 +1,79 @@
+{
+  "id": "brevo.sms_campaigns.delete_sms_campaign",
+  "product": "brevo",
+  "area": "SMS Campaigns",
+  "entity": "sms_campaign",
+  "operation_class": "delete",
+  "label": "Delete an SMS campaign",
+  "description": "Delete an SMS campaign by its campaign ID. Only campaigns that have not been scheduled or sent can be deleted; attempting to delete a campaign that is queued, in process, or has been sent with recipients will return a 403 permission denied error.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the SMS campaign"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "sms_campaign",
+        "find_with": "brevo.sms_campaigns.get_sms_campaigns",
+        "create_with": "brevo.sms_campaigns.create_sms_campaign"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/smsCampaigns/{campaignId}",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.sms_campaigns.get_sms_campaign",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smsCampaigns/{campaignId}/delete (deleteSmsCampaign)"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "id": "brevo.senders.get_ips",
+  "product": "brevo",
+  "area": "Senders",
+  "entity": "ip",
+  "operation_class": "read",
+  "label": "Get all the dedicated IPs for your account",
+  "description": "Retrieves all dedicated IPs associated with your Brevo account. Use this to: - List all your dedicated IPs - Check the status of your dedicated IPs (active/inactive) - Find IP addresses and associated domains for configuration purposes - Monitor your IP reputation and deliverability - Verify available IPs for sender configuration Key information returned: - IP ID and address - Associated domain - Active status - IP configuration details",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "ips": {
+          "description": "Dedicated IP(s) available on your account. Returns empty array\nfor standard accounts without dedicated IPs.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "ips"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/senders/ips",
+      "auth": "header api-key",
+      "params": {},
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/ips/get (getIps)"
+    }
+  ]
+}

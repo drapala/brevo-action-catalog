@@ -1,0 +1,119 @@
+{
+  "id": "brevo.transactional_sms.send_transac_sms",
+  "product": "brevo",
+  "area": "Transactional SMS",
+  "entity": "sm",
+  "operation_class": "action",
+  "label": "Send SMS message to a mobile number",
+  "description": "Send a transactional SMS message to a single mobile number. The `sender`, `recipient`, and either `content` or `templateId` fields are required. The sender name is limited to 11 alphanumeric characters or 15 numeric characters, and the recipient must be a valid international phone number (6-15 digits, optional leading +). Tags can be a string or an array of up to 10 strings. The SMS type defaults to `transactional` but can be set to `marketing`; if the content includes a stop code, it is automatically treated as marketing. Returns the message ID, SMS count, credits used, and remaining credits.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "allOf": [
+            {
+              "type": {
+                "description": "(nested schema truncated)"
+              },
+              "properties": {
+                "description": "(nested schema truncated)"
+              },
+              "required": {
+                "description": "(nested schema truncated)"
+              }
+            },
+            {
+              "oneOf": {
+                "description": "(nested schema truncated)"
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "body"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "messageId": {
+          "example": 1511882900176220,
+          "format": "int64",
+          "type": "integer"
+        },
+        "reference": {
+          "example": "ab1cde2fgh3i4jklmno",
+          "type": "string"
+        },
+        "remainingCredits": {
+          "description": "Remaining SMS credits of the user",
+          "example": 82.85,
+          "format": "float",
+          "type": "number"
+        },
+        "smsCount": {
+          "description": "Count of SMS's to send multiple text messages",
+          "example": 2,
+          "format": "int64",
+          "type": "integer"
+        },
+        "usedCredits": {
+          "description": "SMS credits used per text message",
+          "example": 0.7,
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "required": [
+        "messageId",
+        "reference"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/transactionalSMS/sms",
+      "auth": "header api-key",
+      "params": {
+        "body": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "sends_sms",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//transactionalSMS/sms/post (sendTransacSms)"
+    }
+  ]
+}

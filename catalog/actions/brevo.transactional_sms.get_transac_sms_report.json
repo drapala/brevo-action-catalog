@@ -1,0 +1,106 @@
+{
+  "id": "brevo.transactional_sms.get_transac_sms_report",
+  "product": "brevo",
+  "area": "Transactional SMS",
+  "entity": "report",
+  "operation_class": "read",
+  "label": "Get your SMS activity aggregated per day",
+  "description": "Retrieve a day-by-day breakdown of your transactional SMS activity, with each entry containing the date and counts for requests, delivered, hard bounces, soft bounces, blocked, unsubscribed, replied, accepted, rejected, and skipped messages. Filter by date range using `startDate` and `endDate` (both required together, YYYY-MM-DD format), by a number of past `days` (not compatible with date range), or by `tag`. Results are sorted in descending order by default unless overridden with the `sort` parameter.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the report"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the report"
+        },
+        "days": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Number of days in the past including today (positive integer). **Not compatible with 'startDate' and 'endDate'**"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Filter on a tag"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "reports": {
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/transactionalSMS/statistics/reports",
+      "auth": "header api-key",
+      "params": {
+        "startDate": "query",
+        "endDate": "query",
+        "days": "query",
+        "tag": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//transactionalSMS/statistics/reports/get (getTransacSmsReport)"
+    }
+  ]
+}

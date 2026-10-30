@@ -1,0 +1,176 @@
+{
+  "id": "brevo.contacts.create_contact",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact",
+  "operation_class": "create",
+  "label": "Create a contact",
+  "description": "<Note>Follow this format when passing a \"SMS\" phone number as an attribute. Accepted Number Formats 91xxxxxxxxxx +91xxxxxxxxxx 0091xxxxxxxxxx</Note> Creates new contacts on Brevo. Contacts can be created by passing either - <br><br> 1. email address of the contact (email_id), <br> 2. phone number of the contact (to be passed as \"SMS\" field in \"attributes\" along with proper country code), For example- {\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"} <br> 3. ext_id <br>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "attributes": {
+          "additionalProperties": {
+            "oneOf": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "description": "Pass the set of attributes and their values. The attribute's parameter should be passed in capital letter while creating a contact. Values that don't match the attribute type (e.g. text or string in a date attribute) will be ignored. **These attributes must be present in your Brevo account**. For eg: **{\"FNAME\":\"Elly\", \"LNAME\":\"Roger\", \"COUNTRIES\": [\"India\",\"China\"]}**\n",
+          "example": {
+            "COUNTRIES": {
+              "description": "(nested schema truncated)"
+            },
+            "FNAME": {
+              "description": "(nested schema truncated)"
+            },
+            "LNAME": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "email": {
+          "description": "Email address of the user. **Mandatory if \"ext_id\"  & \"SMS\" field is not passed.**\n",
+          "example": "elly@example.com",
+          "format": "email",
+          "type": "string"
+        },
+        "emailBlacklisted": {
+          "description": "Set this field to blacklist the contact for emails (emailBlacklisted = true)",
+          "example": false,
+          "type": "boolean"
+        },
+        "ext_id": {
+          "description": "Pass your own Id to create a contact.",
+          "example": "externalId",
+          "type": "string"
+        },
+        "listIds": {
+          "description": "Ids of the lists to add the contact to",
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "smsBlacklisted": {
+          "description": "Set this field to blacklist the contact for SMS (smsBlacklisted = true)",
+          "example": false,
+          "type": "boolean"
+        },
+        "smtpBlacklistSender": {
+          "description": "transactional email forbidden sender for contact. Use only for email Contact ( only available if updateEnabled = true )",
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "updateEnabled": {
+          "default": false,
+          "description": "Facilitate to update the existing contact in the same request (updateEnabled = true)",
+          "example": false,
+          "type": "boolean"
+        },
+        "forceMerge": {
+          "default": false,
+          "description": "When true, if the contact being created shares an identifier (email, SMS, ext_id, whatsapp, landline) with an existing contact, the two contacts are force-merged. The contact with the most recent `last_modified` timestamp is retained; the other is deleted. When false (default), a 4xx error is returned on identifier conflict.",
+          "example": true,
+          "type": "boolean"
+        },
+        "getId": {
+          "default": false,
+          "description": "When true, the response returns the `id` of the surviving contact after merge.",
+          "example": true,
+          "type": "boolean"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "ID of the contact when a new contact is created",
+          "example": 122,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "contact",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/contacts",
+      "auth": "header api-key",
+      "params": {
+        "attributes": "body",
+        "email": "body",
+        "emailBlacklisted": "body",
+        "ext_id": "body",
+        "listIds": "body",
+        "smsBlacklisted": "body",
+        "smtpBlacklistSender": "body",
+        "updateEnabled": "body",
+        "forceMerge": "body",
+        "getId": "body"
+      },
+      "success_status": [
+        201,
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.contacts.get_contact_info",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.contacts.delete_contact",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/post (createContact)"
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "id": "brevo.ecommerce.get_attribution_metrics_for_one_or_more_brevo_campaigns_or_workflows",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "metric",
+  "operation_class": "read",
+  "label": "Get attribution metrics for one or more Brevo campaigns or workflows",
+  "description": "Retrieve aggregated ecommerce attribution metrics for one or more Brevo email campaigns, SMS campaigns, or automation workflows. You can optionally filter by a date range using `periodFrom` and `periodTo` in RFC3339 format. The response includes per-source metrics (orders count, revenue, and average basket) as well as aggregated totals across all requested sources.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "periodFrom": {
+          "example": "2022-01-02T00:00:00Z",
+          "format": "date-time",
+          "type": "string",
+          "description": "When getting metrics for a specific period, define the starting datetime in RFC3339 format"
+        },
+        "periodTo": {
+          "example": "2022-01-03T00:00:00Z",
+          "format": "date-time",
+          "type": "string",
+          "description": "When getting metrics for a specific period, define the end datetime in RFC3339 format"
+        },
+        "emailCampaignId[]": {
+          "items": {
+            "example": "sale",
+            "type": "string"
+          },
+          "type": "array",
+          "description": "The email campaign ID(s) to get metrics for"
+        },
+        "smsCampaignId[]": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "The SMS campaign ID(s) to get metrics for"
+        },
+        "automationWorkflowEmailId[]": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "The automation workflow ID(s) to get email attribution metrics for"
+        },
+        "automationWorkflowSmsId[]": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "The automation workflow ID(s) to get SMS attribution metrics for"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "results": {
+          "description": "List of conversion attribution metrics",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": "array"
+        },
+        "totals": {
+          "description": "Attribution list aggregated totals",
+          "example": {
+            "averageBasket": {
+              "description": "(nested schema truncated)"
+            },
+            "ordersCount": {
+              "description": "(nested schema truncated)"
+            },
+            "revenue": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "properties": {
+            "averageBasket": {
+              "description": "(nested schema truncated)"
+            },
+            "ordersCount": {
+              "description": "(nested schema truncated)"
+            },
+            "revenue": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "results",
+        "totals"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/ecommerce/attribution/metrics",
+      "auth": "header api-key",
+      "params": {
+        "periodFrom": "query",
+        "periodTo": "query",
+        "emailCampaignId[]": "query",
+        "smsCampaignId[]": "query",
+        "automationWorkflowEmailId[]": "query",
+        "automationWorkflowSmsId[]": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//ecommerce/attribution/metrics/get"
+    }
+  ]
+}

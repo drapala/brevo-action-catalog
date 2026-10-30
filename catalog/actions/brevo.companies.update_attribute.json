@@ -1,0 +1,114 @@
+{
+  "id": "brevo.companies.update_attribute",
+  "product": "brevo",
+  "area": "Companies",
+  "entity": "crm_attribute",
+  "operation_class": "update",
+  "label": "Update an attribute",
+  "description": "Update an existing custom attribute''s label or options. You can rename the attribute label or modify the available options for `single-select` and `multi-choice` attribute types. System-default attributes cannot be modified except for specific editable fields.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Attribute ID"
+        },
+        "label": {
+          "type": "string",
+          "description": "Attribute display label",
+          "example": "New label"
+        },
+        "optionsLabels": {
+          "type": "array",
+          "description": "Updated labels for selectable options",
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            },
+            "additionalProperties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "properties": {
+              "description": "(nested schema truncated)"
+            }
+          }
+        },
+        "objectType": {
+          "type": "string",
+          "description": "The type of object the attribute belongs to, it cannot be updated after creation",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "companies"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "crm_attribute",
+        "find_with": null,
+        "create_with": "brevo.companies.create_company_deal_attribute"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PATCH",
+      "url": "https://api.brevo.com/v3/crm/attributes/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path",
+        "label": "body",
+        "optionsLabels": "body",
+        "objectType": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.companies.update_attribute",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/attributes/{id}/patch"
+    }
+  ]
+}

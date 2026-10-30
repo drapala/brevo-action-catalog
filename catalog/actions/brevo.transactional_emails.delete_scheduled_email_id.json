@@ -1,0 +1,78 @@
+{
+  "id": "brevo.transactional_emails.delete_scheduled_email_id",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "transactional_email",
+  "operation_class": "delete",
+  "label": "Delete scheduled emails by batchId or messageId",
+  "description": "Delete scheduled batch of emails by batchId or single scheduled email by messageId",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "The `batchId` of scheduled emails batch (must be a valid UUIDv4) or the `messageId` of scheduled email (enclosed in angle brackets with @ sign, e.g. `<...@domain>`)."
+        }
+      },
+      "required": [
+        "identifier"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "identifier",
+        "entity": "transactional_email",
+        "find_with": "brevo.transactional_emails.get_transac_emails_list",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/smtp/email/{identifier}",
+      "auth": "header api-key",
+      "params": {
+        "identifier": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.transactional_emails.get_transac_email_content",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/email/{identifier}/delete (deleteScheduledEmailById)"
+    }
+  ]
+}

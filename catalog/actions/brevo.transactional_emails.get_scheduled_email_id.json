@@ -1,0 +1,162 @@
+{
+  "id": "brevo.transactional_emails.get_scheduled_email_id",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "scheduled_email",
+  "operation_class": "read",
+  "label": "Fetch scheduled emails by batchId or messageId",
+  "description": "Fetch scheduled batch of emails by batchId or single scheduled email by messageId (Can retrieve data upto 30 days old)",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "The `batchId` of scheduled emails batch (must be a valid UUIDv4) or the `messageId` of scheduled email (enclosed in angle brackets with @ sign, e.g. `<...@domain>`). When using `messageId`, the `limit`, `offset`, `sort`, and `status` query parameters are ignored."
+        },
+        "startDate": {
+          "format": "date",
+          "type": "string",
+          "description": "Mandatory if `endDate` is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Cannot be more than 30 days older than the current date."
+        },
+        "endDate": {
+          "format": "date",
+          "type": "string",
+          "description": "Mandatory if `startDate` is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month."
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed. Not valid when identifier is `messageId`."
+        },
+        "status": {
+          "enum": [
+            "processed",
+            "inProgress",
+            "queued"
+          ],
+          "type": "string",
+          "description": "Filter the records by `status` of the scheduled email batch or message. Not valid when identifier is `messageId`."
+        },
+        "limit": {
+          "default": 100,
+          "format": "int64",
+          "maximum": 500,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number of documents returned per page. Not valid when identifier is `messageId`."
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document on the page.  Not valid when identifier is `messageId`."
+        }
+      },
+      "required": [
+        "identifier"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "identifier",
+        "entity": "scheduled_email",
+        "find_with": "brevo.transactional_emails.get_scheduled_email_id",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "oneOf": [
+        {
+          "properties": {
+            "batches": {
+              "description": "(nested schema truncated)"
+            },
+            "count": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        {
+          "properties": {
+            "createdAt": {
+              "description": "(nested schema truncated)"
+            },
+            "scheduledAt": {
+              "description": "(nested schema truncated)"
+            },
+            "status": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/smtp/emailStatus/{identifier}",
+      "auth": "header api-key",
+      "params": {
+        "identifier": "path",
+        "startDate": "query",
+        "endDate": "query",
+        "sort": "query",
+        "status": "query",
+        "limit": "query",
+        "offset": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/emailStatus/{identifier}/get (getScheduledEmailById)"
+    }
+  ]
+}

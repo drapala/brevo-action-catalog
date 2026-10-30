@@ -1,0 +1,150 @@
+{
+  "id": "brevo.transactional_sms.get_transac_aggregated_sms_report",
+  "product": "brevo",
+  "area": "Transactional SMS",
+  "entity": "aggregated_report",
+  "operation_class": "read",
+  "label": "Get your SMS activity aggregated over a period of time",
+  "description": "Retrieve an aggregated report of your transactional SMS activity over a specified time period, including counts for requests, delivered, hard bounces, soft bounces, blocked, unsubscribed, replied, accepted, rejected, and skipped messages. Filter by date range using `startDate` and `endDate` (both required together, YYYY-MM-DD format) or by a number of past `days` (not compatible with date range). You can further narrow results by `tag`. If no date filter is provided, the report covers all available data and returns the auto-detected date range.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the report"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the report"
+        },
+        "days": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Number of days in the past including today (positive integer). **Not compatible with startDate and endDate**"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Filter on a tag"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "accepted": {
+          "description": "Number of accepted SMS for the timeframe",
+          "example": 252,
+          "format": "int64",
+          "type": "integer"
+        },
+        "blocked": {
+          "description": "Number of blocked contact for the timeframe",
+          "example": 2,
+          "format": "int64",
+          "type": "integer"
+        },
+        "delivered": {
+          "description": "Number of delivered SMS for the timeframe",
+          "example": 249,
+          "format": "int64",
+          "type": "integer"
+        },
+        "hardBounces": {
+          "description": "Number of hardbounces for the timeframe",
+          "example": 1,
+          "format": "int64",
+          "type": "integer"
+        },
+        "range": {
+          "description": "Time frame of the report",
+          "example": "2016-09-08|2017-04-06",
+          "type": "string"
+        },
+        "rejected": {
+          "description": "Number of rejected SMS for the timeframe",
+          "example": 8,
+          "format": "int64",
+          "type": "integer"
+        },
+        "replied": {
+          "description": "Number of answered SMS for the timeframe",
+          "example": 12,
+          "format": "int64",
+          "type": "integer"
+        },
+        "requests": {
+          "description": "Number of requests for the timeframe",
+          "example": 263,
+          "format": "int64",
+          "type": "integer"
+        },
+        "skipped": {
+          "description": "Number of skipped SMS for the timeframe",
+          "example": 1,
+          "format": "int64",
+          "type": "integer"
+        },
+        "softBounces": {
+          "description": "Number of softbounces for the timeframe",
+          "example": 4,
+          "format": "int64",
+          "type": "integer"
+        },
+        "unsubscribed": {
+          "description": "Number of unsubscription for the timeframe",
+          "example": 6,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/transactionalSMS/statistics/aggregatedReport",
+      "auth": "header api-key",
+      "params": {
+        "startDate": "query",
+        "endDate": "query",
+        "days": "query",
+        "tag": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//transactionalSMS/statistics/aggregatedReport/get (getTransacAggregatedSmsReport)"
+    }
+  ]
+}

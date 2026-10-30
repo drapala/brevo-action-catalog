@@ -1,0 +1,98 @@
+{
+  "id": "brevo.master_account.get_corporate_invited_users_list",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "user",
+  "operation_class": "read",
+  "label": "Get the list of all admin users",
+  "description": "This endpoint allows you to list all Admin users of your Admin account. You can filter users by type (active or pending) and paginate results using offset and limit.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "User type (active | pending). This is required if offset is provided for\nlimited result."
+        },
+        "offset": {
+          "type": "integer",
+          "description": "Page number for the result set. This is optional, default value will be\nthe 1st page."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Number of users to be displayed on each page. This is optional, the\ndefault limit is 20, but max allowed limit is 100."
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "users": {
+          "description": "Get invited users list",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/corporate/invited/users",
+      "auth": "header api-key",
+      "params": {
+        "type": "query",
+        "offset": "query",
+        "limit": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/invited/users/get (getCorporateInvitedUsersList)"
+    }
+  ]
+}

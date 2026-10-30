@@ -1,0 +1,89 @@
+{
+  "id": "brevo.email_campaigns.get_shared_template_url",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "shared_url",
+  "operation_class": "read",
+  "label": "Get a shared template url",
+  "description": "Get a unique URL to share & import an email template from one Brevo account to another.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the campaign or template"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "shared_url",
+        "find_with": "brevo.email_campaigns.get_shared_template_url",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "sharedUrl": {
+          "description": "A unique URL for the email campaign or transactional template. This URL can be shared with other Brevo users.",
+          "example": "https://my.brevo.com/pt2YU7R5W_guXlowgumy_VX4pFsKu._zd0Gjj96x1_GMmzc1Qps5ZIpj6nx-",
+          "format": "url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sharedUrl"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/emailCampaigns/{campaignId}/sharedUrl",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//emailCampaigns/{campaignId}/sharedUrl/get (getSharedTemplateUrl)"
+    }
+  ]
+}

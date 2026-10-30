@@ -1,0 +1,150 @@
+{
+  "id": "brevo.master_account.enable_disable_sub_account_application",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "application",
+  "operation_class": "update",
+  "label": "Enable/disable sub-account application(s)",
+  "description": "API endpoint for the Corporate owner to enable/disable applications on the sub-account",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the sub-account organization (mandatory)"
+        },
+        "analytics": {
+          "description": "Set this field to enable or disable Analytics on the\nsub-account. Requires the master account's plan to include\nAnalytics; otherwise the call returns a 400 error.",
+          "type": "boolean"
+        },
+        "automation": {
+          "description": "Set this field to enable or disable Automation on the\nsub-account",
+          "type": "boolean"
+        },
+        "conversations": {
+          "description": "Set this field to enable or disable Conversations on the\nsub-account",
+          "type": "boolean"
+        },
+        "crm": {
+          "description": "Set this field to enable or disable Sales CRM on the sub-account",
+          "type": "boolean"
+        },
+        "email-campaigns": {
+          "description": "Set this field to enable or disable Email Campaigns on the\nsub-account",
+          "type": "boolean"
+        },
+        "facebook-ads": {
+          "description": "Set this field to enable or disable Facebook ads on the\nsub-account",
+          "type": "boolean"
+        },
+        "inbox": {
+          "description": "Set this field to enable or disable Inbox on the sub-account /\nNot applicable on ENTv2",
+          "type": "boolean"
+        },
+        "landing-pages": {
+          "description": "Set this field to enable or disable Landing pages on the\nsub-account",
+          "type": "boolean"
+        },
+        "meetings": {
+          "description": "Set this field to enable or disable Meetings on the sub-account",
+          "type": "boolean"
+        },
+        "sms-campaigns": {
+          "description": "Set this field to enable or disable SMS Marketing on the\nsub-account",
+          "type": "boolean"
+        },
+        "transactional-emails": {
+          "description": "Set this field to enable or disable Transactional Email on the\nsub-account",
+          "type": "boolean"
+        },
+        "transactional-sms": {
+          "description": "Set this field to enable or disable Transactional SMS on the\nsub-account",
+          "type": "boolean"
+        },
+        "web-push": {
+          "description": "Set this field to enable or disable Web Push on the sub-account",
+          "type": "boolean"
+        },
+        "whatsapp": {
+          "description": "Set this field to enable or disable Whatsapp campaigns on the\nsub-account",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "application",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/corporate/subAccount/{id}/applications/toggle",
+      "auth": "header api-key",
+      "params": {
+        "id": "path",
+        "analytics": "body",
+        "automation": "body",
+        "conversations": "body",
+        "crm": "body",
+        "email-campaigns": "body",
+        "facebook-ads": "body",
+        "inbox": "body",
+        "landing-pages": "body",
+        "meetings": "body",
+        "sms-campaigns": "body",
+        "transactional-emails": "body",
+        "transactional-sms": "body",
+        "web-push": "body",
+        "whatsapp": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.master_account.enable_disable_sub_account_application",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/subAccount/{id}/applications/toggle/put"
+    }
+  ]
+}

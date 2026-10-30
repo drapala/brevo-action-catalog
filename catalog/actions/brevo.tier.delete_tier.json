@@ -1,0 +1,95 @@
+{
+  "id": "brevo.tier.delete_tier",
+  "product": "brevo",
+  "area": "Tier",
+  "entity": "tier",
+  "operation_class": "delete",
+  "label": "Delete tier",
+  "description": "Deletes a tier from a loyalty program tier group. *(The changes will take effect with the next publication of the loyalty program)*",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "tid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Tier ID"
+        }
+      },
+      "required": [
+        "pid",
+        "tid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "tid",
+        "entity": "tid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "type": "string"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/loyalty/tier/programs/{pid}/tiers/{tid}",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "tid": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/tier/programs/{pid}/tiers/{tid}/delete (deleteTier)"
+    }
+  ]
+}

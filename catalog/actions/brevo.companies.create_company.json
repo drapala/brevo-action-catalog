@@ -1,0 +1,159 @@
+{
+  "id": "brevo.companies.create_company",
+  "product": "brevo",
+  "area": "Companies",
+  "entity": "company",
+  "operation_class": "create",
+  "label": "Create a company",
+  "description": "Create a new CRM company with the specified name, attributes, and optional associations to contacts and deals. The company name is required, and you can optionally provide a country code when a phone number attribute is included.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "attributes": {
+          "description": "Attributes for company creation",
+          "example": {
+            "domain": {
+              "description": "(nested schema truncated)"
+            },
+            "industry": {
+              "description": "(nested schema truncated)"
+            },
+            "owner": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "countryCode": {
+          "description": "Country code if phone_number is passed in attributes.",
+          "example": 91,
+          "format": "int64",
+          "type": "integer"
+        },
+        "linkedContactsIds": {
+          "description": "Contact ids to be linked with company",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "linkedDealsIds": {
+          "description": "Deal ids to be linked with company",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Name of company",
+          "example": "company",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "Created company id",
+      "properties": {
+        "id": {
+          "description": "Unique company id",
+          "example": "61a5cd07ca1347c82306ad06",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "company",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/companies",
+      "auth": "header api-key",
+      "params": {
+        "attributes": "body",
+        "countryCode": "body",
+        "linkedContactsIds": "body",
+        "linkedDealsIds": "body",
+        "name": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.companies.get_company",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.companies.delete_company",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//companies/post"
+    }
+  ]
+}

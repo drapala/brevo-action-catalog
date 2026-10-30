@@ -1,0 +1,104 @@
+{
+  "id": "brevo.contacts.create_list",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "list",
+  "operation_class": "create",
+  "label": "Create a list",
+  "description": "Create a new contact list inside a specified folder. Both the list name and the parent folder ID are required. The newly created list will be empty and ready to receive contacts via the add contacts endpoint.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "folderId": {
+          "description": "Id of the parent folder in which this list is to be created",
+          "example": 2,
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Name of the list",
+          "example": "Magento Customer - ES",
+          "type": "string"
+        }
+      },
+      "required": [
+        "folderId",
+        "name"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "list",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/contacts/lists",
+      "auth": "header api-key",
+      "params": {
+        "folderId": "body",
+        "name": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.contacts.get_list",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.contacts.delete_list",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/lists/post (createList)"
+    }
+  ]
+}

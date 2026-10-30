@@ -1,0 +1,137 @@
+{
+  "id": "brevo.contacts.get_contacts_from_list",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact",
+  "operation_class": "read",
+  "label": "Get contacts in a list",
+  "description": "Retrieve all contacts belonging to a specific list, identified by its list ID. Results are paginated with a default of 50 contacts per page (maximum 500) and sorted in descending order of creation. You can optionally filter contacts by their modification date using the modifiedSince parameter.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "listId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the list"
+        },
+        "modifiedSince": {
+          "type": "string",
+          "description": "Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**"
+        },
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document of the page"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        }
+      },
+      "required": [
+        "listId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "listId",
+        "entity": "list",
+        "find_with": "brevo.contacts.get_lists",
+        "create_with": "brevo.contacts.create_list"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "contacts": {
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "count": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "contacts",
+        "count"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/contacts/lists/{listId}/contacts",
+      "auth": "header api-key",
+      "params": {
+        "listId": "path",
+        "modifiedSince": "query",
+        "limit": "query",
+        "offset": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/lists/{listId}/contacts/get (getContactsFromList)"
+    }
+  ]
+}

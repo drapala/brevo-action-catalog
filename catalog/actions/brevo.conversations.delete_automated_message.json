@@ -1,0 +1,82 @@
+{
+  "id": "brevo.conversations.delete_automated_message",
+  "product": "brevo",
+  "area": "Conversations",
+  "entity": "pushed_message",
+  "operation_class": "delete",
+  "label": "Delete an automated message",
+  "description": "Delete an automated (pushed) message by its ID.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID of the message"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "pushed_message",
+        "find_with": "brevo.conversations.get_automated_message",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/conversations/pushedMessages/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Conversations chat widget installed (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.conversations.get_automated_message",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Conversations chat widget installed"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//conversations/pushedMessages/{id}/delete"
+    }
+  ]
+}

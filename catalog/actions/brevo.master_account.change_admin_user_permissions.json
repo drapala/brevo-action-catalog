@@ -1,0 +1,110 @@
+{
+  "id": "brevo.master_account.change_admin_user_permissions",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "permission",
+  "operation_class": "update",
+  "label": "Change admin user permissions",
+  "description": "This endpoint will allow you to change the permissions of Admin users of your Admin account",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email address of Admin user"
+        },
+        "all_features_access": {
+          "description": "All access to the features",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": true,
+          "type": "boolean"
+        },
+        "privileges": {
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "email",
+        "all_features_access",
+        "privileges"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "email",
+        "entity": "email",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/corporate/user/{email}/permissions",
+      "auth": "header api-key",
+      "params": {
+        "email": "path",
+        "all_features_access": "body",
+        "privileges": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.master_account.change_admin_user_permissions",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/user/{email}/permissions/put"
+    }
+  ]
+}

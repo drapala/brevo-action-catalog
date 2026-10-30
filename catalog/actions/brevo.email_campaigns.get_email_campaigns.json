@@ -1,0 +1,170 @@
+{
+  "id": "brevo.email_campaigns.get_email_campaigns",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "email_campaign",
+  "operation_class": "read",
+  "label": "Return all your created email campaigns",
+  "description": "<Note>The response payload for this endpoint has changed You now need to specify which type of statistics you would like to retrieve. For more information visit [this page](https://developers.brevo.com/changelog/get-all-marketing-campaigns).</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "classic",
+            "trigger"
+          ],
+          "type": "string",
+          "description": "Filter on the type of the campaigns"
+        },
+        "status": {
+          "enum": [
+            "suspended",
+            "archive",
+            "sent",
+            "queued",
+            "draft",
+            "inProcess",
+            "inReview",
+            "cancelling",
+            "cancelled"
+          ],
+          "type": "string",
+          "description": "Filter on the status of the campaign"
+        },
+        "statistics": {
+          "enum": [
+            "globalStats",
+            "linksStats",
+            "statsByDomain"
+          ],
+          "type": "string",
+          "description": "Filter on the type of statistics required. Example: **globalStats** value will only fetch globalStats info of the campaign in the returned response. This option only returns data for events that occurred in the last 6 months. For older campaigns, it is advisable to use the **Get Campaign Report** endpoint."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. The date range between `startDate` and `endDate` must not exceed 2 years. `startDate` must not be in the future."
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. The date range between `startDate` and `endDate` must not exceed 2 years. `endDate` must not be in the future."
+        },
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document in the page"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        },
+        "excludeHtmlContent": {
+          "enum": [
+            true,
+            false
+          ],
+          "type": "boolean",
+          "description": "Use this flag to exclude htmlContent from the response body. If set to **true**, the htmlContent field will be returned as an empty string in the response body."
+        },
+        "excludePdfAttachment": {
+          "enum": [
+            true,
+            false
+          ],
+          "type": "boolean",
+          "description": "Use this flag to filter out campaigns that have a PDF attachment. If set to **true**, only campaigns without a PDF attachment (or with no attachment at all) will be returned."
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "campaigns": {
+          "items": {
+            "allOf": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "count": {
+          "description": "Number of Email campaigns retrieved",
+          "example": 24,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/emailCampaigns",
+      "auth": "header api-key",
+      "params": {
+        "type": "query",
+        "status": "query",
+        "statistics": "query",
+        "startDate": "query",
+        "endDate": "query",
+        "limit": "query",
+        "offset": "query",
+        "sort": "query",
+        "excludeHtmlContent": "query",
+        "excludePdfAttachment": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//emailCampaigns/get (getEmailCampaigns)"
+    }
+  ]
+}

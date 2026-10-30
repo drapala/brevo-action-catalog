@@ -1,0 +1,74 @@
+{
+  "id": "brevo.ecommerce.get_iso_4217_compliant_display_currency_code_for_brevo_account",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "display_currency",
+  "operation_class": "read",
+  "label": "Get the ISO 4217 compliant display currency code for your Brevo account",
+  "description": "Retrieve the ISO 4217 display currency code currently configured for your Brevo ecommerce account. This currency is used to display monetary values across the ecommerce dashboard and reports. Returns a `403` error if ecommerce is not activated on the account.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "code": {
+          "description": "ISO 4217 compliant display currency code",
+          "example": "EUR",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/ecommerce/config/displayCurrency",
+      "auth": "header api-key",
+      "params": {},
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//ecommerce/config/displayCurrency/get"
+    }
+  ]
+}

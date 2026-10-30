@@ -1,0 +1,129 @@
+{
+  "id": "brevo.whats_app_campaigns.get_whats_app_config",
+  "product": "brevo",
+  "area": "WhatsApp Campaigns",
+  "entity": "config",
+  "operation_class": "read",
+  "label": "Get your WhatsApp API account information",
+  "description": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below. [Activating WhatsApp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "businessStatus": {
+          "description": "Verification status information of the Business account",
+          "example": "verified",
+          "type": "string"
+        },
+        "phoneNumberNameStatus": {
+          "description": "Status of the name associated with WhatsApp Phone number",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "APPROVED",
+          "type": "string"
+        },
+        "phoneNumberQuality": {
+          "description": "Quality status of phone number associated with WhatsApp account. There are three quality ratings. example - **High (GREEN) , Medium (YELLOW) and Low(RED)**",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "GREEN",
+          "type": "string"
+        },
+        "sendingLimit": {
+          "description": "Sending limit of the WhatsApp account",
+          "example": "TIER_1K",
+          "type": "string"
+        },
+        "whatsappBusinessAccountId": {
+          "description": "Id of the WhatsApp business account",
+          "example": 105569359072383,
+          "type": "string"
+        },
+        "whatsappBusinessAccountStatus": {
+          "description": "Status information related to WhatsApp Api account",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "APPROVED",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/whatsappCampaigns/config",
+      "auth": "header api-key",
+      "params": {},
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "WhatsApp Business account connected (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "WhatsApp Business account connected"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//whatsappCampaigns/config/get (getWhatsAppConfig)"
+    }
+  ]
+}

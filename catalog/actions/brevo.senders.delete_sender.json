@@ -1,0 +1,76 @@
+{
+  "id": "brevo.senders.delete_sender",
+  "product": "brevo",
+  "area": "Senders",
+  "entity": "sender",
+  "operation_class": "delete",
+  "label": "Delete a sender",
+  "description": "Deletes an email sender from your Brevo account. Use this to: - Remove senders that are no longer needed - Clean up sender configurations - Remove duplicate or test senders Key information returned: - Success confirmation message",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "senderId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the sender"
+        }
+      },
+      "required": [
+        "senderId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "senderId",
+        "entity": "sender",
+        "find_with": "brevo.senders.get_senders",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/senders/{senderId}",
+      "auth": "header api-key",
+      "params": {
+        "senderId": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/{senderId}/delete (deleteSender)"
+    }
+  ]
+}

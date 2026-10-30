@@ -1,0 +1,122 @@
+{
+  "id": "brevo.reward.validate_reward",
+  "product": "brevo",
+  "area": "Reward",
+  "entity": "reward",
+  "operation_class": "action",
+  "label": "Validate a reward",
+  "description": "Validates a reward.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "attributedRewardId": {
+          "description": "Unique identifier for the attributed reward",
+          "format": "uuid",
+          "type": "string"
+        },
+        "code": {
+          "description": "Validation code for the reward",
+          "type": "string"
+        },
+        "contactId": {
+          "description": "Unique identifier for the contact",
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "loyaltySubscriptionId": {
+          "description": "Identifier for the loyalty subscription",
+          "type": "string"
+        },
+        "pointOfSellId": {
+          "description": "Identifier for the point of sale",
+          "type": "string"
+        },
+        "rewardId": {
+          "description": "Unique identifier for the reward",
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "authorize": {
+          "description": "Boolean value to authorize a reward or not",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/offer/programs/{pid}/rewards/validate",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "attributedRewardId": "body",
+        "code": "body",
+        "contactId": "body",
+        "loyaltySubscriptionId": "body",
+        "pointOfSellId": "body",
+        "rewardId": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/offer/programs/{pid}/rewards/validate/post (validateReward)"
+    }
+  ]
+}

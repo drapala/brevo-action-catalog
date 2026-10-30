@@ -1,0 +1,153 @@
+{
+  "id": "brevo.sms_campaigns.create_sms_campaign",
+  "product": "brevo",
+  "area": "SMS Campaigns",
+  "entity": "sms_campaign",
+  "operation_class": "create",
+  "label": "Creates an SMS campaign",
+  "description": "Create a new SMS campaign with the required name, sender, and content fields. The sender name is limited to 11 alphanumeric characters or 15 numeric characters, and the content should stay within 160 characters per SMS segment. If a scheduledAt date is provided, listIds in recipients become mandatory; accounts under validation are limited to 4 total campaigns and campaigns with more than 10 recipients will be saved as draft.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "description": "Content of the message. The **maximum characters used per SMS is 160**, if used more than that, it will be counted as more than one SMS.\n",
+          "example": "Get a discount by visiting our NY store and saying : Happy Spring!",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the campaign",
+          "example": "Spring Promo Code",
+          "type": "string"
+        },
+        "organisationPrefix": {
+          "description": "A recognizable prefix will ensure your audience knows who you are. Recommended by U.S. carriers. This will be added as your Brand Name before the message content. **Prefer verifying maximum length of 160 characters including this prefix in message content to avoid multiple sending of same sms.**",
+          "example": "MyCompany",
+          "type": "string"
+        },
+        "recipients": {
+          "properties": {
+            "exclusionListIds": {
+              "description": "(nested schema truncated)"
+            },
+            "listIds": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        },
+        "scheduledAt": {
+          "description": "UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**\n",
+          "example": "2017-05-05T12:30:00+02:00",
+          "type": "string"
+        },
+        "sender": {
+          "description": "Name of the sender. **The number of characters is limited to 11 for alphanumeric characters and 15 for numeric characters**\n",
+          "example": "MyShop",
+          "maxLength": 15,
+          "type": "string"
+        },
+        "unicodeEnabled": {
+          "default": false,
+          "description": "Format of the message. It indicates whether the content should be treated as unicode or not.\n",
+          "example": true,
+          "type": "boolean"
+        },
+        "unsubscribeInstruction": {
+          "description": "Instructions to unsubscribe from future communications. Recommended by U.S. carriers. Must include **STOP** keyword. This will be added as instructions after the end of message content. **Prefer verifying maximum length of 160 characters including this instructions in message content to avoid multiple sending of same sms.**",
+          "example": "send Stop if you want to unsubscribe.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "content",
+        "name",
+        "sender"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "sms_campaign",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/smsCampaigns",
+      "auth": "header api-key",
+      "params": {
+        "content": "body",
+        "name": "body",
+        "organisationPrefix": "body",
+        "recipients": "body",
+        "scheduledAt": "body",
+        "sender": "body",
+        "unicodeEnabled": "body",
+        "unsubscribeInstruction": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.sms_campaigns.get_sms_campaign",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.sms_campaigns.delete_sms_campaign",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smsCampaigns/post (createSmsCampaign)"
+    }
+  ]
+}

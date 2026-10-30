@@ -1,0 +1,163 @@
+{
+  "id": "brevo.transactional_emails.get_aggregated_smtp_report",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "aggregated_report",
+  "operation_class": "read",
+  "label": "Get your transactional email activity aggregated over a period of time",
+  "description": "This endpoint will show the aggregated stats for past 90 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 90 days",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate"
+        },
+        "days": {
+          "format": "int64",
+          "maximum": 90,
+          "type": "integer",
+          "description": "Number of days in the past including today (positive integer, maximum 90). _Not compatible with 'startDate' and 'endDate'_. Defaults to 90 if neither dates nor days are provided."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag of the emails"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "blocked": {
+          "description": "Number of blocked contact emails for the timeframe",
+          "example": 2,
+          "format": "int64",
+          "type": "integer"
+        },
+        "clicks": {
+          "description": "Number of clicks for the timeframe",
+          "example": 12,
+          "format": "int64",
+          "type": "integer"
+        },
+        "delivered": {
+          "description": "Number of delivered emails for the timeframe",
+          "example": 249,
+          "format": "int64",
+          "type": "integer"
+        },
+        "hardBounces": {
+          "description": "Number of hardbounces for the timeframe",
+          "example": 1,
+          "format": "int64",
+          "type": "integer"
+        },
+        "invalid": {
+          "description": "Number of invalid emails for the timeframe",
+          "example": 0,
+          "format": "int64",
+          "type": "integer"
+        },
+        "opens": {
+          "description": "Number of openings for the timeframe",
+          "example": 47,
+          "format": "int64",
+          "type": "integer"
+        },
+        "range": {
+          "description": "Time frame of the report",
+          "example": "2016-09-08|2017-04-06",
+          "type": "string"
+        },
+        "requests": {
+          "description": "Number of requests for the timeframe",
+          "example": 263,
+          "format": "int64",
+          "type": "integer"
+        },
+        "softBounces": {
+          "description": "Number of softbounces for the timeframe",
+          "example": 4,
+          "format": "int64",
+          "type": "integer"
+        },
+        "spamReports": {
+          "description": "Number of complaint (spam report) for the timeframe",
+          "example": 0,
+          "format": "int64",
+          "type": "integer"
+        },
+        "uniqueClicks": {
+          "description": "Number of unique clicks for the timeframe",
+          "example": 8,
+          "format": "int64",
+          "type": "integer"
+        },
+        "uniqueOpens": {
+          "description": "Number of unique openings for the timeframe",
+          "example": 37,
+          "format": "int64",
+          "type": "integer"
+        },
+        "unsubscribed": {
+          "description": "Number of unsubscribed emails for the timeframe",
+          "example": 0,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/smtp/statistics/aggregatedReport",
+      "auth": "header api-key",
+      "params": {
+        "startDate": "query",
+        "endDate": "query",
+        "days": "query",
+        "tag": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/statistics/aggregatedReport/get (getAggregatedSmtpReport)"
+    }
+  ]
+}

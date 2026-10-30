@@ -1,0 +1,130 @@
+{
+  "id": "brevo.sms_campaigns.get_sms_campaigns",
+  "product": "brevo",
+  "area": "SMS Campaigns",
+  "entity": "sms_campaign",
+  "operation_class": "read",
+  "label": "Returns the information for all your created SMS campaigns",
+  "description": "Retrieve a paginated list of all your SMS campaigns with their statistics and recipient information. Results can be filtered by status and date range, with a default limit of 500 and maximum of 1000 per page. The sort order defaults to descending by creation date; date filters are only available when status is not passed or is set to sent.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "suspended",
+            "archive",
+            "sent",
+            "queued",
+            "draft",
+            "inProcess"
+          ],
+          "type": "string",
+          "description": "Status of campaign."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent SMS campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. `startDate` must not be in the future."
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent SMS campaigns. **Prefer to pass your timezone in date-time format for accurate result.** Only available if `status` is not passed or is set to `sent`. `endDate` must not be in the future."
+        },
+        "limit": {
+          "default": 500,
+          "format": "int64",
+          "maximum": 1000,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Beginning point in the list to retrieve from."
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "campaigns": {
+          "items": {
+            "allOf": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "count": {
+          "description": "Number of SMS campaigns retrieved",
+          "example": 12,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/smsCampaigns",
+      "auth": "header api-key",
+      "params": {
+        "status": "query",
+        "startDate": "query",
+        "endDate": "query",
+        "limit": "query",
+        "offset": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smsCampaigns/get (getSmsCampaigns)"
+    }
+  ]
+}

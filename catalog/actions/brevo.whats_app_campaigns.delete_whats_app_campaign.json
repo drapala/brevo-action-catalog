@@ -1,0 +1,83 @@
+{
+  "id": "brevo.whats_app_campaigns.delete_whats_app_campaign",
+  "product": "brevo",
+  "area": "WhatsApp Campaigns",
+  "entity": "whatsapp_campaign",
+  "operation_class": "delete",
+  "label": "Delete a WhatsApp campaign",
+  "description": "Delete a WhatsApp campaign by its campaign ID. The campaign must exist; if the campaign ID is not found, a 404 error is returned. This action is permanent and cannot be undone.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the campaign"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "whatsapp_campaign",
+        "find_with": "brevo.whats_app_campaigns.get_whats_app_campaigns",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/whatsappCampaigns/{campaignId}",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "WhatsApp Business account connected (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.whats_app_campaigns.get_whats_app_campaign",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "WhatsApp Business account connected"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//whatsappCampaigns/{campaignId}/delete (deleteWhatsAppCampaign)"
+    }
+  ]
+}

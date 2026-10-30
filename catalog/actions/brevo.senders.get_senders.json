@@ -1,0 +1,89 @@
+{
+  "id": "brevo.senders.get_senders",
+  "product": "brevo",
+  "area": "Senders",
+  "entity": "sender",
+  "operation_class": "read",
+  "label": "Get email senders",
+  "description": "Retrieves a list of all email senders from your Brevo account with optional filtering. **Use this to:** - Get all available senders for email campaign setup - Find sender details including ID, name, and email address - Filter senders by IP address for dedicated IP users - Filter senders by domain for domain-specific configurations - Monitor sender configuration and status **Key information returned:** - Sender details (ID, name, email address) - Sender status and verification information - Associated IP addresses and domains (for dedicated IP accounts) - Sender configuration settings **Importa",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string",
+          "description": "Filter your senders for a specific ip. **Available for dedicated IP usage only**"
+        },
+        "domain": {
+          "type": "string",
+          "description": "Filter your senders for a specific domain"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "senders": {
+          "description": "List of the senders available in your account",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/senders",
+      "auth": "header api-key",
+      "params": {
+        "ip": "query",
+        "domain": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/get (getSenders)"
+    }
+  ]
+}

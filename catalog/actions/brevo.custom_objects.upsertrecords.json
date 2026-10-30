@@ -1,0 +1,107 @@
+{
+  "id": "brevo.custom_objects.upsertrecords",
+  "product": "brevo",
+  "area": "Custom Objects",
+  "entity": "object",
+  "operation_class": "create",
+  "label": "Create/Update object records in bulk",
+  "description": "<Note title=\"Enterprise access only\">Custom objects are only available to Enterprise plans. This feature is in beta. These are subject to change.</Note> Performs bulk create or update (upsert) operations for object records in a single asynchronous request. This endpoint is optimized for high-volume data imports and synchronization scenarios. **How Upsert Works:** - **Create**: Omit `identifiers`, or provide only `ext_id` (if it doesn't already exist). A new record is created with a Brevo-generated `id`. - **Update**: Provide `id` (Brevo internal ID) or an `ext_id` that already exists. The matc",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "object_type": {
+          "example": "vehicle",
+          "type": "string",
+          "description": "Object type for the records to upsert. Must be a previously created custom object type. Only lowercase alphanumeric characters and underscores are allowed (max 32 characters)."
+        },
+        "records": {
+          "description": "List of object records to be upsert. Each record can have attributes, identifiers, and associations.",
+          "items": {
+            "oneOf": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "maxItems": 1000,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "object_type",
+        "records"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "object_type",
+        "entity": "object_type",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "message": {
+          "example": "Batch object records are being processed",
+          "type": "string"
+        },
+        "processId": {
+          "description": "Unique Id for the batch process used to track the status of the batch. **How to use this processId:**   Refer to the [Get process status API](https://developers.brevo.com/reference/get-process) to check the execution status of this batch using the returned `processId`.",
+          "example": 21,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/objects/{object_type}/batch/upsert",
+      "auth": "header api-key",
+      "params": {
+        "object_type": "path",
+        "records": "body"
+      },
+      "success_status": [
+        202
+      ]
+    }
+  ],
+  "preconditions": [
+    "Custom objects enabled (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Custom objects enabled"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//objects/{object_type}/batch/upsert/post (upsertrecords)"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "id": "brevo.contacts.get_contact_info",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact",
+  "operation_class": "read",
+  "label": "Get a contact's details",
+  "description": "<Note>Follow this format when passing a \"SMS\" phone number as an attribute. Accepted Number Formats 91xxxxxxxxxx +91xxxxxxxxxx 0091xxxxxxxxxx</Note> There are 2 ways to get a contact <br><br> Option 1- https://api.brevo.com/v3/contacts/{identifier} <br><br> Option 2- https://api.brevo.com/v3/contacts/{identifier}?identifierType={} <br> <br> Option 1 only works if identifierType is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact),where you can directly pass the value of EMAIL, SMS and ID of the contact. <br><br> Option 2 works for all identifierType, use email_id f",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "Email (urlencoded) OR ID of the contact OR its SMS attribute value OR EXT_ID attribute (urlencoded)"
+        },
+        "identifierType": {
+          "enum": [
+            "email_id",
+            "phone_id",
+            "contact_id",
+            "ext_id",
+            "whatsapp_id",
+            "landline_number_id"
+          ],
+          "type": "string",
+          "description": "email_id for Email, phone_id for SMS attribute, contact_id for ID of the contact, ext_id for EXT_ID attribute, whatsapp_id for WHATSAPP attribute, landline_number_id for LANDLINE_NUMBER attribute"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be lower than equal to endDate. Must not be greater than the current date."
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate. Must not be greater than the current date."
+        }
+      },
+      "required": [
+        "identifier"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "identifier",
+        "entity": "contact",
+        "find_with": "brevo.contacts.get_contacts",
+        "create_with": "brevo.contacts.create_contact"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "allOf": [
+        {
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        {
+          "properties": {
+            "statistics": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/contacts/{identifier}",
+      "auth": "header api-key",
+      "params": {
+        "identifier": "path",
+        "identifierType": "query",
+        "startDate": "query",
+        "endDate": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/{identifier}/get (getContactInfo)"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "id": "brevo.whats_app_campaigns.update_whats_app_campaign",
+  "product": "brevo",
+  "area": "WhatsApp Campaigns",
+  "entity": "whatsapp_campaign",
+  "operation_class": "update",
+  "label": "Update a WhatsApp campaign",
+  "description": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below. [Activating Whatsapp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note> <Note>This API requires the List and Segment ids as recipients in Body params.You can use the below Contact endpoints to get the required information. [Get all the Lists](https://developers.brevo.com/reference/getlists-1) [Get all the Segments](https://developers.brevo.com/reference/getsegments)</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the campaign"
+        },
+        "campaignName": {
+          "description": "Name of the campaign",
+          "example": "Test WhatsApp",
+          "type": "string"
+        },
+        "campaignStatus": {
+          "default": "scheduled",
+          "description": "Status of the campaign",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "scheduled",
+          "type": "string"
+        },
+        "recipients": {
+          "description": "Segment ids and List ids to include/exclude from campaign",
+          "properties": {
+            "excludedListIds": {
+              "description": "(nested schema truncated)"
+            },
+            "listIds": {
+              "description": "(nested schema truncated)"
+            },
+            "segments": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "rescheduleFor": {
+          "description": "Reschedule the sending UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of campaign. **Prefer to pass your timezone in date-time format for accurate result.For example: **2017-06-01T12:30:00+02:00** Use this field to update the scheduledAt of any existing draft or scheduled WhatsApp campaign.\n",
+          "example": "2017-06-01T12:30:00+02:00",
+          "type": "string"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "whatsapp_campaign",
+        "find_with": "brevo.whats_app_campaigns.get_whats_app_campaigns",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/whatsappCampaigns/{campaignId}",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path",
+        "campaignName": "body",
+        "campaignStatus": "body",
+        "recipients": "body",
+        "rescheduleFor": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "WhatsApp Business account connected (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.whats_app_campaigns.get_whats_app_campaign",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.whats_app_campaigns.update_whats_app_campaign",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "WhatsApp Business account connected"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//whatsappCampaigns/{campaignId}/put (updateWhatsAppCampaign)"
+    }
+  ]
+}

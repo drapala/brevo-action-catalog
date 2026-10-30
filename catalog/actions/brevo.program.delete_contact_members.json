@@ -1,0 +1,86 @@
+{
+  "id": "brevo.program.delete_contact_members",
+  "product": "brevo",
+  "area": "Program",
+  "entity": "subscription_member",
+  "operation_class": "delete",
+  "label": "Delete subscription member",
+  "description": "Deletes member from a subscription",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+        },
+        "memberContactIds": {
+          "type": "string",
+          "description": "Comma-separated list of member contact IDs to delete from the subscription."
+        }
+      },
+      "required": [
+        "pid",
+        "memberContactIds"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/loyalty/config/programs/{pid}/subscription-members",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "memberContactIds": "query"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/config/programs/{pid}/subscription-members/delete (deleteContactMembers)"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "id": "brevo.account.get_account_activity",
+  "product": "brevo",
+  "area": "Account",
+  "entity": "activity",
+  "operation_class": "read",
+  "label": "Get user activity logs",
+  "description": "Retrieves user activity logs from your organization for security monitoring and audit compliance. Use this to: - Monitor user login activities and access patterns - Track account modifications and configuration changes - Generate security audit reports and compliance documentation - Investigate suspicious activities and unauthorized access - Monitor team member actions and account usage Key information returned: - Complete user activity details and timestamps - User identification (email, IP address, browser) - Action types and activity descriptions - Security-relevant events and access logs -",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "description": "Mandatory if endDate is used. Enter start date in UTC date (YYYY-MM-DD)\nformat to filter the activity in your account. Maximum time period that\ncan be selected is one month. Additionally, you can retrieve activity\nlogs from the past 12 months from the date of your search."
+        },
+        "endDate": {
+          "type": "string",
+          "description": "Mandatory if startDate is used. Enter end date in UTC date (YYYY-MM-DD)\nformat to filter the activity in your account. Maximum time period that\ncan be selected is one month."
+        },
+        "email": {
+          "type": "string",
+          "description": "Enter the user's email address to filter their activity in the account."
+        },
+        "limit": {
+          "default": 10,
+          "format": "int64",
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document in the page."
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "logs": {
+          "description": "Get user activity logs",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/organization/activities",
+      "auth": "header api-key",
+      "params": {
+        "startDate": "query",
+        "endDate": "query",
+        "email": "query",
+        "limit": "query",
+        "offset": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//organization/activities/get (getAccountActivity)"
+    }
+  ]
+}

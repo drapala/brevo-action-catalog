@@ -1,0 +1,110 @@
+{
+  "id": "brevo.user.get_user_permission",
+  "product": "brevo",
+  "area": "User",
+  "entity": "permission",
+  "operation_class": "read",
+  "label": "Check user permission",
+  "description": "Retrieves the granular feature-level permissions assigned to a specific user in the organization, identified by their email address. The response includes the user''s current status (active or pending) and a detailed list of privileges specifying which features and permission levels are granted.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email of the invited user."
+        }
+      },
+      "required": [
+        "email"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "email",
+        "entity": "email",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "Check user permission",
+      "properties": {
+        "email": {
+          "description": "Email address of the user.",
+          "example": "invitedUser@company.com",
+          "type": "string"
+        },
+        "privileges": {
+          "description": "Granular feature permissions given to the user.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "status": {
+          "description": "Status of the invited user.",
+          "example": "active",
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "status",
+        "privileges"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/organization/user/{email}/permissions",
+      "auth": "header api-key",
+      "params": {
+        "email": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//organization/user/{email}/permissions/get (getUserPermission)"
+    }
+  ]
+}

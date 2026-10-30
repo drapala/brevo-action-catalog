@@ -1,0 +1,123 @@
+{
+  "id": "brevo.master_account.get_sub_account_details",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "sub_account",
+  "operation_class": "read",
+  "label": "Get sub-account details",
+  "description": "This endpoint will provide the details for the specified sub-account company",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the sub-account organization"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "sub_account",
+        "find_with": "brevo.master_account.get_list_sub_accounts_master_account",
+        "create_with": "brevo.master_account.create_new_sub_account_under_master_account"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "companyName": {
+          "description": "Sub-account company name",
+          "type": "string"
+        },
+        "email": {
+          "description": "Email id of the sub-account organization",
+          "type": "string"
+        },
+        "groups": {
+          "description": "List of groups associated with the sub-account",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Name of the sub-account user",
+          "type": "string"
+        },
+        "planInfo": {
+          "description": "Sub-account plan details",
+          "properties": {
+            "credits": {
+              "description": "(nested schema truncated)"
+            },
+            "features": {
+              "description": "(nested schema truncated)"
+            },
+            "planType": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/corporate/subAccount/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/subAccount/{id}/get"
+    }
+  ]
+}

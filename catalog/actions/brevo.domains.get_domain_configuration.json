@@ -1,0 +1,126 @@
+{
+  "id": "brevo.domains.get_domain_configuration",
+  "product": "brevo",
+  "area": "Domains",
+  "entity": "sender_domain",
+  "operation_class": "read",
+  "label": "Get a sender domain configuration",
+  "description": "Retrieves configuration of a specific domain, to know if the domain is valid or not. Use this to: - Check domain configuration - Validate a domain configuration - Monitor DNS record status - Troubleshoot authentication issues Key information returned: - Domain verification and authentication status - DNS records configuration and validation status - Detailed authentication requirements",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "domainName": {
+          "type": "string",
+          "description": "Domain name"
+        }
+      },
+      "required": [
+        "domainName"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "domainName",
+        "entity": "sender_domain",
+        "find_with": "brevo.domains.get_domains",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "domain": {
+          "description": "Domain name",
+          "example": "mycompany.com",
+          "type": "string"
+        },
+        "verified": {
+          "description": "Status of domain verification (true=verified, false=non\nverified)",
+          "example": true,
+          "type": "boolean"
+        },
+        "authenticated": {
+          "description": "Status of domain authentication (true=authenticated, false=non\nauthenticated)",
+          "example": false,
+          "type": "boolean"
+        },
+        "dns_records": {
+          "description": "DNS records configuration and status",
+          "properties": {
+            "brevo_code": {
+              "description": "(nested schema truncated)"
+            },
+            "dkim_record": {
+              "description": "(nested schema truncated)"
+            },
+            "dmarc_record": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "domain",
+        "verified",
+        "authenticated",
+        "dns_records"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/senders/domains/{domainName}",
+      "auth": "header api-key",
+      "params": {
+        "domainName": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/domains/{domainName}/get (getDomainConfiguration)"
+    }
+  ]
+}

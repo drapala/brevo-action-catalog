@@ -1,0 +1,226 @@
+{
+  "id": "brevo.consent_groups.update_consent_group",
+  "product": "brevo",
+  "area": "ConsentGroups",
+  "entity": "consent_group",
+  "operation_class": "update",
+  "label": "Update a consent group",
+  "description": "Updates name, description, or signupMode of a consent group. At least one field must be provided. <Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the consent group to update"
+        },
+        "name": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "description": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "signupMode": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "consent_group",
+        "find_with": "brevo.consent_groups.get_consent_groups",
+        "create_with": "brevo.consent_groups.create_consent_group"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "type": "object",
+      "description": "A consent group representing a category of contact opt-in/opt-out preferences.",
+      "properties": {
+        "id": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "name": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "description": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "signupMode": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "contactsCount": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "isDefault": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "createdAt": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "updatedAt": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "signupMode",
+        "contactsCount",
+        "isDefault",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/contacts/consent-groups/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path",
+        "name": "body",
+        "description": "body",
+        "signupMode": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.consent_groups.get_consent_group",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.consent_groups.update_consent_group",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/consent-groups/{id}/put (updateConsentGroup)"
+    }
+  ]
+}

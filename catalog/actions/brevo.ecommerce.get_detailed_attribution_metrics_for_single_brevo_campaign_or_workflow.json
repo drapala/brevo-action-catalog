@@ -1,0 +1,125 @@
+{
+  "id": "brevo.ecommerce.get_detailed_attribution_metrics_for_single_brevo_campaign_or_workflow",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "metric",
+  "operation_class": "read",
+  "label": "Get detailed attribution metrics for a single Brevo campaign or workflow",
+  "description": "Retrieve detailed attribution metrics for a single Brevo campaign or automation workflow, identified by its conversion source type and ID. The response includes orders count, revenue, average basket value, and the number of new customers attributed to that specific campaign or workflow.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "conversionSource": {
+          "enum": [
+            "email_campaign",
+            "sms_campaign",
+            "automation_workflow_email",
+            "automation_workflow_sms"
+          ],
+          "type": "string",
+          "description": "The Brevo campaign type or workflow type for which data will be retrieved"
+        },
+        "conversionSourceId": {
+          "example": "sale",
+          "type": "string",
+          "description": "The Brevo campaign or automation workflow id for which data will be retrieved"
+        }
+      },
+      "required": [
+        "conversionSource",
+        "conversionSourceId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "conversionSource",
+        "entity": "conversion_source",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "conversionSourceId",
+        "entity": "conversion_source",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "allOf": [
+        {
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        {
+          "properties": {
+            "newCustomersCount": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/ecommerce/attribution/metrics/{conversionSource}/{conversionSourceId}",
+      "auth": "header api-key",
+      "params": {
+        "conversionSource": "path",
+        "conversionSourceId": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//ecommerce/attribution/metrics/{conversionSource}/{conversionSourceId}/get"
+    }
+  ]
+}

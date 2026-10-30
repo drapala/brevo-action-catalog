@@ -1,0 +1,110 @@
+{
+  "id": "brevo.master_account.create_new_group_sub_accounts",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "group",
+  "operation_class": "create",
+  "label": "Create a new group of sub-accounts",
+  "description": "This endpoint allows to create a group of sub-accounts",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "groupName": {
+          "description": "The name of the group of sub-accounts",
+          "example": "My group",
+          "type": "string"
+        },
+        "subAccountIds": {
+          "description": "Pass the list of sub-account Ids to be included in the group",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "groupName"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "group",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/corporate/group",
+      "auth": "header api-key",
+      "params": {
+        "groupName": "body",
+        "subAccountIds": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.master_account.get_group_details",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.master_account.delete_group",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/group/post"
+    }
+  ]
+}

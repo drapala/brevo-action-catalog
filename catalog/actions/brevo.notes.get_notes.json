@@ -1,0 +1,145 @@
+{
+  "id": "brevo.notes.get_notes",
+  "product": "brevo",
+  "area": "Notes",
+  "entity": "note",
+  "operation_class": "read",
+  "label": "Get all notes",
+  "description": "Retrieve a paginated list of CRM notes with optional filtering by entity type, entity IDs, and date range. Results are sorted by creation date in descending order by default, with a default limit of 50 notes per page.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "enum": [
+            "companies",
+            "deals",
+            "contacts"
+          ],
+          "type": "string",
+          "description": "Filter by note entity type"
+        },
+        "entityIds": {
+          "type": "string",
+          "description": "Filter by note entity IDs"
+        },
+        "dateFrom": {
+          "type": "integer",
+          "description": "dateFrom to date range filter type (timestamp in milliseconds)"
+        },
+        "dateTo": {
+          "type": "integer",
+          "description": "dateTo to date range filter type (timestamp in milliseconds)"
+        },
+        "offset": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document of the page"
+        },
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "sort": {
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "List of notes",
+      "items": {
+        "description": "Note Details",
+        "properties": {
+          "id": {
+            "description": "(nested schema truncated)"
+          },
+          "text": {
+            "description": "(nested schema truncated)"
+          },
+          "contactIds": {
+            "description": "(nested schema truncated)"
+          },
+          "companyIds": {
+            "description": "(nested schema truncated)"
+          },
+          "dealIds": {
+            "description": "(nested schema truncated)"
+          },
+          "authorId": {
+            "description": "(nested schema truncated)"
+          },
+          "createdAt": {
+            "description": "(nested schema truncated)"
+          },
+          "updatedAt": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "required": [
+          {
+            "description": "(nested schema truncated)"
+          }
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/crm/notes",
+      "auth": "header api-key",
+      "params": {
+        "entity": "query",
+        "entityIds": "query",
+        "dateFrom": "query",
+        "dateTo": "query",
+        "offset": "query",
+        "limit": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/notes/get"
+    }
+  ]
+}

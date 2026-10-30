@@ -1,0 +1,151 @@
+{
+  "id": "brevo.balance.create_subscription_balances",
+  "product": "brevo",
+  "area": "Balance",
+  "entity": "balance",
+  "operation_class": "create",
+  "label": "Create subscription balances",
+  "description": "Creates a balance for a contact",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program Id"
+        },
+        "cid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Contact Id"
+        },
+        "balanceDefinitionId": {
+          "description": "Unique identifier (UUID) of the balance definition associated with the new balance.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pid",
+        "cid",
+        "balanceDefinitionId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "cid",
+        "entity": "cid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "Unique identifier for the balance.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "amount": {
+          "description": "The current amount available in the balance.",
+          "type": "number",
+          "format": "float"
+        },
+        "loyaltyProgramId": {
+          "description": "Loyalty program ID.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "organizationId": {
+          "description": "Organization ID.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "contactId": {
+          "description": "Contact ID.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "balanceDefinitionId": {
+          "description": "Balance definition ID.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "Timestamp of when the balance was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "expiresAt": {
+          "description": "Expiration timestamp of the balance.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "consumedAt": {
+          "description": "Timestamp of when the balance was last consumed.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "balance",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/balance/programs/{pid}/subscriptions/{cid}/balances",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "cid": "path",
+        "balanceDefinitionId": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/balance/programs/{pid}/subscriptions/{cid}/balances/post"
+    }
+  ]
+}

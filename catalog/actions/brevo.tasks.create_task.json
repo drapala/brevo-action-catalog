@@ -1,0 +1,207 @@
+{
+  "id": "brevo.tasks.create_task",
+  "product": "brevo",
+  "area": "Tasks",
+  "entity": "task",
+  "operation_class": "create",
+  "label": "Create a task",
+  "description": "Create a new CRM task with the specified name, type, due date, and optional associations to contacts, companies, or deals. A task requires a name, task type ID, and due date at minimum. You can also set a duration, notes, a reminder, and assign the task to a specific user.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "assignToId": {
+          "description": "To assign a task to a user you can use either the account email or ID.",
+          "example": "5faab4b7f195bb3c4c31e62a",
+          "type": "string"
+        },
+        "companiesIds": {
+          "description": "Companies ids for companies a task is linked to",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "contactsIds": {
+          "description": "Contact ids for contacts linked to this task",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "date": {
+          "description": "Task due date and time",
+          "example": "2021-11-01T17:44:54.668Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "dealsIds": {
+          "description": "Deal ids for deals a task is linked to",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "done": {
+          "description": "Task marked as done",
+          "example": false,
+          "type": "boolean"
+        },
+        "duration": {
+          "description": "Duration of task in milliseconds [1 minute = 60000 ms]",
+          "example": 600000,
+          "format": "int64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "name": {
+          "description": "Name of task",
+          "example": "Task: Connect with client",
+          "type": "string"
+        },
+        "notes": {
+          "description": "Notes added to a task",
+          "example": "In communication with client for resolution of queries.",
+          "type": "string"
+        },
+        "reminder": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "taskTypeId": {
+          "description": "Id for type of task e.g Call / Email / Meeting etc.",
+          "example": "61a5cd07ca1347c82306ad09",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "taskTypeId",
+        "date"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "Task Details",
+      "properties": {
+        "id": {
+          "description": "Unique task id",
+          "example": "61a5cd07ca1347c82306ad06",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "task",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/crm/tasks",
+      "auth": "header api-key",
+      "params": {
+        "assignToId": "body",
+        "companiesIds": "body",
+        "contactsIds": "body",
+        "date": "body",
+        "dealsIds": "body",
+        "done": "body",
+        "duration": "body",
+        "name": "body",
+        "notes": "body",
+        "reminder": "body",
+        "taskTypeId": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.tasks.get_task",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.tasks.delete_task",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/tasks/post"
+    }
+  ]
+}

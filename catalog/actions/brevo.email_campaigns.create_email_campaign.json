@@ -1,0 +1,376 @@
+{
+  "id": "brevo.email_campaigns.create_email_campaign",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "email_campaign",
+  "operation_class": "create",
+  "label": "Create an email campaign",
+  "description": "Create a new email campaign. The campaign requires at minimum a name and sender details, and is created in draft status by default. You must provide email content via one of three mutually exclusive options: htmlContent (inline HTML), htmlUrl (remote URL), or templateId (existing template); additionally, A/B testing can be enabled by setting abTesting to true with subjectA and subjectB, but this is incompatible with sendAtBestTime.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "abTesting": {
+          "default": false,
+          "description": "Status of A/B Test. abTesting = false means it is disabled & abTesting = true means it is enabled. **subjectA, subjectB, splitRule, winnerCriteria & winnerDelay** will be considered when abTesting is set to true. subjectA & subjectB are mandatory together & subject if passed is ignored. **Can be set to true only if sendAtBestTime is false**. You will be able to set up two subject lines for your campaign and send them to a random sample of your total recipients. Half of the test group will receive version A, and the other half will receive version B\n",
+          "example": true,
+          "type": "boolean"
+        },
+        "attachmentUrl": {
+          "description": "Absolute url of the attachment (no local file). Extension allowed: #### xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps\n",
+          "example": "https://attachment.domain.com",
+          "format": "url",
+          "type": "string"
+        },
+        "emailExpirationDate": {
+          "description": "To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy. Learn more about setting an email expiration date. For reference , ``https://help.brevo.com/hc/en-us/articles/4413566705298-Create-an-email-campaign``",
+          "properties": {
+            "duration": {
+              "description": "(nested schema truncated)"
+            },
+            "unit": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "footer": {
+          "description": "Footer of the email campaign",
+          "example": "[DEFAULT_FOOTER]",
+          "type": "string"
+        },
+        "header": {
+          "description": "Header of the email campaign",
+          "example": "[DEFAULT_HEADER]",
+          "type": "string"
+        },
+        "htmlContent": {
+          "description": "**Mandatory if htmlUrl and templateId are empty.** Body of the message (HTML). Must have more than 10 characters and be less than 1MB in size. Cannot be used together with `htmlUrl` or `templateId`.\n",
+          "example": "<!DOCTYPE html> <html> <body> <h1>Confirm you email</h1> <p>Please confirm your email address by clicking on the link below</p> </body> </html>",
+          "type": "string"
+        },
+        "htmlUrl": {
+          "description": "**Mandatory if htmlContent and templateId are empty.** URL to the message (HTML). Cannot be used together with `htmlContent` or `templateId`. For example: **https://html.domain.com**\n",
+          "example": "https://html.domain.com",
+          "format": "url",
+          "type": "string"
+        },
+        "increaseRate": {
+          "description": "**Mandatory if ipWarmupEnable is set to true**. Set a percentage increase rate for warming up your ip. We recommend you set the increase rate to 30% per day. If you want to send the same number of emails every day, set the daily increase value to 0%.\n",
+          "example": 70,
+          "format": "int64",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "initialQuota": {
+          "description": "**Mandatory if ipWarmupEnable is set to true**. Set an initial quota greater than 1 for warming up your ip. We recommend you set a value of 3000.\n",
+          "example": 3000,
+          "format": "int64",
+          "type": "integer"
+        },
+        "inlineImageActivation": {
+          "default": false,
+          "description": "Use true to embedded the images in your email. Final size of the email should be less than **4MB**. Campaigns with embedded images can _not be sent to more than 5000 contacts_\n",
+          "example": true,
+          "type": "boolean"
+        },
+        "ipWarmupEnable": {
+          "default": false,
+          "description": "**Available for dedicated ip clients**. Set this to true if you wish to warm up your ip.\n",
+          "example": true,
+          "type": "boolean"
+        },
+        "mirrorActive": {
+          "description": "Use true to enable the mirror link",
+          "example": true,
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the campaign",
+          "example": "Newsletter - May 2017",
+          "type": "string"
+        },
+        "params": {
+          "additionalProperties": {},
+          "description": "Pass the set of attributes to customize the type classic campaign. For example: **{\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}**. Only available if **type** is **classic**. It's considered only if campaign is in _New Template Language format_. The New Template Language is dependent on the values of **subject, htmlContent/htmlUrl, sender.name & toField**\n",
+          "example": {
+            "FNAME": {
+              "description": "(nested schema truncated)"
+            },
+            "LNAME": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "previewText": {
+          "description": "Preview text or preheader of the email campaign",
+          "example": "Thanks for your order!",
+          "type": "string"
+        },
+        "recipients": {
+          "description": "Segment ids and List ids to include/exclude from campaign",
+          "properties": {
+            "exclusionListIds": {
+              "description": "(nested schema truncated)"
+            },
+            "exclusionSegmentIds": {
+              "description": "(nested schema truncated)"
+            },
+            "listIds": {
+              "description": "(nested schema truncated)"
+            },
+            "segmentIds": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "replyTo": {
+          "description": "Email on which the campaign recipients will be able to reply to",
+          "example": "support@myshop.com",
+          "format": "email",
+          "type": "string"
+        },
+        "scheduledAt": {
+          "description": "Sending UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result**. If sendAtBestTime is set to true, your campaign will be sent according to the date passed (ignoring the time part). For example: **2017-06-01T12:30:00+02:00**\n",
+          "example": "2017-06-01T12:30:00+02:00",
+          "type": "string"
+        },
+        "sendAtBestTime": {
+          "default": false,
+          "description": "Set this to true if you want to send your campaign at best time.",
+          "example": true,
+          "type": "boolean"
+        },
+        "sender": {
+          "description": "Sender details including id or email and name (optional). Only one of either Sender’s email or Sender’s ID shall be passed in one request at a time. Passing both `email` and `id` will result in an error. For example: **{\"name\":\"xyz\", \"email\":\"example@abc.com\"}** or **{\"name\":\"xyz\", \"id\":123}**\n",
+          "properties": {
+            "email": {
+              "description": "(nested schema truncated)"
+            },
+            "id": {
+              "description": "(nested schema truncated)"
+            },
+            "name": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "splitRule": {
+          "description": "Add the size of your test groups. **Mandatory if abTesting = true & 'recipients' is passed**. We'll send version A and B to a random sample of recipients, and then the winning version to everyone else\n",
+          "example": 50,
+          "format": "int64",
+          "maximum": 50,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "subject": {
+          "description": "Subject of the campaign. **Mandatory if abTesting is false**. Ignored if abTesting is true.\n",
+          "example": "Discover the New Collection !",
+          "type": "string"
+        },
+        "subjectA": {
+          "description": "Subject A of the campaign. **Mandatory if abTesting = true**. subjectA & subjectB should have unique value\n",
+          "example": "Discover the New Collection!",
+          "type": "string"
+        },
+        "subjectB": {
+          "description": "Subject B of the campaign. **Mandatory if abTesting = true**. subjectA & subjectB should have unique value\n",
+          "example": "Want to discover the New Collection?",
+          "type": "string"
+        },
+        "tag": {
+          "description": "Tag of the campaign",
+          "example": "Newsletter",
+          "type": "string"
+        },
+        "templateId": {
+          "description": "**Mandatory if htmlContent and htmlUrl are empty.** Id of the transactional email template with status _active_. Used to copy only its content fetched from htmlContent/htmlUrl to an email campaign for RSS feature. Cannot be used together with `htmlContent` or `htmlUrl`.\n",
+          "format": "int64",
+          "type": "integer"
+        },
+        "toField": {
+          "description": "To personalize the **To** Field. If you want to include the first name and last name of your recipient, add **{FNAME} {LNAME}**. These contact attributes must already exist in your Brevo account. If input parameter **params** used please use **{{contact.FNAME}} {{contact.LNAME}}** for personalization\n",
+          "example": "{FNAME} {LNAME}",
+          "type": "string"
+        },
+        "unsubscriptionPageId": {
+          "description": "Enter an unsubscription page id. The page id is a 24 digit alphanumeric id that can be found in the URL when editing the page. If not entered, then the default unsubscription page will be used.\n",
+          "example": "62cbb7fabbe85021021aac52",
+          "type": "string"
+        },
+        "updateFormId": {
+          "description": "**Mandatory if templateId is used containing the {{ update_profile }} tag**. Enter an update profile form id. The form id is a 24 digit alphanumeric id that can be found in the URL when editing the form. If not entered, then the default update profile form will be used.\n",
+          "example": "6313436b9ad40e23b371d095",
+          "type": "string"
+        },
+        "utmCampaign": {
+          "description": "Customize the utm_campaign value. If this field is empty, the campaign name will be used. Only alphanumeric characters and spaces are allowed",
+          "example": "NL_05_2017",
+          "type": "string"
+        },
+        "utmContent": {
+          "description": "Customize the utm_content value. Appears on outgoing tracking links alongside utm_campaign. Only alphanumeric characters and spaces are allowed",
+          "example": "hero_button",
+          "type": "string"
+        },
+        "utmId": {
+          "description": "Customize the utm_id value. Appears on outgoing tracking links alongside utm_campaign. When omitted or empty, the utm_id entry from the account's global utm_settings is used if enabled; otherwise no utm_id parameter is emitted.",
+          "example": "promo_042",
+          "type": "string"
+        },
+        "utmMedium": {
+          "description": "Customize the utm_medium value. When omitted or empty, the utm_medium entry from the account's global utm_settings is used if set; otherwise the default `email` is used.",
+          "example": "email",
+          "type": "string"
+        },
+        "utmSource": {
+          "description": "Customize the utm_source value. When omitted or empty, the utm_source entry from the account's global utm_settings is used if set; otherwise the account default (`brevo` or `sendinblue`) is used.",
+          "example": "brevo",
+          "type": "string"
+        },
+        "utmTerm": {
+          "description": "Customize the utm_term value. Appears on outgoing tracking links alongside utm_campaign. Only alphanumeric characters and spaces are allowed",
+          "example": "summer_sale",
+          "type": "string"
+        },
+        "winnerCriteria": {
+          "description": "Choose the metrics that will determinate the winning version. **Mandatory if _splitRule_ >= 1 and < 50**. If splitRule = 50, `winnerCriteria` is ignored if passed\n",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "open",
+          "type": "string"
+        },
+        "winnerDelay": {
+          "description": "Choose the duration of the test in hours. Maximum is 7 days, pass 24*7 = 168 hours. The winning version will be sent at the end of the test. **Mandatory if _splitRule_ >= 1 and < 50**. If splitRule = 50, `winnerDelay` is ignored if passed\n",
+          "example": 50,
+          "format": "int64",
+          "maximum": 168,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "sender"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "email_campaign",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/emailCampaigns",
+      "auth": "header api-key",
+      "params": {
+        "abTesting": "body",
+        "attachmentUrl": "body",
+        "emailExpirationDate": "body",
+        "footer": "body",
+        "header": "body",
+        "htmlContent": "body",
+        "htmlUrl": "body",
+        "increaseRate": "body",
+        "initialQuota": "body",
+        "inlineImageActivation": "body",
+        "ipWarmupEnable": "body",
+        "mirrorActive": "body",
+        "name": "body",
+        "params": "body",
+        "previewText": "body",
+        "recipients": "body",
+        "replyTo": "body",
+        "scheduledAt": "body",
+        "sendAtBestTime": "body",
+        "sender": "body",
+        "splitRule": "body",
+        "subject": "body",
+        "subjectA": "body",
+        "subjectB": "body",
+        "tag": "body",
+        "templateId": "body",
+        "toField": "body",
+        "unsubscriptionPageId": "body",
+        "updateFormId": "body",
+        "utmCampaign": "body",
+        "utmContent": "body",
+        "utmId": "body",
+        "utmMedium": "body",
+        "utmSource": "body",
+        "utmTerm": "body",
+        "winnerCriteria": "body",
+        "winnerDelay": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.email_campaigns.get_email_campaign",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.email_campaigns.delete_email_campaign",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//emailCampaigns/post (createEmailCampaign)"
+    }
+  ]
+}

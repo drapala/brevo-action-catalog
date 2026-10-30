@@ -1,0 +1,325 @@
+{
+  "id": "brevo.reward.get_reward_information",
+  "product": "brevo",
+  "area": "Reward",
+  "entity": "reward",
+  "operation_class": "read",
+  "label": "Get reward information",
+  "description": "Returns reward information.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "rid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Reward ID"
+        },
+        "version": {
+          "default": "draft",
+          "enum": [
+            "active",
+            "draft"
+          ],
+          "type": "string",
+          "description": "Version"
+        }
+      },
+      "required": [
+        "pid",
+        "rid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "rid",
+        "entity": "rid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "attributionPerConsumer": {
+          "description": "Maximum number of times a consumer can be attributed this reward",
+          "type": "integer"
+        },
+        "balanceDefinitionId": {
+          "description": "Unique identifier for the balance definition",
+          "format": "uuid",
+          "type": "string"
+        },
+        "code": {
+          "description": "Unique code for the reward",
+          "type": "string"
+        },
+        "codeCount": {
+          "description": "Total number of codes generated",
+          "format": "int64",
+          "type": "integer"
+        },
+        "codeGeneratorId": {
+          "description": "Unique identifier for the code generator",
+          "format": "uuid",
+          "type": "string"
+        },
+        "codePoolId": {
+          "description": "Unique identifier for the code pool",
+          "format": "uuid",
+          "type": "string"
+        },
+        "config": {
+          "description": "Configuration settings for the reward",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "Timestamp when the reward was created",
+          "format": "date-time",
+          "type": "string"
+        },
+        "disabledAt": {
+          "description": "Disabled date of the reward",
+          "format": "date-time",
+          "type": "string"
+        },
+        "endDate": {
+          "description": "End date of the reward validity",
+          "format": "date-time",
+          "type": "string"
+        },
+        "expirationDate": {
+          "description": "Expiration date of the reward",
+          "format": "date-time",
+          "type": "string"
+        },
+        "expirationModifier": {
+          "default": "noModification",
+          "description": "Select startOfPeriod to configure rewards expiry on start of day/week/month/year. Select endOfPeriod to configure reward expiry on end of day/week/month/year, else select noModification",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "expirationUnit": {
+          "description": "Unit of time for the rewards's availability (e.g., day/week/month/year).",
+          "type": "string"
+        },
+        "expirationValue": {
+          "description": "Number of days/weeks/month/year for reward expiry",
+          "type": "integer"
+        },
+        "generator": {
+          "allOf": [
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "description": "object"
+        },
+        "id": {
+          "description": "Unique identifier for the reward",
+          "format": "uuid",
+          "type": "string"
+        },
+        "limits": {
+          "description": "Attribution / Redeem Limits for the reward",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "loyaltyProgramId": {
+          "description": "Id of the loyalty program to which the current reward belongs to",
+          "format": "uuid",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": {},
+          "description": "Additional data for reward definition",
+          "type": "object"
+        },
+        "name": {
+          "description": "Name of the reward",
+          "type": "string"
+        },
+        "products": {
+          "description": "Selected products for reward definition",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "publicDescription": {
+          "description": "Public description for the reward",
+          "type": "string"
+        },
+        "publicImage": {
+          "description": "Public Image for the reward",
+          "type": "string"
+        },
+        "publicName": {
+          "description": "Public name for the reward",
+          "type": "string"
+        },
+        "redeemPerConsumer": {
+          "description": "Defines the redeem limit for the consumer",
+          "type": "integer"
+        },
+        "redeemRules": {
+          "description": "Rules defined to redeem a reward",
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "rewardConfigs": {
+          "allOf": [
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "description": "object"
+        },
+        "rule": {
+          "allOf": [
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "description": "Rule to define the reward"
+        },
+        "startDate": {
+          "description": "Start date of attribution of the reward",
+          "format": "date-time",
+          "type": "string"
+        },
+        "subtractBalanceDefinitionId": {
+          "description": "Id of the selected balance while redeeming / attributing a reward",
+          "type": "string"
+        },
+        "subtractBalanceStrategy": {
+          "description": "Strategy of the Balance while redeeming / attributing a reward",
+          "type": "string"
+        },
+        "subtractBalanceValue": {
+          "description": "Amount of balance to be selected while redeeming / attributing a reward",
+          "type": "integer"
+        },
+        "subtractTotalBalance": {
+          "description": "Value to indicate to subtract full balance or not",
+          "type": "boolean"
+        },
+        "totalAttribution": {
+          "description": "Defines the limit to which a consumer can attribute a reward",
+          "type": "integer"
+        },
+        "totalRedeem": {
+          "description": "Defines the limit to which a consumer can redeem a reward",
+          "type": "integer"
+        },
+        "triggerId": {
+          "description": "Id of the Rule to be updated for that reward",
+          "type": "string"
+        },
+        "unit": {
+          "description": "Selected unit of the balance",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "Timestamp for when this reward was last updated.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value of metric in selected config for reward definition",
+          "format": "float64",
+          "type": "number"
+        },
+        "valueType": {
+          "description": "Type of config selected for reward definition",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/loyalty/offer/programs/{pid}/rewards/{rid}",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "rid": "path",
+        "version": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/offer/programs/{pid}/rewards/{rid}/get"
+    }
+  ]
+}

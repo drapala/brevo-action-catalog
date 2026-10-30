@@ -1,0 +1,164 @@
+{
+  "id": "brevo.reward.get_voucher_for_contact",
+  "product": "brevo",
+  "area": "Reward",
+  "entity": "voucher",
+  "operation_class": "read",
+  "label": "Get voucher for a contact",
+  "description": "Get voucher for a contact",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "limit": {
+          "default": 25,
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Page size"
+        },
+        "offset": {
+          "default": 0,
+          "type": "integer",
+          "description": "Pagination offset"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort order"
+        },
+        "sortField": {
+          "default": "updatedAt",
+          "enum": [
+            "updatedAt",
+            "createdAt"
+          ],
+          "type": "string",
+          "description": "Sort field"
+        },
+        "contactId": {
+          "minimum": 1,
+          "type": "integer",
+          "description": "Contact ID"
+        },
+        "metadata_key_value": {
+          "type": "string",
+          "description": "Metadata value for a Key filter"
+        },
+        "rewardId": {
+          "type": "string",
+          "description": "Reward ID"
+        }
+      },
+      "required": [
+        "pid",
+        "contactId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "contactId": {
+          "description": "Contact id associated with the current reward",
+          "format": "int64",
+          "type": "integer"
+        },
+        "contactRewards": {
+          "description": "List of all the rewards for current contact",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "count": {
+          "description": "Count of the rewards associated with the current contact",
+          "type": "integer"
+        },
+        "loyaltyProgramId": {
+          "description": "Loyalty Program Id for the contact",
+          "type": "string"
+        },
+        "loyaltySubscriptionId": {
+          "description": "Loyalty Subscription Id for the contact",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/loyalty/offer/programs/{pid}/vouchers",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "limit": "query",
+        "offset": "query",
+        "sort": "query",
+        "sortField": "query",
+        "contactId": "query",
+        "metadata_key_value": "query",
+        "rewardId": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/offer/programs/{pid}/vouchers/get"
+    }
+  ]
+}

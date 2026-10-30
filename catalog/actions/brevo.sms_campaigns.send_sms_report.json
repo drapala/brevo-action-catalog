@@ -1,0 +1,110 @@
+{
+  "id": "brevo.sms_campaigns.send_sms_report",
+  "product": "brevo",
+  "area": "SMS Campaigns",
+  "entity": "sms_campaign",
+  "operation_class": "action",
+  "label": "Send an SMS campaign's report",
+  "description": "Send report of Sent and Archived campaign, to the specified email addresses, with respective data and a pdf attachment in detail.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the campaign"
+        },
+        "email": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "language": {
+          "default": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "campaignId",
+        "email"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "sms_campaign",
+        "find_with": "brevo.sms_campaigns.get_sms_campaigns",
+        "create_with": "brevo.sms_campaigns.create_sms_campaign"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/smsCampaigns/{campaignId}/sendReport",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path",
+        "email": "body",
+        "language": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "sends_email",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smsCampaigns/{campaignId}/sendReport/post (sendSmsReport)"
+    }
+  ]
+}

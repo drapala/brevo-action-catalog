@@ -1,0 +1,156 @@
+{
+  "id": "brevo.companies.create_company_deal_attribute",
+  "product": "brevo",
+  "area": "Companies",
+  "entity": "crm_attribute",
+  "operation_class": "create",
+  "label": "Create a company/deal attribute",
+  "description": "Create a new custom attribute for companies or deals. The attribute label must be unique within the object type, cannot exceed 50 characters, and cannot use reserved names. For `single-select` or `multi-choice` attribute types, you must also provide the `optionsLabels` array.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "attributeType": {
+          "description": "The type of attribute (must be one of the defined enums)",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "single-select",
+          "type": "string"
+        },
+        "description": {
+          "description": "A description of the attribute",
+          "example": "This is a sample attribute description.",
+          "type": "string"
+        },
+        "label": {
+          "description": "The label for the attribute (max 50 characters, cannot be empty)",
+          "example": "Attribute Label",
+          "type": "string"
+        },
+        "objectType": {
+          "description": "The type of object the attribute belongs to. Must be either `companies` or `deals`.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "companies",
+          "type": "string"
+        },
+        "optionsLabels": {
+          "description": "Options for multi-choice or single-select attributes",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "label",
+        "attributeType",
+        "objectType"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "Unique ID of the created attribute",
+          "example": "61a5cd07ca1347c82306ad07",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "crm_attribute",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/crm/attributes",
+      "auth": "header api-key",
+      "params": {
+        "attributeType": "body",
+        "description": "body",
+        "label": "body",
+        "objectType": "body",
+        "optionsLabels": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.companies.delete_attribute",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/attributes/post"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "id": "brevo.email_campaigns.get_email_campaign",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "email_campaign",
+  "operation_class": "read",
+  "label": "Get an email campaign report",
+  "description": "Retrieve detailed information about a specific email campaign by its ID, including recipients, statistics, and HTML content. Use the statistics query parameter to select which statistics to include (globalStats, linksStats, statsByDomain, statsByDevice, or statsByBrowser); statsByDevice and statsByBrowser are only available on this single-campaign endpoint. You can exclude HTML content from the response by setting excludeHtmlContent to true.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the campaign"
+        },
+        "statistics": {
+          "enum": [
+            "globalStats",
+            "linksStats",
+            "statsByDomain",
+            "statsByDevice",
+            "statsByBrowser"
+          ],
+          "type": "string",
+          "description": "Filter on the type of statistics required. Example: **globalStats** value will only fetch globalStats info of the campaign in the returned response. `statsByDevice` and `statsByBrowser` are only available when retrieving a single campaign (not in the list endpoint)."
+        },
+        "excludeHtmlContent": {
+          "enum": [
+            true,
+            false
+          ],
+          "type": "boolean",
+          "description": "Use this flag to exclude htmlContent from the response body. If set to **true**, htmlContent field will be returned as empty string in the response body"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "email_campaign",
+        "find_with": "brevo.email_campaigns.get_email_campaigns",
+        "create_with": "brevo.email_campaigns.create_email_campaign"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "allOf": [
+        {
+          "allOf": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        {
+          "properties": {
+            "recipients": {
+              "description": "(nested schema truncated)"
+            },
+            "statistics": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/emailCampaigns/{campaignId}",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path",
+        "statistics": "query",
+        "excludeHtmlContent": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//emailCampaigns/{campaignId}/get (getEmailCampaign)"
+    }
+  ]
+}

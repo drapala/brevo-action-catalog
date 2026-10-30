@@ -1,0 +1,133 @@
+{
+  "id": "brevo.transactional_emails.get_transac_email_content",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "transactional_email",
+  "operation_class": "read",
+  "label": "Get the personalized content of a sent transactional email",
+  "description": "<Note title=\"How to get uuid\">You can get the uuid using either of the following methods: Send a GET request to https://api.brevo.com/v3/smtp/emails and pass the message_id in the url. Use your api-key to authenticate the request and you will get your uuid as a response. The uuid can also be fetched from the transactional logs page in your Brevo account, from the address URL.</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "Unique id of the transactional email that has been sent to a particular contact"
+        }
+      },
+      "required": [
+        "uuid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "uuid",
+        "entity": "transactional_email",
+        "find_with": "brevo.transactional_emails.get_transac_emails_list",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "attachmentCount": {
+          "description": "Count of the attachments that were sent in the email",
+          "example": 2,
+          "format": "int64",
+          "type": "integer"
+        },
+        "body": {
+          "description": "Actual content of the transactional email that has been sent",
+          "example": "<!DOCTYPE html> <html> <body> <h1>Greetings from the team</h1> <p>This is the actual html content sent</p> </body> </html>",
+          "type": "string"
+        },
+        "date": {
+          "description": "Date on which transactional email was sent",
+          "example": "2017-03-12T12:30:00Z",
+          "type": "string"
+        },
+        "email": {
+          "description": "Email address to which transactional email has been sent",
+          "example": "abc@example.com",
+          "format": "email",
+          "type": "string"
+        },
+        "events": {
+          "description": "Series of events which occurred on the transactional email",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "subject": {
+          "description": "Subject of the sent email",
+          "example": "Summer Camp",
+          "type": "string"
+        },
+        "templateId": {
+          "description": "Id of the template",
+          "example": 2,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "date",
+        "email",
+        "events",
+        "subject"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/smtp/emails/{uuid}",
+      "auth": "header api-key",
+      "params": {
+        "uuid": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/emails/{uuid}/get (getTransacEmailContent)"
+    }
+  ]
+}

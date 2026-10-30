@@ -1,0 +1,139 @@
+{
+  "id": "brevo.program.subscribe_member_to_asubscription",
+  "product": "brevo",
+  "area": "Program",
+  "entity": "subscription_member",
+  "operation_class": "create",
+  "label": "Create subscription member",
+  "description": "Add member to a subscription",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+        },
+        "contactId": {
+          "description": "Required if LoyaltySubscriptionId is not provided, must be greater than 0",
+          "type": "integer"
+        },
+        "loyaltySubscriptionId": {
+          "description": "Required if ContactId is not provided, max length 64",
+          "maxLength": 64,
+          "type": "string"
+        },
+        "memberContactIds": {
+          "description": "Required, each item must be greater than or equal to 1",
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "pid",
+        "memberContactIds"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "organizationId": {
+          "description": "Unique identifier of the organization.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "ownerContactId": {
+          "description": "Unique identifier of the subscription owner.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "memberContactIds": {
+          "description": "List of unique member contact IDs.",
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "createdAt": {
+          "description": "Timestamp when the subscription member was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "Timestamp when the subscription member was last updated.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/config/programs/{pid}/subscription-members",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "contactId": "body",
+        "loyaltySubscriptionId": "body",
+        "memberContactIds": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.program.delete_contact_members",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/config/programs/{pid}/subscription-members/post (subscribeMemberToASubscription)"
+    }
+  ]
+}

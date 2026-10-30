@@ -1,0 +1,99 @@
+{
+  "id": "brevo.webhooks.get_webhooks",
+  "product": "brevo",
+  "area": "Webhooks",
+  "entity": "webhook",
+  "operation_class": "read",
+  "label": "Get all webhooks",
+  "description": "Retrieves all webhooks from your Brevo account with filtering and sorting options. Use this to: - Monitor webhook configurations and event handling - List webhooks by type (transactional, marketing, inbound) - Review webhook endpoints and authentication - Track webhook creation and modification history - Audit webhook event subscriptions Key information returned: - Complete webhook details and configuration - Event types and channel subscriptions - Authentication and security settings - Webhook URLs and custom headers - Creation and modification timestamps",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "default": "transactional",
+          "enum": [
+            "marketing",
+            "transactional",
+            "inbound"
+          ],
+          "type": "string",
+          "description": "Filter on webhook type"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of webhook creation"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "webhooks": {
+          "items": {
+            "allOf": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "webhooks"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/webhooks",
+      "auth": "header api-key",
+      "params": {
+        "type": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//webhooks/get (getWebhooks)"
+    }
+  ]
+}

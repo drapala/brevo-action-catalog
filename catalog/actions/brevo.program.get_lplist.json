@@ -1,0 +1,104 @@
+{
+  "id": "brevo.program.get_lplist",
+  "product": "brevo",
+  "area": "Program",
+  "entity": "program",
+  "operation_class": "read",
+  "label": "Get loyalty program list",
+  "description": "Returns list of loyalty programs",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "offset": {
+          "type": "integer",
+          "description": "Index of the first document in the page"
+        },
+        "sort_field": {
+          "enum": [
+            "name",
+            "created_at",
+            "updated_at"
+          ],
+          "type": "string",
+          "description": "Sort documents by field"
+        },
+        "sort": {
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort order"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "items": {
+          "description": "Loyalty Program list",
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/loyalty/config/programs",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "offset": "query",
+        "sort_field": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/config/programs/get (getLPList)"
+    }
+  ]
+}

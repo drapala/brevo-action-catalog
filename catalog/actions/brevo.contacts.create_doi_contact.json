@@ -1,0 +1,156 @@
+{
+  "id": "brevo.contacts.create_doi_contact",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact",
+  "operation_class": "create",
+  "label": "Create Contact via DOI (Double-Opt-In) Flow",
+  "description": "<Note title=\"How to use attributes param?\">attributes param in this endpoint is an object containing key-value pairs where values can be either a string, integer, array, or boolean. You can create key-value pairs with these four datatypes. When a value is an array, it should be an array of strings.</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "attributes": {
+          "additionalProperties": {
+            "oneOf": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "description": "Pass the set of attributes and their values. **These attributes must be present in your Brevo account**. For eg. **{'FNAME':'Elly', 'LNAME':'Roger', 'COUNTRIES': ['India','China']}**\n",
+          "example": {
+            "COUNTRIES": {
+              "description": "(nested schema truncated)"
+            },
+            "FNAME": {
+              "description": "(nested schema truncated)"
+            },
+            "LNAME": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "contactPixelTrackingConsent": {
+          "description": "Consent of the DOI recipient for open (pixel) and click tracking in the double opt-in confirmation email, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.\n",
+          "example": true,
+          "type": "boolean"
+        },
+        "email": {
+          "description": "Email address where the confirmation email will be sent. This email address will be the identifier for all other contact attributes.",
+          "example": "elly@example.com",
+          "format": "email",
+          "type": "string"
+        },
+        "excludeListIds": {
+          "description": "Lists under user account where contact should not be added",
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "includeListIds": {
+          "description": "Lists under user account where contact should be added",
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "redirectionUrl": {
+          "description": "URL of the web page that user will be redirected to after clicking on the double opt in URL. When editing your DOI template you can reference this URL by using the tag **{{ params.DOIurl }}**.\n",
+          "example": "http://requestb.in/173lyyx1",
+          "format": "url",
+          "type": "string"
+        },
+        "templateId": {
+          "description": "Id of the Double opt-in (DOI) template",
+          "example": 2,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "email",
+        "includeListIds",
+        "redirectionUrl",
+        "templateId"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/contacts/doubleOptinConfirmation",
+      "auth": "header api-key",
+      "params": {
+        "attributes": "body",
+        "contactPixelTrackingConsent": "body",
+        "email": "body",
+        "excludeListIds": "body",
+        "includeListIds": "body",
+        "redirectionUrl": "body",
+        "templateId": "body"
+      },
+      "success_status": [
+        201,
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.contacts.get_contact_info",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "sends_email",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/doubleOptinConfirmation/post (createDoiContact)"
+    }
+  ]
+}

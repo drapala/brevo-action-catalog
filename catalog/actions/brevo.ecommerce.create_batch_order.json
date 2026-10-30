@@ -1,0 +1,106 @@
+{
+  "id": "brevo.ecommerce.create_batch_order",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "order",
+  "operation_class": "create",
+  "label": "Create orders in batch",
+  "description": "Create multiple orders at one time instead of one order at a time",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "historical": {
+          "default": true,
+          "description": "Defines whether you want your orders to be considered as live data or as historical data (import of past data, synchronising data). True: orders will not trigger any automation workflows. False: orders will trigger workflows as usual.",
+          "example": true,
+          "type": "boolean"
+        },
+        "notifyUrl": {
+          "description": "Webhook URL to receive the status of the batch request",
+          "example": "https://en.wikipedia.org/wiki/Webhook",
+          "type": "string"
+        },
+        "orders": {
+          "description": "array of order objects",
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "orders"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "batchId": {
+          "description": "Batch ID of the request",
+          "example": "1",
+          "type": "number"
+        },
+        "count": {
+          "description": "Number of orders",
+          "example": 17655,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "batchId"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/orders/status/batch",
+      "auth": "header api-key",
+      "params": {
+        "historical": "body",
+        "notifyUrl": "body",
+        "orders": "body"
+      },
+      "success_status": [
+        202
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//orders/status/batch/post (createBatchOrder)"
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "brevo.master_account.invite_admin_user",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "invitation",
+  "operation_class": "action",
+  "label": "Send invitation to an admin user",
+  "description": "`This endpoint allows you to invite a member to manage the Admin account Features and their respective permissions are as below: - `my_plan`: - \"all\" - `api`: - \"none\" - `user_management`: - \"all\" - `app_management` | Not available in ENTv2: - \"all\" - `sub_organization_groups` - \"create\" - \"edit_delete\" - `create_sub_organizations` - \"all\" - `manage_sub_organizations` - \"all\" - `analytics` - \"download_data\" - \"create_alerts\" - \"my_looks\" - \"explore_create\" - `security` - \"all\" **Note**: - If `all_features_access: false` then only privileges are required otherwise if `true` then it's assumed th",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "all_features_access": {
+          "description": "All access to the features",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": true,
+          "type": "boolean"
+        },
+        "email": {
+          "description": "Email address for the organization",
+          "example": "inviteuser@example.com",
+          "format": "email",
+          "type": "string"
+        },
+        "groupIds": {
+          "description": "Ids of Group",
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "privileges": {
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "email",
+        "all_features_access",
+        "privileges"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/corporate/user/invitation/send",
+      "auth": "header api-key",
+      "params": {
+        "all_features_access": "body",
+        "email": "body",
+        "groupIds": "body",
+        "privileges": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "notifies_people",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/user/invitation/send/post (inviteAdminUser)"
+    }
+  ]
+}

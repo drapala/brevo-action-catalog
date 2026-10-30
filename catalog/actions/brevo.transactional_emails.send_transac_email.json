@@ -1,0 +1,277 @@
+{
+  "id": "brevo.transactional_emails.send_transac_email",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "transactional_email",
+  "operation_class": "action",
+  "label": "Send a transactional email",
+  "description": "Send a transactional email to one or more recipients, either using inline HTML content or a pre-built template via `templateId`. You can schedule emails for future delivery using `scheduledAt` (UTC, up to 5-minute delay), send multiple personalized versions with `messageVersions` (max 2000 total recipients, 99 per version), and attach files via URL or base64-encoded content. A `sender` and `subject` are required when no `templateId` is provided; when a `templateId` is used, the template''s sender and subject are applied unless overridden.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "attachment": {
+          "description": "Array of attachment objects. Each attachment must include either an absolute URL (no local file paths) or base64-encoded content, along with the attachment filename. The `name` field is required when `content` is provided. Supported file extensions: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub, eps, odt, mp3, m4a, m4v, wma, ogg, flac, wav, aif, aifc, aiff, mp4, mov, avi, mkv, mpeg, mpg, wmv, pkpass, xlsm. When `templateId` is specified: if the template uses the New Template Language format, both `url` and `content` attachment types are supported; if the template uses the Old Template Language format, the `attachment` parameter is ignored.\n",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "batchId": {
+          "description": "UUIDv4 identifier for the scheduled batch of transactional emails. If omitted, a valid UUIDv4 batch identifier is automatically generated.",
+          "example": "5c6cfa04-eed9-42c2-8b5c-6d470d978e9d",
+          "type": "string"
+        },
+        "bcc": {
+          "description": "Array of BCC recipient objects. Each object contains an email address and an optional name.\n",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "cc": {
+          "description": "Array of CC recipient objects. Each object contains an email address and an optional name.\n",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "headers": {
+          "additionalProperties": {},
+          "description": "Custom email headers (non-standard headers) to include in the email. The `sender.ip` header can be set to specify the IP address used for sending transactional emails (dedicated IP users only). Header names must use Title-Case-Format (words separated by hyphens with the first letter of each word capitalized). Headers not in this format are automatically converted. Standard email headers are not supported. Example: `{\"sender.ip\":\"1.2.3.4\", \"X-Mailin-custom\":\"some_custom_value\", \"IdempotencyKey\":\"abc-123\"}`\n",
+          "example": {
+            "X-Mailin-custom": {
+              "description": "(nested schema truncated)"
+            },
+            "idempotencyKey": {
+              "description": "(nested schema truncated)"
+            },
+            "sender.ip": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "htmlContent": {
+          "description": "HTML body content of the email. Required when `templateId` is not provided. Ignored when `templateId` is provided.\n",
+          "example": "<!DOCTYPE html> <html> <body> <h1>Confirm you email</h1> <p>Please confirm your email address by clicking on the link below</p> </body> </html>",
+          "type": "string"
+        },
+        "messageVersions": {
+          "description": "Array of message version objects for sending customized email variants. The `templateId` can be customized per version only if a global `templateId` is provided. The `htmlContent` and `textContent` can be customized per version only if at least one of these is present in the global parameters. Global parameters such as `to` (required), `bcc`, `cc`, `replyTo`, and `subject` can be customized per version. Maximum total recipients per API request is 2000. Maximum recipients per message version is 99. Individual `params` objects must not exceed 100 KB. Cumulative `params` across all versions must not exceed 1000 KB. See https://developers.brevo.com/docs/batch-send-transactional-emails for detailed usage instructions.\n",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "params": {
+          "additionalProperties": {},
+          "description": "Key-value pairs for template variable substitution. Only applicable when the template uses the New Template Language format.\n",
+          "example": {
+            "FNAME": {
+              "description": "(nested schema truncated)"
+            },
+            "LNAME": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "replyTo": {
+          "description": "Reply-to email address (required) and optional display name. Recipients will use this address when replying to the email.\n",
+          "properties": {
+            "email": {
+              "description": "(nested schema truncated)"
+            },
+            "name": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        },
+        "scheduledAt": {
+          "description": "UTC date-time when the email should be sent (format: YYYY-MM-DDTHH:mm:ss.SSSZ). Include timezone information in the date-time value. Scheduled emails may be delayed by up to 5 minutes.",
+          "example": "2022-04-05T12:30:00+02:00",
+          "format": "date-time",
+          "type": "string"
+        },
+        "sender": {
+          "description": "Sender information. Required when `templateId` is not provided. Specify either an email address (with optional name) or a sender ID. The `name` field is ignored when `id` is provided.\n",
+          "properties": {
+            "email": {
+              "description": "(nested schema truncated)"
+            },
+            "id": {
+              "description": "(nested schema truncated)"
+            },
+            "name": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "subject": {
+          "description": "Email subject line. Required when `templateId` is not provided.\n",
+          "example": "Login Email confirmation",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Array of tags for categorizing and filtering emails",
+          "items": {
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "templateId": {
+          "description": "Template identifier",
+          "example": 2,
+          "format": "int64",
+          "type": "integer"
+        },
+        "textContent": {
+          "description": "Plain text body content of the email. Ignored when `templateId` is provided.\n",
+          "example": "Please confirm your email address by clicking on the link https://text.domain.com",
+          "type": "string"
+        },
+        "to": {
+          "description": "Array of recipient objects. Each object contains an email address and an optional display name. Required when `messageVersions` is not provided. Ignored when `messageVersions` is provided. Example: `[{\"name\":\"Jimmy\", \"email\":\"jimmy@example.com\"}, {\"name\":\"Joe\", \"email\":\"joe@example.com\"}]`\n",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "messageId": {
+          "description": "Message ID of the transactional email sent",
+          "example": "<201798300811.5787683@relay.domain.com>",
+          "type": "string"
+        },
+        "messageIds": {
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/smtp/email",
+      "auth": "header api-key",
+      "params": {
+        "attachment": "body",
+        "batchId": "body",
+        "bcc": "body",
+        "cc": "body",
+        "headers": "body",
+        "htmlContent": "body",
+        "messageVersions": "body",
+        "params": "body",
+        "replyTo": "body",
+        "scheduledAt": "body",
+        "sender": "body",
+        "subject": "body",
+        "tags": "body",
+        "templateId": "body",
+        "textContent": "body",
+        "to": "body"
+      },
+      "success_status": [
+        201,
+        202
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "sends_email",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/email/post (sendTransacEmail)"
+    }
+  ]
+}

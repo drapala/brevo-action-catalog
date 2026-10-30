@@ -1,0 +1,125 @@
+{
+  "id": "brevo.contacts.get_list",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "list",
+  "operation_class": "read",
+  "label": "Get a list's details",
+  "description": "Retrieve the details of a specific contact list by its ID, including its name, folder ID, creation date, subscriber counts, and campaign statistics. You can optionally filter campaign statistics by providing startDate and endDate parameters (both must be used together in YYYY-MM-DD format).",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "listId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the list"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used**. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to aggregate the sent email campaigns for a specific list id. **Prefer to pass your timezone in date-time format for accurate result**"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used**. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to aggregate the sent email campaigns for a specific list id. **Prefer to pass your timezone in date-time format for accurate result**"
+        }
+      },
+      "required": [
+        "listId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "listId",
+        "entity": "list",
+        "find_with": "brevo.contacts.get_lists",
+        "create_with": "brevo.contacts.create_list"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "allOf": [
+        {
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        {
+          "properties": {
+            "campaignStats": {
+              "description": "(nested schema truncated)"
+            },
+            "createdAt": {
+              "description": "(nested schema truncated)"
+            },
+            "dynamicList": {
+              "description": "(nested schema truncated)"
+            },
+            "folderId": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/contacts/lists/{listId}",
+      "auth": "header api-key",
+      "params": {
+        "listId": "path",
+        "startDate": "query",
+        "endDate": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/lists/{listId}/get (getList)"
+    }
+  ]
+}

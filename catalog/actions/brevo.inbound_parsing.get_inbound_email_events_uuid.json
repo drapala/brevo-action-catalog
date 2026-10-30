@@ -1,0 +1,137 @@
+{
+  "id": "brevo.inbound_parsing.get_inbound_email_events_uuid",
+  "product": "brevo",
+  "area": "Inbound Parsing",
+  "entity": "event",
+  "operation_class": "read",
+  "label": "Fetch all events history for one particular received email.",
+  "description": "This endpoint will show the list of all events history for one particular received email.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "UUID to fetch events specific to received email"
+        }
+      },
+      "required": [
+        "uuid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "uuid",
+        "entity": "event",
+        "find_with": "brevo.event.get_events",
+        "create_with": "brevo.event.create_event"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "attachments": {
+          "description": "List of attachments of the email. This will be present only after the processing is done.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "deliveredAt": {
+          "description": "Date when email was delivered successfully to the client’s webhook",
+          "format": "date-time",
+          "nullable": true,
+          "type": "string"
+        },
+        "logs": {
+          "description": "List of events/logs that describe the lifecycle of the email on the Brevo platform",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "messageId": {
+          "description": "Value of the Message-ID header. This will be present only after the processing is done.",
+          "type": "string"
+        },
+        "receivedAt": {
+          "description": "Date when email was received on SMTP relay",
+          "example": "2019-05-25T11:53:26Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "recipient": {
+          "description": "Recipient’s email address",
+          "format": "email",
+          "type": "string"
+        },
+        "sender": {
+          "description": "Sender’s email address",
+          "format": "email",
+          "type": "string"
+        },
+        "subject": {
+          "description": "Value of the Subject header. This will be present only after the processing is done.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/inbound/events/{uuid}",
+      "auth": "header api-key",
+      "params": {
+        "uuid": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Inbound parsing webhook configured (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Inbound parsing webhook configured"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//inbound/events/{uuid}/get (getInboundEmailEventsByUuid)"
+    }
+  ]
+}

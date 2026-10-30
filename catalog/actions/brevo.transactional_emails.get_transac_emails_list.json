@@ -1,0 +1,136 @@
+{
+  "id": "brevo.transactional_emails.get_transac_emails_list",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "transactional_email",
+  "operation_class": "read",
+  "label": "Get the list of transactional emails on the basis of allowed filters",
+  "description": "This endpoint will show the list of emails for past 30 days by default. To retrieve emails before that time, please pass startDate and endDate in query filters.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "**Mandatory if templateId and messageId are not passed in query filters.** Email address to which transactional email has been sent."
+        },
+        "templateId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "**Mandatory if email and messageId are not passed in query filters.** Id of the template that was used to compose transactional email."
+        },
+        "messageId": {
+          "type": "string",
+          "description": "**Mandatory if templateId and email are not passed in query filters.** Message ID of the transactional email sent."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting date (YYYY-MM-DD) from which you want to fetch the list. **Maximum time period that can be selected is one month**."
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending date (YYYY-MM-DD) till which you want to fetch the list. **Maximum time period that can be selected is one month.**"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        },
+        "limit": {
+          "default": 500,
+          "format": "int64",
+          "maximum": 1000,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number of documents returned per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document in the page"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "count": {
+          "description": "Total number of transactional emails available on your account according to the passed filter",
+          "example": 5,
+          "format": "int64",
+          "type": "integer"
+        },
+        "transactionalEmails": {
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/smtp/emails",
+      "auth": "header api-key",
+      "params": {
+        "email": "query",
+        "templateId": "query",
+        "messageId": "query",
+        "startDate": "query",
+        "endDate": "query",
+        "sort": "query",
+        "limit": "query",
+        "offset": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/emails/get (getTransacEmailsList)"
+    }
+  ]
+}

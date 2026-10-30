@@ -1,0 +1,136 @@
+{
+  "id": "brevo.transactional_emails.post_preview_smtp_email_templates",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "email_template",
+  "operation_class": "action",
+  "label": "Generate the rendered preview of transactional template",
+  "description": "Generate a fully rendered preview of a transactional email template by resolving dynamic variables. Provide either an `email` address (to populate variables from the contact''s attributes) or a `params` object with key-value pairs for manual substitution; at least one of these is required alongside the mandatory `templateId`. The response includes the rendered HTML, subject, sender details, preview text, and any feed names used in the template.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "description": "Email of the contact.(Required if params not provided)",
+          "example": "john.doe@example.com",
+          "type": "string"
+        },
+        "params": {
+          "description": "Key-value pairs of dynamic parameters for template rendering.(Required if email not provided) For example: **{\"Firstname\":\"John\", \"Lastname\":\"Doe\"}**\n",
+          "properties": {
+            "Firstname": {
+              "description": "(nested schema truncated)"
+            },
+            "Lastname": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "templateId": {
+          "description": "Id of the template.",
+          "example": 22,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "templateId"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "fromEmail": {
+          "description": "Sender email address",
+          "example": "nikon.doe@example.com",
+          "type": "string"
+        },
+        "fromName": {
+          "description": "Sender Name",
+          "example": "Nikon doe",
+          "type": "string"
+        },
+        "html": {
+          "description": "Html content of the template",
+          "example": "<!DOCTYPE html><html><head><title>Preview html content</title></head><body><p>html content,feed_1_value, feed_2_value </p></body></html>",
+          "type": "string"
+        },
+        "previewText": {
+          "description": "Preview text of the template",
+          "example": "Preview text",
+          "type": "string"
+        },
+        "subject": {
+          "description": "subject of the template",
+          "example": "Template preview subject",
+          "type": "string"
+        },
+        "usedFeedNames": {
+          "example": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/smtp/template/preview",
+      "auth": "header api-key",
+      "params": {
+        "email": "body",
+        "params": "body",
+        "templateId": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/template/preview/post (postPreviewSmtpEmailTemplates)"
+    }
+  ]
+}

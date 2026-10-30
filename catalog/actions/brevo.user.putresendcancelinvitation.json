@@ -1,0 +1,115 @@
+{
+  "id": "brevo.user.putresendcancelinvitation",
+  "product": "brevo",
+  "area": "User",
+  "entity": "invitation",
+  "operation_class": "update",
+  "label": "Resend / Cancel invitation",
+  "description": "Resends or cancels a pending invitation for a user in the organization, depending on the action path parameter. Use `resend` to send a new invitation email to the user, or `cancel` to revoke the pending invitation entirely and remove the user''s pending access.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "enum": [
+            "resend",
+            "cancel"
+          ],
+          "type": "string",
+          "description": "action"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email of the invited user."
+        }
+      },
+      "required": [
+        "action",
+        "email"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "action",
+        "entity": "action",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "email",
+        "entity": "email",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "credit_notes": {
+          "description": "Credit note",
+          "items": {
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "status": {
+          "description": "Status of the API operation.",
+          "example": "OK",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/organization/user/invitation/{action}/{email}",
+      "auth": "header api-key",
+      "params": {
+        "action": "path",
+        "email": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "notifies_people",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//organization/user/invitation/{action}/{email}/put (putresendcancelinvitation)"
+    }
+  ]
+}

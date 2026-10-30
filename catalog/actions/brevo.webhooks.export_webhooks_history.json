@@ -1,0 +1,135 @@
+{
+  "id": "brevo.webhooks.export_webhooks_history",
+  "product": "brevo",
+  "area": "Webhooks",
+  "entity": "webhook",
+  "operation_class": "action",
+  "label": "Export webhook event history as CSV file",
+  "description": "<Note>This is an enterprise feature. To have it activated please send us a request and we will activate it for your account.</Note> Exports webhook event history to CSV format for analysis and reporting. Use this to: - Generate comprehensive webhook event reports - Analyze webhook delivery patterns and success rates - Export event data for external analysis tools - Create historical reports for compliance and auditing - Track webhook performance and reliability metrics Key information returned: - Process ID for tracking export completion - CSV file will be delivered to specified webhook URL",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "oneOf": [
+            {
+              "properties": {
+                "days": {
+                  "description": "(nested schema truncated)"
+                },
+                "email": {
+                  "description": "(nested schema truncated)"
+                },
+                "endDate": {
+                  "description": "(nested schema truncated)"
+                },
+                "event": {
+                  "description": "(nested schema truncated)"
+                },
+                "messageId": {
+                  "description": "(nested schema truncated)"
+                },
+                "notifyURL": {
+                  "description": "(nested schema truncated)"
+                },
+                "sort": {
+                  "description": "(nested schema truncated)"
+                },
+                "startDate": {
+                  "description": "(nested schema truncated)"
+                },
+                "type": {
+                  "description": "(nested schema truncated)"
+                },
+                "webhookId": {
+                  "description": "(nested schema truncated)"
+                }
+              },
+              "required": [
+                {
+                  "description": "(nested schema truncated)"
+                },
+                {
+                  "description": "(nested schema truncated)"
+                },
+                {
+                  "description": "(nested schema truncated)"
+                }
+              ],
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "required": [
+        "body"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "processId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "processId"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/webhooks/export",
+      "auth": "header api-key",
+      "params": {
+        "body": "body"
+      },
+      "success_status": [
+        202
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//webhooks/export/post (exportWebhooksHistory)"
+    }
+  ]
+}

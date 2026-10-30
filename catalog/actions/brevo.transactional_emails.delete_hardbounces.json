@@ -1,0 +1,80 @@
+{
+  "id": "brevo.transactional_emails.delete_hardbounces",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "smtp",
+  "operation_class": "action",
+  "label": "Delete hardbounces",
+  "description": "Delete hardbounces. To use carefully (e.g. in case of temporary ISP failures)",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "contactEmail": {
+          "description": "Target a specific email address",
+          "example": "alex76@example.com",
+          "format": "email",
+          "type": "string"
+        },
+        "endDate": {
+          "description": "Ending date (YYYY-MM-DD) of the time period for deletion. The hardbounces until this date will be deleted. Must be greater than or equal to the startDate",
+          "example": "2017-01-31",
+          "type": "string"
+        },
+        "startDate": {
+          "description": "Starting date (YYYY-MM-DD) of the time period for deletion. The hardbounces occurred after this date will be deleted. Must be less than or equal to the endDate",
+          "example": "2016-12-31",
+          "type": "string"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/smtp/deleteHardbounces",
+      "auth": "header api-key",
+      "params": {
+        "contactEmail": "body",
+        "endDate": "body",
+        "startDate": "body"
+      },
+      "success_status": [
+        200,
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/deleteHardbounces/post (deleteHardbounces)"
+    }
+  ]
+}

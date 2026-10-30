@@ -1,0 +1,82 @@
+{
+  "id": "brevo.sms_campaigns.send_test_sms",
+  "product": "brevo",
+  "area": "SMS Campaigns",
+  "entity": "sms_campaign",
+  "operation_class": "action",
+  "label": "Send a test SMS campaign",
+  "description": "Send a test SMS to a specified phone number to preview the campaign before sending it to all recipients. The phone number must belong to one of your existing contacts in your Brevo account and must not be blacklisted. The number should include the country code (e.g. 33689965433).",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the SMS campaign"
+        },
+        "phoneNumber": {
+          "description": "Mobile number of the recipient with the country code. This number **must belong to one of your contacts in Brevo account and must not be blacklisted**\n",
+          "example": "33689965433",
+          "type": "string"
+        }
+      },
+      "required": [
+        "campaignId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "sms_campaign",
+        "find_with": "brevo.sms_campaigns.get_sms_campaigns",
+        "create_with": "brevo.sms_campaigns.create_sms_campaign"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/smsCampaigns/{campaignId}/sendTest",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path",
+        "phoneNumber": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "sends_sms",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smsCampaigns/{campaignId}/sendTest/post (sendTestSms)"
+    }
+  ]
+}

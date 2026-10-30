@@ -1,0 +1,164 @@
+{
+  "id": "brevo.transactional_emails.get_email_event_report",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "event",
+  "operation_class": "read",
+  "label": "Get all your transactional email activity (unaggregated events)",
+  "description": "This endpoint will show the aggregated stats for past 30 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 90 days",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 2500,
+          "format": "int64",
+          "maximum": 5000,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number limitation for the result returned"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Beginning point in the list to retrieve from."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate"
+        },
+        "days": {
+          "format": "int64",
+          "maximum": 90,
+          "type": "integer",
+          "description": "Number of days in the past including today (positive integer, maximum 90). _Not compatible with 'startDate' and 'endDate'_. Defaults to 30 if neither dates nor days are provided."
+        },
+        "email": {
+          "format": "email",
+          "type": "string",
+          "description": "Filter the report for a specific email addresses"
+        },
+        "event": {
+          "enum": [
+            "bounces",
+            "hardBounces",
+            "softBounces",
+            "delivered",
+            "spam",
+            "requests",
+            "opened",
+            "clicks",
+            "invalid",
+            "deferred",
+            "blocked",
+            "unsubscribed",
+            "error",
+            "loadedByProxy"
+          ],
+          "type": "string",
+          "description": "Filter the report for a specific event type"
+        },
+        "tags": {
+          "type": "string",
+          "description": "Filter the report for tags (serialized and urlencoded array)"
+        },
+        "messageId": {
+          "type": "string",
+          "description": "Filter on a specific message id"
+        },
+        "templateId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Filter on a specific template id"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "events": {
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/smtp/statistics/events",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "offset": "query",
+        "startDate": "query",
+        "endDate": "query",
+        "days": "query",
+        "email": "query",
+        "event": "query",
+        "tags": "query",
+        "messageId": "query",
+        "templateId": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/statistics/events/get (getEmailEventReport)"
+    }
+  ]
+}

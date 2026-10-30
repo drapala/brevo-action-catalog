@@ -1,0 +1,92 @@
+{
+  "id": "brevo.contacts.update_list",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "list",
+  "operation_class": "update",
+  "label": "Update a list",
+  "description": "Update an existing contact list identified by its ID. You can update the list name, move it to a different folder by providing a new folderId, or both. Only one of the two parameters (name, folderId) needs to be provided per request.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "listId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the list"
+        },
+        "folderId": {
+          "description": "Id of the folder in which the list is to be moved. Either of the two parameters (name, folderId) can be updated at a time.",
+          "example": 2,
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Name of the list. Either of the two parameters (name, folderId) can be updated at a time.",
+          "example": "Magento Customer - ES",
+          "type": "string"
+        }
+      },
+      "required": [
+        "listId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "listId",
+        "entity": "list",
+        "find_with": "brevo.contacts.get_lists",
+        "create_with": "brevo.contacts.create_list"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/contacts/lists/{listId}",
+      "auth": "header api-key",
+      "params": {
+        "listId": "path",
+        "folderId": "body",
+        "name": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.contacts.get_list",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.contacts.update_list",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/lists/{listId}/put (updateList)"
+    }
+  ]
+}

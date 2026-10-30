@@ -1,0 +1,151 @@
+{
+  "id": "brevo.custom_objects.get_associated_records",
+  "product": "brevo",
+  "area": "Custom Objects",
+  "entity": "associated_record",
+  "operation_class": "read",
+  "label": "Get the records associated with an object record",
+  "description": "<Note title=\"Enterprise access only\">Custom objects are only available to Enterprise plans. This feature is in beta. These are subject to change.</Note> Returns the records associated with a single source record. Associations of every type are returned together in one paginated list, ordered by association creation time with the most recently created association first. **Identifying the source record** Provide exactly one of `id`, `ext_id`, `email` or `sms`. Passing none of them, or more than one, returns `400`. `email` and `sms` are only accepted when `object_type` is `contact`; using either ",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "object_type": {
+          "example": "vehicle",
+          "type": "string",
+          "description": "Object type of the source record, exactly as defined in your account. Accepts any object type defined in the account, for example a custom object type or `contact`."
+        },
+        "id": {
+          "example": 16789,
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer",
+          "description": "Internal Brevo ID of the source record. Must be a positive integer. Provide exactly one of `id`, `ext_id`, `email` or `sms`."
+        },
+        "ext_id": {
+          "example": "507f1f77bc",
+          "type": "string",
+          "description": "External ID of the source record in your system. Provide exactly one of `id`, `ext_id`, `email` or `sms`."
+        },
+        "email": {
+          "example": "jane.doe@example.com",
+          "type": "string",
+          "description": "Email address of the source contact. Only accepted when `object_type` is `contact`. Provide exactly one of `id`, `ext_id`, `email` or `sms`."
+        },
+        "sms": {
+          "example": "33612345678",
+          "type": "string",
+          "description": "Phone number of the source contact, including the country code. It may be given with or without a leading `+`; percent-encode the `+` as `%2B`, because a literal `+` in a query string is read as a space. Only accepted when `object_type` is `contact`. Provide exactly one of `id`, `ext_id`, `email` or `sms`."
+        },
+        "type": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 5,
+          "type": "array",
+          "description": "Restricts the response to the given associated object types. Repeat the parameter to request several types, for example `?type=contact&type=garage`. Maximum 5 types per call. Associations of every type are returned when omitted."
+        },
+        "offset": {
+          "default": 0,
+          "example": 0,
+          "format": "int64",
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number of records to skip before the first record of the page. Defaults to 0. Increase by 20 to fetch the next page."
+        }
+      },
+      "required": [
+        "object_type"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "object_type",
+        "entity": "object_type",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "has_more": {
+          "description": "`true` when at least one more associated record exists after this page.",
+          "example": true,
+          "type": "boolean"
+        },
+        "items": {
+          "description": "Associated records for this page, up to 20 per page. Fewer when the last page is reached, empty when the source record has no matching associations.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "offset": {
+          "description": "The offset that was requested.",
+          "example": 0,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/objects/{object_type}/associated-records",
+      "auth": "header api-key",
+      "params": {
+        "object_type": "path",
+        "id": "query",
+        "ext_id": "query",
+        "email": "query",
+        "sms": "query",
+        "type": "query",
+        "offset": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Custom objects enabled (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Custom objects enabled"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//objects/{object_type}/associated-records/get (getAssociatedRecords)"
+    }
+  ]
+}

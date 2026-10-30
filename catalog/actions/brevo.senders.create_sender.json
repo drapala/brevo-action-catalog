@@ -1,0 +1,116 @@
+{
+  "id": "brevo.senders.create_sender",
+  "product": "brevo",
+  "area": "Senders",
+  "entity": "sender",
+  "operation_class": "action",
+  "label": "Create email sender",
+  "description": "Creates a new email sender in your Brevo account. **Use this to:** - Add new senders for email campaigns - Configure sender identity (name and email) - Associate dedicated IPs with the sender (for dedicated IP accounts) - Set up domain-based sender configurations **Key information returned:** - Created sender ID - DKIM and SPF configuration status - Success confirmation **Important considerations:** - Verification email sent to specified sender address - DKIM and SPF configuration affects deliverability - Dedicated IP accounts require IP association during creation - IP weights must sum to 100",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "description": "From email to use for the sender. A verification email will be\nsent to this address.",
+          "example": "support@example.com",
+          "format": "email",
+          "type": "string"
+        },
+        "ips": {
+          "description": "**Mandatory in case of dedicated IP**. IPs to associate to the\nsender. Not required for standard accounts.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "From Name to use for the sender",
+          "example": "Support Team",
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "name"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "dkimError": {
+          "description": "Status of DKIM configuration for the sender (true = DKIM not\nwell configured, false = DKIM well configured)",
+          "example": false,
+          "type": "boolean"
+        },
+        "id": {
+          "description": "ID of the Sender created",
+          "example": 15,
+          "format": "int64",
+          "type": "integer"
+        },
+        "spfError": {
+          "description": "Status of SPF configuration for the sender (true = SPF not\nwell configured, false = SPF well configured)",
+          "example": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/senders",
+      "auth": "header api-key",
+      "params": {
+        "email": "body",
+        "ips": "body",
+        "name": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/post (createSender)"
+    }
+  ]
+}

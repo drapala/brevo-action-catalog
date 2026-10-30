@@ -1,0 +1,161 @@
+{
+  "id": "brevo.consent_groups.get_consent_groups",
+  "product": "brevo",
+  "area": "ConsentGroups",
+  "entity": "consent_group",
+  "operation_class": "read",
+  "label": "List all consent groups",
+  "description": "Returns a paginated list of consent groups for the account. <Note>This endpoint is only available when the Consent Groups feature is enabled for your account. Returns `403` if the feature is not activated.</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int64",
+          "default": 10,
+          "maximum": 50,
+          "minimum": 0,
+          "description": "Maximum number of results to return (default 10, max 50)"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int64",
+          "default": 0,
+          "minimum": 0,
+          "description": "Number of results to skip (default 0)"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Filter by consent group ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "Filter by name (case-insensitive partial match)"
+        },
+        "signupMode": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "automatic"
+          ],
+          "description": "Filter by signup mode"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "type": "object",
+      "description": "Paginated list of consent groups.",
+      "properties": {
+        "consentGroups": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "total": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "limit": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "offset": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "consentGroups",
+        "total",
+        "limit",
+        "offset"
+      ]
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/contacts/consent-groups",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "offset": "query",
+        "id": "query",
+        "name": "query",
+        "signupMode": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/consent-groups/get (getConsentGroups)"
+    }
+  ]
+}

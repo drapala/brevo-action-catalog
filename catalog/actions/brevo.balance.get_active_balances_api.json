@@ -1,0 +1,167 @@
+{
+  "id": "brevo.balance.get_active_balances_api",
+  "product": "brevo",
+  "area": "Balance",
+  "entity": "active_balance",
+  "operation_class": "read",
+  "label": "Get Active Balances API",
+  "description": "Returns Active Balances",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program Id"
+        },
+        "limit": {
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Limit"
+        },
+        "offset": {
+          "minimum": 0,
+          "type": "integer",
+          "description": "Offset"
+        },
+        "sortField": {
+          "enum": [
+            "createdAt"
+          ],
+          "type": "string",
+          "description": "Sort Field"
+        },
+        "sort": {
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort Order"
+        },
+        "contactId": {
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer",
+          "description": "Contact ID"
+        },
+        "balanceDefinitionId": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Balance Definition ID"
+        },
+        "includeInternal": {
+          "type": "boolean",
+          "description": "Include balances tied to internal definitions."
+        }
+      },
+      "required": [
+        "pid",
+        "contactId",
+        "balanceDefinitionId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "Active balance response for a specific contact and balance definition.",
+      "properties": {
+        "count": {
+          "description": "Total number of active balances.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "loyaltyProgramId": {
+          "description": "Unique identifier of the loyalty program.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "contactId": {
+          "description": "Unique identifier of the contact.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "balanceDefinitionId": {
+          "description": "Unique identifier of the balance definition.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "activeBalances": {
+          "description": "List of active balances.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/loyalty/balance/programs/{pid}/active-balance",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "limit": "query",
+        "offset": "query",
+        "sortField": "query",
+        "sort": "query",
+        "contactId": "query",
+        "balanceDefinitionId": "query",
+        "includeInternal": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/balance/programs/{pid}/active-balance/get"
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "id": "brevo.event.create_event",
+  "product": "brevo",
+  "area": "Event",
+  "entity": "event",
+  "operation_class": "create",
+  "label": "Create an event",
+  "description": "Create an event to track a contact's interaction.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "contact_properties": {
+          "additionalProperties": {
+            "anyOf": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "description": "Properties defining the state of the contact associated to this event. Useful to update contact attributes defined in your contacts database while passing the event. For example: **\"FIRSTNAME\": \"Jane\" , \"AGE\": 37**",
+          "example": {
+            "AGE": {
+              "description": "(nested schema truncated)"
+            },
+            "GENDER": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "event_date": {
+          "description": "ISO 8601 timestamp of when the event occurred (e.g. \"2024-01-24T17:39:57+01:00\"). If no value is passed, the timestamp of the event creation is used.",
+          "example": "2024-02-06T20:59:23.383Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "event_name": {
+          "description": "The name of the event that occurred. This is how you will find your event in Brevo. Limited to 255 characters; only alphanumeric characters, hyphens (-), and underscores (_) are allowed.",
+          "example": "video_played",
+          "maxLength": 255,
+          "type": "string"
+        },
+        "event_properties": {
+          "additionalProperties": {
+            "anyOf": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "description": "Properties of the event. Top level properties and nested properties can be used to better segment contacts and personalise workflow conditions. The following field types are supported: string, number, boolean (true/false), date (Timestamp e.g. \"2024-01-24T17:39:57+01:00\"). Keys are limited to 255 characters, alphanumerical characters and - _ only. Size is limited to 50KB.",
+          "example": {
+            "autoplayed": {
+              "description": "(nested schema truncated)"
+            },
+            "duration": {
+              "description": "(nested schema truncated)"
+            },
+            "upload_date": {
+              "description": "(nested schema truncated)"
+            },
+            "video_description": {
+              "description": "(nested schema truncated)"
+            },
+            "video_title": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "identifiers": {
+          "description": "Identifies the contact associated with the event. At least one identifier is required.",
+          "minProperties": 1,
+          "properties": {
+            "contact_id": {
+              "description": "(nested schema truncated)"
+            },
+            "email_id": {
+              "description": "(nested schema truncated)"
+            },
+            "ext_id": {
+              "description": "(nested schema truncated)"
+            },
+            "landline_number_id": {
+              "description": "(nested schema truncated)"
+            },
+            "phone_id": {
+              "description": "(nested schema truncated)"
+            },
+            "whatsapp_id": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "object": {
+          "description": "Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.",
+          "properties": {
+            "identifiers": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "event_name",
+        "identifiers"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/events",
+      "auth": "header api-key",
+      "params": {
+        "contact_properties": "body",
+        "event_date": "body",
+        "event_name": "body",
+        "event_properties": "body",
+        "identifiers": "body",
+        "object": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Events tracking enabled (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.inbound_parsing.get_inbound_email_events_uuid",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Events tracking enabled"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//events/post (createEvent)"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "id": "brevo.ecommerce.create_update_batch_category",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "category",
+  "operation_class": "create",
+  "label": "Create categories in batch",
+  "description": "Create or update multiple ecommerce categories in a single request. The `categories` array accepts up to 100 category objects, each requiring a unique `id`. When `updateEnabled` is `false` (the default), all categories are inserted as new; if any ID already exists, a `400` error is returned. When `updateEnabled` is `true`, existing categories are updated and new ones are created via upsert. Duplicate IDs within the same request payload are rejected. The response returns the count of created and updated categories.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "description": "array of categories objects",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "updateEnabled": {
+          "description": "Facilitate to update the existing categories in the same request (updateEnabled = true)",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "categories"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "createdCount": {
+          "description": "Number of the new created categories",
+          "example": 7,
+          "format": "int64",
+          "type": "integer"
+        },
+        "updatedCount": {
+          "description": "Number of the existing categories updated",
+          "example": 5,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/categories/batch",
+      "auth": "header api-key",
+      "params": {
+        "categories": "body",
+        "updateEnabled": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.ecommerce.get_category_info",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//categories/batch/post (createUpdateBatchCategory)"
+    }
+  ]
+}

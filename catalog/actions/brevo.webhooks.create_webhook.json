@@ -1,0 +1,190 @@
+{
+  "id": "brevo.webhooks.create_webhook",
+  "product": "brevo",
+  "area": "Webhooks",
+  "entity": "webhook",
+  "operation_class": "create",
+  "label": "Create a webhook",
+  "description": "Creates a new webhook to receive real-time notifications for specified events. Use this to: - Set up event notifications for transactional or marketing emails - Configure webhook endpoints for campaign tracking - Enable real-time monitoring of email delivery status - Subscribe to contact list changes and updates - Implement custom event handling and automation Key information returned: - Created webhook ID and configuration - Success confirmation and setup details",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "description": "Add authentication on webhook url",
+          "properties": {
+            "token": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "batched": {
+          "description": "To send batched webhooks",
+          "example": true,
+          "type": "boolean"
+        },
+        "channel": {
+          "default": "email",
+          "description": "Channel of the webhook",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "email",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description of the webhook",
+          "example": "Webhook triggered on unsubscription",
+          "type": "string"
+        },
+        "domain": {
+          "description": "Inbound domain of webhook, required in case of event type\n`inbound`",
+          "example": "example.com",
+          "type": "string"
+        },
+        "events": {
+          "description": "Events triggering the webhook. Required for transactional and\nmarketing types, optional for inbound type (defaults to\n`inboundEmailProcessed`). Possible values for **Transactional**\ntype webhook: `sent` OR `request`, `delivered`, `hardBounce`,\n`softBounce`, `blocked`, `spam`, `invalid`, `deferred`, `click`,\n`opened`, `uniqueOpened` and `unsubscribed`. Possible values for\n**Marketing** type webhook: `spam`, `opened`, `click`,\n`hardBounce`, `softBounce`, `unsubscribed`, `listAddition`,\n`delivered`, `contactUpdated` & `contactDeleted`. Possible values\nfor **Inbound** type webhook: `inboundEmailProcessed`.",
+          "items": {
+            "enum": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "headers": {
+          "description": "Custom headers to be send with webhooks",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "type": {
+          "default": "transactional",
+          "description": "Type of the webhook",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "marketing",
+          "type": "string"
+        },
+        "url": {
+          "description": "URL of the webhook",
+          "example": "http://requestb.in/173lyyx1",
+          "format": "url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "webhook",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/webhooks",
+      "auth": "header api-key",
+      "params": {
+        "auth": "body",
+        "batched": "body",
+        "channel": "body",
+        "description": "body",
+        "domain": "body",
+        "events": "body",
+        "headers": "body",
+        "type": "body",
+        "url": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.webhooks.get_webhook",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.webhooks.delete_webhook",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//webhooks/post (createWebhook)"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id": "brevo.transactional_emails.delete_smtp_transactional_log",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "log",
+  "operation_class": "delete",
+  "label": "Delete an SMTP transactional log",
+  "description": "Delete SMTP transactional log entries identified by a message ID (enclosed in angle brackets with an @ sign) or a valid email address. Optionally narrow the deletion to a specific date range using `from_date` and `to_date` query parameters (YYYY-MM-DD format). The operation also removes any associated stored email preview content.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "MessageId or email address of the transactional log(s) to delete. Must be a valid message ID (enclosed in angle brackets with @ sign) or a valid email address."
+        },
+        "from_date": {
+          "type": "string",
+          "description": "Starting date (YYYY-MM-DD) to narrow down logs for deletion"
+        },
+        "to_date": {
+          "type": "string",
+          "description": "Ending date (YYYY-MM-DD) to narrow down logs for deletion"
+        }
+      },
+      "required": [
+        "identifier"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "identifier",
+        "entity": "log",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/smtp/log/{identifier}",
+      "auth": "header api-key",
+      "params": {
+        "identifier": "path",
+        "from_date": "query",
+        "to_date": "query"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/log/{identifier}/delete"
+    }
+  ]
+}

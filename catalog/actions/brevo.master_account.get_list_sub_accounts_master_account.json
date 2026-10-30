@@ -1,0 +1,100 @@
+{
+  "id": "brevo.master_account.get_list_sub_accounts_master_account",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "sub_account",
+  "operation_class": "read",
+  "label": "Get the list of all the sub-accounts of the master account.",
+  "description": "This endpoint will provide the list all the sub-accounts of the master account.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "description": "Index of the first sub-account in the page"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Number of sub-accounts to be displayed on each page"
+        }
+      },
+      "required": [
+        "offset",
+        "limit"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "count": {
+          "description": "Total number of subaccounts",
+          "type": "integer"
+        },
+        "subAccounts": {
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/corporate/subAccount",
+      "auth": "header api-key",
+      "params": {
+        "offset": "query",
+        "limit": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/subAccount/get"
+    }
+  ]
+}

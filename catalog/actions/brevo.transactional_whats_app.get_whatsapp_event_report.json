@@ -1,0 +1,144 @@
+{
+  "id": "brevo.transactional_whats_app.get_whatsapp_event_report",
+  "product": "brevo",
+  "area": "Transactional WhatsApp",
+  "entity": "event",
+  "operation_class": "read",
+  "label": "Get all your WhatsApp activity (unaggregated events)",
+  "description": "This endpoint will show the unaggregated statistics for WhatsApp activity (30 days by default if `startDate` and `endDate` or `days` is not passed. The date range can not exceed 90 days)",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 2500,
+          "format": "int64",
+          "maximum": 10000,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Number limitation for the result returned"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Beginning point in the list to retrieve from"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "**Mandatory if endDate is used.** Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "**Mandatory if startDate is used.** Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate"
+        },
+        "days": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Number of days in the past including today (positive integer). _Not compatible with 'startDate' and 'endDate'_"
+        },
+        "contactNumber": {
+          "format": "mobile",
+          "type": "string",
+          "description": "Filter results for specific contact (WhatsApp Number with country code. Example, 85264318721)"
+        },
+        "event": {
+          "enum": [
+            "sent",
+            "delivered",
+            "read",
+            "error",
+            "unsubscribe",
+            "reply",
+            "soft-bounce"
+          ],
+          "type": "string",
+          "description": "Filter the report for a specific event type"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "events": {
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/whatsapp/statistics/events",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "offset": "query",
+        "startDate": "query",
+        "endDate": "query",
+        "days": "query",
+        "contactNumber": "query",
+        "event": "query",
+        "sort": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "WhatsApp Business account connected (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "WhatsApp Business account connected"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//whatsapp/statistics/events/get (getWhatsappEventReport)"
+    }
+  ]
+}

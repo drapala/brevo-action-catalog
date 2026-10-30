@@ -1,0 +1,85 @@
+{
+  "id": "brevo.ecommerce.set_config_display_currency",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "display_currency",
+  "operation_class": "create",
+  "label": "Set the ISO 4217 compliant display currency code for your Brevo account",
+  "description": "Set or update the ISO 4217 display currency code for your Brevo ecommerce account. This currency determines how monetary values are displayed in the ecommerce dashboard and reports. The provided currency code must be a valid ISO 4217 code; invalid codes result in a `422` error. Returns a `403` error if ecommerce is not activated on the account.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "ISO 4217 compliant display currency code",
+          "example": "EUR",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "code": {
+          "description": "ISO 4217 compliant display currency code",
+          "example": "EUR",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/ecommerce/config/displayCurrency",
+      "auth": "header api-key",
+      "params": {
+        "code": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//ecommerce/config/displayCurrency/post (setConfigDisplayCurrency)"
+    }
+  ]
+}

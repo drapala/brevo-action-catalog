@@ -1,0 +1,157 @@
+{
+  "id": "brevo.external_feeds.update_external_feed",
+  "product": "brevo",
+  "area": "External Feeds",
+  "entity": "feed",
+  "operation_class": "update",
+  "label": "Update external feed",
+  "description": "Updates configuration of an existing external feed. **Use this to:** - Update feed URLs when data sources change - Modify authentication credentials - Change cache and retry settings - Update custom headers - Rename feeds for better organization **Key information returned:** - Success confirmation message **Important considerations:** - Only provided fields will be updated - Feed UUID must exist in your account - Authentication changes require verification - URL changes should be tested before campaign use - Monitor campaigns using this feed after updates",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "format": "uuidv4",
+          "type": "string",
+          "description": "UUID of the feed to update"
+        },
+        "name": {
+          "description": "Name of the feed",
+          "example": "Updated Product Catalog",
+          "type": "string"
+        },
+        "url": {
+          "description": "URL of the external data source",
+          "example": "https://api.newstore.com/products/v2",
+          "format": "url",
+          "type": "string"
+        },
+        "authType": {
+          "description": "Authentication type for accessing the feed",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "token",
+          "type": "string"
+        },
+        "username": {
+          "description": "Username for basic authentication",
+          "example": "apiuser",
+          "type": "string"
+        },
+        "password": {
+          "description": "Password for basic authentication",
+          "example": "newsecurepass456",
+          "type": "string"
+        },
+        "token": {
+          "description": "Token for token-based authentication",
+          "example": "newabc123token789",
+          "type": "string"
+        },
+        "headers": {
+          "description": "Custom HTTP headers for the feed request",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "maxRetries": {
+          "description": "Maximum number of retry attempts for failed requests",
+          "example": 3,
+          "maximum": 5,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cache": {
+          "description": "Whether to cache the feed response",
+          "example": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "uuid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "uuid",
+        "entity": "feed",
+        "find_with": "brevo.external_feeds.get_external_feeds",
+        "create_with": "brevo.external_feeds.create_external_feed"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/feeds/{uuid}",
+      "auth": "header api-key",
+      "params": {
+        "uuid": "path",
+        "name": "body",
+        "url": "body",
+        "authType": "body",
+        "username": "body",
+        "password": "body",
+        "token": "body",
+        "headers": "body",
+        "maxRetries": "body",
+        "cache": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.external_feeds.get_external_feed_uuid",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.external_feeds.update_external_feed",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//feeds/{uuid}/put (updateExternalFeed)"
+    }
+  ]
+}

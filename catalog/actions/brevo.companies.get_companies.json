@@ -1,0 +1,125 @@
+{
+  "id": "brevo.companies.get_companies",
+  "product": "brevo",
+  "area": "Companies",
+  "entity": "company",
+  "operation_class": "read",
+  "label": "Get all Companies",
+  "description": "Retrieve a paginated list of companies with optional filtering, sorting, and search capabilities. Results are sorted by creation date in descending order by default, and can be filtered by attributes, linked contacts, linked deals, or modification/creation timestamps.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "filters[attributes.name]": {
+          "type": "string",
+          "description": "Filter by attributes. If you have a filter for the owner on your side please send it as filters[attributes.owner] and utilize the account email for the filtering."
+        },
+        "linkedContactsIds": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Filter by linked contacts ids"
+        },
+        "linkedDealsIds": {
+          "format": "objectID",
+          "type": "string",
+          "description": "Filter by linked Deals ids"
+        },
+        "modifiedSince": {
+          "type": "string",
+          "description": "Filter (urlencoded) the companies modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result."
+        },
+        "createdSince": {
+          "type": "string",
+          "description": "Filter (urlencoded) the companies created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result."
+        },
+        "page": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document of the page"
+        },
+        "limit": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "sort": {
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order. Default order is **descending** by creation if `sort` is not passed"
+        },
+        "sortBy": {
+          "type": "string",
+          "description": "The field used to sort field names."
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "List of companies",
+      "properties": {
+        "items": {
+          "description": "List of companies",
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/companies",
+      "auth": "header api-key",
+      "params": {
+        "filters[attributes.name]": "query",
+        "linkedContactsIds": "query",
+        "linkedDealsIds": "query",
+        "modifiedSince": "query",
+        "createdSince": "query",
+        "page": "query",
+        "limit": "query",
+        "sort": "query",
+        "sortBy": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//companies/get"
+    }
+  ]
+}

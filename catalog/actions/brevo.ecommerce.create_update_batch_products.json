@@ -1,0 +1,107 @@
+{
+  "id": "brevo.ecommerce.create_update_batch_products",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "product",
+  "operation_class": "create",
+  "label": "Create products in batch",
+  "description": "Create or update multiple ecommerce products in a single request. The `products` array accepts up to 100 product objects for creation (or up to 1000 when `updateEnabled` is `true` and the account has an increased limit). Each product requires a unique `id` and `name` (name is mandatory for creation only). When `updateEnabled` is `false`, all products are inserted as new; if any ID already exists, a `400` error is returned. When `updateEnabled` is `true`, existing products are updated and new ones are created via upsert. Duplicate IDs within the same request payload are rejected. The response r",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "products": {
+          "description": "array of products objects",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "updateEnabled": {
+          "description": "Facilitate to update the existing products in the same request (updateEnabled = true)",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "products"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "createdCount": {
+          "description": "Number of the new created products",
+          "example": 7,
+          "format": "int64",
+          "type": "integer"
+        },
+        "updatedCount": {
+          "description": "Number of the existing products updated",
+          "example": 5,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/products/batch",
+      "auth": "header api-key",
+      "params": {
+        "products": "body",
+        "updateEnabled": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.ecommerce.get_product_info",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//products/batch/post (createUpdateBatchProducts)"
+    }
+  ]
+}

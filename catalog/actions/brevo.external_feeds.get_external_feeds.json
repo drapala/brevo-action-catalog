@@ -1,0 +1,141 @@
+{
+  "id": "brevo.external_feeds.get_external_feeds",
+  "product": "brevo",
+  "area": "External Feeds",
+  "entity": "feed",
+  "operation_class": "read",
+  "label": "Get all external feeds",
+  "description": "Retrieves all external feeds from your Brevo account with filtering and pagination. **Use this to:** - Get an overview of all external data feeds - Find feeds by name using search functionality - Filter feeds by creation date range - Browse feeds by authentication type - Monitor feed library organization and usage **Key information returned:** - Feed details (UUID, name, URL, authentication type) - Feed configuration and settings - Creation and modification timestamps - Feed status and error information - Authentication and header configurations **Important considerations:** - External feeds e",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "search": {
+          "type": "string",
+          "description": "Can be used to filter records by search keyword on feed name"
+        },
+        "startDate": {
+          "format": "date",
+          "type": "string",
+          "description": "Mandatory if `endDate` is used. Starting date (YYYY-MM-DD) from which\nyou want to fetch the list. Can be maximum 30 days older than current\ndate."
+        },
+        "endDate": {
+          "format": "date",
+          "type": "string",
+          "description": "Mandatory if `startDate` is used. Ending date (YYYY-MM-DD) till which\nyou want to fetch the list. Maximum time period that can be selected is\none month."
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation.\nDefault order is **descending** if `sort` is not passed."
+        },
+        "authType": {
+          "enum": [
+            "basic",
+            "token",
+            "noAuth"
+          ],
+          "type": "string",
+          "description": "Filter the records by `authType` of the feed."
+        },
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Number of documents returned per page."
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document on the page."
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "count": {
+          "description": "Total number of feeds",
+          "example": 18,
+          "type": "integer"
+        },
+        "feeds": {
+          "description": "List of external feeds",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "count",
+        "feeds"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/feeds",
+      "auth": "header api-key",
+      "params": {
+        "search": "query",
+        "startDate": "query",
+        "endDate": "query",
+        "sort": "query",
+        "authType": "query",
+        "limit": "query",
+        "offset": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//feeds/get (getAllExternalFeeds)"
+    }
+  ]
+}

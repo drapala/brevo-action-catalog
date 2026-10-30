@@ -1,0 +1,310 @@
+{
+  "id": "brevo.tier.create_tier_group",
+  "product": "brevo",
+  "area": "Tier",
+  "entity": "tier_group",
+  "operation_class": "create",
+  "label": "Create a tier group",
+  "description": "Creates a new tier group in a loyalty program. *(The changes will take effect with the next publication of the loyalty program)*",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "downgradeStrategy": {
+          "default": "real_time",
+          "description": "Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the tier group",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": true,
+          "description": "Additional metadata for the tier group.",
+          "example": {
+            "isInternal": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "properties": {
+            "isInternal": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "tierOrder": {
+          "description": "Order of the tiers in the group in ascending order",
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "upgradeStrategy": {
+          "default": "real_time",
+          "description": "Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "upgradeSchedule": {
+          "description": "Schedule configuration for tier upgrades. Required when upgradeStrategy is set to a schedule-based strategy.",
+          "properties": {
+            "durationValue": {
+              "description": "(nested schema truncated)"
+            },
+            "durationUnit": {
+              "description": "(nested schema truncated)"
+            },
+            "durationModifier": {
+              "description": "(nested schema truncated)"
+            },
+            "scheduledDate": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "downgradeSchedule": {
+          "description": "Schedule configuration for tier downgrades. Required when downgradeStrategy is set to a schedule-based strategy.",
+          "properties": {
+            "durationValue": {
+              "description": "(nested schema truncated)"
+            },
+            "durationUnit": {
+              "description": "(nested schema truncated)"
+            },
+            "durationModifier": {
+              "description": "(nested schema truncated)"
+            },
+            "scheduledDate": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "pid",
+        "name"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "createdAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "downgradeStrategy": {
+          "default": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "loyaltyProgramId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "name": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "tierOrder": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "updatedAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "upgradeStrategy": {
+          "default": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "upgradeSchedule": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "downgradeSchedule": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "tier_group",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/tier/programs/{pid}/tier-groups",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "downgradeStrategy": "body",
+        "name": "body",
+        "meta": "body",
+        "tierOrder": "body",
+        "upgradeStrategy": "body",
+        "upgradeSchedule": "body",
+        "downgradeSchedule": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.tier.get_tier_group",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.tier.delete_tier_group",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/tier/programs/{pid}/tier-groups/post (createTierGroup)"
+    }
+  ]
+}

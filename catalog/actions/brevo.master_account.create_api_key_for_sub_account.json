@@ -1,0 +1,102 @@
+{
+  "id": "brevo.master_account.create_api_key_for_sub_account",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "sub_account",
+  "operation_class": "create",
+  "label": "Create an API key for a sub-account",
+  "description": "This endpoint will generate an API v3 key for a sub-account",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Id of the sub-account organization",
+          "example": 3232323,
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Name of the API key",
+          "example": "My Api Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "key": {
+          "description": "API key",
+          "example": "xkeysib-21881axxxxxcc92e04-mIrexxxx7z",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status of the API operation.",
+          "example": "success",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "key"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/corporate/subAccount/key",
+      "auth": "header api-key",
+      "params": {
+        "id": "body",
+        "name": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.master_account.get_sub_account_details",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "changes_account",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/subAccount/key/post"
+    }
+  ]
+}

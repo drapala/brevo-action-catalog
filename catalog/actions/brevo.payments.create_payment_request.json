@@ -1,0 +1,154 @@
+{
+  "id": "brevo.payments.create_payment_request",
+  "product": "brevo",
+  "area": "Payments",
+  "entity": "request",
+  "operation_class": "create",
+  "label": "Create a payment request",
+  "description": "Create a new payment request for a Brevo contact. The request requires a reference (displayed on the payment page), a contact ID, and a cart with currency and amount in cents. You can optionally configure a custom success redirect URL and enable email notifications with reminders. Returns the payment request ID and its public payment URL. A `403` error is returned if Brevo Payments is not activated or the account is not validated.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "cart": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "configuration": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "contactId": {
+          "description": "Brevo ID of the contact requested to pay.\n",
+          "example": 43,
+          "format": "int64",
+          "type": "integer"
+        },
+        "description": {
+          "description": "Description of payment request.\n",
+          "example": "Shipping Cost for sending bottles to NYC",
+          "type": "string"
+        },
+        "notification": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "required": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "reference": {
+          "description": "Reference of the payment request, it will appear on the payment page.\n",
+          "example": "Invoice #INV0001",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference",
+        "contactId",
+        "cart"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "ID of the object created",
+          "example": 122,
+          "format": "int64",
+          "type": "integer"
+        },
+        "url": {
+          "description": "URL of the payment request created",
+          "example": "https://pay.brevo.com/payment/6d4ec0b2b48ef803df4103ve",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "request",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/payments/requests",
+      "auth": "header api-key",
+      "params": {
+        "cart": "body",
+        "configuration": "body",
+        "contactId": "body",
+        "description": "body",
+        "notification": "body",
+        "reference": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "Brevo Payments activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.payments.get_payment_request",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.payments.delete_payment_request",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Brevo Payments activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//payments/requests/post (createPaymentRequest)"
+    }
+  ]
+}

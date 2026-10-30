@@ -1,0 +1,131 @@
+{
+  "id": "brevo.sms_campaigns.request_sms_recipient_export",
+  "product": "brevo",
+  "area": "SMS Campaigns",
+  "entity": "sms_campaign",
+  "operation_class": "action",
+  "label": "Export an SMS campaign's recipients",
+  "description": "It returns the background process ID which on completion calls the notify URL that you have set in the input.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "campaignId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the campaign"
+        },
+        "notifyURL": {
+          "description": "URL that will be called once the export process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479",
+          "example": "http://requestb.in/173lyyx1",
+          "format": "url",
+          "type": "string"
+        },
+        "recipientsType": {
+          "description": "Filter the recipients based on how they interacted with the campaign",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "answered",
+          "type": "string"
+        }
+      },
+      "required": [
+        "campaignId",
+        "recipientsType"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "campaignId",
+        "entity": "sms_campaign",
+        "find_with": "brevo.sms_campaigns.get_sms_campaigns",
+        "create_with": "brevo.sms_campaigns.create_sms_campaign"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "processId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "processId"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/smsCampaigns/{campaignId}/exportRecipients",
+      "auth": "header api-key",
+      "params": {
+        "campaignId": "path",
+        "notifyURL": "body",
+        "recipientsType": "body"
+      },
+      "success_status": [
+        202
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smsCampaigns/{campaignId}/exportRecipients/post (requestSmsRecipientExport)"
+    }
+  ]
+}

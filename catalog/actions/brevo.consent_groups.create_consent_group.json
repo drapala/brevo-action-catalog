@@ -1,0 +1,238 @@
+{
+  "id": "brevo.consent_groups.create_consent_group",
+  "product": "brevo",
+  "area": "ConsentGroups",
+  "entity": "consent_group",
+  "operation_class": "create",
+  "label": "Create a consent group",
+  "description": "Creates a new consent group for the account. <Note>This endpoint is only available when the Consent Groups feature is enabled for your account.</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "description": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "signupMode": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "listIds": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "signupMode"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "type": "object",
+      "description": "A consent group representing a category of contact opt-in/opt-out preferences.",
+      "properties": {
+        "id": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "name": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "description": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "signupMode": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "contactsCount": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "isDefault": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "createdAt": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "updatedAt": {
+          "type": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "signupMode",
+        "contactsCount",
+        "isDefault",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "produces_entity": {
+      "entity": "consent_group",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/contacts/consent-groups",
+      "auth": "header api-key",
+      "params": {
+        "name": "body",
+        "description": "body",
+        "signupMode": "body",
+        "listIds": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.consent_groups.get_consent_group",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.consent_groups.delete_consent_group",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/consent-groups/post (createConsentGroup)"
+    }
+  ]
+}

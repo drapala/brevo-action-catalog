@@ -1,0 +1,133 @@
+{
+  "id": "brevo.coupons.update_coupon_collection",
+  "product": "brevo",
+  "area": "Coupons",
+  "entity": "coupon_collection",
+  "operation_class": "update",
+  "label": "Update a coupon collection by id",
+  "description": "Update an existing coupon collection by its UUID. You can modify the default coupon value, set or remove the expiration date (pass `null` to remove), and configure or disable alert thresholds for remaining coupons or remaining days. Only the fields included in the request body are updated; omitted fields remain unchanged.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuidv4",
+          "type": "string",
+          "description": "Id of the collection to update"
+        },
+        "defaultCoupon": {
+          "description": "A default coupon to be used in case there are no coupons left",
+          "example": "10 OFF",
+          "type": "string"
+        },
+        "expirationDate": {
+          "description": "Specify an expiration date for the coupon collection in RFC3339 format. Use null to remove the expiration date.",
+          "example": "2024-01-01T00:00:00Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "remainingCouponsAlert": {
+          "description": "Send a notification alert (email) when the remaining coupons count is equal or fall bellow this number. Use null to disable alerts.",
+          "example": 5,
+          "type": "integer"
+        },
+        "remainingDaysAlert": {
+          "description": "Send a notification alert (email) when the remaining days until the expiration date are equal or fall bellow this number. Use null to disable alerts.",
+          "example": 5,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "id",
+        "entity": "coupon_collection",
+        "find_with": "brevo.coupons.get_coupon_collections",
+        "create_with": "brevo.coupons.create_coupon_collection"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "defaultCoupon": {
+          "description": "The default coupon of the collection",
+          "example": "10 OFF",
+          "type": "string"
+        },
+        "id": {
+          "description": "The id of the collection",
+          "example": "23befbae-1505-47a8-bd27-e30ef739f32c",
+          "format": "uuidv4",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the collection",
+          "example": "SummerPromotions",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "defaultCoupon"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PATCH",
+      "url": "https://api.brevo.com/v3/couponCollections/{id}",
+      "auth": "header api-key",
+      "params": {
+        "id": "path",
+        "defaultCoupon": "body",
+        "expirationDate": "body",
+        "remainingCouponsAlert": "body",
+        "remainingDaysAlert": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.coupons.get_coupon_collection",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.coupons.update_coupon_collection",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//couponCollections/{id}/patch (updateCouponCollection)"
+    }
+  ]
+}

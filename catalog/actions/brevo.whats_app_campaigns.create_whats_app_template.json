@@ -1,0 +1,151 @@
+{
+  "id": "brevo.whats_app_campaigns.create_whats_app_template",
+  "product": "brevo",
+  "area": "WhatsApp Campaigns",
+  "entity": "whatsapp_template",
+  "operation_class": "create",
+  "label": "Create a WhatsApp template",
+  "description": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below. [Activating WhatsApp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "bodyText": {
+          "description": "Body of the template. **Maximum allowed characters are 1024**",
+          "example": "making it look like readable English",
+          "type": "string"
+        },
+        "category": {
+          "description": "Category of the template",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "MARKETING",
+          "type": "string"
+        },
+        "headerText": {
+          "description": "Text content of the header in the template.  **Maximum allowed characters are 45** **Use this field to add text content in template header and if mediaUrl is empty**\n",
+          "example": "Test WhatsApp campaign",
+          "type": "string"
+        },
+        "language": {
+          "description": "Language of the template. For Example :\n**en** for English\n",
+          "example": "en",
+          "type": "string"
+        },
+        "mediaUrl": {
+          "description": "Absolute url of the media file **(no local file)** for the header. **Use this field in you want to add media in Template header and headerText is empty** Allowed extensions for media files are: #### jpeg | png | mp4 | pdf\n",
+          "example": "https://attachment.domain.com",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the template",
+          "example": "Test template",
+          "type": "string"
+        },
+        "source": {
+          "description": "source of the template",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "language",
+        "category",
+        "bodyText"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "whatsapp_template",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/whatsappCampaigns/template",
+      "auth": "header api-key",
+      "params": {
+        "bodyText": "body",
+        "category": "body",
+        "headerText": "body",
+        "language": "body",
+        "mediaUrl": "body",
+        "name": "body",
+        "source": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "WhatsApp Business account connected (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "WhatsApp Business account connected"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//whatsappCampaigns/template/post (createWhatsAppTemplate)"
+    }
+  ]
+}

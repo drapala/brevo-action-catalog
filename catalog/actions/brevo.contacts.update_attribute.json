@@ -1,0 +1,125 @@
+{
+  "id": "brevo.contacts.update_attribute",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact_attribute",
+  "operation_class": "update",
+  "label": "Update contact attribute",
+  "description": "Update an existing contact attribute identified by its category and name. For category-type attributes, you can update the enumeration values; for calculated or global attributes, update the computed value formula; and for normal multiple-choice attributes, update the multicategory options. None of the category or multicategory option values can exceed 200 characters.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "attributeCategory": {
+          "enum": [
+            "category",
+            "calculated",
+            "global",
+            "normal"
+          ],
+          "type": "string",
+          "description": "Category of the attribute"
+        },
+        "attributeName": {
+          "type": "string",
+          "description": "Name of the existing attribute"
+        },
+        "enumeration": {
+          "description": "List of the values and labels that the attribute can take. **Use only if the attribute's category is \"category\"** None of the category options can exceed max 200 characters. For example, **[{\"value\":1, \"label\":\"male\"}, {\"value\":2, \"label\":\"female\"}]**\n",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "multiCategoryOptions": {
+          "description": "Use this option to add multiple-choice attributes options only if the attribute's category is \"normal\". **This option is specifically designed for updating multiple-choice attributes. None of the multicategory options can exceed max 200 characters.**. For example: **[\"USA\",\"INDIA\"]**\n",
+          "items": {
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "value": {
+          "description": "Value of the attribute to update. **Use only if the attribute's category is 'calculated' or 'global'**\n",
+          "example": "COUNT[BLACKLISTED,BLACKLISTED,<,NOW()]",
+          "type": "string"
+        }
+      },
+      "required": [
+        "attributeCategory",
+        "attributeName"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "attributeCategory",
+        "entity": "attribute_category",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "attributeName",
+        "entity": "contact_attribute",
+        "find_with": "brevo.contacts.get_attributes",
+        "create_with": "brevo.contacts.create_attribute"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/contacts/attributes/{attributeCategory}/{attributeName}",
+      "auth": "header api-key",
+      "params": {
+        "attributeCategory": "path",
+        "attributeName": "path",
+        "enumeration": "body",
+        "multiCategoryOptions": "body",
+        "value": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.contacts.update_attribute",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/attributes/{attributeCategory}/{attributeName}/put (updateAttribute)"
+    }
+  ]
+}

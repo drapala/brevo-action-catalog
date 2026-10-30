@@ -1,0 +1,121 @@
+{
+  "id": "brevo.contacts.add_contact_to_list",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact",
+  "operation_class": "action",
+  "label": "Add existing contacts to a list",
+  "description": "Add existing contacts to a list",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "listId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the list"
+        },
+        "body": {
+          "oneOf": [
+            {
+              "properties": {
+                "emails": {
+                  "description": "(nested schema truncated)"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "ids": {
+                  "description": "(nested schema truncated)"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "extIds": {
+                  "description": "(nested schema truncated)"
+                }
+              },
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "required": [
+        "listId",
+        "body"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "listId",
+        "entity": "list",
+        "find_with": "brevo.contacts.get_lists",
+        "create_with": "brevo.contacts.create_list"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "contacts": {
+          "properties": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "contacts"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/contacts/lists/{listId}/contacts/add",
+      "auth": "header api-key",
+      "params": {
+        "listId": "path",
+        "body": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/lists/{listId}/contacts/add/post (addContactToList)"
+    }
+  ]
+}

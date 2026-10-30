@@ -1,0 +1,79 @@
+{
+  "id": "brevo.contacts.delete_folder",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "folder",
+  "operation_class": "delete",
+  "label": "Delete a folder (and all its lists)",
+  "description": "Permanently delete a folder identified by its ID. Deleting a folder will also delete all the contact lists contained within it. This action cannot be undone.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "folderId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the folder"
+        }
+      },
+      "required": [
+        "folderId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "folderId",
+        "entity": "folder",
+        "find_with": "brevo.contacts.get_folders",
+        "create_with": "brevo.contacts.create_folder"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/contacts/folders/{folderId}",
+      "auth": "header api-key",
+      "params": {
+        "folderId": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.contacts.get_folder",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/folders/{folderId}/delete (deleteFolder)"
+    }
+  ]
+}

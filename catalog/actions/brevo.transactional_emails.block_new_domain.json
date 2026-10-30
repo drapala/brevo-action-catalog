@@ -1,0 +1,69 @@
+{
+  "id": "brevo.transactional_emails.block_new_domain",
+  "product": "brevo",
+  "area": "Transactional emails",
+  "entity": "blocked_domain",
+  "operation_class": "create",
+  "label": "Add a new domain to the list of blocked domains",
+  "description": "Blocks a new domain in order to avoid messages being sent to the same",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "description": "name of the domain to be blocked",
+          "example": "example.com",
+          "type": "string"
+        }
+      },
+      "required": [
+        "domain"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/smtp/blockedDomains",
+      "auth": "header api-key",
+      "params": {
+        "domain": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.transactional_emails.delete_blocked_domain",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//smtp/blockedDomains/post (blockNewDomain)"
+    }
+  ]
+}

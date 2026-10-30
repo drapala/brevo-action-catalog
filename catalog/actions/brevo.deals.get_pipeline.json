@@ -1,0 +1,88 @@
+{
+  "id": "brevo.deals.get_pipeline",
+  "product": "brevo",
+  "area": "Deals",
+  "entity": "detail",
+  "operation_class": "read",
+  "label": "Get a pipeline",
+  "description": "Retrieve the details of a specific deal pipeline by its identifier, including its stages, stage ordering, and configuration. Use this endpoint to obtain the pipeline and stage IDs needed when creating or updating deals.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pipelineID": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pipelineID"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pipelineID",
+        "entity": "pipeline",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "List of pipeline",
+      "items": {
+        "description": {
+          "description": "(nested schema truncated)"
+        },
+        "properties": {
+          "description": "(nested schema truncated)"
+        },
+        "type": {
+          "description": "(nested schema truncated)"
+        }
+      },
+      "type": "array"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/crm/pipeline/details/{pipelineID}",
+      "auth": "header api-key",
+      "params": {
+        "pipelineID": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//crm/pipeline/details/{pipelineID}/get"
+    }
+  ]
+}

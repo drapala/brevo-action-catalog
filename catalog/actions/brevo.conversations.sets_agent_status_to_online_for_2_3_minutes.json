@@ -1,0 +1,85 @@
+{
+  "id": "brevo.conversations.sets_agent_status_to_online_for_2_3_minutes",
+  "product": "brevo",
+  "area": "Conversations",
+  "entity": "conversation",
+  "operation_class": "action",
+  "label": "Sets agent's status to online for 2-3 minutes",
+  "description": "Sets the agent's status to online for 2-3 minutes. We recommend pinging this endpoint every minute for as long as the agent has to be considered online. You must provide either `agentId` alone, or all three of `agentEmail` + `agentName` + `receivedFrom`.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "agentEmail": {
+          "description": "Agent's email address. When sending online pings from a standalone system, it's hard to maintain a 1-to-1 relationship between the users of both systems. In this case, an agent can be specified by their email address. If there's no agent with the specified email address in your Brevo organization, a dummy agent will be created automatically.",
+          "type": "string",
+          "format": "email"
+        },
+        "agentId": {
+          "description": "Agent ID. It can be found on the agent's page or received <a href=\"https://developers.brevo.com/docs/conversations-webhooks\">from a webhook</a>. Alternatively, you can use `agentEmail` + `agentName` + `receivedFrom` instead (all 3 fields required).",
+          "type": "string"
+        },
+        "agentName": {
+          "description": "Agent's name.",
+          "type": "string"
+        },
+        "receivedFrom": {
+          "description": "Mark your messages to distinguish messages created by you from the others.",
+          "type": "string"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/conversations/agentOnlinePing",
+      "auth": "header api-key",
+      "params": {
+        "agentEmail": "body",
+        "agentId": "body",
+        "agentName": "body",
+        "receivedFrom": "body"
+      },
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [
+    "Conversations chat widget installed (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Conversations chat widget installed"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//conversations/agentOnlinePing/post"
+    }
+  ]
+}

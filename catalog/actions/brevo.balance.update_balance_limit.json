@@ -1,0 +1,279 @@
+{
+  "id": "brevo.balance.update_balance_limit",
+  "product": "brevo",
+  "area": "Balance",
+  "entity": "limit",
+  "operation_class": "update",
+  "label": "Updates balance limit",
+  "description": "Updates balance limit",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program Id"
+        },
+        "bdid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Balance Definition Id"
+        },
+        "blid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Balance Limit Id"
+        },
+        "constraintType": {
+          "description": "Defines whether the limit applies to transaction count or amount.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "durationUnit": {
+          "description": "Unit of time for which the limit is applicable.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "durationValue": {
+          "description": "Number of time units for the balance limit.",
+          "type": "integer"
+        },
+        "slidingSchedule": {
+          "description": "Determines if the limit resets on a rolling schedule.",
+          "type": "boolean"
+        },
+        "transactionType": {
+          "description": "Specifies whether the limit applies to credit or debit transactions.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        },
+        "value": {
+          "description": "Maximum allowed value for the specified constraint type.",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pid",
+        "bdid",
+        "blid",
+        "constraintType",
+        "durationUnit",
+        "durationValue",
+        "transactionType",
+        "value"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "bdid",
+        "entity": "bdid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "blid",
+        "entity": "blid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "balanceDefinitionId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "transactionType": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "constraintType": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "durationValue": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "durationUnit": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "enum": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "value": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "slidingSchedule": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "createdAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        },
+        "updatedAt": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/loyalty/balance/programs/{pid}/balance-definitions/{bdid}/limits/{blid}",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "bdid": "path",
+        "blid": "path",
+        "constraintType": "body",
+        "durationUnit": "body",
+        "durationValue": "body",
+        "slidingSchedule": "body",
+        "transactionType": "body",
+        "value": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.balance.get_balance_limit",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.balance.update_balance_limit",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/balance/programs/{pid}/balance-definitions/{bdid}/limits/{blid}/put (updateBalanceLimit)"
+    }
+  ]
+}

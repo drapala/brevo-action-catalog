@@ -1,0 +1,81 @@
+{
+  "id": "brevo.companies.import_companies_creation_and_updation",
+  "product": "brevo",
+  "area": "Companies",
+  "entity": "company",
+  "operation_class": "action",
+  "label": "Import companies(creation and updation)",
+  "description": "Import companies from a CSV file with mapping options.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "description": "The CSV file to upload.The file should have the first row as the mapping attribute. Some default attribute names are (a) company_id [brevo mongoID to update companies] (b) associated_contact (c) associated_deal (f) any other attribute with internal name\n",
+          "example": false,
+          "format": "binary",
+          "type": "string"
+        },
+        "mapping": {
+          "description": "The mapping options in JSON format. Here is an example of the JSON structure: ```json {\n  \"link_entities\": true, // Determines whether to link related entities during the import process\n  \"unlink_entities\": false, // Determines whether to unlink related entities during the import process\n  \"update_existing_records\": true, // Determines whether to update based on company ID or treat every row as create\n  \"unset_empty_attributes\": false // Determines whether to unset a specific attribute during update if the values input is blank\n} ```\n",
+          "type": "object"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "processId": {
+          "description": "The ID of the import process",
+          "example": 50,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/companies/import",
+      "auth": "header api-key",
+      "params": {
+        "file": "body",
+        "mapping": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//companies/import/post"
+    }
+  ]
+}

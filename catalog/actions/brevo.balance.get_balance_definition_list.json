@@ -1,0 +1,138 @@
+{
+  "id": "brevo.balance.get_balance_definition_list",
+  "product": "brevo",
+  "area": "Balance",
+  "entity": "balance_definition",
+  "operation_class": "read",
+  "label": "Get balance definition list",
+  "description": "Returns balance definition page",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program Id"
+        },
+        "limit": {
+          "default": 200,
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Limit the number of records returned"
+        },
+        "offset": {
+          "default": 0,
+          "minimum": 0,
+          "type": "integer",
+          "description": "Offset to paginate records"
+        },
+        "sortField": {
+          "default": "updated_at",
+          "enum": [
+            "name",
+            "created_at",
+            "updated_at"
+          ],
+          "type": "string",
+          "description": "Field to sort by"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort direction"
+        },
+        "version": {
+          "default": "draft",
+          "enum": [
+            "active",
+            "draft"
+          ],
+          "type": "string",
+          "description": "Version"
+        }
+      },
+      "required": [
+        "pid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "items": {
+          "description": "list of balance definitions",
+          "items": {
+            "description": "(nested schema truncated)"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/loyalty/balance/programs/{pid}/balance-definitions",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "limit": "query",
+        "offset": "query",
+        "sortField": "query",
+        "sort": "query",
+        "version": "query"
+      },
+      "success_status": [
+        200,
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/balance/programs/{pid}/balance-definitions/get (getBalanceDefinitionList)"
+    }
+  ]
+}

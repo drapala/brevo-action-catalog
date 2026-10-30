@@ -1,0 +1,91 @@
+{
+  "id": "brevo.contacts.update_folder",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "folder",
+  "operation_class": "update",
+  "label": "Update a folder",
+  "description": "Update the name of an existing folder identified by its ID. The new folder name must be provided in the request body. Returns a 404 error if the folder ID does not exist.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "folderId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the folder"
+        },
+        "name": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "folderId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "folderId",
+        "entity": "folder",
+        "find_with": "brevo.contacts.get_folders",
+        "create_with": "brevo.contacts.create_folder"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/contacts/folders/{folderId}",
+      "auth": "header api-key",
+      "params": {
+        "folderId": "path",
+        "name": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.contacts.get_folder",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.contacts.update_folder",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/folders/{folderId}/put (updateFolder)"
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "id": "brevo.contacts.import_contacts",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "contact",
+  "operation_class": "action",
+  "label": "Import contacts",
+  "description": "It returns the background process ID which on completion calls the notify URL that you have set in the input. **Note**: - Any contact attribute that doesn't exist in your account will be ignored at import end.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "disableNotification": {
+          "default": false,
+          "description": "To disable email notification",
+          "example": false,
+          "type": "boolean"
+        },
+        "emailBlacklist": {
+          "default": false,
+          "description": "To blacklist all the contacts for email",
+          "example": false,
+          "type": "boolean"
+        },
+        "emptyContactsAttributes": {
+          "default": false,
+          "description": "To facilitate the choice to erase any attribute of the existing contacts with empty value. emptyContactsAttributes = true means the empty fields in your import will erase any attribute that currently contain data in Brevo, & emptyContactsAttributes = false means the empty fields will not affect your existing data ( **only available if `updateExistingContacts` set to true **)\n",
+          "example": true,
+          "type": "boolean"
+        },
+        "fileBody": {
+          "description": "**Mandatory if fileUrl and jsonBody is not defined.** CSV content to be imported. Use semicolon to separate multiple attributes. **Maximum allowed file body size is 10MB** . However we recommend a safe limit of around 8 MB to avoid the issues caused due to increase of file body size while parsing. Please use fileUrl instead to import bigger files.\n",
+          "example": "NAME;SURNAME;EMAIL\nSmith;John;john.smith@example.com\nRoger;Ellie;ellie36@example.com",
+          "type": "string"
+        },
+        "fileUrl": {
+          "description": "**Mandatory if fileBody and jsonBody is not defined.** URL of the file to be imported (**no local file**). Possible file formats: #### .txt, .csv, .json\n",
+          "example": "https://importfile.domain.com",
+          "format": "url",
+          "type": "string"
+        },
+        "jsonBody": {
+          "description": "**Mandatory if fileUrl and fileBody is not defined.** JSON content to be imported. **Maximum allowed json body size is 10MB** . However we recommend a safe limit of around 8 MB to avoid the issues caused due to increase of json body size while parsing. Please use fileUrl instead to import bigger files.\n",
+          "items": {
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "listIds": {
+          "description": "**Mandatory if newList is not defined.** Ids of the lists in which the contacts shall be imported. For example, **[2, 4, 7]**.\n",
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "consentGroupIds": {
+          "description": "**Optional.** Ids of the consent groups to which all imported contacts will be added. Requires consent groups to be enabled for the organisation. For example, **[1, 3]**.\n",
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "newList": {
+          "description": "To create a new list and import the contacts into it, pass the listName and an optional folderId.",
+          "properties": {
+            "folderId": {
+              "description": "(nested schema truncated)"
+            },
+            "listName": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "notifyUrl": {
+          "description": "URL that will be called once the import process is finished. For reference, https://help.brevo.com/hc/en-us/articles/360007666479",
+          "example": "http://requestb.in/173lyyx1",
+          "format": "url",
+          "type": "string"
+        },
+        "smsBlacklist": {
+          "default": false,
+          "description": "To blacklist all the contacts for sms",
+          "example": false,
+          "type": "boolean"
+        },
+        "updateExistingContacts": {
+          "default": true,
+          "description": "To facilitate the choice to update the existing contacts",
+          "example": true,
+          "type": "boolean"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "processId": {
+          "description": {
+            "description": "(nested schema truncated)"
+          },
+          "example": {
+            "description": "(nested schema truncated)"
+          },
+          "format": {
+            "description": "(nested schema truncated)"
+          },
+          "type": {
+            "description": "(nested schema truncated)"
+          }
+        }
+      },
+      "required": [
+        "processId"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/contacts/import",
+      "auth": "header api-key",
+      "params": {
+        "disableNotification": "body",
+        "emailBlacklist": "body",
+        "emptyContactsAttributes": "body",
+        "fileBody": "body",
+        "fileUrl": "body",
+        "jsonBody": "body",
+        "listIds": "body",
+        "consentGroupIds": "body",
+        "newList": "body",
+        "notifyUrl": "body",
+        "smsBlacklist": "body",
+        "updateExistingContacts": "body"
+      },
+      "success_status": [
+        202
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//contacts/import/post (importContacts)"
+    }
+  ]
+}

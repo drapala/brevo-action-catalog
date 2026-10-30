@@ -1,0 +1,124 @@
+{
+  "id": "brevo.balance.get_subscription_balances",
+  "product": "brevo",
+  "area": "Balance",
+  "entity": "balance",
+  "operation_class": "read",
+  "label": "Get subscription balances",
+  "description": "Returns subscription balances",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "cid": {
+          "format": "int",
+          "type": "string",
+          "description": "Contact Id"
+        },
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program Id"
+        },
+        "includeInternal": {
+          "type": "boolean",
+          "description": "Include balances tied to internal definitions."
+        }
+      },
+      "required": [
+        "cid",
+        "pid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "cid",
+        "entity": "cid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "loyaltyProgramId": {
+          "description": "Unique identifier of the loyalty program.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "contactId": {
+          "description": "Unique identifier of the contact.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "balance": {
+          "description": "Aggregate balance per balance definition.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/loyalty/balance/programs/{pid}/subscriptions/{cid}/balances",
+      "auth": "header api-key",
+      "params": {
+        "cid": "path",
+        "pid": "path",
+        "includeInternal": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/balance/programs/{pid}/subscriptions/{cid}/balances/get (getSubscriptionBalances)"
+    }
+  ]
+}

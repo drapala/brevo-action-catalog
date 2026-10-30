@@ -1,0 +1,80 @@
+{
+  "id": "brevo.whats_app_campaigns.send_whats_app_template_approval",
+  "product": "brevo",
+  "area": "WhatsApp Campaigns",
+  "entity": "whatsapp_template",
+  "operation_class": "action",
+  "label": "Send your WhatsApp template for approval",
+  "description": "<Note>You can use this API for WhatsApp only if you have setup your WhatsApp account on Brevo platform. To setup your WhatsApp account, follow the steps in the guide below. [Activating WhatsApp](https://developers.brevo.com/docs/whatsapp-campaigns-1) in your account</Note>",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "templateId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "id of the template"
+        }
+      },
+      "required": [
+        "templateId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "templateId",
+        "entity": "whatsapp_template",
+        "find_with": "brevo.whats_app_campaigns.get_whats_app_templates",
+        "create_with": "brevo.whats_app_campaigns.create_whats_app_template"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/whatsappCampaigns/template/approval/{templateId}",
+      "auth": "header api-key",
+      "params": {
+        "templateId": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "WhatsApp Business account connected (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "WhatsApp Business account connected"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//whatsappCampaigns/template/approval/{templateId}/post (sendWhatsAppTemplateApproval)"
+    }
+  ]
+}

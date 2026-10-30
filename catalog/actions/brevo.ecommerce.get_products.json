@@ -1,0 +1,226 @@
+{
+  "id": "brevo.ecommerce.get_products",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "product",
+  "operation_class": "read",
+  "label": "Return all your products",
+  "description": "Retrieve a paginated list of all ecommerce products stored in your Brevo account. Results are sorted by creation date in descending order by default, and can be filtered by product IDs, name (minimum 3 characters), price range, category IDs, modification date, creation date, or deletion status. Use the `search` parameter to query across SKU, name, and ID simultaneously — results are prioritized as exact SKU match > SKU prefix match > name match > ID match. Pagination defaults to 50 products per page (maximum 1000), and the response includes a `count` field with the total number of matching pro",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 50,
+          "format": "int64",
+          "maximum": 1000,
+          "type": "integer",
+          "description": "Number of documents per page"
+        },
+        "offset": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer",
+          "description": "Index of the first document in the page"
+        },
+        "sort": {
+          "default": "desc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string",
+          "description": "Sort the results in the ascending/descending order of record creation. Default order is **descending** if `sort` is not passed"
+        },
+        "ids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Filter by product ids"
+        },
+        "search": {
+          "type": "string",
+          "description": "Search products simultaneously across SKU, name, and ID fields. Results are returned in the following priority order: **exact SKU match** > **SKU prefix match** > **name match** > **ID match**. For example, `?search=123` on products with `{sku: \"123\"}` and `{sku: \"123456\"}` returns the exact SKU match first."
+        },
+        "name": {
+          "type": "string",
+          "description": "Filter by product name, minimum 3 characters should be present for search."
+        },
+        "price[lte]": {
+          "type": "number",
+          "description": "Price filter for products less than and equals to particular amount"
+        },
+        "price[gte]": {
+          "type": "number",
+          "description": "Price filter for products greater than and equals to particular amount"
+        },
+        "price[lt]": {
+          "type": "number",
+          "description": "Price filter for products less than particular amount"
+        },
+        "price[gt]": {
+          "type": "number",
+          "description": "Price filter for products greater than particular amount"
+        },
+        "price[eq]": {
+          "type": "number",
+          "description": "Price filter for products equals to particular amount"
+        },
+        "price[ne]": {
+          "type": "number",
+          "description": "Price filter for products not equals to particular amount"
+        },
+        "alternativePrice[lte]": {
+          "type": "number",
+          "description": "Alternative price filter for products less than and equals to particular amount"
+        },
+        "alternativePrice[gte]": {
+          "type": "number",
+          "description": "Alternative price filter for products greater than and equals to particular amount"
+        },
+        "alternativePrice[lt]": {
+          "type": "number",
+          "description": "Alternative price filter for products less than particular amount"
+        },
+        "alternativePrice[gt]": {
+          "type": "number",
+          "description": "Alternative price filter for products greater than particular amount"
+        },
+        "alternativePrice[eq]": {
+          "type": "number",
+          "description": "Alternative price filter for products equals to particular amount"
+        },
+        "alternativePrice[ne]": {
+          "type": "number",
+          "description": "Alternative price filter for products not equals to particular amount"
+        },
+        "categories": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Filter by categories ids"
+        },
+        "modifiedSince": {
+          "type": "string",
+          "description": "Filter (urlencoded) the products modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**"
+        },
+        "createdSince": {
+          "type": "string",
+          "description": "Filter (urlencoded) the products created after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). **Prefer to pass your timezone in date-time format for accurate result.**"
+        },
+        "sortByField": {
+          "enum": [
+            "created_at",
+            "name",
+            "price",
+            "id"
+          ],
+          "type": "string",
+          "description": "Sort the results by a specific field. Default sort field is `created_at` when not passed."
+        },
+        "isDeleted": {
+          "type": "string",
+          "description": "Filter products by their deletion status. If `false` is passed, only products that are not deleted will be returned."
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "count": {
+          "description": "Number of products",
+          "example": 17655,
+          "format": "int64",
+          "type": "integer"
+        },
+        "products": {
+          "items": {
+            "allOf": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "products",
+        "count"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/products",
+      "auth": "header api-key",
+      "params": {
+        "limit": "query",
+        "offset": "query",
+        "sort": "query",
+        "ids": "query",
+        "search": "query",
+        "name": "query",
+        "price[lte]": "query",
+        "price[gte]": "query",
+        "price[lt]": "query",
+        "price[gt]": "query",
+        "price[eq]": "query",
+        "price[ne]": "query",
+        "alternativePrice[lte]": "query",
+        "alternativePrice[gte]": "query",
+        "alternativePrice[lt]": "query",
+        "alternativePrice[gt]": "query",
+        "alternativePrice[eq]": "query",
+        "alternativePrice[ne]": "query",
+        "categories": "query",
+        "modifiedSince": "query",
+        "createdSince": "query",
+        "sortByField": "query",
+        "isDeleted": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//products/get (getProducts)"
+    }
+  ]
+}

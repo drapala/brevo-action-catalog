@@ -1,0 +1,144 @@
+{
+  "id": "brevo.master_account.get_corporate_user_permission",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "permission",
+  "operation_class": "read",
+  "label": "Check admin user permissions",
+  "description": "This endpoint will provide the list of admin user permissions",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email of the invited user."
+        }
+      },
+      "required": [
+        "email"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "email",
+        "entity": "email",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "Check admin user permissions",
+      "properties": {
+        "email": {
+          "description": "Email address of the user.",
+          "example": "invitedUser@company.com",
+          "type": "string"
+        },
+        "feature_access": {
+          "description": "Granular feature permissions given to the user.",
+          "properties": {
+            "analytics": {
+              "description": "(nested schema truncated)"
+            },
+            "api_keys": {
+              "description": "(nested schema truncated)"
+            },
+            "apps_management": {
+              "description": "(nested schema truncated)"
+            },
+            "create_sub_organizations": {
+              "description": "(nested schema truncated)"
+            },
+            "manage_sub_organizations": {
+              "description": "(nested schema truncated)"
+            },
+            "my_plan": {
+              "description": "(nested schema truncated)"
+            },
+            "sub_organization_groups": {
+              "description": "(nested schema truncated)"
+            },
+            "user_management": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "groups": {
+          "items": {
+            "description": {
+              "description": "(nested schema truncated)"
+            },
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "status": {
+          "description": "Status of the invited user.",
+          "example": "active / pending",
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "status",
+        "groups",
+        "feature_access"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/corporate/user/{email}/permissions",
+      "auth": "header api-key",
+      "params": {
+        "email": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/user/{email}/permissions/get (getCorporateUserPermission)"
+    }
+  ]
+}

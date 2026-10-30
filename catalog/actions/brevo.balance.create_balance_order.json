@@ -1,0 +1,199 @@
+{
+  "id": "brevo.balance.create_balance_order",
+  "product": "brevo",
+  "area": "Balance",
+  "entity": "program",
+  "operation_class": "create",
+  "label": "Create balance order",
+  "description": "Returns created order",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program Id"
+        },
+        "amount": {
+          "description": "Order amount (must be non-zero).",
+          "type": "number"
+        },
+        "balanceDefinitionId": {
+          "description": "Unique identifier (UUID) of the associated balance definition.",
+          "type": "string"
+        },
+        "contactId": {
+          "description": "Unique identifier of the contact placing the order (must be ≥ 1).",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "dueAt": {
+          "description": "RFC3339 timestamp specifying when the order is due.",
+          "type": "string"
+        },
+        "expiresAt": {
+          "description": "Optional RFC3339 timestamp defining order expiration.",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": true,
+          "description": "Optional metadata associated with the order.",
+          "type": "object"
+        },
+        "source": {
+          "description": "Specifies the origin of the order.",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "pid",
+        "amount",
+        "balanceDefinitionId",
+        "contactId",
+        "dueAt",
+        "source"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "description": "Represents an order linked to a balance definition, including amount, due date, and transaction details.",
+      "properties": {
+        "amount": {
+          "description": "Order amount (must not be zero).",
+          "type": "number"
+        },
+        "balanceDefinitionId": {
+          "description": "Optional unique identifier (UUID) of the associated balance definition.",
+          "type": "string"
+        },
+        "contactId": {
+          "description": "Unique identifier of the contact placing the order (must be ≥ 1).",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "createdAt": {
+          "description": "RFC3339 timestamp indicating when the order was created.",
+          "type": "string"
+        },
+        "dueAt": {
+          "description": "RFC3339 timestamp specifying when the order is due in the future.",
+          "type": "string"
+        },
+        "expiresAt": {
+          "description": "Optional RFC3339 timestamp defining order expiration in the future.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique identifier for the balance order.",
+          "type": "string"
+        },
+        "loyaltyProgramId": {
+          "description": "Unique identifier of the loyalty program associated with the order.",
+          "type": "string"
+        },
+        "meta": {
+          "additionalProperties": true,
+          "description": "Optional metadata associated with the order.",
+          "type": "object"
+        },
+        "processedAt": {
+          "description": "Optional RFC3339 timestamp indicating when the order was processed.",
+          "type": "string"
+        },
+        "transactionid": {
+          "description": "Optional reference to the associated transaction ID.",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "RFC3339 timestamp indicating the last update to the order.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "contactId",
+        "createdAt",
+        "dueAt",
+        "loyaltyProgramId",
+        "updatedAt"
+      ],
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "program",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/loyalty/balance/programs/{pid}/create-order",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "amount": "body",
+        "balanceDefinitionId": "body",
+        "contactId": "body",
+        "dueAt": "body",
+        "expiresAt": "body",
+        "meta": "body",
+        "source": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.program.get_loyalty_program_info",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.program.delete_loyalty_program",
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/balance/programs/{pid}/create-order/post (createBalanceOrder)"
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "id": "brevo.external_feeds.get_external_feed_uuid",
+  "product": "brevo",
+  "area": "External Feeds",
+  "entity": "feed",
+  "operation_class": "read",
+  "label": "Get external feed details",
+  "description": "Retrieves details of a specific external feed by its UUID. **Use this to:** - Get complete configuration of an external feed - Check feed authentication settings - Review feed personalization options - Verify feed URL and parameters - Monitor feed modification history **Key information returned:** - Complete feed configuration and settings - Authentication credentials and headers - Personalization and fallback settings - Creation and modification timestamps - Cache and retry configurations **Important considerations:** - UUID must exist in your account - Provides complete feed information for ",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "format": "uuidv4",
+          "type": "string",
+          "description": "UUID of the feed to fetch"
+        }
+      },
+      "required": [
+        "uuid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "uuid",
+        "entity": "feed",
+        "find_with": "brevo.external_feeds.get_external_feeds",
+        "create_with": "brevo.external_feeds.create_external_feed"
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the feed",
+          "example": "b1c2d3e4-f5a6-47b8-89c0-d1e2f3a4b5c6",
+          "format": "uuidv4",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the feed",
+          "example": "Product Catalog Feed",
+          "type": "string"
+        },
+        "url": {
+          "description": "URL of the external data source",
+          "example": "https://api.example.com/products",
+          "format": "url",
+          "type": "string"
+        },
+        "authType": {
+          "description": "Authentication type for accessing the feed",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "token",
+          "type": "string"
+        },
+        "username": {
+          "description": "Username for basic authentication. Only returned when authType is 'basic'. Excluded from response when authType is 'token'.",
+          "example": "api_user",
+          "type": "string",
+          "nullable": true
+        },
+        "password": {
+          "description": "Password for basic authentication. Only returned when authType is 'basic'. Excluded from response when authType is 'token'.",
+          "example": "secure_pass123",
+          "type": "string",
+          "nullable": true
+        },
+        "token": {
+          "description": "Token for token-based authentication. Only returned when authType is 'token'. Excluded from response when authType is 'basic' or 'noAuth'.",
+          "example": "token_abc123",
+          "type": "string",
+          "nullable": true
+        },
+        "headers": {
+          "description": "Custom HTTP headers for the feed request",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array",
+          "nullable": true
+        },
+        "maxRetries": {
+          "description": "Maximum number of retry attempts for failed requests",
+          "example": 3,
+          "maximum": 5,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cache": {
+          "description": "Whether to cache the feed response",
+          "example": true,
+          "type": "boolean"
+        },
+        "createdAt": {
+          "description": "Feed creation timestamp",
+          "example": "2025-09-18T13:29:27.208Z",
+          "format": "date-time",
+          "type": "string"
+        },
+        "modifiedAt": {
+          "description": "Feed last modification timestamp",
+          "example": "2025-09-18T13:29:27.208Z",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "url",
+        "authType",
+        "maxRetries",
+        "cache",
+        "createdAt",
+        "modifiedAt"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/feeds/{uuid}",
+      "auth": "header api-key",
+      "params": {
+        "uuid": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//feeds/{uuid}/get (getExternalFeedByUUID)"
+    }
+  ]
+}

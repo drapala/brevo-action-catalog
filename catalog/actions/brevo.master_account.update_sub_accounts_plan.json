@@ -1,0 +1,118 @@
+{
+  "id": "brevo.master_account.update_sub_accounts_plan",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "sub_account",
+  "operation_class": "update",
+  "label": "Update sub-accounts plan",
+  "description": "This endpoint will update multiple sub-accounts plan. On the Corporate solution new version v2, you can set an unlimited number of credits in your sub-organization. Please pass the value “-1\" to set the consumable in unlimited mode.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "credits": {
+          "description": "Credit details to update",
+          "properties": {
+            "email": {
+              "description": "(nested schema truncated)"
+            },
+            "externalFeeds": {
+              "description": "(nested schema truncated)"
+            },
+            "sms": {
+              "description": "(nested schema truncated)"
+            },
+            "whatsapp": {
+              "description": "(nested schema truncated)"
+            },
+            "wpSubscribers": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "features": {
+          "description": "Features details to update",
+          "properties": {
+            "landingPage": {
+              "description": "(nested schema truncated)"
+            },
+            "salesUsers": {
+              "description": "(nested schema truncated)"
+            },
+            "users": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "subAccountIds": {
+          "description": "List of sub-account ids",
+          "items": {
+            "format": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/corporate/subAccounts/plan",
+      "auth": "header api-key",
+      "params": {
+        "credits": "body",
+        "features": "body",
+        "subAccountIds": "body"
+      },
+      "success_status": [
+        202
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.master_account.get_sub_account_details",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "changes_account",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/subAccounts/plan/put"
+    }
+  ]
+}

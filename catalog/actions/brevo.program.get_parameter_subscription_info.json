@@ -1,0 +1,167 @@
+{
+  "id": "brevo.program.get_parameter_subscription_info",
+  "product": "brevo",
+  "area": "Program",
+  "entity": "account_info",
+  "operation_class": "read",
+  "label": "Get Subscription Data",
+  "description": "Get Information of balances, tiers, rewards and subscription members for a subscription",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID. A unique identifier for the loyalty program."
+        },
+        "contactId": {
+          "type": "string",
+          "description": "The contact ID to filter by."
+        },
+        "params": {
+          "type": "string",
+          "description": "A list of filter parameters for querying the subscription info."
+        },
+        "loyaltySubscriptionId": {
+          "type": "string",
+          "description": "The loyalty subscription ID to filter by."
+        },
+        "includeInternal": {
+          "type": "boolean",
+          "description": "Include balances tied to internal definitions."
+        }
+      },
+      "required": [
+        "pid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "balance": {
+          "allOf": [
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "description": "Balance details for the subscription."
+        },
+        "loyaltyProgramName": {
+          "description": "Name of the loyalty program.",
+          "type": "string"
+        },
+        "members": {
+          "description": "List of members associated with the subscription.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "membership": {
+          "description": "Membership details of the subscription. Returned when the subscription could be resolved from the provided `contactId` or `loyaltySubscriptionId`.",
+          "properties": {
+            "createdAt": {
+              "description": "(nested schema truncated)"
+            },
+            "loyaltySubscriptionId": {
+              "description": "(nested schema truncated)"
+            },
+            "updatedAt": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "reward": {
+          "description": "List of rewards associated with the subscription.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "tier": {
+          "description": "List of tier assignments for the subscription.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/loyalty/config/programs/{pid}/account-info",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "contactId": "query",
+        "params": "query",
+        "loyaltySubscriptionId": "query",
+        "includeInternal": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/config/programs/{pid}/account-info/get (getParameterSubscriptionInfo)"
+    }
+  ]
+}

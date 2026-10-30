@@ -1,0 +1,105 @@
+{
+  "id": "brevo.senders.update_sender",
+  "product": "brevo",
+  "area": "Senders",
+  "entity": "sender",
+  "operation_class": "update",
+  "label": "Update a sender",
+  "description": "Updates an existing email sender's configuration. Use this to: - Modify sender display name or email address - Update dedicated IP associations - Change sender configuration settings - Correct sender information Key information returned: - Success confirmation - Updated sender details",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "senderId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the sender"
+        },
+        "email": {
+          "description": "From Email to update the sender",
+          "example": "newsupport@mycompany.com",
+          "format": "email",
+          "type": "string"
+        },
+        "ips": {
+          "description": "**Only in case of dedicated IP**. IPs to associate to the\nsender. If passed, will replace all the existing IPs. Not required for standard accounts.",
+          "items": {
+            "properties": {
+              "description": "(nested schema truncated)"
+            },
+            "required": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "From Name to update the sender",
+          "example": "Support Team",
+          "type": "string"
+        }
+      },
+      "required": [
+        "senderId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "senderId",
+        "entity": "sender",
+        "find_with": "brevo.senders.get_senders",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": null,
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/senders/{senderId}",
+      "auth": "header api-key",
+      "params": {
+        "senderId": "path",
+        "email": "body",
+        "ips": "body",
+        "name": "body"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.senders.update_sender",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/{senderId}/put (updateSender)"
+    }
+  ]
+}

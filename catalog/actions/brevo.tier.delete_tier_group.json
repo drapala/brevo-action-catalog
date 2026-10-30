@@ -1,0 +1,98 @@
+{
+  "id": "brevo.tier.delete_tier_group",
+  "product": "brevo",
+  "area": "Tier",
+  "entity": "tier_group",
+  "operation_class": "delete",
+  "label": "Delete tier group",
+  "description": "Deletes a tier group from a loyalty program. *(The changes will take effect with the next publication of the loyalty program)*",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Loyalty Program ID"
+        },
+        "gid": {
+          "format": "uuid",
+          "type": "string",
+          "description": "Tier group ID"
+        }
+      },
+      "required": [
+        "pid",
+        "gid"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "pid",
+        "entity": "pid",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "gid",
+        "entity": "gid",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "type": "string"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "DELETE",
+      "url": "https://api.brevo.com/v3/loyalty/tier/programs/{pid}/tier-groups/{gid}",
+      "auth": "header api-key",
+      "params": {
+        "pid": "path",
+        "gid": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "Loyalty app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.tier.get_tier_group",
+    "assert": "the read returns 404"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Loyalty app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//loyalty/tier/programs/{pid}/tier-groups/{gid}/delete (deleteTierGroup)"
+    }
+  ]
+}

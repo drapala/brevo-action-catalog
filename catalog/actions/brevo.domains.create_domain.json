@@ -1,0 +1,126 @@
+{
+  "id": "brevo.domains.create_domain",
+  "product": "brevo",
+  "area": "Domains",
+  "entity": "sender_domain",
+  "operation_class": "action",
+  "label": "Create a new sender domain",
+  "description": "Creates a new domain in Brevo. Use this to: - Add new domains for sending emails - Set up domain authentication for better deliverability - Configure DNS records for email authentication - Establish domain-based sender identities Key information returned: - Created domain ID and configuration - Required DNS records for authentication - Domain provider detection results - Setup instructions and next steps",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Domain name to be added",
+          "example": "mycompany.com",
+          "type": "string",
+          "format": "hostname"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "ID of the Domain created",
+          "example": 5,
+          "format": "int64",
+          "type": "integer"
+        },
+        "domain_name": {
+          "description": "Domain name",
+          "example": "mycompany.com",
+          "type": "string"
+        },
+        "domain_provider": {
+          "description": "Detected domain provider",
+          "example": "Cloudflare",
+          "type": "string"
+        },
+        "message": {
+          "description": "Success message with next steps",
+          "example": "Domain added successfully. To authenticate it, add following DNS records",
+          "type": "string"
+        },
+        "dns_records": {
+          "description": "DNS records required for domain authentication",
+          "properties": {
+            "brevo_code": {
+              "description": "(nested schema truncated)"
+            },
+            "dkim_record": {
+              "description": "(nested schema truncated)"
+            },
+            "dmarc_record": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "required": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "domain_name",
+        "message"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/senders/domains",
+      "auth": "header api-key",
+      "params": {
+        "name": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "changes_account",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//senders/domains/post (createDomain)"
+    }
+  ]
+}

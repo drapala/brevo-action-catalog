@@ -1,0 +1,99 @@
+{
+  "id": "brevo.user.put_revoke_user_permission",
+  "product": "brevo",
+  "area": "User",
+  "entity": "invitation",
+  "operation_class": "update",
+  "label": "Revoke user permission",
+  "description": "Revokes all permissions for an invited user in the organization, effectively removing their access to the platform. If the user''s plan change generated credit notes, they are returned in the response for billing reconciliation.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email of the invited user."
+        }
+      },
+      "required": [
+        "email"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "email",
+        "entity": "email",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "credit_notes": {
+          "description": "Credit note",
+          "items": {
+            "example": {
+              "description": "(nested schema truncated)"
+            },
+            "type": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "array"
+        },
+        "status": {
+          "description": "Status of the API operation.",
+          "example": "OK",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/organization/user/invitation/revoke/{email}",
+      "auth": "header api-key",
+      "params": {
+        "email": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.user.put_revoke_user_permission",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//organization/user/invitation/revoke/{email}/put (putRevokeUserPermission)"
+    }
+  ]
+}

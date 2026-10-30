@@ -1,0 +1,103 @@
+{
+  "id": "brevo.master_account.resend_cancel_admin_user_invitation",
+  "product": "brevo",
+  "area": "Master account",
+  "entity": "invitation",
+  "operation_class": "update",
+  "label": "Resend / cancel admin user invitation",
+  "description": "This endpoint will allow the user to: - Resend an admin user invitation - Cancel an admin user invitation",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "enum": [
+            "resend",
+            "cancel"
+          ],
+          "type": "string",
+          "description": "Action to be performed (cancel / resend)"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the recipient"
+        }
+      },
+      "required": [
+        "action",
+        "email"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "action",
+        "entity": "action",
+        "find_with": null,
+        "create_with": null
+      },
+      {
+        "input": "email",
+        "entity": "email",
+        "find_with": null,
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "message": {
+          "description": "Action success message",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/corporate/user/invitation/{action}/{email}",
+      "auth": "header api-key",
+      "params": {
+        "action": "path",
+        "email": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Enterprise master account (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "notifies_people",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Enterprise master account"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//corporate/user/invitation/{action}/{email}/put"
+    }
+  ]
+}

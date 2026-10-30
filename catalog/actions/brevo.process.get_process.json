@@ -1,0 +1,156 @@
+{
+  "id": "brevo.process.get_process",
+  "product": "brevo",
+  "area": "Process",
+  "entity": "process",
+  "operation_class": "read",
+  "label": "Get process details",
+  "description": "Retrieves detailed information about a specific background process. **Use this to:** - Get detailed status of a specific process - Monitor process progress and completion - Download results from completed export processes - Check error details for failed processes - Track process execution times **Key information returned:** - Complete process details (ID, name, status) - Download URLs for completed export processes - Import details with CSV report URLs for completed import processes **Important considerations:** - Process ID must exist in your account and not be deleted - Completed export pro",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "processId": {
+          "format": "int64",
+          "type": "integer",
+          "description": "Id of the process"
+        }
+      },
+      "required": [
+        "processId"
+      ]
+    },
+    "entity_refs": [
+      {
+        "input": "processId",
+        "entity": "process",
+        "find_with": "brevo.process.get_processes",
+        "create_with": null
+      }
+    ],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the process",
+          "example": 217,
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Name/type of the process",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "IMPORTUSER",
+          "type": "string"
+        },
+        "status": {
+          "description": "Current status of the process",
+          "enum": [
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            },
+            {
+              "description": "(nested schema truncated)"
+            }
+          ],
+          "example": "completed",
+          "type": "string"
+        },
+        "info": {
+          "description": "Additional process information, only returned for completed IMPORTUSER processes. Contains URLs to CSV files with details about problematic records.",
+          "properties": {
+            "import": {
+              "description": "(nested schema truncated)"
+            }
+          },
+          "type": "object"
+        },
+        "export_url": {
+          "description": "Download URL for completed export processes (returned for SEARCH_EXPORT_USERS, SEARCH_EXPORT_USERS_API, CAMPAIGN_USER_DETAILS, and EXPORT_WEBHOOK process types)",
+          "example": "https://s3.eu-west-1.amazonaws.com/api-export.example.com/upload/contacts_export.csv",
+          "format": "url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "status"
+      ],
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "GET",
+      "url": "https://api.brevo.com/v3/processes/{processId}",
+      "auth": "header api-key",
+      "params": {
+        "processId": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": []
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//processes/{processId}/get (getProcess)"
+    }
+  ]
+}

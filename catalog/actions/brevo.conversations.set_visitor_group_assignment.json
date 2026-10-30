@@ -1,0 +1,81 @@
+{
+  "id": "brevo.conversations.set_visitor_group_assignment",
+  "product": "brevo",
+  "area": "Conversations",
+  "entity": "visitor_group",
+  "operation_class": "update",
+  "label": "Set visitor group assignment",
+  "description": "Assigns a visitor to a specific agent group or removes them from their current group.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "description": "Group ID. It can be found on group’s page."
+        }
+      },
+      "required": [
+        "groupId"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "groupId": {
+          "description": "group ID the visitor was assigned to"
+        },
+        "visitorId": {
+          "description": "visitor ID"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "PUT",
+      "url": "https://api.brevo.com/v3/conversations/visitorGroup",
+      "auth": "header api-key",
+      "params": {
+        "groupId": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [
+    "Conversations chat widget installed (needed before any call in this area)"
+  ],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.conversations.set_visitor_group_assignment",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "Conversations chat widget installed"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//conversations/visitorGroup/put"
+    }
+  ]
+}

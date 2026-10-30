@@ -1,0 +1,120 @@
+{
+  "id": "brevo.ecommerce.create_update_category",
+  "product": "brevo",
+  "area": "Ecommerce",
+  "entity": "category",
+  "operation_class": "create",
+  "label": "Create/Update a category",
+  "description": "Create a new ecommerce category or update an existing one, identified by the mandatory `id` field. When `updateEnabled` is set to `false` (the default), the endpoint performs an insert and returns `201`; if the category ID already exists, a `400` error is returned. When `updateEnabled` is `true`, the endpoint performs an upsert, returning `201` for a new category or `204` when an existing category is updated. The `name` field is mandatory for creation but optional for updates.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "deletedAt": {
+          "description": "UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of the category deleted from the shop's database",
+          "example": "2017-05-12T12:30:00Z",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique Category ID as saved in the shop\n",
+          "example": "CAT123",
+          "type": "string"
+        },
+        "isDeleted": {
+          "description": "category deleted from the shop's database",
+          "example": true,
+          "type": "boolean"
+        },
+        "name": {
+          "description": "**Mandatory in case of creation**. Name of the Category, as displayed in the shop\n",
+          "example": "Electronics",
+          "type": "string"
+        },
+        "updateEnabled": {
+          "default": false,
+          "description": "Facilitate to update the existing category in the same request (updateEnabled = true)",
+          "example": false,
+          "type": "boolean"
+        },
+        "url": {
+          "description": "URL to the category",
+          "example": "http://mydomain.com/category/electronics",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_api_key"
+  },
+  "outputs": {
+    "schema": {
+      "properties": {
+        "id": {
+          "description": "ID of the category when a new category is created",
+          "example": "CAT123",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "produces_entity": {
+      "entity": "category",
+      "id_field": "id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "documented_api",
+      "method": "POST",
+      "url": "https://api.brevo.com/v3/categories",
+      "auth": "header api-key",
+      "params": {
+        "deletedAt": "body",
+        "id": "body",
+        "isDeleted": "body",
+        "name": "body",
+        "updateEnabled": "body",
+        "url": "body"
+      },
+      "success_status": [
+        201,
+        204
+      ]
+    }
+  ],
+  "preconditions": [
+    "eCommerce app activated (needed before any call in this area)"
+  ],
+  "postcondition": {
+    "check_with": "brevo.ecommerce.get_category_info",
+    "assert": "the entity exists and its fields equal the inputs that were sent"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "unknown",
+    "requires": [
+      "eCommerce app activated"
+    ]
+  },
+  "verification": {
+    "status": "documented",
+    "route_kind": null,
+    "checked_at": null,
+    "evidence": null
+  },
+  "sources": [
+    {
+      "kind": "openapi",
+      "ref": "swagger_definition_v3.yml#/paths//categories/post (createUpdateCategory)"
+    }
+  ]
+}
