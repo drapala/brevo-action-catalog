@@ -28,3 +28,12 @@ def test_list_excludes_fails_when_the_path_is_missing():
 def test_checks_do_not_crash_on_a_text_payload():
     ok, _ = brevo_exec.check(CHECK, 200, "Bad gateway", {})
     assert not ok
+
+
+def test_gate_probe_never_sends_a_call_that_could_succeed():
+    action = {"routes": [{"kind": "documented_api", "params": {"id": "path", "name": "body"}}],
+              "inputs": {"schema": {"type": "object", "properties": {"id": {"type": "integer"}, "name": {"type": "string"}},
+                                    "required": ["id", "name"]}}}
+    assert brevo_exec.gate_probe_inputs(action) == {"id": 999999999}
+    action["inputs"]["schema"]["required"] = []
+    assert brevo_exec.gate_probe_inputs(action) is None

@@ -1,0 +1,30 @@
+name: more-crm-contacts-sms
+description: Actions the first scenarios did not reach. Folder, deal, note and SMS campaign draft, each read back. Nothing is sent. Everything created is deleted.
+steps:
+  - {name: create_folder, action: brevo.contacts.create_folder, inputs: {name: "${prefix}-folder-${ts}"}, assert: {status: 201}}
+  - {name: rename_folder, action: brevo.contacts.update_folder, inputs: {folderId: "${create_folder.response.id}", name: "${prefix}-folder-renamed-${ts}"}, assert: {status: 204}}
+  - {name: read_folder_renamed, postcondition_of: brevo.contacts.update_folder, action: brevo.contacts.get_folder, inputs: {folderId: "${create_folder.response.id}"}, assert: {status: 200, equals: {name: "${prefix}-folder-renamed-${ts}"}}}
+  - {name: create_list, action: brevo.contacts.create_list, inputs: {name: "${prefix}-list-${ts}", folderId: "${create_folder.response.id}"}, assert: {status: 201}}
+  - {name: folder_lists, action: brevo.contacts.get_folder_lists, inputs: {folderId: "${create_folder.response.id}"}, assert: {status: 200, list_contains: {path: lists, field: id, value: "${create_list.response.id}"}}, retry: {times: 6, every: 2}, proves: get_folder_lists returns the lists in the folder}
+  - {name: create_contact, action: brevo.contacts.create_contact, inputs: {email: "${prefix}-${ts}@example.com"}, assert: {status: 201}}
+  - {name: contact_stats, action: brevo.contacts.get_contact_stats, inputs: {identifier: "${prefix}-${ts}@example.com"}, assert: {status: [200, 204]}, proves: get_contact_stats answers for a contact with no campaign activity}
+  - {name: pipelines, action: brevo.deals.get_all_pipelines, assert: {status: 200}}
+  - {name: read_pipeline, action: brevo.deals.get_pipeline, inputs: {pipelineID: "${pipelines.response.0.pipeline}"}, assert: {status: 200}, proves: get_pipeline returns the pipeline that get_all_pipelines lists}
+  - {name: create_deal, action: brevo.deals.create_deal, inputs: {name: "${prefix}-deal-${ts}"}, assert: {status: [200, 201]}}
+  - {name: rename_deal, action: brevo.deals.update_deal, inputs: {id: "${create_deal.response.id}", name: "${prefix}-deal-renamed-${ts}"}, assert: {status: [200, 204]}}
+  - {name: read_deal_renamed, postcondition_of: brevo.deals.update_deal, action: brevo.deals.get_deal, inputs: {id: "${create_deal.response.id}"}, assert: {status: 200, equals: {attributes.deal_name: "${prefix}-deal-renamed-${ts}"}}}
+  - {name: create_note, action: brevo.notes.create_note, inputs: {text: "${prefix} note ${ts}", dealIds: ["${create_deal.response.id}"]}, assert: {status: [200, 201]}}
+  - {name: edit_note, action: brevo.notes.update_note, inputs: {id: "${create_note.response.id}", text: "${prefix} note edited ${ts}"}, assert: {status: [200, 204]}}
+  - {name: read_note_edited, postcondition_of: brevo.notes.update_note, action: brevo.notes.get_note, inputs: {id: "${create_note.response.id}"}, assert: {status: 200, equals: {text: "${prefix} note edited ${ts}"}}}
+  - {name: create_sms_campaign, action: brevo.sms_campaigns.create_sms_campaign, inputs: {name: "${prefix}-sms-${ts}", sender: "ZZTest", content: "zz catalog test, not sent"}, assert: {status: 201}, note: "a draft with no recipients and no schedule, so it cannot send"}
+  - {name: read_sms_campaign, postcondition_of: brevo.sms_campaigns.create_sms_campaign, action: brevo.sms_campaigns.get_sms_campaign, inputs: {campaignId: "${create_sms_campaign.response.id}"}, assert: {status: 200, equals: {name: "${prefix}-sms-${ts}"}}}
+  - {name: rename_sms_campaign, action: brevo.sms_campaigns.update_sms_campaign, inputs: {campaignId: "${create_sms_campaign.response.id}", name: "${prefix}-sms-renamed-${ts}"}, assert: {status: 204}}
+  - {name: read_sms_renamed, postcondition_of: brevo.sms_campaigns.update_sms_campaign, action: brevo.sms_campaigns.get_sms_campaign, inputs: {campaignId: "${create_sms_campaign.response.id}"}, assert: {status: 200, equals: {name: "${prefix}-sms-renamed-${ts}"}}}
+  - {name: delete_sms_campaign, action: brevo.sms_campaigns.delete_sms_campaign, inputs: {campaignId: "${create_sms_campaign.response.id}"}, assert: {status: 204}, stop_on_fail: false}
+  - {name: sms_gone, postcondition_of: brevo.sms_campaigns.delete_sms_campaign, action: brevo.sms_campaigns.get_sms_campaign, inputs: {campaignId: "${create_sms_campaign.response.id}"}, assert: {status: 404}, stop_on_fail: false}
+  - {name: delete_note, action: brevo.notes.delete_note, inputs: {id: "${create_note.response.id}"}, assert: {status: 204}, stop_on_fail: false}
+  - {name: delete_deal, action: brevo.deals.delete_deal, inputs: {id: "${create_deal.response.id}"}, assert: {status: 204}, stop_on_fail: false}
+  - {name: delete_contact, action: brevo.contacts.delete_contact, inputs: {identifier: "${prefix}-${ts}@example.com"}, assert: {status: 204}, stop_on_fail: false}
+  - {name: delete_list, action: brevo.contacts.delete_list, inputs: {listId: "${create_list.response.id}"}, assert: {status: 204}, stop_on_fail: false}
+  - {name: delete_folder, action: brevo.contacts.delete_folder, inputs: {folderId: "${create_folder.response.id}"}, assert: {status: 204}, stop_on_fail: false}
+  - {name: folder_gone, action: brevo.contacts.get_folder, inputs: {folderId: "${create_folder.response.id}"}, assert: {status: 404}, retry: {times: 6, every: 2}, stop_on_fail: false}

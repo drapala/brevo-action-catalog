@@ -22,6 +22,7 @@ import yaml
 
 import catalog_lint
 import corrections
+import make_claims
 
 ROOT = Path(__file__).resolve().parent.parent
 DRAFTS = ROOT / "build/openapi_actions"
@@ -100,7 +101,7 @@ def seen_action(line: dict, walk: dict) -> dict:
             "status": line.get("status", "seen"),
             "route_kind": "ui_path",
             "checked_at": walk["walked_at"],
-            "evidence": walk["evidence"],
+            "evidence": line.get("evidence", walk["evidence"]),
             "notes": "The free plan shows an upgrade or setup screen instead."
             if line.get("status") == "gated"
             else "Seen in the web app and not run, so the inputs and the exact effect are not known.",
@@ -232,6 +233,7 @@ def apply_evidence(actions: dict[str, dict]) -> None:
         passed = [e for e in own if e["verdict"] == "pass"]
         failed = [e for e in own if e["verdict"] == "fail"]
         probes = [c for c in calls.get(action_id, []) if c["run"].startswith("probe-reads")]
+        gates = [c for c in calls.get(action_id, []) if c["run"].startswith("probe-gates")]
         checks = postconditions.get(action_id, [])
         good = [c for c in checks if c["verdict"] == "pass"]
         if good and not action.get("postcondition"):
@@ -329,6 +331,25 @@ def apply_evidence(actions: dict[str, dict]) -> None:
                 evidence=f"evidence/runs.jsonl#run={last['run']}",
                 notes=last.get("why", ""),
             )
+        elif gates:
+            last = gates[-1]
+            message = json.dumps(last.get("response"), ensure_ascii=False)
+            refused = last["status"] in (401, 402, 403) and '"bad_request"' not in message
+            if refused or any(h in message.lower() for h in GATED_HINTS):
+                v.update(
+                    status="gated",
+                    route_kind="documented_api",
+                    checked_at=last["at"],
+                    evidence=f"evidence/runs.jsonl#run={last['run']}",
+                    notes=f"HTTP {last['status']} to a call with inputs that cannot succeed: {message[:200]}",
+                )
+                action["availability"]["free_plan"] = "gated"
+                action["availability"]["evidence"] = f"HTTP {last['status']} on the free plan"
+            else:
+                v["notes"] = (
+                    f"Not run with real inputs. A call with inputs that cannot succeed returned HTTP {last['status']}, "
+                    f"not a plan refusal ({message[:160]}). Evidence: evidence/runs.jsonl#run={last['run']}."
+                )
 
 
 def main() -> None:
@@ -386,6 +407,7 @@ def main() -> None:
     for change in corrections.sync(findings, "catalog_lint", catalog_lint.BUILD_CHECKS):
         print("ledger:", change)
     corrections.render()
+    make_claims.main()
 
 
 if __name__ == "__main__":

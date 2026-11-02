@@ -152,3 +152,27 @@ def test_read_back_text_covers_every_kind_of_check():
     assert '`status` equals "draft"' in text
     assert "`attributes` no longer holds an item whose `name`" in text
     assert build_catalog.describe_check({"status": 404}) == "the read returns HTTP 404"
+
+
+def test_a_plan_refusal_marks_gated_and_any_other_answer_keeps_documented(tmp_path, monkeypatch):
+    # A call that cannot succeed only tells whether the free plan refuses the route. It never verifies.
+    runs = [
+        {"run": "probe-gates-1", "action": "brevo.tier.get_tier", "status": 403, "at": "2026-11-02T19:50:00+00:00",
+         "response": {"message": "Current account is not activated for this feature"}},
+        {"run": "probe-gates-1", "action": "brevo.files.get_file", "status": 404, "at": "2026-11-02T19:50:01+00:00",
+         "response": {"code": "document_not_found"}},
+        # A 403 that rejects the fake input is not a plan refusal.
+        {"run": "probe-gates-1", "action": "brevo.user.get_invite", "status": 403, "at": "2026-11-02T19:50:02+00:00",
+         "response": {"code": "bad_request", "message": "Invalid request"}},
+    ]
+    evidence = tmp_path / "runs.jsonl"
+    evidence.write_text("\n".join(json.dumps(r) for r in runs) + "\n")
+    monkeypatch.setattr(build_catalog, "EVIDENCE", evidence)
+    actions = {a: entry(a) for a in ("brevo.tier.get_tier", "brevo.files.get_file", "brevo.user.get_invite")}
+    build_catalog.apply_evidence(actions)
+
+    tier, file = actions["brevo.tier.get_tier"], actions["brevo.files.get_file"]
+    assert tier["verification"]["status"] == "gated" and tier["availability"]["free_plan"] == "gated"
+    assert file["verification"]["status"] == "documented" and file["availability"]["free_plan"] == "unknown"
+    assert "HTTP 404" in file["verification"]["notes"]
+    assert actions["brevo.user.get_invite"]["verification"]["status"] == "documented"

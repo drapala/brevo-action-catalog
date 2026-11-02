@@ -25,6 +25,14 @@
         "Pick the time zone",
         "Click 'Save'"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/campaign-settings/config",
+        "Set the time zone and the time and date formats",
+        "Click 'Save'"
+      ]
     }
   ],
   "preconditions": [],

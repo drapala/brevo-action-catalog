@@ -419,16 +419,18 @@
     "requires_confirmation": true
   },
   "availability": {
-    "free_plan": "unknown",
+    "free_plan": "gated",
     "requires": [
       "Conversations chat widget installed"
-    ]
+    ],
+    "evidence": "HTTP 402 on the free plan"
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "gated",
+    "route_kind": "documented_api",
+    "checked_at": "2026-11-02T19:36:18+00:00",
+    "evidence": "evidence/runs.jsonl#run=probe-gates-1793648157",
+    "notes": "HTTP 402 to a call with inputs that cannot succeed: {\"code\": \"not_enough_credits\", \"message\": \"Upgrade your plan to use REST API\"}"
   },
   "sources": [
     {

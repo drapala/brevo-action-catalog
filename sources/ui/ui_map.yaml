@@ -3,6 +3,7 @@
 # did not have, added with status 'seen'. kind view: changes the screen only.
 walked_at: '2026-11-02T17:05:00+00:00'
 evidence: evidence/ui-walk-2026-11-02.json
+settings_evidence: evidence/ui-walk-settings-2026-11-02.json
 method: Playwright on the free plan account. One test item of each kind (folder, list, contact, company, deal, campaign, template) was created through the API so that row menus appear, and deleted after
   the walk.
 actions:
@@ -1097,3 +1098,853 @@ actions:
   - The free plan shows Upgrade to Enterprise
   catalog_id: brevo.program.create_new_lp
   status: gated
+- area: Account
+  ui: Update my profile
+  steps:
+  - Open https://app.brevo.com/profile/information
+  - Edit name, email, phone, company or address
+  - Save
+  new:
+    id: brevo.account.update_profile
+    entity: account
+    operation_class: update
+    description: Change the account owner's name, email, phone, company and address.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Account
+  ui: Set a password
+  steps:
+  - Open https://app.brevo.com/profile/information
+  - Click the 'Password' tab
+  - Click 'Set a password'
+  new:
+    id: brevo.account.set_password
+    entity: account
+    operation_class: update
+    description: Set or change the password of the account owner.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Account
+  ui: Change the language
+  steps:
+  - Open https://app.brevo.com/settings/localization
+  - Pick a language
+  - Click 'Save the preferences'
+  new:
+    id: brevo.account.update_language
+    entity: account
+    operation_class: update
+    description: Change the language of the Brevo web app.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Users
+  ui: Add users
+  steps:
+  - Open https://app.brevo.com/user/member
+  - Click 'Add users'
+  catalog_id: brevo.user.inviteuser
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Users
+  ui: Invite a partner user
+  steps:
+  - Open https://app.brevo.com/user/partner
+  - Click 'Invite your partner user'
+  new:
+    id: brevo.user.invite_partner_user
+    entity: user
+    operation_class: create
+    description: Invite an agency or partner to work in this account.
+    external_effect: sends_email
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Users
+  ui: Export the activity log
+  steps:
+  - Open https://app.brevo.com/user/activity-logs
+  - Click 'Export CSV'
+  new:
+    id: brevo.user.export_activity_log
+    entity: activity_log
+    operation_class: read
+    description: Download the users' activity log as CSV.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Aura
+  ui: Turn an Aura agent on or off
+  steps:
+  - Open https://app.brevo.com/aura-settings
+  - Click the toggle on an agent card (Marketing, Conversations, Data management)
+  new:
+    id: brevo.aura.toggle_agent
+    entity: aura_agent
+    operation_class: update
+    description: Turn one of Brevo's built-in AI agents on or off.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Aura
+  ui: Deactivate Aura
+  steps:
+  - Open https://app.brevo.com/aura-settings
+  - Click 'Deactivate Aura'
+  new:
+    id: brevo.aura.deactivate
+    entity: aura
+    operation_class: action
+    description: Turn off all of Brevo's built-in AI agents.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Security
+  ui: Turn on two-factor authentication
+  steps:
+  - Open https://app.brevo.com/security/two-factor-authentication
+  - Click 'Enable two-factor authentication'
+  new:
+    id: brevo.security.enable_two_factor_auth
+    entity: account
+    operation_class: update
+    description: Require a second factor at login.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Security
+  ui: Authorize an IP address
+  steps:
+  - Open https://app.brevo.com/security/authorised_ips
+  - Click 'Authorize IP addresses'
+  - Enter the IP
+  new:
+    id: brevo.security.authorize_ip
+    entity: authorized_ip
+    operation_class: create
+    description: Add an IP address to the list allowed to use the account.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Security
+  ui: Block unknown IPs for API keys
+  steps:
+  - Open https://app.brevo.com/security/authorised_ips
+  - Click 'Activate for API keys'
+  catalog_id: brevo.settings.restrict_api_keys_by_ip
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Security
+  ui: Block unknown IPs for SMTP keys
+  steps:
+  - Open https://app.brevo.com/security/authorised_ips
+  - Click 'Activate for SMTP keys'
+  new:
+    id: brevo.security.restrict_smtp_keys_by_ip
+    entity: smtp_key
+    operation_class: update
+    description: Allow SMTP sending only from authorized IP addresses.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Security
+  ui: Export authorized IPs
+  steps:
+  - Open https://app.brevo.com/security/authorised_ips
+  - Click 'Export CSV'
+  new:
+    id: brevo.security.export_authorized_ips
+    entity: authorized_ip
+    operation_class: read
+    description: Download the authorized IP addresses as CSV.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Security
+  ui: Remove an authorized IP
+  steps:
+  - Open https://app.brevo.com/security/authorised_ips
+  - Click the delete icon on the IP row
+  - Confirm
+  new:
+    id: brevo.security.delete_authorized_ip
+    entity: authorized_ip
+    operation_class: delete
+    description: Remove an IP address from the authorized list.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Set up campaign languages
+  steps:
+  - Open https://app.brevo.com/localization
+  - The free plan shows 'Upgrade to Professional'
+  new:
+    id: brevo.campaigns.set_up_languages
+    entity: campaign_language
+    operation_class: update
+    description: Set the language attribute and the languages for translated campaigns.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+  status: gated
+  free_plan: gated
+  requires:
+  - Professional plan
+- area: Email Campaigns
+  ui: Create a campaign from the deliverability center
+  steps:
+  - Open https://app.brevo.com/compliance
+  - Click 'Create campaign'
+  catalog_id: brevo.email_campaigns.create_email_campaign
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Turn on UTM tracking
+  steps:
+  - Open https://app.brevo.com/global/utms
+  - Click the 'Activate UTM tracking' toggle
+  new:
+    id: brevo.campaigns.set_utm_tracking
+    entity: utm_setting
+    operation_class: update
+    description: Add UTM parameters to the links in every campaign.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Data feeds
+  steps:
+  - Open https://app.brevo.com/external-feeds/welcome
+  - The free plan shows 'Upgrade plan'
+  catalog_id: brevo.external_feeds.create_external_feed
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+  status: gated
+- area: CRM
+  ui: Set up deals
+  steps:
+  - Open https://app.brevo.com/crm/settings
+  - Click 'Start setup'
+  catalog_id: brevo.crm.activate_sales_crm
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Change the regional settings
+  steps:
+  - Open https://app.brevo.com/campaign-settings/config
+  - Set the time zone and the time and date formats
+  - Click 'Save'
+  catalog_id: brevo.settings.update_time_zone
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Change the default campaign settings
+  steps:
+  - Open https://app.brevo.com/campaign-settings/config?tab=campaign
+  - Edit sender, reply-to, header and footer
+  - Click 'Save'
+  new:
+    id: brevo.campaigns.update_default_settings
+    entity: campaign_setting
+    operation_class: update
+    description: Set the default sender, reply-to address, header and footer for new campaigns.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Change tracking and report settings
+  steps:
+  - Open https://app.brevo.com/campaign-settings/config?tab=tracking
+  - Set anonymous tracking, image URLs and the CSV separator
+  - Click 'Save'
+  new:
+    id: brevo.campaigns.update_tracking_settings
+    entity: campaign_setting
+    operation_class: update
+    description: Set how campaign opens and clicks are tracked and how reports export.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Change campaign notifications
+  steps:
+  - Open https://app.brevo.com/campaign-settings/config?tab=notifications
+  - Set SMS reply forwarding and activity notifications
+  - Click 'Save'
+  new:
+    id: brevo.campaigns.update_notification_settings
+    entity: campaign_setting
+    operation_class: update
+    description: Choose which campaign notifications the account receives.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Add a test user
+  steps:
+  - Open https://app.brevo.com/campaign-settings/test-list
+  - Click 'Add test user'
+  new:
+    id: brevo.campaigns.add_test_user
+    entity: test_user
+    operation_class: create
+    description: Add an address to the list that receives test campaigns.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Remove a test user
+  steps:
+  - Open https://app.brevo.com/campaign-settings/test-list
+  - Click 'Remove' on the test user row
+  new:
+    id: brevo.campaigns.remove_test_user
+    entity: test_user
+    operation_class: delete
+    description: Remove an address from the test list.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Create an unsubscribe page
+  steps:
+  - Open https://app.brevo.com/campaign/pages/unsubscription
+  - Click 'Create an unsubscription page'
+  new:
+    id: brevo.campaigns.create_unsubscribe_page
+    entity: unsubscribe_page
+    operation_class: create
+    description: Build a custom page that contacts see when they unsubscribe.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Edit an unsubscribe page
+  steps:
+  - Open https://app.brevo.com/campaign/pages/unsubscription
+  - Click the page row
+  - Edit and save
+  new:
+    id: brevo.campaigns.update_unsubscribe_page
+    entity: unsubscribe_page
+    operation_class: update
+    description: Change an unsubscribe page.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Email Campaigns
+  ui: Duplicate an unsubscribe page
+  steps:
+  - Open https://app.brevo.com/campaign/pages/unsubscription
+  - Click 'More Actions' on the page row
+  - Click 'Duplicate'
+  new:
+    id: brevo.campaigns.duplicate_unsubscribe_page
+    entity: unsubscribe_page
+    operation_class: create
+    description: Copy an unsubscribe page.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Contacts
+  ui: Add a global computed value
+  steps:
+  - Open https://my.brevo.com/lists/global-computed-values
+  - Click 'Add a New Global Computation Value'
+  new:
+    id: brevo.contacts.create_global_computed_value
+    entity: global_computed_value
+    operation_class: create
+    description: Define a value computed over all contacts, for example the number of readers.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Contacts
+  ui: Edit a global computed value
+  steps:
+  - Open https://my.brevo.com/lists/global-computed-values
+  - Click the pencil icon on the value row
+  new:
+    id: brevo.contacts.update_global_computed_value
+    entity: global_computed_value
+    operation_class: update
+    description: Change a global computed value.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Contacts
+  ui: Delete a global computed value
+  steps:
+  - Open https://my.brevo.com/lists/global-computed-values
+  - Click the red x on the value row
+  new:
+    id: brevo.contacts.delete_global_computed_value
+    entity: global_computed_value
+    operation_class: delete
+    description: Delete a global computed value.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Webhooks
+  ui: Add a webhook from the settings
+  steps:
+  - Open https://app.brevo.com/app-store/webhooks
+  - Click 'Add webhook'
+  catalog_id: brevo.webhooks.create_webhook
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Push
+  ui: Set up web push
+  steps:
+  - Open https://app.brevo.com/push-settings
+  - Click 'Set up Push'
+  new:
+    id: brevo.push.set_up_push
+    entity: push_setting
+    operation_class: action
+    description: Connect a website so it can send push notifications. The settings page showed an error during the walk.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: SMS Campaigns
+  ui: Request an SMS sender ID
+  steps:
+  - Open https://app.brevo.com/sms-compliance/listing?source=settings
+  - Click 'Request Sender ID'
+  new:
+    id: brevo.sms_campaigns.request_sender_id
+    entity: sms_sender
+    operation_class: create
+    description: Ask Brevo to register a sender name for SMS in a country that requires it.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Transactional emails
+  ui: Block a contact from transactional email
+  steps:
+  - Open https://app.brevo.com/transactional/email/settings/blocked-contacts
+  - Click 'Block new contact'
+  new:
+    id: brevo.transactional_emails.block_contact
+    entity: blocked_contact
+    operation_class: create
+    description: Stop transactional emails to one address.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Transactional emails
+  ui: Export blocked contacts
+  steps:
+  - Open https://app.brevo.com/transactional/email/settings/blocked-contacts
+  - Click 'Download CSV'
+  catalog_id: brevo.transactional_emails.get_transac_blocked_contacts
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Transactional emails
+  ui: Block a domain
+  steps:
+  - Open https://app.brevo.com/transactional/email/settings/blocked-domains
+  - Click 'Add a new domain'
+  catalog_id: brevo.transactional_emails.block_new_domain
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Transactional emails
+  ui: Add a webhook for transactional email
+  steps:
+  - Open https://app.brevo.com/transactional/email/settings
+  - Click the 'Webhook' card
+  - Click 'Add webhook'
+  catalog_id: brevo.webhooks.create_webhook
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Transactional emails
+  ui: Change log retention
+  steps:
+  - Open https://app.brevo.com/transactional/email/settings/retention-rules
+  - Choose the senders and the retention time
+  - Click 'Save'
+  new:
+    id: brevo.transactional_emails.update_retention_rules
+    entity: retention_rule
+    operation_class: update
+    description: Choose how long transactional email logs and previews are kept.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Transactional emails
+  ui: Change transactional tracking
+  steps:
+  - Open https://app.brevo.com/transactional/email/settings/tracking
+  - Set anonymous email tracking
+  - Click 'Save'
+  new:
+    id: brevo.transactional_emails.update_tracking_settings
+    entity: tracking_setting
+    operation_class: update
+    description: Turn anonymous tracking of transactional emails on or off.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Transactional SMS
+  ui: Forward SMS replies by email
+  steps:
+  - Open https://app.brevo.com/transactional/sms/settings/configurations
+  - Choose Yes or No
+  - Click 'Save'
+  new:
+    id: brevo.transactional_sms.update_reply_settings
+    entity: sms_setting
+    operation_class: update
+    description: Choose whether replies to transactional SMS are forwarded by email.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Transactional SMS
+  ui: Change SMS log retention
+  steps:
+  - Open https://app.brevo.com/transactional/sms/settings/retention-rules
+  - Choose no limit or a limited time
+  - Click 'Save'
+  new:
+    id: brevo.transactional_sms.update_retention_rules
+    entity: retention_rule
+    operation_class: update
+    description: Choose how long transactional SMS logs are kept.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Automations
+  ui: Turn on the Brevo tracker
+  steps:
+  - Open https://app.brevo.com/automation/advanced
+  - Click the 'Brevo tracker' card
+  - Click the 'Identify and track visitors' switch
+  new:
+    id: brevo.automations.enable_tracker
+    entity: tracker
+    operation_class: update
+    description: Track website visitors so automations can react to their visits.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Automations
+  ui: Choose how visitors are identified
+  steps:
+  - Open https://app.brevo.com/automation/parameters
+  - Pick links in emails or a third-party tracker
+  new:
+    id: brevo.automations.set_visitor_identification
+    entity: tracker
+    operation_class: update
+    description: Choose how the tracker links a visitor to a contact.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Automations
+  ui: Check the tracker install
+  steps:
+  - Open https://app.brevo.com/automation/parameters
+  - Click 'Verify'
+  new:
+    id: brevo.automations.verify_tracker
+    entity: tracker
+    operation_class: read
+    description: Check that the tracker code is installed on the website.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: E-commerce
+  ui: Connect an online store
+  steps:
+  - Open https://app.brevo.com/ecommerce/settings
+  - Click 'Connect my store'
+  new:
+    id: brevo.ecommerce.connect_store
+    entity: store
+    operation_class: action
+    description: Connect a Shopify, WooCommerce or other store so orders and products sync.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Meetings
+  ui: Set up meetings from the settings
+  steps:
+  - Open https://app.brevo.com/meetings/settings
+  - Click 'Start setup'
+  catalog_id: brevo.meetings.set_up_meetings
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Analytics
+  ui: Conversions from the settings
+  steps:
+  - Open https://app.brevo.com/conversions/settings
+  - The free plan shows 'Upgrade'
+  catalog_id: brevo.conversions.create_conversion
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+  status: gated
+- area: Conversations
+  ui: Connect an individual mailbox
+  steps:
+  - Open https://conversations-app.brevo.com/individual-email/settings
+  - Click 'Connect individual email'
+  new:
+    id: brevo.conversations.connect_individual_mailbox
+    entity: mailbox
+    operation_class: action
+    description: Connect a personal mailbox so its emails show in Brevo.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Exclude an email or domain from a mailbox
+  steps:
+  - Open https://conversations-app.brevo.com/individual-email/settings
+  - Click 'Add email or domain'
+  new:
+    id: brevo.conversations.add_excluded_address
+    entity: excluded_address
+    operation_class: create
+    description: Keep emails from an address or domain out of the inbox.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Install the chat widget
+  steps:
+  - Open https://conversations-app.brevo.com/settings/integrations/widget
+  - Click 'Install chat widget'
+  new:
+    id: brevo.conversations.install_chat_widget
+    entity: chat_widget
+    operation_class: action
+    description: Get the chat widget code for a website.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Connect a team mailbox
+  steps:
+  - Open https://conversations-app.brevo.com/settings/integrations/email
+  - Click 'Connect team mailbox'
+  new:
+    id: brevo.conversations.connect_team_mailbox
+    entity: mailbox
+    operation_class: action
+    description: Connect a shared mailbox to the team inbox.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Connect a Facebook page
+  steps:
+  - Open https://conversations-app.brevo.com/settings/integrations/facebook
+  - Click 'Connect page'
+  new:
+    id: brevo.conversations.connect_facebook_page
+    entity: channel
+    operation_class: action
+    description: Bring Facebook page messages into the inbox. The page also shows 'Get package'.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Connect an Instagram account
+  steps:
+  - Open https://conversations-app.brevo.com/settings/integrations/instagram
+  - Click 'Connect account'
+  new:
+    id: brevo.conversations.connect_instagram
+    entity: channel
+    operation_class: action
+    description: Bring Instagram messages into the inbox. The page also shows 'Get package'.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Connect a WhatsApp account
+  steps:
+  - Open https://conversations-app.brevo.com/settings/integrations/whatsapp
+  - Click 'Connect account'
+  new:
+    id: brevo.conversations.connect_whatsapp
+    entity: channel
+    operation_class: action
+    description: Bring WhatsApp messages into the inbox. The page also shows 'Get package'.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Get an SMS phone number
+  steps:
+  - Open https://conversations-app.brevo.com/settings/integrations/sms
+  - Click 'Get phone number'
+  new:
+    id: brevo.conversations.get_sms_number
+    entity: channel
+    operation_class: action
+    description: Get a phone number for two-way SMS in the inbox.
+    external_effect: spends_credits
+    requires_confirmation: true
+    reversible: false
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Change chat preferences
+  steps:
+  - Open https://conversations-app.brevo.com/settings/preferences
+  - Change languages, visitor IP and location, attachment types or email forwarding
+  new:
+    id: brevo.conversations.update_chat_preferences
+    entity: chat_setting
+    operation_class: update
+    description: Set chat languages, what agents see about visitors, allowed attachments and transcript forwarding.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Create a saved reply
+  steps:
+  - Open https://conversations-app.brevo.com/settings/saved-replies
+  - Click 'Create saved reply'
+  new:
+    id: brevo.conversations.create_saved_reply
+    entity: saved_reply
+    operation_class: create
+    description: Save a reply that agents can insert in a chat.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Turn on the AI chatbot
+  steps:
+  - Open https://conversations-app.brevo.com/settings/ai-bot
+  - Click the 'Activate AI chatbot' switch
+  new:
+    id: brevo.conversations.activate_ai_chatbot
+    entity: ai_chatbot
+    operation_class: update
+    description: Let the AI chatbot answer visitors.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Configure the AI chatbot
+  steps:
+  - Open https://conversations-app.brevo.com/settings/ai-bot
+  - Edit identity, behavior and handoff settings
+  new:
+    id: brevo.conversations.configure_ai_chatbot
+    entity: ai_chatbot
+    operation_class: update
+    description: Set the chatbot's name, what it helps with, what it avoids, and when it hands off to a person.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Connect the AI chatbot to a channel
+  steps:
+  - Open https://conversations-app.brevo.com/settings/ai-bot
+  - Click the 'Channels' tab
+  - Click 'Connect' on a channel
+  new:
+    id: brevo.conversations.connect_ai_chatbot_channel
+    entity: ai_chatbot
+    operation_class: action
+    description: Let the chatbot answer on the chat widget, Facebook, Instagram or WhatsApp.
+    requires_confirmation: true
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Add an AI chatbot source
+  steps:
+  - Open https://conversations-app.brevo.com/settings/ai-bot
+  - Click the 'Sources' tab
+  - Click 'Add source'
+  new:
+    id: brevo.conversations.add_ai_chatbot_source
+    entity: ai_chatbot_source
+    operation_class: create
+    description: Give the chatbot a page or document to answer from.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Turn a chat trigger on or off
+  steps:
+  - Open https://conversations-app.brevo.com/settings/actions
+  - Click the toggle on a trigger
+  new:
+    id: brevo.conversations.toggle_chat_trigger
+    entity: chat_trigger
+    operation_class: update
+    description: Turn an automatic chat message on or off, for example a greeting on the front page.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Create a chat trigger
+  steps:
+  - Open https://conversations-app.brevo.com/settings/actions
+  - Click 'New trigger'
+  new:
+    id: brevo.conversations.create_chat_trigger
+    entity: chat_trigger
+    operation_class: create
+    description: Create an automatic chat message for a page or a visitor action.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Configure the contact form
+  steps:
+  - Open https://conversations-app.brevo.com/settings/bot
+  - Set when the bot replies, the form fields and the consent switches
+  new:
+    id: brevo.conversations.configure_contact_form
+    entity: contact_form
+    operation_class: update
+    description: Set the form the chat shows to collect a visitor's details.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Create a chatbot scenario
+  steps:
+  - Open https://conversations-app.brevo.com/settings/scripts
+  - Click 'New scenario'
+  new:
+    id: brevo.conversations.create_chatbot_scenario
+    entity: chatbot_scenario
+    operation_class: create
+    description: Build a scripted chatbot flow.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Create an agent group
+  steps:
+  - Open https://conversations-app.brevo.com/settings/groups
+  - Click 'New group'
+  new:
+    id: brevo.conversations.create_agent_group
+    entity: agent_group
+    operation_class: create
+    description: Group agents so chats can be routed to them.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Turn on assignment rules
+  steps:
+  - Open https://conversations-app.brevo.com/settings/assignment-rulesets
+  - Click the switch
+  new:
+    id: brevo.conversations.set_assignment_rules
+    entity: assignment_rule
+    operation_class: update
+    description: Route chats to agent groups with custom rules.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Update the chat profile
+  steps:
+  - Open https://conversations-app.brevo.com/settings/account
+  - Edit name, title, photo and status settings
+  new:
+    id: brevo.conversations.update_chat_profile
+    entity: agent_profile
+    operation_class: update
+    description: Change how the agent appears to visitors and when the status goes offline.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Set chat availability
+  steps:
+  - Open https://conversations-app.brevo.com/settings/availability
+  - Click the switch and set the hours
+  new:
+    id: brevo.conversations.set_availability
+    entity: agent_profile
+    operation_class: update
+    description: Set the hours when the agent is available for chats.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json
+- area: Conversations
+  ui: Change chat notifications
+  steps:
+  - Open https://conversations-app.brevo.com/settings/notifications
+  - Enable desktop notifications, pick a sound, or change the switches
+  new:
+    id: brevo.conversations.update_notification_settings
+    entity: chat_setting
+    operation_class: update
+    description: Choose how the agent is notified of new chats and emails.
+  evidence: evidence/ui-walk-settings-2026-11-02.json
+  source: evidence/ui-walk-settings-2026-11-02.json

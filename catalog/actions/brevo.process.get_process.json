@@ -159,7 +159,8 @@
     "status": "documented",
     "route_kind": null,
     "checked_at": null,
-    "evidence": null
+    "evidence": null,
+    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 404, not a plan refusal ({\"code\": \"document_not_found\", \"message\": \"processId not found\"}). Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
   },
   "sources": [
     {

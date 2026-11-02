@@ -39,6 +39,13 @@
       "success_status": [
         201
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/transactional/email/settings/blocked-domains",
+        "Click 'Add a new domain'"
+      ]
     }
   ],
   "preconditions": [],
@@ -58,7 +65,8 @@
     "status": "documented",
     "route_kind": null,
     "checked_at": null,
-    "evidence": null
+    "evidence": null,
+    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 400, not a plan refusal ({\"code\": \"missing_parameter\", \"message\": \"Domain is missing\"}). Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
   },
   "sources": [
     {

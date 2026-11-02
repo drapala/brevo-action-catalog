@@ -23,6 +23,13 @@
       "ui_steps": [
         "Open https://app.brevo.com/conversions/listing"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/conversions/settings",
+        "The free plan shows 'Upgrade'"
+      ]
     }
   ],
   "preconditions": [],

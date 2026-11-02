@@ -1,41 +1,45 @@
 {
-  "total_actions": 348,
+  "total_actions": 407,
   "by_verification": {
-    "verified": 81,
-    "gated": 22,
-    "seen": 42,
+    "verified": 91,
+    "gated": 87,
+    "seen": 100,
     "observed": 9,
-    "documented": 193,
+    "documented": 119,
     "failed": 1
   },
   "by_route_kind": {
     "documented_api": 292,
-    "ui_path": 95,
+    "ui_path": 158,
     "undocumented_api": 9
   },
-  "without_public_api": 56,
+  "without_public_api": 115,
   "curated_entries": 4,
   "web_app_walk": {
     "view_only": 15,
-    "business_actions": 106,
-    "catalog_actions": 93,
-    "in_catalog_before_walk": 58,
-    "runs_through_public_api": 49,
-    "added_by_walk": 48,
-    "ui_steps_only": 44,
+    "business_actions": 177,
+    "catalog_actions": 156,
+    "in_catalog_before_walk": 65,
+    "runs_through_public_api": 54,
+    "added_by_walk": 112,
+    "ui_steps_only": 106,
     "internal_endpoint_browser_only": 7,
-    "blocked_on_free_plan": 6
+    "blocked_on_free_plan": 10
   },
   "by_area": {
     "Account": {
       "verified": 1,
-      "gated": 1
+      "gated": 1,
+      "seen": 3
     },
     "Analytics": {
       "gated": 2
     },
+    "Aura": {
+      "seen": 2
+    },
     "Automations": {
-      "seen": 4,
+      "seen": 7,
       "observed": 4
     },
     "Balance": {
@@ -49,40 +53,45 @@
       "documented": 5
     },
     "ConsentGroups": {
-      "documented": 4,
-      "gated": 1
+      "documented": 1,
+      "gated": 4
     },
     "Contacts": {
-      "seen": 13,
-      "verified": 21,
-      "documented": 9,
+      "seen": 16,
+      "verified": 24,
+      "documented": 6,
       "observed": 2
     },
     "Conversations": {
-      "documented": 10
+      "seen": 23,
+      "gated": 9,
+      "documented": 1
     },
     "Coupons": {
-      "documented": 4,
-      "gated": 1
+      "gated": 5
     },
     "Custom Objects": {
       "documented": 4
     },
     "Deals": {
       "seen": 1,
-      "verified": 8,
-      "documented": 3
+      "verified": 10,
+      "documented": 1
     },
     "Domains": {
       "documented": 4,
       "verified": 1
     },
+    "E-commerce": {
+      "seen": 1
+    },
     "Ecommerce": {
-      "documented": 13,
-      "gated": 5
+      "documented": 1,
+      "gated": 17
     },
     "Email Campaigns": {
-      "seen": 7,
+      "seen": 16,
+      "gated": 1,
       "verified": 5,
       "documented": 8
     },
@@ -91,8 +100,7 @@
       "verified": 1
     },
     "External Feeds": {
-      "documented": 4,
-      "gated": 1
+      "gated": 5
     },
     "Files": {
       "documented": 4,
@@ -113,18 +121,17 @@
       "seen": 2
     },
     "Master account": {
-      "documented": 22,
-      "gated": 4
+      "gated": 25,
+      "documented": 1
     },
     "Meetings": {
       "seen": 1
     },
     "Notes": {
-      "verified": 4,
-      "documented": 1
+      "verified": 5
     },
     "Payments": {
-      "documented": 3
+      "gated": 3
     },
     "Phone": {
       "gated": 1
@@ -138,15 +145,22 @@
       "documented": 10,
       "verified": 1
     },
+    "Push": {
+      "seen": 1
+    },
     "Reward": {
       "documented": 10
     },
     "SMS Campaigns": {
-      "documented": 9,
-      "verified": 1
+      "verified": 5,
+      "seen": 1,
+      "documented": 5
     },
     "SMS Templates": {
       "verified": 1
+    },
+    "Security": {
+      "seen": 5
     },
     "Senders": {
       "documented": 5,
@@ -168,34 +182,39 @@
     },
     "Transactional SMS": {
       "verified": 3,
-      "documented": 2
+      "documented": 2,
+      "seen": 2
     },
     "Transactional WhatsApp": {
       "verified": 1,
       "documented": 1
     },
     "Transactional emails": {
+      "seen": 3,
       "documented": 11,
       "verified": 11
     },
     "User": {
-      "documented": 5,
-      "verified": 1
+      "documented": 4,
+      "verified": 1,
+      "gated": 1
+    },
+    "Users": {
+      "seen": 2
     },
     "Wallet": {
       "documented": 2
     },
     "Webhooks": {
       "verified": 5,
-      "documented": 1
+      "gated": 1
     },
     "WhatsApp Campaigns": {
-      "documented": 6,
-      "gated": 3
+      "gated": 9
     }
   },
   "lint": {
-    "G001 (gap)": 126,
+    "G001 (gap)": 182,
     "G002 (gap)": 25
   }
 }

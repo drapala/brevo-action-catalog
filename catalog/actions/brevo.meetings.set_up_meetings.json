@@ -24,6 +24,13 @@
         "Open https://app.brevo.com/meetings/offer/all",
         "The page redirects to /meetings/onboarding"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/meetings/settings",
+        "Click 'Start setup'"
+      ]
     }
   ],
   "preconditions": [],

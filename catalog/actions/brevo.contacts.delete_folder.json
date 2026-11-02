@@ -67,8 +67,8 @@
   "verification": {
     "status": "verified",
     "route_kind": "documented_api",
-    "checked_at": "2026-11-02T17:12:36+00:00",
-    "evidence": "evidence/runs.jsonl#run=contacts-lifecycle-1793639545"
+    "checked_at": "2026-11-02T19:39:25+00:00",
+    "evidence": "evidence/runs.jsonl#run=more-crm-contacts-sms-1793648350"
   },
   "sources": [
     {

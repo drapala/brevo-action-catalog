@@ -25,6 +25,13 @@
         "The page redirects to /crm/onboarding",
         "Click 'Start for free'"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/crm/settings",
+        "Click 'Start setup'"
+      ]
     }
   ],
   "preconditions": [],

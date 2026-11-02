@@ -146,14 +146,16 @@
     "requires_confirmation": true
   },
   "availability": {
-    "free_plan": "unknown",
-    "requires": []
+    "free_plan": "gated",
+    "requires": [],
+    "evidence": "HTTP 400 on the free plan"
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "gated",
+    "route_kind": "documented_api",
+    "checked_at": "2026-11-02T19:37:30+00:00",
+    "evidence": "evidence/runs.jsonl#run=probe-gates-1793648157",
+    "notes": "HTTP 400 to a call with inputs that cannot succeed: {\"code\": \"feature_inactive\", \"message\": \"you don't have permission to access the url. Please contact us at contact@sendinblue.com to request activation\"}"
   },
   "sources": [
     {

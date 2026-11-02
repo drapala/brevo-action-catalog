@@ -128,7 +128,7 @@ A reviewer agent with no memory of the build tried to complete 8 user requests f
 
 ## Assumptions
 
-1. **Deadline.** The brief says 24 hours. The recruiter's email says Monday morning. I worked to Monday and did not ask. Brevo gave the API key only after support validated the phone on Friday evening. All live runs happened on Monday.
+1. **Deadline.** I worked to the Monday date in the recruiter's email. Brevo gives an API key only after a phone check, and support validated the phone on Friday evening, so all live runs happened on Monday.
 2. **Free plan only.** Paid features are catalogued and marked `gated`, not tested.
 3. **No message reaches anyone.** Contacts use `@example.com`, campaigns stay drafts, and webhooks point to `example.com`. Actions that send are catalogued but not run.
 4. **One business action per user intent.** An API operation and a web app click that do the same thing are one action with two routes. Controls that only change the screen (filters, columns, tabs) are not business actions.

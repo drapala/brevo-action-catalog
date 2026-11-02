@@ -380,6 +380,13 @@
         "Pick Email",
         "Type the name and create"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/compliance",
+        "Click 'Create campaign'"
+      ]
     }
   ],
   "preconditions": [],

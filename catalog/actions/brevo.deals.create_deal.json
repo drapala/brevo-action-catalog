@@ -129,9 +129,9 @@
   "verification": {
     "status": "verified",
     "route_kind": "documented_api",
-    "checked_at": "2026-11-02T18:31:11+00:00",
-    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793644268",
-    "notes": "The spec documents 201, the live API returns 200."
+    "checked_at": "2026-11-02T19:39:16+00:00",
+    "evidence": "evidence/runs.jsonl#run=more-crm-contacts-sms-1793648350",
+    "notes": "The spec documents HTTP [201], the live API returns [200]."
   },
   "sources": [
     {

@@ -1,0 +1,55 @@
+{
+  "id": "brevo.conversations.create_agent_group",
+  "product": "brevo",
+  "area": "Conversations",
+  "entity": "agent_group",
+  "operation_class": "create",
+  "label": "Create an agent group",
+  "description": "Group agents so chats can be routed to them.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://conversations-app.brevo.com/settings/groups",
+        "Click 'New group'"
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "seen",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T17:05:00+00:00",
+    "evidence": "evidence/ui-walk-settings-2026-11-02.json",
+    "notes": "Seen in the web app and not run, so the inputs and the exact effect are not known."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "evidence/ui-walk-settings-2026-11-02.json"
+    }
+  ]
+}

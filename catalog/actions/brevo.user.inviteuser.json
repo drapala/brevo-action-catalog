@@ -160,6 +160,13 @@
       "success_status": [
         200
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/user/member",
+        "Click 'Add users'"
+      ]
     }
   ],
   "preconditions": [],
@@ -172,14 +179,16 @@
     "requires_confirmation": true
   },
   "availability": {
-    "free_plan": "unknown",
-    "requires": []
+    "free_plan": "gated",
+    "requires": [],
+    "evidence": "HTTP 403 on the free plan"
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "gated",
+    "route_kind": "documented_api",
+    "checked_at": "2026-11-02T19:37:27+00:00",
+    "evidence": "evidence/runs.jsonl#run=probe-gates-1793648157",
+    "notes": "HTTP 403 to a call with inputs that cannot succeed: \"User Management API is not enabled for this account\\n\""
   },
   "sources": [
     {

@@ -1,0 +1,943 @@
+{
+  "walked_at": "2026-11-02T19:50:41Z",
+  "method": "Playwright, read-only, free plan account. Viewport 1600x1000. Sections opened from the Settings side menu. Only navigation links, tabs, and one row menu ('More Actions', closed with Escape) were clicked. No state-changing control was clicked. Labels are the visible text or aria-label. Personal values (email, phone, IP, agent ID) and the tracker script are not recorded.",
+  "sections": [
+    {
+      "section": "Profile",
+      "url": "https://app.brevo.com/profile/data-processing-agreement",
+      "actions": [
+        {
+          "ui": "Update my profile",
+          "steps": [
+            "Open https://app.brevo.com/profile/information",
+            "Edit the fields Email address, First name, Last name, Phone number (with 'Select Country'), Company / Organization, Website (optional), Street address, ZIP code, City, Country, and the checkbox 'Send me marketing tips and news about Brevo updates.'",
+            "Click 'Update my profile'"
+          ]
+        },
+        {
+          "ui": "Set a password",
+          "steps": [
+            "Open https://app.brevo.com/profile/information",
+            "Click tab 'Password'",
+            "Click 'Set a password'"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Tab 'Information'",
+        "Tab 'Password'",
+        "Tab 'Legal Documents'",
+        "Link 'General Conditions of Use'",
+        "Link 'Privacy Policy'",
+        "Link 'Anti-Spam Policy'"
+      ],
+      "gated": null
+    },
+    {
+      "section": "Language",
+      "url": "https://app.brevo.com/settings/localization",
+      "actions": [
+        {
+          "ui": "Save the preferences",
+          "steps": [
+            "Open https://app.brevo.com/settings/localization",
+            "Select a language (English (United States), English (United Kingdom), Français (France), Italiano (Italia), Español (España), Português (Brasil), Deutsch (Deutschland)) and a timezone in the '(GMT-03:00) Sao Paulo' dropdown",
+            "Click 'Save the preferences'"
+          ]
+        }
+      ],
+      "view_controls": [],
+      "gated": null
+    },
+    {
+      "section": "Individual email",
+      "url": "https://conversations-app.brevo.com/individual-email/settings",
+      "actions": [
+        {
+          "ui": "Connect individual email",
+          "steps": [
+            "Open https://conversations-app.brevo.com/individual-email/settings",
+            "Click 'Connect individual email'"
+          ]
+        },
+        {
+          "ui": "Add email or domain",
+          "steps": [
+            "Open https://conversations-app.brevo.com/individual-email/settings",
+            "Click 'Add email or domain' (section 'Excluded emails and domains')"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Link 'Learn more about connecting your individual email'",
+        "Link 'connect a team mailbox' (goes to Inbox > Email connect)"
+      ],
+      "gated": null
+    },
+    {
+      "section": "Users",
+      "url": "https://app.brevo.com/user/activity-logs",
+      "actions": [
+        {
+          "ui": "Add users",
+          "steps": [
+            "Open https://app.brevo.com/user/member",
+            "Click 'Add users'"
+          ]
+        },
+        {
+          "ui": "Add seats",
+          "steps": [
+            "Open https://app.brevo.com/user/member",
+            "Click 'Add seats' next to 'Marketing seats: 1/1'"
+          ]
+        },
+        {
+          "ui": "Add seats",
+          "steps": [
+            "Open https://app.brevo.com/user/member",
+            "Click 'Add seats' next to 'Sales seats: 1/1'"
+          ]
+        },
+        {
+          "ui": "Invite your partner user",
+          "steps": [
+            "Open https://app.brevo.com/user/partner",
+            "Click 'Invite your partner user'"
+          ]
+        },
+        {
+          "ui": "Export CSV",
+          "steps": [
+            "Open https://app.brevo.com/user/activity-logs",
+            "Click 'Export CSV'"
+          ]
+        },
+        {
+          "ui": "Upgrade to Enterprise",
+          "steps": [
+            "Open https://app.brevo.com/user/activity-logs",
+            "Click 'Upgrade to Enterprise' (banner about 12-month activity logs)"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Tab 'Users'",
+        "Tab 'Partner user'",
+        "Tab 'Activity logs'",
+        "Search 'Email address'",
+        "Rows per page '10'",
+        "Previous page / Next page",
+        "help button (x2, next to seat counts)",
+        "Activity logs filters 'Actions', 'Users', 'Date: 10/03/2026 - 11/02/2026'",
+        "Row button 'Show event data'",
+        "Logs per page '20'",
+        "Banner 'close'"
+      ],
+      "gated": null
+    },
+    {
+      "section": "Aura AI control center",
+      "url": "https://app.brevo.com/aura-settings",
+      "actions": [
+        {
+          "ui": "Toggle (Marketing agent, currently on)",
+          "steps": [
+            "Open https://app.brevo.com/aura-settings",
+            "Click the toggle on the 'Marketing agent' card"
+          ]
+        },
+        {
+          "ui": "Get package (Sales agent)",
+          "steps": [
+            "Open https://app.brevo.com/aura-settings",
+            "Click 'Get package' on the 'Sales agent' card"
+          ]
+        },
+        {
+          "ui": "Toggle (Conversations agent, currently on)",
+          "steps": [
+            "Open https://app.brevo.com/aura-settings",
+            "Click the toggle on the 'Conversations agent' card"
+          ]
+        },
+        {
+          "ui": "Toggle (Data management agent, currently on)",
+          "steps": [
+            "Open https://app.brevo.com/aura-settings",
+            "Click the toggle on the 'Data management agent' card"
+          ]
+        },
+        {
+          "ui": "Deactivate Aura",
+          "steps": [
+            "Open https://app.brevo.com/aura-settings",
+            "Click 'Deactivate Aura' (section 'Manage Aura')"
+          ]
+        }
+      ],
+      "view_controls": [],
+      "gated": null
+    },
+    {
+      "section": "Security",
+      "url": "https://app.brevo.com/security/authorised_ips",
+      "actions": [
+        {
+          "ui": "Enable two-factor authentication",
+          "steps": [
+            "Open https://app.brevo.com/security/two-factor-authentication",
+            "Click 'Enable two-factor authentication'"
+          ]
+        },
+        {
+          "ui": "Authorize IP addresses",
+          "steps": [
+            "Open https://app.brevo.com/security/authorised_ips",
+            "Click 'Authorize IP addresses'"
+          ]
+        },
+        {
+          "ui": "Activate for API keys",
+          "steps": [
+            "Open https://app.brevo.com/security/authorised_ips",
+            "Click 'Activate for API keys' (Blocking unauthorized IP addresses, API keys: Deactivated)"
+          ]
+        },
+        {
+          "ui": "Activate for SMTP keys",
+          "steps": [
+            "Open https://app.brevo.com/security/authorised_ips",
+            "Click 'Activate for SMTP keys' (SMTP keys: Deactivated)"
+          ]
+        },
+        {
+          "ui": "Export CSV",
+          "steps": [
+            "Open https://app.brevo.com/security/authorised_ips",
+            "Click 'Export CSV' (list 'Authorized IP addresses (1)')"
+          ]
+        },
+        {
+          "ui": "Delete authorized IP address",
+          "steps": [
+            "Open https://app.brevo.com/security/authorised_ips",
+            "Click the row icon 'Delete authorized IP address'"
+          ]
+        },
+        {
+          "ui": "Authorize IP address",
+          "steps": [
+            "Open https://app.brevo.com/security/authorised_ips",
+            "Click 'Unauthorized IP addresses (0)'",
+            "Click 'Authorize IP address'"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Tab 'Two-factor authentication'",
+        "Tab 'Authorized IPs'",
+        "Tab 'Authorized IP addresses (1)'",
+        "Tab 'Unauthorized IP addresses (0)'",
+        "Search 'Search by IP address or ASN'",
+        "Sort 'Sort column authorisation_date'",
+        "IP addresses per page '20'",
+        "Page number input, Previous page / Next page",
+        "Link 'Learn more about authorized IP addresses'"
+      ],
+      "gated": null
+    },
+    {
+      "section": "Localization",
+      "url": "https://app.brevo.com/localization",
+      "actions": [
+        {
+          "ui": "Upgrade to Professional",
+          "steps": [
+            "Open https://app.brevo.com/localization",
+            "Click 'Upgrade to Professional'"
+          ]
+        }
+      ],
+      "view_controls": [],
+      "gated": "Set up your languages Reaching your international audience has never been easier. But before translating your campaigns into other languages, you need to set up: The language attribute that determines"
+    },
+    {
+      "section": "Deliverability Center",
+      "url": "https://app.brevo.com/compliance",
+      "actions": [
+        {
+          "ui": "Create campaign",
+          "steps": [
+            "Open https://app.brevo.com/compliance",
+            "Click 'Create campaign' (shown twice: in 'Deliverability score' and in 'Score analysis', both empty states)"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Toggle 'Breakdown'",
+        "Toggle 'History'"
+      ],
+      "gated": null
+    },
+    {
+      "section": "UTM parameters",
+      "url": "https://app.brevo.com/global/utms",
+      "actions": [
+        {
+          "ui": "Activate UTM tracking (toggle, currently off)",
+          "steps": [
+            "Open https://app.brevo.com/global/utms",
+            "Click the 'Activate UTM tracking' toggle"
+          ]
+        }
+      ],
+      "view_controls": [],
+      "gated": null
+    },
+    {
+      "section": "Data feeds",
+      "url": "https://app.brevo.com/external-feeds/welcome",
+      "actions": [
+        {
+          "ui": "Upgrade plan",
+          "steps": [
+            "Open https://app.brevo.com/external-feeds/welcome",
+            "Click 'Upgrade plan'"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Link 'Learn how to create a data feed'",
+        "Note: the menu item opened https://app.brevo.com/external-feeds/listing, which redirected to /external-feeds/welcome"
+      ],
+      "gated": "Data feeds Personalize your messages with external data Sync Brevo with your company’s data to personalize messages across all channels. Generate personalized product recommendations, auto populate em"
+    },
+    {
+      "section": "Deals",
+      "url": "https://app.brevo.com/crm/settings",
+      "actions": [
+        {
+          "ui": "Start setup",
+          "steps": [
+            "Open https://app.brevo.com/crm/settings",
+            "Click 'Start setup'"
+          ]
+        }
+      ],
+      "view_controls": [],
+      "gated": "Deals Set things up first You need to complete a quick setup before you can access this page. It only takes a few steps. Start setup"
+    },
+    {
+      "section": "Campaigns",
+      "url": "https://app.brevo.com/campaign-settings",
+      "actions": [
+        {
+          "ui": "Save (Default Settings > Regional information)",
+          "steps": [
+            "Open https://app.brevo.com/campaign-settings/config",
+            "Set Timezone, Time format (24 Hours / 12 Hours), Date format (DD-MM-YYYY / MM-DD-YYYY)",
+            "Click 'Save'"
+          ]
+        },
+        {
+          "ui": "Save (Default Settings > Default campaign)",
+          "steps": [
+            "Open https://app.brevo.com/campaign-settings/config?tab=campaign",
+            "Edit Sender name, Sender email, Reply-to email, Email header, Email footer, and the option 'Add a 'View in browser' link to all campaigns'",
+            "Click 'Save'"
+          ]
+        },
+        {
+          "ui": "Save (Default Settings > Tracking and reports)",
+          "steps": [
+            "Open https://app.brevo.com/campaign-settings/config?tab=tracking",
+            "Set Anonymous email tracking (Yes/No), Hide image URLs (Yes/No), CSV field separator (Semicolon/Comma), Exclude Apple MPP opens (Exclude/Include), Exclude bot activity (Exclude/Include)",
+            "Click 'Save'"
+          ]
+        },
+        {
+          "ui": "Save (Default Settings > Notifications)",
+          "steps": [
+            "Open https://app.brevo.com/campaign-settings/config?tab=notifications",
+            "Set 'Receive replies to your SMS campaigns by email' (Yes/No) and 'Brevo activity notifications' (Disable/Enable)",
+            "Click 'Save'"
+          ]
+        },
+        {
+          "ui": "Add test user",
+          "steps": [
+            "Open https://app.brevo.com/campaign-settings/test-list",
+            "Click 'Add test user'"
+          ]
+        },
+        {
+          "ui": "Remove <test user email>",
+          "steps": [
+            "Open https://app.brevo.com/campaign-settings/test-list",
+            "Click 'Remove <email>' on the test user row"
+          ]
+        },
+        {
+          "ui": "Create an unsubscription page",
+          "steps": [
+            "Open https://app.brevo.com/campaign/pages/unsubscription",
+            "Click 'Create an unsubscription page'"
+          ]
+        },
+        {
+          "ui": "Default unsubscribe page (row link to the page editor, /campaign/pages/unsubscription/edit/<id>)",
+          "steps": [
+            "Open https://app.brevo.com/campaign/pages/unsubscription",
+            "Click the row 'Default unsubscribe page'"
+          ]
+        },
+        {
+          "ui": "Duplicate",
+          "steps": [
+            "Open https://app.brevo.com/campaign/pages/unsubscription",
+            "Click 'More Actions' on the 'Default unsubscribe page' row",
+            "Click 'Duplicate'"
+          ]
+        },
+        {
+          "ui": "Add a New Global Computation Value",
+          "steps": [
+            "Open https://my.brevo.com/lists/global-computed-values",
+            "Click 'Add a New Global Computation Value'"
+          ]
+        },
+        {
+          "ui": "Edit (pencil icon, no text label)",
+          "steps": [
+            "Open https://my.brevo.com/lists/global-computed-values",
+            "Click the pencil icon on a value row (BLACKLIST, READERS, CLICKERS)"
+          ]
+        },
+        {
+          "ui": "Delete (red x icon, no text label)",
+          "steps": [
+            "Open https://my.brevo.com/lists/global-computed-values",
+            "Click the red x icon on a value row (BLACKLIST, READERS, CLICKERS)"
+          ]
+        },
+        {
+          "ui": "Add webhook",
+          "steps": [
+            "Open https://app.brevo.com/app-store/webhooks",
+            "Click 'Add webhook'"
+          ]
+        },
+        {
+          "ui": "Upgrade now (inbound webhooks)",
+          "steps": [
+            "Open https://app.brevo.com/app-store/webhooks",
+            "Click 'Inbound webhook'",
+            "Click 'Upgrade now' ('Inbound webhooks is only available on enterprise plan.')"
+          ]
+        },
+        {
+          "ui": "Buy (Get a dedicated IP)",
+          "steps": [
+            "Open https://app.brevo.com/campaign-settings",
+            "Click 'Buy' on the 'Get a dedicated IP' card"
+          ]
+        },
+        {
+          "ui": "Set up Push",
+          "steps": [
+            "Open https://app.brevo.com/push-settings",
+            "Click 'Set up Push'"
+          ]
+        },
+        {
+          "ui": "Request Sender ID",
+          "steps": [
+            "Open https://app.brevo.com/sms-compliance/listing?source=settings",
+            "Click 'Request Sender ID' (shown twice: header and empty state)"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Hub card buttons that only navigate: Default Settings 'Configure' (/campaign-settings/config), Test List 'Set up' (/campaign-settings/test-list), Unsubscribe Pages 'Personalize' (/campaign/pages/unsubscription), Global Calculated Values 'Configure' (my.brevo.com/lists/global-computed-values), Webhooks 'Configure' (/app-store/webhooks), Push 'Configure' (/push-settings), SMS Sender ID 'Configure' (/sms-compliance/listing)",
+        "Google Analytics 'Configure' opens https://app.brevo.com/global/utms (the UTM parameters section)",
+        "Your senders and domains 'Configure' opens https://app.brevo.com/senders/list (Senders, domains, IPs section, not walked here)",
+        "New Conversions 'View conversions'",
+        "WhatsApp card button 'Professional' (not clicked, target not verified)",
+        "Default Settings tabs 'Regional information', 'Default campaign', 'Tracking and reports', 'Notifications'",
+        "Unsubscription pages: search 'Search by name', banner 'close button', pagination",
+        "Global Calculated Values: 'Back', link 'More Information'",
+        "Webhooks: toggles 'Outbound webhook' / 'Inbound webhook', link 'Learn how to create an webhook'",
+        "Push settings cards (entry points, not opened): 'Website', 'iOS application', 'Android application', 'Subscription', 'Icon and name', 'Pressure settings', 'UTM parameters', 'Advanced settings'. The page also showed: 'We could not process your request at this time. Wait a few minutes, then try again.'",
+        "SMS Sender ID: 'back button', link 'contact our Support team.'"
+      ],
+      "gated": null
+    },
+    {
+      "section": "Inbox",
+      "url": "https://conversations-app.brevo.com/settings",
+      "actions": [
+        {
+          "ui": "Install chat widget",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/integrations/widget",
+            "Click 'Install chat widget'"
+          ]
+        },
+        {
+          "ui": "Connect team mailbox",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/integrations/email",
+            "Click 'Connect team mailbox'"
+          ]
+        },
+        {
+          "ui": "Add email or domain",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/integrations/email",
+            "Click 'Add email or domain' (Excluded emails and domains)"
+          ]
+        },
+        {
+          "ui": "Get package",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/integrations/facebook",
+            "Click 'Get package' (the same button is on Instagram, WhatsApp, SMS, Saved replies, AI chatbot, Targeted chats & triggers, Chatbot scenarios, Groups, Assignment Rules, Availability, Notifications)"
+          ]
+        },
+        {
+          "ui": "Connect page (Facebook)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/integrations/facebook",
+            "Click 'Connect page'"
+          ]
+        },
+        {
+          "ui": "Connect account (Instagram)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/integrations/instagram",
+            "Click 'Connect account'"
+          ]
+        },
+        {
+          "ui": "Connect account (WhatsApp)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/integrations/whatsapp",
+            "Click 'Connect account'"
+          ]
+        },
+        {
+          "ui": "Get phone number (SMS)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/integrations/sms",
+            "Click 'Get phone number'"
+          ]
+        },
+        {
+          "ui": "Support languages checkboxes (English on; Deutsch, Français, Español, Português, Italiano, Nederlands, Русский off)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/preferences",
+            "Check or uncheck a language"
+          ]
+        },
+        {
+          "ui": "Show visitors’ IPs (switch)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/preferences",
+            "Click the switch"
+          ]
+        },
+        {
+          "ui": "Show visitors’ location in the queue (switch)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/preferences",
+            "Click the switch"
+          ]
+        },
+        {
+          "ui": "Allowed attachment types (select: Allow all file types / Block certain file types / Allow only certain file types)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/preferences",
+            "Choose an option"
+          ]
+        },
+        {
+          "ui": "Email forwarding (select: Do not forward anything / Forward conversation transcripts, missed and offline messages / Forward missed and offline messages only) and 'Email addresses' field",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/preferences",
+            "Choose an option and edit the addresses"
+          ]
+        },
+        {
+          "ui": "Email unread replies or full transcripts to visitors (select: Do not send anything / Email unread replies to visitors / Email full conversation transcripts to visitors)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/preferences",
+            "Choose an option"
+          ]
+        },
+        {
+          "ui": "Create saved reply",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/saved-replies",
+            "Click 'Create saved reply'"
+          ]
+        },
+        {
+          "ui": "Activate AI chatbot (switch, off)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/ai-bot",
+            "Click the 'Activate AI chatbot' switch"
+          ]
+        },
+        {
+          "ui": "AI chatbot Identity: Chatbot name, Chatbot title, 'Choose image' (avatar)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/ai-bot",
+            "Edit the fields or click 'Choose image'"
+          ]
+        },
+        {
+          "ui": "Connect (AI chatbot channels: Chat widget, Facebook, Instagram, WhatsApp)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/ai-bot",
+            "Click tab 'Channels'",
+            "Click 'Connect' on a channel"
+          ]
+        },
+        {
+          "ui": "AI chatbot Behavior: 'What can the chatbot help with?', 'What should the chatbot avoid?', Chatbot personality (Neutral/Friendly/Reassuring/Professional), Response length (Concise/Balanced/Detailed), Company name, Company description, Industry, switches 'Show quick reply suggestions' and 'Share visitor location'",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/ai-bot",
+            "Click tab 'Behavior'",
+            "Edit the fields or switches"
+          ]
+        },
+        {
+          "ui": "Add source",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/ai-bot",
+            "Click tab 'Sources'",
+            "Click 'Add source'"
+          ]
+        },
+        {
+          "ui": "AI chatbot Handoff switches: 'Allow conversation transfer to human agents', 'Get conversation summary as a comment', 'Allow the chatbot to reply to conversations without an assigned group'",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/ai-bot",
+            "Click tab 'Handoff'",
+            "Click a switch"
+          ]
+        },
+        {
+          "ui": "Trigger toggles: 'Front or landing page greeting', 'Assistance on complicated pages', 'Open chat window on a “contact us” page', 'Cart saving and checkout assistance', 'Talk to visitors about to leave', 'Send a discount to visitors about to leave'",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/actions",
+            "Click the 'Toggle' switch of a trigger"
+          ]
+        },
+        {
+          "ui": "New trigger",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/actions",
+            "Click 'New trigger'"
+          ]
+        },
+        {
+          "ui": "Contact form: 'Bot should respond' select (Immediately, after the first message / If agents delay a response / Never)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/bot",
+            "Choose an option"
+          ]
+        },
+        {
+          "ui": "Contact form switch 'Get offline messages only once the contact form is filled' (on)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/bot",
+            "Click the switch"
+          ]
+        },
+        {
+          "ui": "Contact form field buttons (First name, Last name, E-mail, _DETECTED_POSTALCODE, _DETECTED_CITY, _DETECTED_REGION, CONTACT_TIMEZONE, EXT_ID, LINKEDIN, JOB_TITLE, WhatsApp, Landline number, Phone number)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/bot",
+            "Click a field button"
+          ]
+        },
+        {
+          "ui": "Contact form switches 'Request consent to your terms' and 'Request consent to your marketing communications'",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/bot",
+            "Click a switch"
+          ]
+        },
+        {
+          "ui": "Choose image (contact form chatbot avatar)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/bot",
+            "Click 'Choose image'"
+          ]
+        },
+        {
+          "ui": "Bot phrases",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/bot",
+            "Click 'Bot phrases'"
+          ]
+        },
+        {
+          "ui": "New scenario",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/scripts",
+            "Click 'New scenario'"
+          ]
+        },
+        {
+          "ui": "New group",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/groups",
+            "Click 'New group'"
+          ]
+        },
+        {
+          "ui": "Enable custom assignment rules (switch)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/assignment-rulesets",
+            "Click the switch"
+          ]
+        },
+        {
+          "ui": "Chat profile: Name, Title, 'Choose image' (photo)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/account",
+            "Edit the fields or click 'Choose image'"
+          ]
+        },
+        {
+          "ui": "Chat profile switches: 'Show me on the welcome screen in the chat window' (on), 'Set my status to “offline” after N minutes of not reacting to new messages' (on, minutes field '3'), 'Get new chat notifications when invisible, if online agents take longer than 30 seconds to respond' (off)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/account",
+            "Click a switch or edit the minutes"
+          ]
+        },
+        {
+          "ui": "Set up your availability (switch)",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/availability",
+            "Click the switch"
+          ]
+        },
+        {
+          "ui": "Enable desktop notifications",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/notifications",
+            "Click 'Enable desktop notifications'"
+          ]
+        },
+        {
+          "ui": "Notification sound (select: Pshh-clog-tick, Triangle, Maraca, Sleigh bells, Washboard, Wind chime, Castanets, None (sound off))",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/notifications",
+            "Choose a sound"
+          ]
+        },
+        {
+          "ui": "Notification switches: 'Make it louder', 'Repeat sound for new incoming chats', 'Receive a notification for every visitor to the website', 'Enable notifications for new emails'",
+          "steps": [
+            "Open https://conversations-app.brevo.com/settings/notifications",
+            "Click a switch"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Inbox settings side menu: Chat widget set up, Email connect, Facebook, Instagram, WhatsApp, SMS, Preferences, Saved replies, Integrations, AI chatbot, Targeted chats & triggers, Contact form, Chatbot scenarios, Agents, Groups, Assignment Rules, Chat profile, Availability, Notifications, Get mobile app",
+        "The landing page /settings shows only the side menu (empty main area)",
+        "Email connect: link 'connect an individual email'",
+        "Integrations cards (links, not opened): 'Brevo Tracker', 'Webhooks', 'Upscope'",
+        "AI chatbot: tabs 'Identity', 'Channels', 'Behavior', 'Sources', 'Handoff'; 'Preview AI chatbot'; Sources 'Sort by: Newest first'",
+        "Targeted chats: link 'quick guide'",
+        "Chatbot scenarios: link 'triggers'",
+        "Agents: agent row link (owner) and link 'Manage Brevo users' (goes to Users)",
+        "Chat profile: 'Copy' (agent ID), link 'Conversations API'",
+        "Get mobile app: links 'For Android', 'For iPhone & iPad'",
+        "No Save button was seen on Preferences, AI chatbot, Contact form, or Chat profile"
+      ],
+      "gated": null
+    },
+    {
+      "section": "Meetings",
+      "url": "https://app.brevo.com/meetings/settings",
+      "actions": [
+        {
+          "ui": "Start setup",
+          "steps": [
+            "Open https://app.brevo.com/meetings/settings",
+            "Click 'Start setup'"
+          ]
+        }
+      ],
+      "view_controls": [],
+      "gated": "Settings Configure your booking page To view Meetings settings, set up your booking page first. It only takes a few steps. Start setup"
+    },
+    {
+      "section": "Automations",
+      "url": "https://app.brevo.com/automation/parameters",
+      "actions": [
+        {
+          "ui": "Identify and track visitors (switch, off)",
+          "steps": [
+            "Open https://app.brevo.com/automation/advanced",
+            "Click the 'Brevo tracker' card",
+            "Click the 'Identify and track visitors' switch"
+          ]
+        },
+        {
+          "ui": "Identify and track visitors through the links in your emails (radio)",
+          "steps": [
+            "Open https://app.brevo.com/automation/parameters",
+            "Select the radio option"
+          ]
+        },
+        {
+          "ui": "Identify visitors through a third-party tracker (radio)",
+          "steps": [
+            "Open https://app.brevo.com/automation/parameters",
+            "Select the radio option"
+          ]
+        },
+        {
+          "ui": "Verify",
+          "steps": [
+            "Open https://app.brevo.com/automation/parameters",
+            "Click 'Verify' (step D, checks the tracker install)"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Card 'Brevo tracker' on /automation/advanced (navigation)",
+        "Installation option cards 'JS Tracker', 'Plugins', 'Google Tag Manager'",
+        "'Copy the code' (tracker script, not recorded)",
+        "Links 'Learn more' (x2), 'help center'"
+      ],
+      "gated": null
+    },
+    {
+      "section": "Transactional emails",
+      "url": "https://app.brevo.com/transactional/email/settings",
+      "actions": [
+        {
+          "ui": "Add webhook",
+          "steps": [
+            "Open https://app.brevo.com/transactional/email/settings",
+            "Click the 'Webhook' card (opens https://app.brevo.com/app-store/webhooks)",
+            "Click 'Add webhook'"
+          ]
+        },
+        {
+          "ui": "Download CSV",
+          "steps": [
+            "Open https://app.brevo.com/transactional/email/settings/blocked-contacts",
+            "Click 'Download CSV'"
+          ]
+        },
+        {
+          "ui": "Block new contact",
+          "steps": [
+            "Open https://app.brevo.com/transactional/email/settings/blocked-contacts",
+            "Click 'Block new contact'"
+          ]
+        },
+        {
+          "ui": "Add a new domain",
+          "steps": [
+            "Open https://app.brevo.com/transactional/email/settings/blocked-domains",
+            "Click 'Add a new domain'"
+          ]
+        },
+        {
+          "ui": "Save (Retention rules)",
+          "steps": [
+            "Open https://app.brevo.com/transactional/email/settings/retention-rules",
+            "Choose 'All senders' (logs deleted after N months) or 'Only Selected Senders', and 'Keep the previews for the duration selected above' or 'Never store previews'",
+            "Click 'Save'"
+          ]
+        },
+        {
+          "ui": "Save (Tracking)",
+          "steps": [
+            "Open https://app.brevo.com/transactional/email/settings/tracking",
+            "Set 'Anonymous email tracking' (Yes/No)",
+            "Click 'Save'"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Cards (navigation): 'Configuration', 'Webhook', 'Blocked or unsubscribed contacts', 'Blocked domains', 'Tags', 'Retention rules', 'Tracking'",
+        "Configuration page links: 'Get your API key', 'Get your SMTP key', 'Edit your email Templates', 'Read the HTTP API documentation', 'Transactional Templates', 'API key', 'documentation'",
+        "Blocked contacts: search 'Search by contact', date inputs 'DD/MM/YYYY' (x2), 'Toggle Datepicker'",
+        "Blocked domains: search 'Search by domain'",
+        "Tags: search 'Search by tag name' (list empty, no action button seen)",
+        "Back button on each sub-page"
+      ],
+      "gated": null
+    },
+    {
+      "section": "Transactional SMS",
+      "url": "https://app.brevo.com/transactional/sms/settings",
+      "actions": [
+        {
+          "ui": "Save (Transactional SMS Reply)",
+          "steps": [
+            "Open https://app.brevo.com/transactional/sms/settings/configurations",
+            "Set 'Do you want to receive the replies to your transactional SMS by email?' (Yes/No)",
+            "Click 'Save'"
+          ]
+        },
+        {
+          "ui": "Save (SMS Retention Rules)",
+          "steps": [
+            "Open https://app.brevo.com/transactional/sms/settings/retention-rules",
+            "Choose 'No time limit' or 'Limited time'",
+            "Click 'Save'"
+          ]
+        }
+      ],
+      "view_controls": [
+        "Cards (navigation): 'Configuration', 'Blocked or unsubscribed contacts', 'Retention rules'",
+        "Configuration links: 'Get your API key', 'Read the HTTP API documentation', 'API key', 'documentation'",
+        "Blocked contacts: search 'Search by contact' (list empty, no action button seen)",
+        "Back button on each sub-page"
+      ],
+      "gated": null
+    },
+    {
+      "section": "E-commerce",
+      "url": "https://app.brevo.com/ecommerce/settings",
+      "actions": [
+        {
+          "ui": "Connect my store",
+          "steps": [
+            "Open https://app.brevo.com/ecommerce/settings",
+            "Click 'Connect my store'"
+          ]
+        }
+      ],
+      "view_controls": [],
+      "gated": "eCommerce Configure eCommerce dashboard Your eCommerce dashboard settings will appear here once you connect your online store. It only takes a few steps. Connect my store"
+    },
+    {
+      "section": "Conversions",
+      "url": "https://app.brevo.com/conversions/settings",
+      "actions": [
+        {
+          "ui": "Upgrade",
+          "steps": [
+            "Open https://app.brevo.com/conversions/settings",
+            "Click 'Upgrade'"
+          ]
+        }
+      ],
+      "view_controls": [],
+      "gated": "Analyze your business outcomes with your custom conversion metric Set up key conversion metrics for your business Customize your analytics by following up on the key event that represents success for "
+    }
+  ]
+}

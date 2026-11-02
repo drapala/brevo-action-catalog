@@ -126,7 +126,8 @@
     "status": "documented",
     "route_kind": null,
     "checked_at": null,
-    "evidence": null
+    "evidence": null,
+    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 400, not a plan refusal (\"handle HTTP: postattribute: get request data: json unmarshal: unexpected end of JSON input: HTTP server code 400: get request data: json unmarshal: unexpected ). Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
   },
   "sources": [
     {

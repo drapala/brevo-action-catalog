@@ -171,6 +171,21 @@
         "Open the 'Webhooks' tab",
         "Add a webhook"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/app-store/webhooks",
+        "Click 'Add webhook'"
+      ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/transactional/email/settings",
+        "Click the 'Webhook' card",
+        "Click 'Add webhook'"
+      ]
     }
   ],
   "preconditions": [],

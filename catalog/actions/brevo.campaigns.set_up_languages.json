@@ -1,0 +1,57 @@
+{
+  "id": "brevo.campaigns.set_up_languages",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "campaign_language",
+  "operation_class": "update",
+  "label": "Set up campaign languages",
+  "description": "Set the language attribute and the languages for translated campaigns.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/localization",
+        "The free plan shows 'Upgrade to Professional'"
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "gated",
+    "requires": [
+      "Professional plan"
+    ]
+  },
+  "verification": {
+    "status": "gated",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T17:05:00+00:00",
+    "evidence": "evidence/ui-walk-settings-2026-11-02.json",
+    "notes": "The free plan shows an upgrade or setup screen instead."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "evidence/ui-walk-settings-2026-11-02.json"
+    }
+  ]
+}

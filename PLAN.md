@@ -94,6 +94,6 @@ The difference between sources 2 and 1 is the main finding: what a user can do i
 
 ## Assumptions
 
-- Deadline: Monday morning, from the recruiter's email. The brief says 24 hours. I used the recruiter's date and did not ask.
+- Deadline: Monday morning, from the recruiter's email.
 - Free plan only. Paid-only actions are catalogued, marked `gated`, and not executed.
 - No message goes to anyone other than me.

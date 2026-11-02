@@ -7,6 +7,7 @@ never reaches the evidence.
 Usage:
   brevo_exec.py call <action_id> '<json inputs>'
   brevo_exec.py probe-reads            # every read action that needs no ID
+  brevo_exec.py probe-gates            # untested actions, inputs that cannot succeed: does the free plan refuse?
   brevo_exec.py scenario <file.yaml>   # create, read back, update, delete flows
 
 A scenario step can carry `known_defect: <text>` when Brevo itself misbehaves. The
@@ -196,6 +197,39 @@ def probe_reads() -> None:
             time.sleep(0.25)
 
 
+def gate_probe_inputs(action: dict) -> dict | None:
+    """Inputs that cannot succeed: a fake ID in each required path field, every other input left out.
+    None when the call could succeed, because the action requires nothing that can be faked or left out."""
+    route = next((r for r in action["routes"] if r["kind"] == "documented_api"), None)
+    if route is None:
+        return None
+    schema = action["inputs"]["schema"]
+    required = schema.get("required") or []
+    path_ids = [n for n in required if route["params"].get(n) == "path"]
+    if not path_ids and not required:
+        return None
+    fake = {"integer": 999999999, "number": 999999999}
+    return {n: fake.get((schema["properties"].get(n) or {}).get("type"), "zz-catalog-test-none") for n in path_ids}
+
+
+def probe_gates() -> None:
+    """Call each action that only the spec describes once, with inputs that cannot succeed.
+    A plan refusal (401, 402, 403) marks it gated. Any other answer only shows the route is there."""
+    run = f"probe-gates-{int(time.time())}"
+    with client() as c:
+        for path in sorted(CATALOG.glob("*.json")):
+            action = json.loads(path.read_text())
+            if action["verification"]["status"] != "documented":
+                continue
+            inputs = gate_probe_inputs(action)
+            if inputs is None:
+                print(f"skip {action['id']}: no input to leave out")
+                continue
+            status, _ = call(action["id"], inputs, c, run, action=action)
+            print(f"{status} {action['id']}" + ("  <- 2xx: check this" if 200 <= status < 300 else ""))
+            time.sleep(0.25)
+
+
 def render(value, ctx: dict):
     if isinstance(value, str):
 
@@ -329,6 +363,8 @@ def main() -> None:
         print(status, json.dumps(payload, indent=2)[:3000])
     elif cmd == "probe-reads":
         probe_reads()
+    elif cmd == "probe-gates":
+        probe_gates()
     elif cmd == "scenario":
         sys.exit(1 if scenario(sys.argv[2]) else 0)
     else:

@@ -904,5 +904,341 @@
     "target": "brevo.meetings.set_up_meetings",
     "severity": "gap",
     "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.account.update_profile",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.account.set_password",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.account.update_language",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.user.invite_partner_user",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.aura.toggle_agent",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.aura.deactivate",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.security.enable_two_factor_auth",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.security.authorize_ip",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.security.restrict_smtp_keys_by_ip",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.security.delete_authorized_ip",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.set_up_languages",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.set_utm_tracking",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.update_default_settings",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.update_tracking_settings",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.update_notification_settings",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.add_test_user",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.remove_test_user",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.create_unsubscribe_page",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.update_unsubscribe_page",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.campaigns.duplicate_unsubscribe_page",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.contacts.create_global_computed_value",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.contacts.update_global_computed_value",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.contacts.delete_global_computed_value",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.push.set_up_push",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.sms_campaigns.request_sender_id",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_emails.block_contact",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_emails.update_retention_rules",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_emails.update_tracking_settings",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_sms.update_reply_settings",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_sms.update_retention_rules",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.automations.enable_tracker",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.automations.set_visitor_identification",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.ecommerce.connect_store",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.connect_individual_mailbox",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.add_excluded_address",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.install_chat_widget",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.connect_team_mailbox",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.connect_facebook_page",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.connect_instagram",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.connect_whatsapp",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.get_sms_number",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.update_chat_preferences",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.create_saved_reply",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.activate_ai_chatbot",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.configure_ai_chatbot",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.connect_ai_chatbot_channel",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.add_ai_chatbot_source",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.toggle_chat_trigger",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.create_chat_trigger",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.configure_contact_form",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.create_chatbot_scenario",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.create_agent_group",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.set_assignment_rules",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.update_chat_profile",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.set_availability",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.update_notification_settings",
+    "severity": "gap",
+    "message": "write with no postcondition"
   }
 ]

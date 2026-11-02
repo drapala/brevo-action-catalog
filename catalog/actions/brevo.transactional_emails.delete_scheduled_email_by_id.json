@@ -67,7 +67,8 @@
     "status": "documented",
     "route_kind": null,
     "checked_at": null,
-    "evidence": null
+    "evidence": null,
+    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 400, not a plan refusal ({\"code\": \"invalid_parameter\", \"message\": \"Please enter valid UUIDv4 batch ID or message ID\"}). Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
   },
   "sources": [
     {

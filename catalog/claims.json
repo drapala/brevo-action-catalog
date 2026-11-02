@@ -1,0 +1,107 @@
+{
+  "how_to_check": "Run each recompute command from the repo root.",
+  "claims": [
+    {
+      "id": "actions_total",
+      "value": 407,
+      "meaning": "Business actions in the catalog, one JSON file each.",
+      "recompute": "jq length catalog/index.json"
+    },
+    {
+      "id": "status_verified",
+      "value": 91,
+      "meaning": "Actions with status `verified`. See AGENT.md for what each status means.",
+      "recompute": "jq '[.[] | select(.verification == \"verified\")] | length' catalog/index.json"
+    },
+    {
+      "id": "status_observed",
+      "value": 9,
+      "meaning": "Actions with status `observed`. See AGENT.md for what each status means.",
+      "recompute": "jq '[.[] | select(.verification == \"observed\")] | length' catalog/index.json"
+    },
+    {
+      "id": "status_gated",
+      "value": 87,
+      "meaning": "Actions with status `gated`. See AGENT.md for what each status means.",
+      "recompute": "jq '[.[] | select(.verification == \"gated\")] | length' catalog/index.json"
+    },
+    {
+      "id": "status_failed",
+      "value": 1,
+      "meaning": "Actions with status `failed`. See AGENT.md for what each status means.",
+      "recompute": "jq '[.[] | select(.verification == \"failed\")] | length' catalog/index.json"
+    },
+    {
+      "id": "status_seen",
+      "value": 100,
+      "meaning": "Actions with status `seen`. See AGENT.md for what each status means.",
+      "recompute": "jq '[.[] | select(.verification == \"seen\")] | length' catalog/index.json"
+    },
+    {
+      "id": "status_documented",
+      "value": 119,
+      "meaning": "Actions with status `documented`. See AGENT.md for what each status means.",
+      "recompute": "jq '[.[] | select(.verification == \"documented\")] | length' catalog/index.json"
+    },
+    {
+      "id": "verified_writes",
+      "value": 37,
+      "meaning": "Verified actions that change data. Each one has a read-back that confirmed the change.",
+      "recompute": "jq -s '[.[] | select(.verification.status == \"verified\" and .operation_class != \"read\")] | length' catalog/actions/*.json"
+    },
+    {
+      "id": "verified_writes_without_read_back",
+      "value": 0,
+      "meaning": "Verified writes with no read-back. Must be 0.",
+      "recompute": "jq -s '[.[] | select(.verification.status == \"verified\" and .operation_class != \"read\" and .postcondition == null)] | length' catalog/actions/*.json"
+    },
+    {
+      "id": "requires_confirmation",
+      "value": 211,
+      "meaning": "Actions that need the user's OK before they run: sends, deletes and writes that nothing can undo.",
+      "recompute": "jq '[.[] | select(.requires_confirmation)] | length' catalog/index.json"
+    },
+    {
+      "id": "live_api_calls",
+      "value": 639,
+      "meaning": "Calls made to the live Brevo API. Each is one line in the evidence log.",
+      "recompute": "jq -s '[.[] | select(.status != null)] | length' evidence/runs.jsonl"
+    },
+    {
+      "id": "web_app_actions",
+      "value": 177,
+      "meaning": "Business actions found in the web app walk.",
+      "recompute": "jq .web_app_walk.business_actions catalog/coverage.json"
+    },
+    {
+      "id": "web_app_catalog_actions",
+      "value": 156,
+      "meaning": "Catalog actions behind the web app actions. One action can serve several buttons.",
+      "recompute": "jq .web_app_walk.catalog_actions catalog/coverage.json"
+    },
+    {
+      "id": "web_app_actions_with_public_api",
+      "value": 54,
+      "meaning": "Web app actions whose catalog action runs through the public API.",
+      "recompute": "jq .web_app_walk.runs_through_public_api catalog/coverage.json"
+    },
+    {
+      "id": "corrections",
+      "value": 37,
+      "meaning": "Mistakes logged while building the catalog.",
+      "recompute": "wc -l < docs/corrections.jsonl"
+    },
+    {
+      "id": "corrections_with_check",
+      "value": 23,
+      "meaning": "Logged mistakes that name the automated check that now catches them.",
+      "recompute": "jq -s '[.[] | select(.now_checked_by != null or .check != null)] | length' docs/corrections.jsonl"
+    },
+    {
+      "id": "lint_errors",
+      "value": 0,
+      "meaning": "Errors from the catalog lint. Must be 0.",
+      "recompute": "jq '[.[] | select(.severity == \"error\")] | length' catalog/lint.json"
+    }
+  ]
+}

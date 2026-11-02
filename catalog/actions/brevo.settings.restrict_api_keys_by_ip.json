@@ -24,6 +24,13 @@
         "Open https://app.brevo.com/settings/keys/api",
         "Click 'Activate for API keys'"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/security/authorised_ips",
+        "Click 'Activate for API keys'"
+      ]
     }
   ],
   "preconditions": [],

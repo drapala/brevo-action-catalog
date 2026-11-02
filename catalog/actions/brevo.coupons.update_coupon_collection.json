@@ -113,16 +113,18 @@
     "requires_confirmation": false
   },
   "availability": {
-    "free_plan": "unknown",
+    "free_plan": "gated",
     "requires": [
       "eCommerce app activated"
-    ]
+    ],
+    "evidence": "HTTP 403 on the free plan"
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "gated",
+    "route_kind": "documented_api",
+    "checked_at": "2026-11-02T19:36:22+00:00",
+    "evidence": "evidence/runs.jsonl#run=probe-gates-1793648157",
+    "notes": "HTTP 403 to a call with inputs that cannot succeed: {\"message\": \"Forbidden\"}"
   },
   "sources": [
     {
