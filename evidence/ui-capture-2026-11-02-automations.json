@@ -1,0 +1,63 @@
+{
+  "captured_at": "2026-11-02T16:28:18+00:00",
+  "method": "Playwright browser session on the free plan account; requests read from the browser network log; cookies and auth headers not stored",
+  "calls": [
+    {
+      "step": "Create an automation > Create from scratch",
+      "request": "POST https://workflow-apis.brevo.com/v1/workflow/createcustom",
+      "status": 200,
+      "response": {
+        "workflow_id": 1
+      },
+      "request_body": "not captured (the browser log kept headers only)"
+    },
+    {
+      "step": "editor reads the workflow",
+      "request": "GET https://workflow-apis.brevo.com/v1/workflow/1",
+      "status": 200,
+      "response": {
+        "id": 1,
+        "name": "Automation #1",
+        "status": "inactive"
+      }
+    },
+    {
+      "step": "rename from the row menu to zz-catalog-test-automation",
+      "request": "PUT https://workflow-apis.brevo.com/v1/workflow/1/metadata",
+      "status": 200,
+      "response": {
+        "status": true
+      }
+    },
+    {
+      "step": "list read-back",
+      "request": "GET https://workflow-apis.brevo.com/v1/workflow/listing",
+      "status": 200,
+      "response_summary": "total 1: id 1, scenario_name zz-catalog-test-automation, status inactive"
+    },
+    {
+      "step": "delete from the row menu, confirm 'Delete automation'",
+      "request": "PUT https://workflow-apis.brevo.com/v1/workflow/1/status",
+      "status": 200,
+      "response": {
+        "status": true
+      }
+    },
+    {
+      "step": "list read-back",
+      "request": "GET https://workflow-apis.brevo.com/v1/workflow/listing",
+      "status": 200,
+      "response_summary": "total 0"
+    }
+  ],
+  "seen_not_executed": [
+    "Generate automation with AI",
+    "16 automation templates (Welcome message, Abandoned cart, ...)",
+    "Duplicate",
+    "Assign a tag",
+    "View report",
+    "See details",
+    "Access logs",
+    "editing steps in the visual editor"
+  ]
+}

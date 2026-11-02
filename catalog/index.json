@@ -26,6 +26,62 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.automations.create_automation",
+    "label": "Create an automation",
+    "area": "Automations",
+    "entity": "automation",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path",
+      "undocumented_api"
+    ],
+    "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.automations.delete_automation",
+    "label": "Delete an automation",
+    "area": "Automations",
+    "entity": "automation",
+    "operation_class": "delete",
+    "route_kinds": [
+      "ui_path",
+      "undocumented_api"
+    ],
+    "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.automations.list_automations",
+    "label": "List automations",
+    "area": "Automations",
+    "entity": "automation",
+    "operation_class": "read",
+    "route_kinds": [
+      "ui_path",
+      "undocumented_api"
+    ],
+    "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.automations.rename_automation",
+    "label": "Rename an automation",
+    "area": "Automations",
+    "entity": "automation",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path",
+      "undocumented_api"
+    ],
+    "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
     "id": "brevo.balance.begin_transaction",
     "label": "Create new transaction",
     "area": "Balance",
@@ -1885,6 +1941,48 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.forms.create_form",
+    "label": "Create a sign-up form",
+    "area": "Forms",
+    "entity": "form",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path",
+      "undocumented_api"
+    ],
+    "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.forms.delete_form",
+    "label": "Delete a form",
+    "area": "Forms",
+    "entity": "form",
+    "operation_class": "delete",
+    "route_kinds": [
+      "ui_path",
+      "undocumented_api"
+    ],
+    "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.forms.list_forms",
+    "label": "List sign-up forms",
+    "area": "Forms",
+    "entity": "form",
+    "operation_class": "read",
+    "route_kinds": [
+      "ui_path",
+      "undocumented_api"
+    ],
+    "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
     "id": "brevo.inbound_parsing.get_inbound_email_attachment",
     "label": "Retrieve inbound attachment with download token.",
     "area": "Inbound Parsing",
@@ -3015,6 +3113,19 @@
     ],
     "verification": "failed",
     "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.templates.create_template_folder",
+    "label": "Create a template folder",
+    "area": "Templates (marketing email)",
+    "entity": "template_folder",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {

@@ -1,0 +1,94 @@
+{
+  "id": "brevo.forms.list_forms",
+  "product": "brevo",
+  "area": "Forms",
+  "entity": "form",
+  "operation_class": "read",
+  "label": "List sign-up forms",
+  "description": "List the sign-up, unsubscribe or profile-update forms of the account. The public API has no route for forms.",
+  "intent_examples": [
+    "which sign-up forms do I have?"
+  ],
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "subscription",
+            "unsubscription",
+            "profile_update"
+          ],
+          "default": "subscription",
+          "description": "Form kind, matching the tabs Sign-up, Unsubscribe and Profile update"
+        },
+        "limit": {
+          "type": "integer",
+          "default": 10
+        },
+        "offset": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/forms-app/subscription",
+        "Pick the Sign-up, Unsubscribe or Profile update tab"
+      ]
+    },
+    {
+      "kind": "undocumented_api",
+      "method": "GET",
+      "url": "https://forms-api.brevo.com/forms-api/forms",
+      "auth": "web session cookie",
+      "params": {
+        "type": "query",
+        "limit": "query",
+        "offset": "query"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "observed",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T16:26:32+00:00",
+    "evidence": "evidence/ui-capture-2026-11-02-forms.json",
+    "notes": "The web app called it on load and after each change. The response shape is {forms: [...], totalRecords: N}."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/areas-2026-10-30.yaml (Forms: public_api none)"
+    },
+    {
+      "kind": "network_capture",
+      "ref": "evidence/ui-capture-2026-11-02-forms.json"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "brevo.automations.delete_automation",
+  "product": "brevo",
+  "area": "Automations",
+  "entity": "automation",
+  "operation_class": "delete",
+  "label": "Delete an automation",
+  "description": "Delete an automation. All contacts in it exit, and it cannot be restored. The web app does this by changing the status, not with a DELETE.",
+  "intent_examples": [
+    "delete the test automation"
+  ],
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "required": [
+        "workflowId"
+      ],
+      "properties": {
+        "workflowId": {
+          "type": "integer",
+          "description": "Automation ID, the number in the editor URL /automation/edit/{id}"
+        }
+      }
+    },
+    "entity_refs": [
+      {
+        "input": "workflowId",
+        "entity": "automation",
+        "find_with": "brevo.automations.list_automations",
+        "create_with": "brevo.automations.create_automation"
+      }
+    ],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/automation/automations",
+        "On the automation row, click the actions menu",
+        "Click 'Delete'",
+        "Confirm with 'Delete automation'"
+      ]
+    },
+    {
+      "kind": "undocumented_api",
+      "method": "PUT",
+      "url": "https://workflow-apis.brevo.com/v1/workflow/{workflowId}/status",
+      "auth": "web session cookie",
+      "params": {
+        "workflowId": "path"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.automations.list_automations",
+    "assert": "the list no longer holds the automation"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "observed",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T16:28:18+00:00",
+    "evidence": "evidence/ui-capture-2026-11-02-automations.json",
+    "notes": "Deleted in the web app. PUT .../status returned {status: true}, and the next list call returned total 0. The status value in the body was not captured."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/areas-2026-10-30.yaml (Automations: public_api none)"
+    },
+    {
+      "kind": "network_capture",
+      "ref": "evidence/ui-capture-2026-11-02-automations.json"
+    }
+  ]
+}

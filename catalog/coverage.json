@@ -1,23 +1,26 @@
 {
-  "total_actions": 294,
+  "total_actions": 302,
   "by_verification": {
     "verified": 79,
-    "gated": 16,
+    "gated": 17,
+    "observed": 9,
     "documented": 194,
-    "observed": 2,
     "failed": 3
   },
   "by_route_kind": {
     "documented_api": 292,
-    "ui_path": 2,
-    "undocumented_api": 2
+    "ui_path": 10,
+    "undocumented_api": 9
   },
-  "without_public_api": 2,
+  "without_public_api": 10,
   "curated_entries": 0,
   "by_area": {
     "Account": {
       "verified": 1,
       "gated": 1
+    },
+    "Automations": {
+      "observed": 4
     },
     "Balance": {
       "documented": 18
@@ -73,6 +76,9 @@
       "documented": 4,
       "verified": 1
     },
+    "Forms": {
+      "observed": 3
+    },
     "Inbound Parsing": {
       "documented": 2,
       "verified": 1
@@ -114,6 +120,9 @@
       "verified": 5,
       "failed": 1
     },
+    "Templates (marketing email)": {
+      "gated": 1
+    },
     "Tier": {
       "documented": 10
     },
@@ -148,7 +157,7 @@
     }
   },
   "lint": {
-    "G001 (gap)": 38,
+    "G001 (gap)": 39,
     "G002 (gap)": 25
   }
 }

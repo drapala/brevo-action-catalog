@@ -1,0 +1,94 @@
+{
+  "id": "brevo.forms.delete_form",
+  "product": "brevo",
+  "area": "Forms",
+  "entity": "form",
+  "operation_class": "delete",
+  "label": "Delete a form",
+  "description": "Delete a form. If the form is on a website, it stops working there at once. A deleted form cannot be restored.",
+  "intent_examples": [
+    "remove the old sign-up form"
+  ],
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "required": [
+        "formId"
+      ],
+      "properties": {
+        "formId": {
+          "type": "string",
+          "description": "Form ID, a 24-character hex string, the last part of the form edit URL"
+        }
+      }
+    },
+    "entity_refs": [
+      {
+        "input": "formId",
+        "entity": "form",
+        "find_with": "brevo.forms.list_forms",
+        "create_with": "brevo.forms.create_form"
+      }
+    ],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/forms-app/subscription",
+        "On the form row, click 'More Actions'",
+        "Click 'Delete'",
+        "Confirm with 'Delete form'"
+      ]
+    },
+    {
+      "kind": "undocumented_api",
+      "method": "DELETE",
+      "url": "https://forms-api.brevo.com/forms-api/forms/{formId}",
+      "auth": "web session cookie",
+      "params": {
+        "formId": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.forms.list_forms",
+    "assert": "the list no longer holds the form"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "publishes",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "observed",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T16:26:32+00:00",
+    "evidence": "evidence/ui-capture-2026-11-02-forms.json",
+    "notes": "Deleted in the web app. DELETE returned 204, and the next list call returned totalRecords 0."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/areas-2026-10-30.yaml (Forms: public_api none)"
+    },
+    {
+      "kind": "network_capture",
+      "ref": "evidence/ui-capture-2026-11-02-forms.json"
+    }
+  ]
+}

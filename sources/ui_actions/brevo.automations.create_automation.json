@@ -1,0 +1,80 @@
+{
+  "id": "brevo.automations.create_automation",
+  "product": "brevo",
+  "area": "Automations",
+  "entity": "automation",
+  "operation_class": "create",
+  "label": "Create an automation",
+  "description": "Create an empty automation from scratch. It starts inactive, named 'Automation #N', with no entry point and no steps. Building the steps happens in the visual editor and is not catalogued yet. The public API can only trigger automations through events.",
+  "intent_examples": [
+    "start a new automation for new subscribers"
+  ],
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": {
+      "entity": "automation",
+      "id_field": "workflow_id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/automation/automations",
+        "Click 'Create an automation'",
+        "Click 'Create from scratch'",
+        "The editor opens at /automation/edit/{id}"
+      ]
+    },
+    {
+      "kind": "undocumented_api",
+      "method": "POST",
+      "url": "https://workflow-apis.brevo.com/v1/workflow/createcustom",
+      "auth": "web session cookie",
+      "params": {},
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.automations.list_automations",
+    "assert": "the list holds the new workflow_id with status 'inactive'"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.automations.delete_automation",
+    "external_effect": "none",
+    "idempotent": false,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "observed",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T16:28:18+00:00",
+    "evidence": "evidence/ui-capture-2026-11-02-automations.json",
+    "notes": "Created in the web app. The POST returned 200 with {workflow_id: 1}, and GET /v1/workflow/1 returned name 'Automation #1', status 'inactive'."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/areas-2026-10-30.yaml (Automations: public_api none)"
+    },
+    {
+      "kind": "network_capture",
+      "ref": "evidence/ui-capture-2026-11-02-automations.json"
+    }
+  ]
+}

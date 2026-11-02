@@ -376,5 +376,11 @@
     "target": "brevo.whats_app_campaigns.create_whats_app_template",
     "severity": "gap",
     "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.templates.create_template_folder",
+    "severity": "gap",
+    "message": "write with no postcondition"
   }
 ]

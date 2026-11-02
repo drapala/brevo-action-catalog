@@ -1,0 +1,42 @@
+{
+  "captured_at": "2026-11-02T16:26:32+00:00",
+  "method": "Playwright browser session on the free plan account; requests read from the browser network log; cookies and auth headers not stored",
+  "calls": [
+    {
+      "step": "create an embedded sign-up form named zz-catalog-test-form",
+      "request": "POST https://forms-api.brevo.com/forms-api/forms",
+      "status": 201,
+      "response": {
+        "id": "6ae8b971c5451a8991479e9a",
+        "name": "zz-catalog-test-form",
+        "type": "subscription",
+        "numberOfContact": 0,
+        "numberOfSubmits": 0
+      },
+      "request_body": "not captured (the browser log kept headers only)"
+    },
+    {
+      "step": "editor opens and reads the form",
+      "request": "GET https://forms-api.brevo.com/forms-api/forms/6ae8b971c5451a8991479e9a/data",
+      "status": 200
+    },
+    {
+      "step": "delete from the row menu, confirm 'Delete form'",
+      "request": "DELETE https://forms-api.brevo.com/forms-api/forms/6ae8b971c5451a8991479e9a",
+      "status": 204
+    },
+    {
+      "step": "list read-back",
+      "request": "GET https://forms-api.brevo.com/forms-api/forms?type=subscription&limit=10&offset=0",
+      "status": 200,
+      "response": {
+        "forms": [],
+        "totalRecords": 0
+      }
+    }
+  ],
+  "seen_not_executed": [
+    "Duplicate (row menu)",
+    "Pop-up layout: shows a Professional badge"
+  ]
+}

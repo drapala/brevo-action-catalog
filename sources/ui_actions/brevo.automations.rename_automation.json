@@ -1,0 +1,100 @@
+{
+  "id": "brevo.automations.rename_automation",
+  "product": "brevo",
+  "area": "Automations",
+  "entity": "automation",
+  "operation_class": "update",
+  "label": "Rename an automation",
+  "description": "Change the name of an automation. Its steps and status do not change.",
+  "intent_examples": [
+    "rename the welcome automation"
+  ],
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "required": [
+        "workflowId",
+        "name"
+      ],
+      "properties": {
+        "workflowId": {
+          "type": "integer",
+          "description": "Automation ID, the number in the editor URL /automation/edit/{id}"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "entity_refs": [
+      {
+        "input": "workflowId",
+        "entity": "automation",
+        "find_with": "brevo.automations.list_automations",
+        "create_with": "brevo.automations.create_automation"
+      }
+    ],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/automation/automations",
+        "On the automation row, click the actions menu",
+        "Click 'Rename'",
+        "Type the new name",
+        "Click 'Save'"
+      ]
+    },
+    {
+      "kind": "undocumented_api",
+      "method": "PUT",
+      "url": "https://workflow-apis.brevo.com/v1/workflow/{workflowId}/metadata",
+      "auth": "web session cookie",
+      "params": {
+        "workflowId": "path",
+        "name": "body"
+      },
+      "success_status": [
+        200
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.automations.list_automations",
+    "assert": "the item with this id has scenario_name equal to the new name"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.automations.rename_automation",
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "observed",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T16:28:18+00:00",
+    "evidence": "evidence/ui-capture-2026-11-02-automations.json",
+    "notes": "Renamed in the web app. PUT returned {status: true}, and the next list call showed scenario_name 'zz-catalog-test-automation'."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/areas-2026-10-30.yaml (Automations: public_api none)"
+    },
+    {
+      "kind": "network_capture",
+      "ref": "evidence/ui-capture-2026-11-02-automations.json"
+    }
+  ]
+}

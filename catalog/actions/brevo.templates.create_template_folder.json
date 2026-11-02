@@ -1,0 +1,66 @@
+{
+  "id": "brevo.templates.create_template_folder",
+  "product": "brevo",
+  "area": "Templates (marketing email)",
+  "entity": "template_folder",
+  "operation_class": "create",
+  "label": "Create a template folder",
+  "description": "Group marketing email templates in folders. The free plan shows an upgrade prompt instead.",
+  "intent_examples": [
+    "put the holiday templates in their own folder"
+  ],
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/templates/listing",
+        "Click 'Create folder'"
+      ]
+    }
+  ],
+  "preconditions": [],
+  "side_effects": {
+    "reversible": true,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": false,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "gated",
+    "requires": [
+      "a paid plan"
+    ]
+  },
+  "verification": {
+    "status": "gated",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T16:24:40+00:00",
+    "evidence": "evidence/ui-capture-2026-11-02-template-folders.json",
+    "notes": "The free plan opens the dialog 'Stay organized with folders' with an Upgrade button. No folder is created, so the internal route is unknown."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/areas-2026-10-30.yaml (Templates: Create folder)"
+    }
+  ]
+}
