@@ -18,3 +18,13 @@ def test_every_claim_matches_its_recompute_command():
         assert int(out.stdout.strip()) == claim["value"], claim["id"]
     by_id = {c["id"]: c["value"] for c in claims}
     assert by_id["verified_writes_without_read_back"] == 0 and by_id["lint_errors"] == 0
+
+
+def test_agent_doc_shows_the_current_claims():
+    import sys
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    import make_claims
+
+    claims = json.loads((ROOT / "catalog/claims.json").read_text())["claims"]
+    assert make_claims.table(claims) in (ROOT / "AGENT.md").read_text()

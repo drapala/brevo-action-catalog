@@ -74,13 +74,24 @@ def run(command: str) -> int:
     return int(out.stdout.strip())
 
 
+AGENT_DOC = ROOT / "AGENT.md"
+START, END = "<!-- claims:start -->", "<!-- claims:end -->"
+
+
+def table(claims: list[dict]) -> str:
+    rows = [f"| `{c['id']}` | {c['value']} | {c['meaning']} |" for c in claims]
+    return "\n".join([START, "| Claim | Value | Meaning |", "|---|---|---|", *rows, END])
+
+
 def main() -> None:
     claims = [{"id": i, "value": run(c), "meaning": m, "recompute": c} for i, m, c in CLAIMS]
     OUT.write_text(
         json.dumps({"how_to_check": "Run each recompute command from the repo root.", "claims": claims}, indent=2)
         + "\n"
     )
-    print(f"wrote {len(claims)} claims to {OUT.relative_to(ROOT)}")
+    text = AGENT_DOC.read_text()
+    AGENT_DOC.write_text(text.split(START)[0] + table(claims) + text.split(END)[1])
+    print(f"wrote {len(claims)} claims to {OUT.relative_to(ROOT)} and {AGENT_DOC.name}")
 
 
 if __name__ == "__main__":

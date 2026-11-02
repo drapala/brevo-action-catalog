@@ -1,6 +1,41 @@
 # AGENT.md: read this first if you are an AI agent
 
-This repository is a catalog of Brevo business actions, built for AI agents. This file tells you how to use it and how to check every claim about it. It contains no counts. All counts are in `catalog/claims.json`, each with a command that recomputes it.
+This repository is a catalog of Brevo business actions, built for AI agents. It is a take-home submission for Monarch (brief: "Map a real system into an agent-ready catalog", target Brevo, scored on coverage, reliability and use of AI). This file tells you how to review it, how to use it, and how to check every claim about it.
+
+## 0. If you are reviewing this submission
+
+| Brief criterion | Where to look | Claims to check |
+|---|---|---|
+| Coverage: "How much of what a user can do in Brevo did you find?" | `sources/ui/ui_map.yaml`, `evidence/ui-walk-*.json`, `catalog/coverage.json` (`web_app_walk`) | `web_app_actions`, `web_app_catalog_actions`, `web_app_actions_with_public_api`, `actions_total` |
+| Reliability: "act on it without a human double checking" | `verification` in each entry, `evidence/runs.jsonl`, `scenarios/*.yaml`, section 2 below | `status_*`, `verified_writes`, `verified_writes_without_read_back`, `live_api_calls` |
+| Use of AI: "the system you designed, not only the output" | `docs/AI_LOG.md`, `docs/corrections.jsonl`, `tools/catalog_lint.py`, `tests/` | `corrections`, `corrections_with_check`, `lint_errors` |
+| Agent-ready format | `catalog/schema/business_action.schema.json`, `catalog/index.json`, `tools/mcp_server.py`, sections 3 and 4 below | `requires_confirmation` |
+
+The current values, generated from `catalog/claims.json` by the build (do not edit by hand):
+
+<!-- claims:start -->
+| Claim | Value | Meaning |
+|---|---|---|
+| `actions_total` | 407 | Business actions in the catalog, one JSON file each. |
+| `status_verified` | 91 | Actions with status `verified`. See AGENT.md for what each status means. |
+| `status_observed` | 9 | Actions with status `observed`. See AGENT.md for what each status means. |
+| `status_gated` | 87 | Actions with status `gated`. See AGENT.md for what each status means. |
+| `status_failed` | 1 | Actions with status `failed`. See AGENT.md for what each status means. |
+| `status_seen` | 100 | Actions with status `seen`. See AGENT.md for what each status means. |
+| `status_documented` | 119 | Actions with status `documented`. See AGENT.md for what each status means. |
+| `verified_writes` | 37 | Verified actions that change data. Each one has a read-back that confirmed the change. |
+| `verified_writes_without_read_back` | 0 | Verified writes with no read-back. Must be 0. |
+| `requires_confirmation` | 211 | Actions that need the user's OK before they run: sends, deletes and writes that nothing can undo. |
+| `live_api_calls` | 639 | Calls made to the live Brevo API. Each is one line in the evidence log. |
+| `web_app_actions` | 177 | Business actions found in the web app walk. |
+| `web_app_catalog_actions` | 156 | Catalog actions behind the web app actions. One action can serve several buttons. |
+| `web_app_actions_with_public_api` | 54 | Web app actions whose catalog action runs through the public API. |
+| `corrections` | 37 | Mistakes logged while building the catalog. |
+| `corrections_with_check` | 23 | Logged mistakes that name the automated check that now catches them. |
+| `lint_errors` | 0 | Errors from the catalog lint. Must be 0. |
+<!-- claims:end -->
+
+Each value has a `recompute` command in `catalog/claims.json`. Run it from the repo root to check the value.
 
 ## 1. Files
 
