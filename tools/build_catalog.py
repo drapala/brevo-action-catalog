@@ -34,6 +34,7 @@ SCENARIOS = ROOT / "scenarios"
 OUT = ROOT / "catalog/actions"
 SCHEMA = ROOT / "catalog/schema/business_action.schema.json"
 
+SETUP_HINTS = ("not activated", "not yet activated", "not enabled", "feature_inactive", "request activation")
 GATED_HINTS = (
     "not enabled",
     "upgrade",
@@ -343,14 +344,19 @@ def apply_evidence(actions: dict[str, dict]) -> None:
                     evidence=f"evidence/runs.jsonl#run={last['run']}",
                     notes=f"HTTP {last['status']} to a call with inputs that cannot succeed: {message[:200]}",
                 )
-                action["availability"]["free_plan"] = "gated"
-                action["availability"]["evidence"] = f"HTTP {last['status']} on the free plan"
+                if any(h in message.lower() for h in SETUP_HINTS):
+                    action["availability"]["free_plan"] = "limited"
+                    action["availability"]["requires"] = ["turn this feature on in the account first"]
+                    action["availability"]["evidence"] = f"HTTP {last['status']}: the feature is not turned on"
+                else:
+                    action["availability"]["free_plan"] = "gated"
+                    action["availability"]["evidence"] = f"HTTP {last['status']} on the free plan"
             else:
                 v["notes"] = (
-                    f"Not run with real inputs. A call with inputs that cannot succeed returned HTTP {last['status']}, "
-                    f"not a plan refusal ({message[:160]}). Evidence: evidence/runs.jsonl#run={last['run']}."
+                    f"Not run with real inputs. A call with inputs that cannot succeed returned HTTP {last['status']} "
+                    f"({message[:160]}). This answer does not show whether the free plan allows the action. "
+                    f"Evidence: evidence/runs.jsonl#run={last['run']}."
                 )
-
 
 def main() -> None:
     actions = load_actions()

@@ -75,7 +75,7 @@
     "route_kind": null,
     "checked_at": null,
     "evidence": null,
-    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 400, not a plan refusal ({\"code\": \"INVALID_PARAMETER\", \"message\": \"Invalid message id OR email id\"}). Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
+    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 400 ({\"code\": \"INVALID_PARAMETER\", \"message\": \"Invalid message id OR email id\"}). This answer does not show whether the free plan allows the action. Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
   },
   "sources": [
     {

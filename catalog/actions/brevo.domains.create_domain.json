@@ -204,7 +204,7 @@
     "route_kind": null,
     "checked_at": null,
     "evidence": null,
-    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 400, not a plan refusal ({\"error\": \"{object}\"}). Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
+    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 400 ({\"error\": \"{object}\"}). This answer does not show whether the free plan allows the action. Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
   },
   "sources": [
     {

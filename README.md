@@ -2,7 +2,7 @@
 
 A catalog of 407 Brevo actions that an AI agent can find, fill, run and check. It covers every business action that two walks of the web app found on the free plan (177 buttons and menu items, which map to 156 catalog actions), plus the full public API. Each action says how far an agent can trust it, and the trust comes from live calls on a real account.
 
-If you are an AI agent, read [`AGENT.md`](AGENT.md) first. Every number in this README is in [`catalog/claims.json`](catalog/claims.json), with the command that recomputes it.
+If you are an AI agent, read [`AGENT.md`](AGENT.md) first. The headline numbers are in [`catalog/claims.json`](catalog/claims.json), each with the command that recomputes it.
 
 | Status | Count | Meaning |
 |---|---|---|
@@ -44,7 +44,7 @@ These are the reasons a catalog built from the spec alone would mislead an agent
 2. **The spec and the API disagree.** `create_deal` returns 200, where the spec says 201. `get_transac_emails_list` marks every filter optional, but the API rejects a call without `email`, `messageId` or `templateId`. `get_webhooks` returns 400 "Webhook record does not exist" on an account with no webhooks, not an empty list. Each entry keeps this in `verification.notes`, so an agent knows what to send and what to expect. The filter rule is also in the input schema, so the server refuses a call without one of the three.
 3. **A read right after a write can miss it.** Once, a contact added to a list was not in the list on the first read. The verifier now retries a read-back a few times before it fails the step. Every later run passed on the first read.
 4. **Much of the product has no public API.** Segments (create, delete), forms, and automations exist only in the web app. The catalog has these as `observed` actions with two routes: UI steps for a browser agent, and the internal endpoint the app calls (for example `POST https://forms-api.brevo.com/forms-api/forms`).
-5. **The free plan blocks more than the pricing page says.** 16 read calls with no inputs returned 403 or an "upgrade" message. Then each action that only the spec described was called once with inputs that cannot succeed (a fake ID, or a required field left out). 64 of them got a plan refusal: master accounts ("not a corporate user"), conversations ("Upgrade your plan to use REST API"), WhatsApp, e-commerce ("not yet activated"), data feeds (Enterprise plan), consent groups, payments and coupons. These are `gated`, with the refusal as evidence. Template folders show an upgrade dialog in the web app.
+5. **The free plan blocks more than the pricing page says.** 16 read calls with no inputs returned 403 or an "upgrade" message. Then 184 of the 193 actions that only the spec described were called once with inputs that cannot succeed (a fake ID, or a required field left out). 64 were refused. 40 need another plan or account type: master accounts ("not a corporate user"), conversations ("Upgrade your plan to use REST API"), WhatsApp and data feeds (Enterprise plan). 17 need a feature turned on first: e-commerce ("not yet activated"), payments and consent groups. 7 answered only "Forbidden". All 64 are `gated`, with the refusal as evidence. Template folders show an upgrade dialog in the web app.
 6. **An API key needs a verified phone.** SMS and call verification failed for this account. Brevo support validated the account on Friday evening, so the live runs started on Monday. The phone check is a precondition of creating an API key and of sending a campaign in the catalog.
 
 ## The format
@@ -101,7 +101,7 @@ Each action is one JSON file in `catalog/actions/`, valid against `catalog/schem
 The full plan is in `PLAN.md`. In short:
 
 1. **Discover from three sources.** The official OpenAPI spec (292 operations) gives a baseline through a deterministic generator. A browser walk of the web app's pages lists what a user can click, and a map joins each click to the catalog. The web app's network log shows the internal endpoint behind a UI-only action. The difference between the UI and the spec is the list of actions with no public API.
-2. **Verify on a live account.** Read actions with no required input were probed one by one. Each action that only the spec described was called once with inputs that cannot succeed, to see if the free plan refuses it. Write actions run in scenarios that create, read back, update, read back, delete and confirm the item is gone. The scenarios never send a message to anyone: contacts use `@example.com`, the campaign stays a draft, and the webhook points to `example.com`.
+2. **Verify on a live account.** Read actions with no required input were probed one by one. 184 of the 193 actions that only the spec described were called once with inputs that cannot succeed, to see if the account refuses them. Write actions run in scenarios that create, read back, update, read back, delete and confirm the item is gone. The scenarios never send a message to anyone: contacts use `@example.com`, the campaign stays a draft, and the webhook points to `example.com`.
 3. **Let only evidence set the status.** `tools/build_catalog.py` sets `verified` only from a passing read-back in `evidence/runs.jsonl`. A failed read-back marks the write that it checks as `failed`, even when the write returned 2xx.
 
 ### Priorities
@@ -140,7 +140,7 @@ A reviewer agent with no memory of the build tried to complete 8 user requests f
 
 ## Known gaps and limits
 
-1. **119 actions are `documented` only.** 50 of them are loyalty actions (balance, program, tier, reward, wallet). 49 of them answer 422 "Invalid loyalty program id", and the free plan cannot create a loyalty program, so they cannot run on this account. Most of the others answered a call with inputs that cannot succeed, and the answer is in their notes, but none ran with real inputs. 9 were not called at all, because no input could be left out safely, for example `send_transac_email` and `delete_hardbounces`.
+1. **119 actions are `documented` only.** 50 of them are loyalty actions (balance, program, tier, reward, wallet). 47 of them answer 422 "Invalid loyalty program id", and the free plan cannot create a loyalty program, so they cannot run on this account. Most of the others answered a call with inputs that cannot succeed, and the answer is in their notes, but none ran with real inputs. 9 were not called at all, because no input could be left out safely, for example `send_transac_email` and `delete_hardbounces`.
 2. **The 105 actions that the two walks added were not run.** Only 9 UI-only actions were done end to end with their network calls captured. The walks did not open the visual automation editor, and could not read the deal and task screens (onboarding) or the Conversations inbox.
 3. **Request bodies of internal calls are not captured.** The browser log kept headers and responses only. The internal routes give the method, URL and response, but not the body shape.
 4. **The executor runs only public API routes.** A script cannot replay the internal routes, because they need the browser's session. A UI-only action needs a browser agent that follows `ui_steps`.

@@ -103,11 +103,11 @@
     "requires_confirmation": false
   },
   "availability": {
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires": [
-      "eCommerce app activated"
+      "turn this feature on in the account first"
     ],
-    "evidence": "HTTP 403 on the free plan"
+    "evidence": "HTTP 403: the feature is not turned on"
   },
   "verification": {
     "status": "gated",

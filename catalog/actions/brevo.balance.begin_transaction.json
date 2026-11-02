@@ -234,7 +234,7 @@
     "route_kind": null,
     "checked_at": null,
     "evidence": null,
-    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 422, not a plan refusal ({\"error\": \"Invalid loyalty program id\"}). Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
+    "notes": "Not run with real inputs. A call with inputs that cannot succeed returned HTTP 422 ({\"error\": \"Invalid loyalty program id\"}). This answer does not show whether the free plan allows the action. Evidence: evidence/runs.jsonl#run=probe-gates-1793648157."
   },
   "sources": [
     {

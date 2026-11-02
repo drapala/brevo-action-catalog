@@ -158,9 +158,11 @@ def test_a_plan_refusal_marks_gated_and_any_other_answer_keeps_documented(tmp_pa
     # A call that cannot succeed only tells whether the free plan refuses the route. It never verifies.
     runs = [
         {"run": "probe-gates-1", "action": "brevo.tier.get_tier", "status": 403, "at": "2026-11-02T19:50:00+00:00",
-         "response": {"message": "Current account is not activated for this feature"}},
+         "response": {"message": "Current account is not a corporate user", "code": "permission_denied"}},
         {"run": "probe-gates-1", "action": "brevo.files.get_file", "status": 404, "at": "2026-11-02T19:50:01+00:00",
          "response": {"code": "document_not_found"}},
+        {"run": "probe-gates-1", "action": "brevo.ecommerce.get_products", "status": 403, "at": "2026-11-02T19:50:03+00:00",
+         "response": {"message": "Your eCommerce section is not yet activated.", "code": "permission_denied"}},
         # A 403 that rejects the fake input is not a plan refusal.
         {"run": "probe-gates-1", "action": "brevo.user.get_invite", "status": 403, "at": "2026-11-02T19:50:02+00:00",
          "response": {"code": "bad_request", "message": "Invalid request"}},
@@ -168,7 +170,8 @@ def test_a_plan_refusal_marks_gated_and_any_other_answer_keeps_documented(tmp_pa
     evidence = tmp_path / "runs.jsonl"
     evidence.write_text("\n".join(json.dumps(r) for r in runs) + "\n")
     monkeypatch.setattr(build_catalog, "EVIDENCE", evidence)
-    actions = {a: entry(a) for a in ("brevo.tier.get_tier", "brevo.files.get_file", "brevo.user.get_invite")}
+    ids = ("brevo.tier.get_tier", "brevo.files.get_file", "brevo.user.get_invite", "brevo.ecommerce.get_products")
+    actions = {a: entry(a) for a in ids}
     build_catalog.apply_evidence(actions)
 
     tier, file = actions["brevo.tier.get_tier"], actions["brevo.files.get_file"]
@@ -176,3 +179,6 @@ def test_a_plan_refusal_marks_gated_and_any_other_answer_keeps_documented(tmp_pa
     assert file["verification"]["status"] == "documented" and file["availability"]["free_plan"] == "unknown"
     assert "HTTP 404" in file["verification"]["notes"]
     assert actions["brevo.user.get_invite"]["verification"]["status"] == "documented"
+    # A feature that is only switched off is a setup step, not a paid plan.
+    products = actions["brevo.ecommerce.get_products"]
+    assert products["verification"]["status"] == "gated" and products["availability"]["free_plan"] == "limited"

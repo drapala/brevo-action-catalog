@@ -59,7 +59,7 @@ Each value has a `recompute` command in `catalog/claims.json`. Run it from the r
 |---|---|---|
 | `verified` | Ran on a live free account. A write also passed a read-back. A read returned success, and in a scenario it also returned the expected data. | Run it. For a write, still run the read-back in `postcondition` before you report success. |
 | `observed` | Done once in the web app, with the app's network calls saved. No public API. | A browser agent can follow `routes[kind=ui_path].ui_steps`. A script cannot run it. |
-| `gated` | The free plan refuses it, or it needs a setup step. `verification.notes` holds the exact refusal. | Do not offer it on a free account. Tell the user why. |
+| `gated` | The free plan refuses it, or it needs a setup step. `verification.notes` holds the exact refusal. If `availability.free_plan` is `limited`, a feature must be turned on first (`availability.requires`). | Do not offer it on a free account. Tell the user why, or what to turn on. |
 | `failed` | Returned success, but the read-back showed no change. `verification.notes` says what fails. | Do not report success from the status code. Run the read-back and report what it shows. |
 | `seen` | Seen in the web app, not run. Inputs and exact effect are unknown. | Give the user the UI steps, or hand it to a browser agent. |
 | `documented` | Only in the official API spec. Not run with real inputs. `verification.notes` may hold the answer to a call with inputs that could not succeed. | Treat it as untested. Run the read-back after any write. |
@@ -81,9 +81,12 @@ Each value has a `recompute` command in `catalog/claims.json`. Run it from the r
 | `{"ran": false, "reason": "this action has no public API ...", "ui_paths": [...]}` | Only a browser can do it. |
 | `{"ran": false, "reason": "the inputs do not match the catalog entry", "errors": [...]}` | Fix the inputs. Each error names the field. |
 | `{"ran": false, "reason": "this action needs the user's confirmation ..."}` | Ask the user, then call again with `confirmed=true`. |
-| `{"ran": true, "http_status": ..., "response": ..., "catalog_status": ..., "next_step": "..."}` | The call ran. `next_step` is the read-back to do. A `failed` action adds `warning`. |
+| `{"ran": true, "http_status": ..., "response": ..., "catalog_status": ..., "next_step": "..."}` | The call ran. `next_step` is the read-back to do, and it is present only when the entry has a `postcondition`. A `failed` action adds `warning`. |
 | `{"ran": "unknown", "reason": "...", "next_step": "..."}` | A write was sent and no usable answer came back. It may have run. Do the `next_step` check before any retry. |
 | `{"ran": false, "reason": "the request did not reach Brevo ..."}` | Nothing was sent. Safe to retry. |
+| `{"ran": false, "reason": "no answer from Brevo ... A read is safe to retry."}` | A read got no usable answer. Retry it. |
+| `{"ran": false, "reason": "unknown action ... Use find_actions."}` | The id is not in the catalog. |
+| `{"ran": false, "reason": "No Brevo API key ..."}` or `"...: missing path inputs [...]"` | The server has no key, or a path input is missing. Nothing was sent. |
 
 `confirmed=true` is your own statement that the user agreed. The server cannot check it. Set it only after the user agreed to this exact call.
 
@@ -104,11 +107,11 @@ The server reads the Brevo API key from `BREVO_API_KEY` or the macOS keychain (`
 | `brevo.transactional_emails.get_transac_emails_list` | Needs one of `email`, `messageId`, `templateId`. The spec marks all three optional. The input schema now has this rule. | same |
 | `brevo.webhooks.get_webhooks` | Returns 400 "Webhook record does not exist" on an account with no webhooks. | same |
 | Reads right after a write | Can miss the change for a few seconds. The scenarios retry a read-back before they fail it. | `scenarios/contacts_lifecycle.yaml` |
-| Loyalty actions (`Balance`, `Program`, `Tier`, `Reward`, `Wallet` areas) | 49 of the 50 answer 422 "Invalid loyalty program id" to a fake ID. The free plan cannot create a loyalty program (`brevo.program.create_new_lp` is `gated`), so these cannot run on a free account. | `evidence/runs.jsonl`, `run=probe-gates-*` |
+| Loyalty actions (`Balance`, `Program`, `Tier`, `Reward`, `Wallet` areas) | 47 of the 50 answer 422 "Invalid loyalty program id" to a fake ID. The free plan cannot create a loyalty program (`brevo.program.create_new_lp` is `gated`), so these cannot run on a free account. | `evidence/runs.jsonl`, `run=probe-gates-*` |
 
 ## 6. How to check the submission
 
-1. `jq -c '.claims[] | [.id, .value]' catalog/claims.json` lists every number. Run each `recompute` command to check it. `tests/test_claims.py` runs them all.
+1. `jq -c '.claims[] | [.id, .value]' catalog/claims.json` lists the headline numbers. Run each `recompute` command to check it. `tests/test_claims.py` runs them all.
 2. To trace one status: read `verification.evidence` in the entry (for example `evidence/runs.jsonl#run=contacts-lifecycle-1793639545`), then `grep '"run": "contacts-lifecycle-1793639545"' evidence/runs.jsonl`.
 3. To check the build: `.venv/bin/python -m pytest -q`, `.venv/bin/python tools/catalog_lint.py`, `.venv/bin/python tools/presubmit_check.py`. None of them calls Brevo.
 4. To check the AI-use record: `docs/AI_LOG.md`. Each entry has what went wrong, who caught it (lint, live verifier, reviewer agent, the agent itself, a human, Brevo) and the check that now catches it.
@@ -117,6 +120,6 @@ The server reads the Brevo API key from `BREVO_API_KEY` or the macOS keychain (`
 
 - Free plan only. `gated` means "refused on the free plan", not "does not exist".
 - No message reached anyone. Contacts use `@example.com`, campaigns stayed drafts, webhooks point to `example.com`. Actions that send were never run.
-- The web app walk did not open every settings section. `evidence/ui-walk-*.json` shows what was opened.
+- The walks did not open the visual automation editor, and could not read the deal and task screens or the Conversations inbox. `evidence/ui-walk-*.json` shows what was opened.
 - `find_actions` is keyword matching. Read the entry before you act on the first result.
 - A web app action count (`web_app_actions` in `claims.json`) counts buttons. Several buttons can map to one catalog action (`web_app_catalog_actions`).

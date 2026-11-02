@@ -797,7 +797,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -810,7 +810,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": false
   },
   {
@@ -836,7 +836,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": false
   },
   {
@@ -2176,7 +2176,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -2189,7 +2189,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -2202,7 +2202,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -2215,7 +2215,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -2228,7 +2228,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -2241,7 +2241,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -2254,7 +2254,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -2306,7 +2306,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": false
   },
   {
@@ -2358,7 +2358,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": false
   },
   {
@@ -3410,7 +3410,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": false
   },
   {
@@ -3423,7 +3423,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -3436,7 +3436,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": false
   },
   {
@@ -5091,7 +5091,7 @@
       "ui_path"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {
@@ -5183,7 +5183,7 @@
       "documented_api"
     ],
     "verification": "gated",
-    "free_plan": "gated",
+    "free_plan": "limited",
     "requires_confirmation": true
   },
   {

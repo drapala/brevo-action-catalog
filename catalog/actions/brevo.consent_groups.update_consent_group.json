@@ -142,9 +142,11 @@
     "requires_confirmation": false
   },
   "availability": {
-    "free_plan": "gated",
-    "requires": [],
-    "evidence": "HTTP 403 on the free plan"
+    "free_plan": "limited",
+    "requires": [
+      "turn this feature on in the account first"
+    ],
+    "evidence": "HTTP 403: the feature is not turned on"
   },
   "verification": {
     "status": "gated",
