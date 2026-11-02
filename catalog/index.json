@@ -4317,8 +4317,7 @@
     "entity": "invitation",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api",
-      "ui_path"
+      "documented_api"
     ],
     "verification": "documented",
     "free_plan": "unknown",

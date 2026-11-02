@@ -155,8 +155,8 @@
   "verification": {
     "status": "verified",
     "route_kind": "documented_api",
-    "checked_at": "2026-11-02T17:12:39+00:00",
-    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793639557"
+    "checked_at": "2026-11-02T18:31:09+00:00",
+    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793644268"
   },
   "sources": [
     {

@@ -98,14 +98,6 @@
       "success_status": [
         200
       ]
-    },
-    {
-      "kind": "ui_path",
-      "ui_steps": [
-        "Open settings from the profile menu",
-        "Click 'Users' under Organization settings",
-        "Invite a user"
-      ]
     }
   ],
   "preconditions": [],

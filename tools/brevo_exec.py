@@ -193,6 +193,9 @@ def check(assertion: dict, status: int, payload, ctx: dict) -> tuple[bool, str]:
         field, want = contains["field"], render(contains["value"], ctx)
         if not isinstance(items, list) or not any(isinstance(i, dict) and i.get(field) == want for i in items):
             return False, f"no item with {field}={want!r} in {contains['path']}"
+    for path in assertion.get("present") or []:
+        if lookup(payload, path) in (None, ""):
+            return False, f"{path} is missing or empty"
     excludes = assertion.get("list_excludes")
     if excludes:
         items = lookup(payload, excludes["path"])

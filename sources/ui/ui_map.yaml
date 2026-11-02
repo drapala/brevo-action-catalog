@@ -967,13 +967,6 @@ actions:
     external_effect: changes_account
     requires_confirmation: true
     reversible: false
-- area: Settings
-  ui: Invite a user
-  steps:
-  - Open settings from the profile menu
-  - Click 'Users' under Organization settings
-  - Invite a user
-  catalog_id: brevo.user.inviteuser
 - area: Library
   ui: Add file
   steps:
@@ -1078,6 +1071,7 @@ actions:
     requires_confirmation: true
     reversible: false
   status: gated
+  source: sources/ui/areas-2026-10-30.yaml (Phone), the 2026-10-30 walk
   free_plan: gated
   requires:
   - a paid add-on

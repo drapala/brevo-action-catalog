@@ -143,3 +143,12 @@ def test_a_newer_own_failure_wins_over_an_older_read_probe(tmp_path, monkeypatch
     actions = {"brevo.contacts.get_lists": entry("brevo.contacts.get_lists")}
     build_catalog.apply_evidence(actions)
     assert actions["brevo.contacts.get_lists"]["verification"]["status"] == "failed"
+
+
+def test_read_back_text_covers_every_kind_of_check():
+    text = build_catalog.describe_check({"status": 200, "equals": {"name": "${prefix}-x", "status": "draft"},
+                                         "list_excludes": {"path": "attributes", "field": "name", "value": "X"}})
+    assert "`name` equals the value that was sent" in text
+    assert '`status` equals "draft"' in text
+    assert "`attributes` no longer holds an item whose `name`" in text
+    assert build_catalog.describe_check({"status": 404}) == "the read returns HTTP 404"

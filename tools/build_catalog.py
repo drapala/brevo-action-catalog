@@ -105,7 +105,7 @@ def seen_action(line: dict, walk: dict) -> dict:
             if line.get("status") == "gated"
             else "Seen in the web app and not run, so the inputs and the exact effect are not known.",
         },
-        "sources": [{"kind": "ui_walk", "ref": f"sources/ui/ui_map.yaml ({line['area']}: {line['ui']})"}],
+        "sources": [{"kind": "ui_walk", "ref": line.get("source") or f"sources/ui/ui_map.yaml ({line['area']}: {line['ui']})"}],
     }
 
 
@@ -186,8 +186,11 @@ def scenario_steps() -> dict[tuple[str, str], dict]:
 def describe_check(assertion: dict) -> str:
     """The read-back check of a scenario step, in words an agent can act on."""
     parts = []
-    for path, _ in (assertion.get("equals") or {}).items():
-        parts.append(f"`{path}` equals the value that was sent")
+    for path, value in (assertion.get("equals") or {}).items():
+        if isinstance(value, str) and "${" in value:
+            parts.append(f"`{path}` equals the value that was sent")
+        else:
+            parts.append(f"`{path}` equals {json.dumps(value)}")
     if assertion.get("list_contains"):
         c = assertion["list_contains"]
         parts.append(f"`{c['path']}` holds an item whose `{c['field']}` is the one that was sent")
@@ -234,8 +237,6 @@ def apply_evidence(actions: dict[str, dict]) -> None:
             }
         if checks and checks[-1]["verdict"] == "fail":
             last = checks[-1]
-            current = step_of(last, steps)
-            last = {**last, "note": current.get("known_defect") or current.get("note") or last.get("note")}
             v.update(
                 status="failed",
                 route_kind="documented_api",

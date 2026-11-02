@@ -812,12 +812,6 @@ add(
         reversible=False,
     ),
 )
-add(
-    "Settings",
-    "Invite a user",
-    ["Open settings from the profile menu", "Click 'Users' under Organization settings", "Invite a user"],
-    "brevo.user.inviteuser",
-)
 
 # Library and commerce
 P = "Open https://content-library.brevo.com/content-hub"
@@ -910,6 +904,7 @@ add(
         reversible=False,
     ),
     status="gated",
+    source="sources/ui/areas-2026-10-30.yaml (Phone), the 2026-10-30 walk",
     free_plan="gated",
     requires=["a paid add-on"],
 )

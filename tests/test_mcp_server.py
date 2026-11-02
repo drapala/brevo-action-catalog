@@ -1,6 +1,7 @@
 """The MCP server enforces the catalog's rules, so an agent cannot skip them.
 None of these tests calls Brevo: each refusal happens before any request."""
 
+import subprocess
 import sys
 from pathlib import Path
 
@@ -31,23 +32,34 @@ def test_ui_only_action_does_not_run_even_when_confirmed():
 
 def test_requests_from_the_reviewer_find_the_right_action_first():
     cases = {
+        "Add zz-catalog-test-demo@example.com to the list named zz-catalog-test-demo-list. Create the contact if it does not exist.":
+            "brevo.contacts.add_contact_to_list",
+        "Mark the task named zz-catalog-test-demo-task as done.": "brevo.tasks.update_task",
+        "Delete the contact list named zz-catalog-test-demo-list.": "brevo.contacts.delete_list",
+        "Create a segment of the contacts who opened last week's campaign.": "brevo.segments.create_segment",
         "add a contact to the newsletter list": "brevo.contacts.add_contact_to_list",
         "mark a task as done": "brevo.tasks.update_task",
         "which webhooks do we have": "brevo.webhooks.get_webhooks",
         "delete the old sign-up form": "brevo.forms.delete_form",
         "which lists do we have": "brevo.contacts.get_lists",
         "which forms do we have": "brevo.forms.list_forms",
+        "rename the welcome automation": "brevo.automations.rename_automation",
+        "show me the transactional emails sent to bob@example.com": "brevo.transactional_emails.get_transac_emails_list",
+        "list my email campaigns": "brevo.email_campaigns.get_email_campaigns",
+        "delete the contact jane@example.com": "brevo.contacts.delete_contact",
+        "create a contact list called VIP": "brevo.contacts.create_list",
     }
     for request, expected in cases.items():
         assert mcp_server.find_actions(request, limit=3)[0]["id"] == expected, request
 
 
 def test_a_missing_api_key_is_a_refusal_not_a_crash(monkeypatch):
-    def no_key():
-        raise RuntimeError("No Brevo API key")
-    monkeypatch.setattr(mcp_server.brevo_exec, "api_key", no_key)
+    # No env key and a keychain lookup that fails: the real api_key() runs.
+    monkeypatch.delenv("BREVO_API_KEY", raising=False)
+    monkeypatch.setattr(mcp_server.brevo_exec.subprocess, "run",
+                        lambda *a, **k: subprocess.CompletedProcess(a, 1, stdout="", stderr="not found"))
     reply = mcp_server.run_action("brevo.contacts.get_lists", {})
-    assert reply == {"ran": False, "reason": "No Brevo API key"}
+    assert reply["ran"] is False and reply["reason"].startswith("No Brevo API key")
 
 
 def test_plural_requests_do_not_push_writes_up():

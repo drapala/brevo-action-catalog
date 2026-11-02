@@ -51,7 +51,7 @@
   "sources": [
     {
       "kind": "ui_walk",
-      "ref": "sources/ui/ui_map.yaml (Phone: Phone)"
+      "ref": "sources/ui/areas-2026-10-30.yaml (Phone), the 2026-10-30 walk"
     }
   ]
 }

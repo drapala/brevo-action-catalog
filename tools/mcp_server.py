@@ -64,6 +64,8 @@ def find_actions(request: str, limit: int = 8) -> list[dict]:
     and the confirmation flag. Read the full entry with get_action before you run it.
     """
     wanted = words(request)
+    tokens = re.findall(r"[a-z]+", request.lower())
+    lead = SYNONYMS.get(tokens[0], tokens[0]) if tokens else ""
     plural = {w[:-1] for w in re.findall(r"[a-z]+", request.lower()) if w.endswith("s") and not w.endswith("ss")}
     scored = []
     for entry in json.loads(INDEX.read_text()):
@@ -74,6 +76,10 @@ def find_actions(request: str, limit: int = 8) -> list[dict]:
         if score:
             trust = {"verified": 3, "observed": 2, "failed": 2, "documented": 1}.get(entry["verification"], 0)
             required = len(action.get("inputs", {}).get("schema", {}).get("required", []))
+            if entry["id"].split(".")[-1].split("_")[0] == lead:
+                score += 2  # the request opens with this action's verb ("Add ..." -> add_contact_to_list)
+            if entry["entity"].split("_")[-1] in wanted:
+                score += 2  # the request names this action's own entity ("the contact list" -> list)
             if entry["operation_class"] == "read" and entry["entity"].split("_")[-1] in plural and not required:
                 score += 3  # "which webhooks": the list action, not the get-one action
             scored.append((score, trust, required, entry))
