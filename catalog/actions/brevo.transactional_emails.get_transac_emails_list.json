@@ -124,8 +124,8 @@
   "verification": {
     "status": "verified",
     "route_kind": "documented_api",
-    "checked_at": "2026-11-02T16:30:38+00:00",
-    "evidence": "evidence/runs.jsonl#run=templates-and-campaigns-1793637036",
+    "checked_at": "2026-11-02T17:12:53+00:00",
+    "evidence": "evidence/runs.jsonl#run=templates-and-campaigns-1793639571",
     "notes": "The spec marks every filter optional, but the API needs one of email, messageId or templateId. A call with no inputs, made before any test data existed, returned HTTP 400: {\"code\": \"missing_parameter\", \"message\": \"Please pass atleast one of the following filters: email, messageId, templateId\"}."
   },
   "sources": [

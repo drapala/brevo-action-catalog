@@ -11,3 +11,4 @@ steps:
   - {name: create_attribute, action: brevo.contacts.create_attribute, inputs: {attributeCategory: normal, attributeName: "ZZCATALOG${ts}", type: text}, assert: {status: 201}}
   - {name: attribute_listed, postcondition_of: brevo.contacts.create_attribute, action: brevo.contacts.get_attributes, assert: {status: 200, list_contains: {path: attributes, field: name, value: "ZZCATALOG${ts}"}}}
   - {name: delete_attribute, action: brevo.contacts.delete_attribute, inputs: {attributeCategory: normal, attributeName: "ZZCATALOG${ts}"}, assert: {status: 204}, stop_on_fail: false}
+  - {name: attribute_gone, postcondition_of: brevo.contacts.delete_attribute, action: brevo.contacts.get_attributes, assert: {status: 200, list_excludes: {path: attributes, field: name, value: "ZZCATALOG${ts}"}}, retry: {times: 3, every: 2}, stop_on_fail: false}

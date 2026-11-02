@@ -16,11 +16,13 @@
   "without_public_api": 56,
   "curated_entries": 0,
   "web_app_walk": {
-    "business_actions": 107,
-    "in_catalog_with_public_api": 51,
     "view_only": 15,
-    "seen_only": 46,
-    "in_catalog_ui_only": 10
+    "business_actions": 107,
+    "in_catalog_before_walk": 59,
+    "runs_through_public_api": 51,
+    "added_by_walk": 48,
+    "ui_steps_only": 49,
+    "runs_through_internal_api": 7
   },
   "by_area": {
     "Account": {

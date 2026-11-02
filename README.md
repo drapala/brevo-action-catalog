@@ -1,6 +1,6 @@
 # Brevo business action catalog
 
-A catalog of 348 Brevo actions that an AI agent can find, fill, run and check. It covers everything a user can do by clicking around the web app on the free plan, plus the full public API. Each action says how far an agent can trust it, and the trust comes from live calls on a real account, not from the documentation.
+A catalog of 348 Brevo actions that an AI agent can find, fill, run and check. It covers every business action a walk of the web app found on the free plan (107), plus the full public API. Each action says how far an agent can trust it, and the trust comes from live calls on a real account, not from the documentation.
 
 | Status | Count | Meaning |
 |---|---|---|
@@ -11,18 +11,16 @@ A catalog of 348 Brevo actions that an AI agent can find, fill, run and check. I
 | `seen` | 42 | Seen in the web app (a button or a menu item) and not run. The entry gives the UI steps. These actions have no public API. |
 | `documented` | 194 | In the official API spec only. Not run. |
 
-The 81 verified actions include 31 writes (create, update, delete, link). Every write was read back after it ran. The evidence is in `evidence/runs.jsonl` (309 live API calls). Coverage by area is in `catalog/coverage.json`.
+The 81 verified actions include 31 writes (create, update, delete, link). Every write was read back after it ran. The evidence is in `evidence/runs.jsonl` (377 live API calls). Coverage by area is in `catalog/coverage.json`.
 
 ## Coverage of the web app
 
 The brief asks for everything a user can do by clicking around the product, so the web app is the reference, not the API.
 
-1. A browser agent opened every page of the main menu and the settings menu (40 pages). One test item of each kind (list, contact, company, deal, campaign, template) was created first, so that row menus and bulk actions appear. The items were deleted after the walk.
+1. A browser agent opened every page of the main menu and the settings menu (40 pages). It did not open the visual automation editor, the deal and task screens, or the Conversations inbox (see the gaps). One test item of each kind (list, contact, company, deal, campaign, template) was created first, so that row menus and bulk actions appear. The items were deleted after the walk.
 2. It found 107 business actions, plus 15 controls that only change the screen (filters, columns, tabs).
-3. `sources/ui/ui_map.yaml` joins each of the 107 to the catalog. 61 match an action that has a route an agent can run: 51 through the public API and 10 through the web app's internal calls. Each match also gets the UI steps as a second route.
-4. The other 46 have no public API. They are in the catalog as `seen` (42) or `gated` (4), with the UI steps.
-
-Before this walk, the catalog had 61 of the 107 (57%). Now it has all of them. The numbers are in `catalog/coverage.json` under `web_app_walk`, and the raw walk is in `evidence/ui-walk-2026-11-02.json`.
+3. `sources/ui/ui_map.yaml` joins each of the 107 to the catalog. 58 lead to an action with a route an agent can run: 51 through the public API and 7 through the web app's internal calls. The other 49 have UI steps only. Each action also gets the UI steps as a route.
+4. Before this walk, 59 of the 107 matched a catalog action (55%). The walk added 46 new actions for the other 48: 42 `seen` and 4 `gated`. The numbers are in `catalog/coverage.json` under `web_app_walk`, and the raw walk is in `evidence/ui-walk-2026-11-02.json`.
 
 Areas that the free plan blocks, or that need a setup step first, are listed with the screen the app shows instead: deals and tasks (the sales CRM must be turned on first, although the public API creates deals and tasks without that step), custom objects, landing pages, conversions, Analytics studio, loyalty, phone and meetings.
 
@@ -90,7 +88,7 @@ The main agent was Claude Code (Claude Opus 5.5). It used subagents for parallel
 
 The rule: the model drafts and explores, and code checks. No model output can set `verified`.
 
-`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 21 corrections: what went wrong, what caught it, and the fix. Examples:
+`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 24 corrections: what went wrong, what caught it, and the fix. Examples:
 
 - The ID generator dropped words, so `addContactToList` became `add_contact_list`. Lint check L001 now catches this.
 - The builder showed `update_task` as verified, because the failed read-back was filed under the read action. A test now replays this case.

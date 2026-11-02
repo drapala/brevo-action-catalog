@@ -187,8 +187,8 @@
   "verification": {
     "status": "failed",
     "route_kind": "documented_api",
-    "checked_at": "2026-11-02T16:23:52+00:00",
-    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793636622",
+    "checked_at": "2026-11-02T17:12:46+00:00",
+    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793639557",
     "notes": "the call returns success but the read-back check failed: update_task answers 204 to done=true but the task stays not done; the same call does update name"
   },
   "sources": [

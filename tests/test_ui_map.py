@@ -40,4 +40,5 @@ def test_matched_line_adds_a_ui_route_and_new_line_becomes_a_valid_seen_action(t
     assert seen["side_effects"]["requires_confirmation"] is True
     schema = json.loads((ROOT / "catalog/schema/business_action.schema.json").read_text())
     jsonschema.validate(seen, schema)
-    assert stats == {"business_actions": 2, "in_catalog_with_public_api": 1, "seen_only": 1, "view_only": 1}
+    assert stats == {"view_only": 1, "business_actions": 2, "in_catalog_before_walk": 1, "added_by_walk": 1,
+                     "runs_through_public_api": 1, "ui_steps_only": 1}

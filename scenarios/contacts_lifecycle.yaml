@@ -7,6 +7,7 @@ steps:
     assert: {status: 201}
     proves: create_folder returns the new folder id
   - name: read_folder
+    postcondition_of: brevo.contacts.create_folder
     action: brevo.contacts.get_folder
     inputs: {folderId: "${create_folder.response.id}"}
     assert: {status: 200, equals: {name: "${prefix}-folder-${ts}"}}
@@ -16,6 +17,7 @@ steps:
     inputs: {name: "${prefix}-list-${ts}", folderId: "${create_folder.response.id}"}
     assert: {status: 201}
   - name: read_list
+    postcondition_of: brevo.contacts.create_list
     action: brevo.contacts.get_list
     inputs: {listId: "${create_list.response.id}"}
     assert: {status: 200, equals: {name: "${prefix}-list-${ts}", folderId: "${create_folder.response.id}"}}
@@ -33,6 +35,7 @@ steps:
     inputs: {email: "${prefix}-${ts}@example.com", attributes: {FIRSTNAME: "Catalog"}}
     assert: {status: 201}
   - name: read_contact
+    postcondition_of: brevo.contacts.create_contact
     action: brevo.contacts.get_contact_info
     inputs: {identifier: "${prefix}-${ts}@example.com"}
     assert: {status: 200, equals: {email: "${prefix}-${ts}@example.com", attributes.FIRSTNAME: "Catalog"}}
@@ -60,6 +63,13 @@ steps:
     action: brevo.contacts.remove_contact_from_list
     inputs: {listId: "${create_list.response.id}", body: {emails: ["${prefix}-${ts}@example.com"]}}
     assert: {status: 201}
+  - name: list_lacks_contact
+    postcondition_of: brevo.contacts.remove_contact_from_list
+    action: brevo.contacts.get_contacts_from_list
+    inputs: {listId: "${create_list.response.id}"}
+    assert: {status: 200, list_excludes: {path: contacts, field: email, value: "${prefix}-${ts}@example.com"}}
+    retry: {times: 6, every: 2}
+    proves: remove_contact_from_list took effect
   - name: delete_contact
     action: brevo.contacts.delete_contact
     inputs: {identifier: "${prefix}-${ts}@example.com"}

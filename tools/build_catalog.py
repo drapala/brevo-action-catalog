@@ -118,21 +118,24 @@ def apply_ui_map(actions: dict[str, dict]) -> dict:
     if not UI_MAP.exists():
         return {}
     walk = yaml.safe_load(UI_MAP.read_text())
-    stats = Counter()
-    for line in walk["actions"]:
-        if line.get("kind") == "view":
-            stats["view_only"] += 1
-            continue
-        stats["business_actions"] += 1
-        if line.get("catalog_id"):
-            action = actions[line["catalog_id"]]
-            if not any(r["kind"] == "ui_path" for r in action["routes"]):
-                action["routes"].append({"kind": "ui_path", "ui_steps": line["steps"]})
-            public = any(r["kind"] == "documented_api" for r in action["routes"])
-            stats["in_catalog_with_public_api" if public else "in_catalog_ui_only"] += 1
-        else:
+    lines = [line for line in walk["actions"] if line.get("kind") != "view"]
+    added = {line["new"]["id"] for line in lines if line.get("new")}
+    for line in lines:
+        if line.get("new"):
             actions[line["new"]["id"]] = seen_action(line, walk)
-            stats["seen_only"] += 1
+    stats = Counter(view_only=len(walk["actions"]) - len(lines), business_actions=len(lines))
+    for line in lines:
+        target = actions[line.get("catalog_id") or line["new"]["id"]]
+        if not any(r["kind"] == "ui_path" for r in target["routes"]):
+            target["routes"].append({"kind": "ui_path", "ui_steps": line["steps"]})
+        stats["added_by_walk" if target["id"] in added else "in_catalog_before_walk"] += 1
+        kinds = {r["kind"] for r in target["routes"]}
+        if "documented_api" in kinds:
+            stats["runs_through_public_api"] += 1
+        elif "undocumented_api" in kinds:
+            stats["runs_through_internal_api"] += 1
+        else:
+            stats["ui_steps_only"] += 1
     return dict(stats)
 
 
@@ -180,6 +183,13 @@ def apply_evidence(actions: dict[str, dict]) -> None:
                 notes=f"the call returns success but the read-back check failed: {last.get('note') or last.get('why', '')}",
             )
             action["availability"]["free_plan"] = "available"
+            continue
+        if passed and action["operation_class"] != "read" and not any(c["verdict"] == "pass" for c in checks):
+            v.update(
+                checked_at=passed[-1]["at"],
+                evidence=f"evidence/runs.jsonl#run={passed[-1]['run']}",
+                notes="The call returned success, but no read-back has checked the effect yet.",
+            )
             continue
         if passed:
             v.update(

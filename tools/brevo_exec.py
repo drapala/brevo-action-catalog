@@ -184,6 +184,14 @@ def check(assertion: dict, status: int, payload, ctx: dict) -> tuple[bool, str]:
         field, want = contains["field"], render(contains["value"], ctx)
         if not any(isinstance(i, dict) and i.get(field) == want for i in (items or [])):
             return False, f"no item with {field}={want!r} in {contains['path']}"
+    excludes = assertion.get("list_excludes")
+    if excludes:
+        items = payload
+        for part in excludes["path"].split("."):
+            items = (items or {}).get(part)
+        field, unwanted = excludes["field"], render(excludes["value"], ctx)
+        if any(isinstance(i, dict) and i.get(field) == unwanted for i in (items or [])):
+            return False, f"{excludes['path']} still has an item with {field}={unwanted!r}"
     return True, "ok"
 
 

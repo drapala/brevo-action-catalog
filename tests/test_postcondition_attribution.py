@@ -12,7 +12,8 @@ import build_catalog  # noqa: E402
 
 
 def entry(action_id):
-    return {"id": action_id, "verification": {"status": "documented"}, "availability": {"free_plan": "unknown"}}
+    op = "read" if action_id.split(".")[-1].startswith("get_") else "update"
+    return {"id": action_id, "operation_class": op, "verification": {"status": "documented"}, "availability": {"free_plan": "unknown"}}
 
 
 def test_failed_read_back_marks_the_write_action_failed(tmp_path, monkeypatch):
@@ -49,3 +50,14 @@ def test_passing_read_back_keeps_the_write_action_verified(tmp_path, monkeypatch
     build_catalog.apply_evidence(actions)
 
     assert actions["brevo.contacts.update_list"]["verification"]["status"] == "verified"
+
+
+def test_write_without_a_read_back_is_not_verified(tmp_path, monkeypatch):
+    # The reviewer found 11 writes marked verified from their own 2xx, with no read-back.
+    runs = [{"run": "c-2", "action": "brevo.contacts.create_folder", "verdict": "pass", "why": "ok", "at": "2026-11-02T18:00:00+00:00"}]
+    evidence = tmp_path / "runs.jsonl"
+    evidence.write_text(json.dumps(runs[0]) + "\n")
+    monkeypatch.setattr(build_catalog, "EVIDENCE", evidence)
+    actions = {"brevo.contacts.create_folder": entry("brevo.contacts.create_folder")}
+    build_catalog.apply_evidence(actions)
+    assert actions["brevo.contacts.create_folder"]["verification"]["status"] == "documented"
