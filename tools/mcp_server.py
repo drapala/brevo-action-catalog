@@ -111,6 +111,23 @@ def get_action(action_id: str) -> dict:
     return action
 
 
+def check_before_retry(action: dict, inputs: dict) -> str:
+    """The read that shows whether an unanswered write took effect, using only the inputs that were sent."""
+    check = action.get("postcondition") or {}
+    reader = load(check["check_with"]) if check else None
+    if reader:
+        missing = [n for n in reader["inputs"]["schema"].get("required") or [] if n not in inputs]
+        if not missing:
+            return f"Before any retry, run {check['check_with']} and check: {check['assert']}"
+        finder = next(
+            (r["find_with"] for r in reader["inputs"]["entity_refs"] if r["input"] in missing and r.get("find_with")),
+            None,
+        )
+        if finder:
+            return f"Before any retry, run {finder} and look for an item with the values you sent. If it is there, the action ran."
+    return "Before any retry, look the item up and check whether the action already took effect."
+
+
 @mcp.tool
 def run_action(action_id: str, inputs: dict, confirmed: bool = False) -> dict:
     """Run a catalog action through the public Brevo API.
@@ -150,17 +167,14 @@ def run_action(action_id: str, inputs: dict, confirmed: bool = False) -> dict:
         return {"ran": False, "reason": str(error)}
     except (httpx.ConnectError, httpx.ConnectTimeout) as error:
         return {"ran": False, "reason": f"the request did not reach Brevo: {error!r}"}
-    except httpx.TransportError as error:
+    except httpx.RequestError as error:
         # The request was sent, so a write may have landed. A blind retry can create a duplicate.
         if action["operation_class"] == "read":
             return {"ran": False, "reason": f"no answer from Brevo: {error!r}. A read is safe to retry."}
-        check = action.get("postcondition") or {}
         return {
             "ran": "unknown",
-            "reason": f"the request was sent but no answer came back: {error!r}. The action may have run.",
-            "next_step": f"Before any retry, run {check['check_with']} and check: {check['assert']}"
-            if check
-            else "Before any retry, look the item up and check whether the action already took effect.",
+            "reason": f"the request was sent but no usable answer came back: {error!r}. The action may have run.",
+            "next_step": check_before_retry(action, inputs),
         }
     reply = {"ran": True, "http_status": code, "response": payload, "catalog_status": status}
     if status == "failed":

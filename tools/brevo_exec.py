@@ -94,7 +94,16 @@ def input_errors(action: dict, inputs: dict) -> list[str]:
 
 
 def describe(error) -> str:
-    where = ".".join(map(str, error.path)) or "inputs"
+    where = ".".join(map(str, error.absolute_path)) or "inputs"
+    if error.validator in ("anyOf", "oneOf") and isinstance(error.instance, dict):
+        # The body names a branch's field but its value is wrong: report that value, not the branch list.
+        for i, branch in enumerate(error.validator_value):
+            named = (
+                isinstance(branch, dict) and branch.get("required") and set(branch["required"]) <= set(error.instance)
+            )
+            inner = [e for e in error.context if named and list(e.relative_schema_path)[:1] == [i]]
+            if inner:
+                return describe(inner[0])
     if error.validator in ("anyOf", "oneOf"):
         needs = [
             " and ".join(b["required"]) for b in error.validator_value if isinstance(b, dict) and b.get("required")
@@ -143,7 +152,7 @@ def call(
         raise ValueError(f"{action_id}: missing path inputs {missing}")
     try:
         response = client.request(route["method"], url, params=query or None, json=body or None)
-    except httpx.TransportError as error:
+    except httpx.RequestError as error:
         record({"run": run, "action": action_id, "method": route["method"], "url": url, "error": repr(error)})
         raise
     try:

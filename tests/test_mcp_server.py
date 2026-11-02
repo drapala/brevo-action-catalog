@@ -117,6 +117,14 @@ def test_one_of_bodies_accept_one_named_field_and_refuse_the_rest():
     for body in ({}, {"emails": "x"}, {"emial": ["zz@example.com"]}, {"emails": []}, {"ids": ["abc"]}):
         assert errors(add, {"listId": 2, "body": body}), body
     assert errors(add, {"listId": 2, "body": {}}) == ["body: needs exactly one of: emails; ids; extIds"]
+    assert errors(add, {"listId": 2, "body": {"emails": "x"}}) == ["body.emails: 'x' is not of type 'array'"]
+    assert errors(add, {"listId": 2, "body": {"ids": ["abc"]}}) == ["body.ids.0: 'abc' is not of type 'integer'"]
+
+
+def test_a_response_that_cannot_be_decoded_is_unknown_for_a_write(monkeypatch):
+    monkeypatch.setattr(mcp_server.brevo_exec, "client", failing_client(httpx.DecodingError("bad gzip")))
+    reply = mcp_server.run_action("brevo.contacts.create_list", {"name": "zz-catalog-test-x", "folderId": 1})
+    assert reply["ran"] == "unknown"
 
 
 def test_path_values_are_encoded_except_the_at_sign():
@@ -144,6 +152,9 @@ def test_a_request_that_never_left_is_a_refusal(monkeypatch):
 def test_a_write_with_no_answer_is_unknown_and_names_the_check_before_a_retry(monkeypatch):
     monkeypatch.setattr(mcp_server.brevo_exec, "client", failing_client(httpx.ReadTimeout("slow")))
     reply = mcp_server.run_action("brevo.contacts.create_list", {"name": "zz-catalog-test-x", "folderId": 1})
-    assert reply["ran"] == "unknown" and "brevo.contacts.get_list" in reply["next_step"]
+    # get_list needs the ID that the lost response held, so the reply names the finder instead.
+    assert reply["ran"] == "unknown" and reply["next_step"].startswith("Before any retry, run brevo.contacts.get_lists ")
+    reply = mcp_server.run_action("brevo.contacts.update_list", {"listId": 5, "name": "zz-catalog-test-y"})
+    assert reply["ran"] == "unknown" and reply["next_step"].startswith("Before any retry, run brevo.contacts.get_list ")
     reply = mcp_server.run_action("brevo.contacts.get_lists", {})
     assert reply["ran"] is False and "safe to retry" in reply["reason"]

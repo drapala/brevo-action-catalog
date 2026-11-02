@@ -114,7 +114,7 @@ The main agent was Claude Code (Claude Opus 5.5). It used subagents for parallel
 
 The rule: the model drafts and explores, and code checks. No model output can set `verified`.
 
-`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 36 corrections: what went wrong, what caught it, and the fix. Examples:
+`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 37 corrections: what went wrong, what caught it, and the fix. Examples:
 
 - The ID generator dropped words, so `addContactToList` became `add_contact_list`. Lint check L001 now catches this.
 - The builder showed `update_task` as verified, because the failed read-back was filed under the read action. A test now replays this case.
@@ -122,7 +122,7 @@ The rule: the model drafts and explores, and code checks. No model output can se
 - A scenario named action IDs that do not exist. The presubmit check now fails on an unknown ID.
 - The first version was built API-first. A check of every requirement in the brief showed that the first walk listed only 24 buttons, and a full walk found that the catalog had only 58 of the 106 web app actions (55%). The full walk and the map above came from that check.
 
-22 of the 36 corrections name the check that now catches the same error: a lint check in `tools/catalog_lint.py`, a live scenario, a test in `tests/`, or `tools/presubmit_check.py`. The other 14 fixed single entries, claims in the write-up, or how the agent worked.
+23 of the 37 corrections name the check that now catches the same error: a lint check in `tools/catalog_lint.py`, a live scenario, a test in `tests/`, or `tools/presubmit_check.py`. The other 14 fixed single entries, claims in the write-up, or how the agent worked.
 
 A reviewer agent with no memory of the build tried to complete 8 user requests from the catalog alone, for example "add jane@example.com to the Newsletter list" and "which webhooks do we have?". It found 4 severe problems. Two delete actions did not ask for confirmation. One ID pointed to the wrong finder. Two entries left out facts that an agent needs. I checked each finding against the files, fixed all 4, and logged them (C016 to C019). The minor findings are in the gaps below.
 
