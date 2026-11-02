@@ -29,6 +29,7 @@ UI = ROOT / "sources/ui_actions"
 UI_MAP = ROOT / "sources/ui/ui_map.yaml"
 CURATION = ROOT / "catalog/curation.yaml"
 EVIDENCE = ROOT / "evidence/runs.jsonl"
+SCENARIOS = ROOT / "scenarios"
 OUT = ROOT / "catalog/actions"
 SCHEMA = ROOT / "catalog/schema/business_action.schema.json"
 
@@ -109,7 +110,7 @@ def seen_action(line: dict, walk: dict) -> dict:
 
 
 def apply_ui_map(actions: dict[str, dict]) -> dict:
-    """Join every action seen in the web app to the catalog, and count the result.
+    """Join every action seen in the web app to the catalog, and return the walk.
 
     A line with catalog_id adds its UI steps to that action as a ui_path route.
     A line with new becomes a `seen` action. A line with kind view only changes
@@ -120,13 +121,11 @@ def apply_ui_map(actions: dict[str, dict]) -> dict:
         return {}
     walk = yaml.safe_load(UI_MAP.read_text())
     lines = [line for line in walk["actions"] if line.get("kind") != "view"]
-    added = {line["new"]["id"] for line in lines if line.get("new")}
     for line in lines:
         if line.get("new"):
             if line["new"]["id"] in actions:
                 raise ValueError(f"ui_map adds {line['new']['id']}, which the catalog already has")
             actions[line["new"]["id"]] = seen_action(line, walk)
-    stats = Counter(view_only=len(walk["actions"]) - len(lines), business_actions=len(lines))
     for line in lines:
         target = actions[line.get("catalog_id") or line["new"]["id"]]
         route = {"kind": "ui_path", "ui_steps": line["steps"]}
@@ -136,6 +135,18 @@ def apply_ui_map(actions: dict[str, dict]) -> dict:
             target["verification"].update(status="gated", route_kind="ui_path", checked_at=walk["walked_at"],
                                           evidence=walk["evidence"], notes="The free plan shows an upgrade screen instead.")
             target["availability"]["free_plan"] = "gated"
+    return walk
+
+
+def walk_stats(actions: dict[str, dict], walk: dict) -> dict:
+    """Count the web app actions by the route their catalog action has once evidence is applied."""
+    if not walk:
+        return {}
+    lines = [line for line in walk["actions"] if line.get("kind") != "view"]
+    added = {line["new"]["id"] for line in lines if line.get("new")}
+    stats = Counter(view_only=len(walk["actions"]) - len(lines), business_actions=len(lines))
+    for line in lines:
+        target = actions[line.get("catalog_id") or line["new"]["id"]]
         stats["added_by_walk" if target["id"] in added else "in_catalog_before_walk"] += 1
         kinds = {r["kind"] for r in target["routes"]}
         if target["verification"]["status"] == "gated":
@@ -143,7 +154,7 @@ def apply_ui_map(actions: dict[str, dict]) -> dict:
         elif "documented_api" in kinds:
             stats["runs_through_public_api"] += 1
         elif "undocumented_api" in kinds:
-            stats["runs_through_internal_api"] += 1
+            stats["internal_endpoint_browser_only"] += 1
         else:
             stats["ui_steps_only"] += 1
     return dict(stats)
@@ -163,12 +174,42 @@ def apply_curation(actions: dict[str, dict]) -> int:
     return len(patches)
 
 
+def scenario_steps() -> dict[tuple[str, str], dict]:
+    steps = {}
+    for path in sorted(SCENARIOS.glob("*.yaml")):
+        spec = yaml.safe_load(path.read_text())
+        for step in spec["steps"]:
+            steps[(spec["name"], step["name"])] = step
+    return steps
+
+
+def describe_check(assertion: dict) -> str:
+    """The read-back check of a scenario step, in words an agent can act on."""
+    parts = []
+    for path, _ in (assertion.get("equals") or {}).items():
+        parts.append(f"`{path}` equals the value that was sent")
+    if assertion.get("list_contains"):
+        c = assertion["list_contains"]
+        parts.append(f"`{c['path']}` holds an item whose `{c['field']}` is the one that was sent")
+    if assertion.get("list_excludes"):
+        c = assertion["list_excludes"]
+        parts.append(f"`{c['path']}` no longer holds an item whose `{c['field']}` is the one that was sent")
+    if not parts and assertion.get("status"):
+        parts.append(f"the read returns HTTP {assertion['status']}")
+    return "; ".join(parts)
+
+
+def step_of(entry: dict, steps: dict[tuple[str, str], dict]) -> dict:
+    return steps.get((entry["run"].rsplit("-", 1)[0], entry.get("step", "")), {})
+
+
 def apply_evidence(actions: dict[str, dict]) -> None:
     if not EVIDENCE.exists():
         return
     calls: dict[str, list[dict]] = defaultdict(list)
     verdicts: dict[str, list[dict]] = defaultdict(list)
     postconditions: dict[str, list[dict]] = defaultdict(list)
+    steps = scenario_steps()
     for line in EVIDENCE.read_text().splitlines():
         entry = json.loads(line)
         if "verdict" in entry:
@@ -189,21 +230,31 @@ def apply_evidence(actions: dict[str, dict]) -> None:
         if good and not action.get("postcondition"):
             action["postcondition"] = {
                 "check_with": good[-1]["action"],
-                "assert": good[-1].get("proves") or f"the read-back step '{good[-1]['step']}' passes",
+                "assert": describe_check(step_of(good[-1], steps).get("assert") or {}) or good[-1].get("proves", ""),
             }
         if checks and checks[-1]["verdict"] == "fail":
             last = checks[-1]
+            current = step_of(last, steps)
+            last = {**last, "note": current.get("known_defect") or current.get("note") or last.get("note")}
             v.update(
                 status="failed",
                 route_kind="documented_api",
                 checked_at=last["at"],
                 evidence=f"evidence/runs.jsonl#run={last['run']}",
-                notes=f"the call returns success but the read-back check failed: {last.get('note') or last.get('why', '')}",
+                notes=f"The call returns success, but the read-back check failed: {last.get('note') or last.get('why', '')}",
             )
             action["availability"]["free_plan"] = "available"
             continue
         if own and own[-1]["verdict"] == "fail":
-            passed = []
+            last = own[-1]
+            v.update(
+                status="failed",
+                route_kind="documented_api",
+                checked_at=last["at"],
+                evidence=f"evidence/runs.jsonl#run={last['run']}",
+                notes=last.get("why", ""),
+            )
+            continue
         if passed and action["operation_class"] != "read" and not good:
             v.update(
                 checked_at=passed[-1]["at"],
@@ -277,9 +328,10 @@ def apply_evidence(actions: dict[str, dict]) -> None:
 
 def main() -> None:
     actions = load_actions()
-    ui_walk = apply_ui_map(actions)
+    walk = apply_ui_map(actions)
     n_curated = apply_curation(actions)
     apply_evidence(actions)
+    ui_walk = walk_stats(actions, walk)
 
     validator = jsonschema.Draft202012Validator(json.loads(SCHEMA.read_text()))
     OUT.mkdir(parents=True, exist_ok=True)

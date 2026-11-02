@@ -22,7 +22,7 @@
     "runs_through_public_api": 50,
     "added_by_walk": 48,
     "ui_steps_only": 44,
-    "runs_through_internal_api": 7,
+    "internal_endpoint_browser_only": 7,
     "blocked_on_free_plan": 6
   },
   "by_area": {

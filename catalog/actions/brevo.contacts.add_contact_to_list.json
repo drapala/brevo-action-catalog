@@ -105,7 +105,7 @@
   "preconditions": [],
   "postcondition": {
     "check_with": "brevo.contacts.get_contacts_from_list",
-    "assert": "add_contact_to_list took effect"
+    "assert": "`contacts` holds an item whose `email` is the one that was sent"
   },
   "side_effects": {
     "reversible": true,

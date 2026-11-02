@@ -90,3 +90,56 @@ def test_the_newest_own_result_wins(tmp_path, monkeypatch):
     actions = {"brevo.contacts.get_lists": entry("brevo.contacts.get_lists")}
     build_catalog.apply_evidence(actions)
     assert actions["brevo.contacts.get_lists"]["verification"]["status"] == "failed"
+
+
+def test_a_passing_scenario_read_back_becomes_the_entry_postcondition_in_plain_words(tmp_path, monkeypatch):
+    scenarios = tmp_path / "scenarios"
+    scenarios.mkdir()
+    (scenarios / "s.yaml").write_text(
+        "name: demo\nsteps:\n"
+        "  - {name: add, action: brevo.contacts.add_contact_to_list}\n"
+        "  - {name: listed, action: brevo.contacts.get_contacts_from_list, postcondition_of: brevo.contacts.add_contact_to_list,\n"
+        "     assert: {status: 200, list_contains: {path: contacts, field: email, value: x}}}\n")
+    runs = [
+        {"run": "demo-1", "step": "add", "action": "brevo.contacts.add_contact_to_list", "verdict": "pass", "at": "2026-11-02T18:20:00+00:00"},
+        {"run": "demo-1", "step": "listed", "action": "brevo.contacts.get_contacts_from_list", "verdict": "pass",
+         "postcondition_of": "brevo.contacts.add_contact_to_list", "at": "2026-11-02T18:20:01+00:00"},
+    ]
+    evidence = tmp_path / "runs.jsonl"
+    evidence.write_text("\n".join(json.dumps(r) for r in runs) + "\n")
+    monkeypatch.setattr(build_catalog, "EVIDENCE", evidence)
+    monkeypatch.setattr(build_catalog, "SCENARIOS", scenarios)
+    write = entry("brevo.contacts.add_contact_to_list")
+    build_catalog.apply_evidence({write["id"]: write})
+    assert write["postcondition"]["check_with"] == "brevo.contacts.get_contacts_from_list"
+    assert "`contacts` holds an item whose `email`" in write["postcondition"]["assert"]
+    assert write["verification"]["status"] == "verified"
+
+
+def test_live_success_code_replaces_the_spec_code_with_a_note(tmp_path, monkeypatch):
+    runs = [
+        {"run": "c-4", "action": "brevo.companies.update_company", "status": 204, "expected": [200], "at": "2026-11-02T18:30:00+00:00"},
+        {"run": "c-4", "step": "s", "action": "brevo.companies.update_company", "verdict": "pass", "at": "2026-11-02T18:30:01+00:00"},
+        {"run": "c-4", "step": "r", "action": "brevo.companies.get_company", "verdict": "pass",
+         "postcondition_of": "brevo.companies.update_company", "at": "2026-11-02T18:30:02+00:00"},
+    ]
+    evidence = tmp_path / "runs.jsonl"
+    evidence.write_text("\n".join(json.dumps(r) for r in runs) + "\n")
+    monkeypatch.setattr(build_catalog, "EVIDENCE", evidence)
+    write = entry("brevo.companies.update_company")
+    build_catalog.apply_evidence({write["id"]: write})
+    assert write["routes"][0]["success_status"] == [204]
+    assert "live API returns [204]" in write["verification"]["notes"]
+
+
+def test_a_newer_own_failure_wins_over_an_older_read_probe(tmp_path, monkeypatch):
+    runs = [
+        {"run": "probe-reads-1", "action": "brevo.contacts.get_lists", "status": 200, "expected": [200], "at": "2026-11-02T18:00:00+00:00"},
+        {"run": "r2", "step": "s", "action": "brevo.contacts.get_lists", "verdict": "fail", "why": "status 500", "at": "2026-11-02T18:05:00+00:00"},
+    ]
+    evidence = tmp_path / "runs.jsonl"
+    evidence.write_text("\n".join(json.dumps(r) for r in runs) + "\n")
+    monkeypatch.setattr(build_catalog, "EVIDENCE", evidence)
+    actions = {"brevo.contacts.get_lists": entry("brevo.contacts.get_lists")}
+    build_catalog.apply_evidence(actions)
+    assert actions["brevo.contacts.get_lists"]["verification"]["status"] == "failed"

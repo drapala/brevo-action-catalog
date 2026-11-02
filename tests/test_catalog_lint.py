@@ -103,3 +103,15 @@ def test_l007_delete_named_action_without_confirmation_is_caught():
     assert [f.check for f in lint.check_destructive_needs_confirmation(entry)] == ["L007"]
     entry["side_effects"]["requires_confirmation"] = True
     assert lint.check_destructive_needs_confirmation(entry) == []
+
+
+def test_l007_covers_dissociate_disable_and_unlink():
+    for name in ("dissociate_ip_to_sub_accounts", "enable_disable_sub_account_application",
+                 "link_and_unlink_deal_with_contacts_and_companies"):
+        entry = action(id=f"brevo.x.{name}")
+        assert [f.check for f in lint.check_destructive_needs_confirmation(entry)] == ["L007"], name
+
+
+def test_g001_counts_writes_of_the_action_class():
+    # add_contact_to_list is class "action": a missing read-back must still count as a gap.
+    assert [f.check for f in lint.check_write_has_postcondition(action())] == ["G001"]

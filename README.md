@@ -25,9 +25,9 @@ The 81 verified actions include 31 writes (create, update, delete, link). Every 
 
 The brief asks for everything a user can do by clicking around the product, so the web app is the reference, not the API.
 
-1. A browser agent opened every page of the main menu and the settings menu (40 pages). It did not open the visual automation editor, the deal and task screens, or the Conversations inbox (see the gaps). One test item of each kind (list, contact, company, deal, campaign, template) was created first, so that row menus and bulk actions appear. The items were deleted after the walk.
+1. A browser agent opened 40 pages from the main menu and the settings menu. Several settings sections were listed but not opened, and it did not open the visual automation editor, the deal and task screens, or the Conversations inbox (see the gaps). One test item of each kind (list, contact, company, deal, campaign, template) was created first, so that row menus and bulk actions appear. The items were deleted after the walk.
 2. It found 107 business actions, plus 15 controls that only change the screen (filters, columns, tabs).
-3. `sources/ui/ui_map.yaml` joins each of the 107 to the catalog. 57 lead to an action with a route an agent can run: 50 through the public API and 7 through the web app's internal calls. 6 are blocked on the free plan. The other 44 have UI steps only. Every UI path is also kept on its catalog action as a route.
+3. `sources/ui/ui_map.yaml` joins each of the 107 to the catalog. 50 lead to an action an agent can run through the public API. 7 have a captured internal endpoint (method, URL, response), but only a browser agent that follows the UI steps can run them. 6 are blocked on the free plan. The other 44 have UI steps only. Every UI path is also kept on its catalog action as a route.
 4. Before this walk, 59 of the 107 matched a catalog action (55%). The walk added 46 new actions for the other 48: 42 `seen` and 4 `gated`. The numbers are in `catalog/coverage.json` under `web_app_walk`, and the raw walk is in `evidence/ui-walk-2026-11-02.json`.
 
 Areas that the free plan blocks, or that need a setup step first, are listed with the screen the app shows instead: deals and tasks (the sales CRM must be turned on first, although the public API creates deals and tasks without that step), custom objects, landing pages, conversions, Analytics studio, loyalty, phone and meetings.
@@ -115,13 +115,13 @@ The main agent was Claude Code (Claude Opus 5.5). It used subagents for parallel
 
 The rule: the model drafts and explores, and code checks. No model output can set `verified`.
 
-`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 28 corrections: what went wrong, what caught it, and the fix. Examples:
+`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 30 corrections: what went wrong, what caught it, and the fix. Examples:
 
 - The ID generator dropped words, so `addContactToList` became `add_contact_list`. Lint check L001 now catches this.
 - The builder showed `update_task` as verified, because the failed read-back was filed under the read action. A test now replays this case.
 - The agent reused browser cookies outside the browser, and the web session ended. UI-only actions are now done in the browser, and only the network log is read.
 - A scenario named action IDs that do not exist. The presubmit check now fails on an unknown ID.
-- The first version was built API-first. A check of every requirement in the brief showed that the web app walk was too shallow (57% of the clicks). The full walk and the map above came from that check.
+- The first version was built API-first. A check of every requirement in the brief showed that the first walk listed only 24 buttons, and a full walk found that the catalog had only 59 of the 107 web app actions (55%). The full walk and the map above came from that check.
 
 Most corrections led to a check that stops the same error from coming back: lint checks in `tools/catalog_lint.py`, tests in `tests/`, and `tools/presubmit_check.py`.
 
@@ -138,14 +138,14 @@ A reviewer agent with no memory of the build tried to complete 8 user requests f
 ## Known gaps and limits
 
 1. **193 actions are `documented` only.** They come from the spec and were not run. The largest groups are master accounts (22), loyalty balance (18), e-commerce (13) and transactional email (11).
-2. **46 web app actions are `seen` or `gated`, not run.** Only 9 UI-only actions were done end to end with their network calls captured. The walk also did not open the visual automation editor, the deal and task screens (they need the sales CRM turned on), or the Conversations inbox, which loaded without any control the walk could read.
+2. **The 46 actions the walk added (42 `seen`, 4 `gated`) were not run.** Only 9 UI-only actions were done end to end with their network calls captured. The walk did not open several settings sections (Profile, Security, Localization, UTM parameters, Deliverability Center, Data feeds), the visual automation editor, the deal and task screens (they need the sales CRM turned on), or the Conversations inbox, which loaded without any control the walk could read.
 3. **Request bodies of internal calls are not captured.** The browser log kept headers and responses only. The internal routes give the method, URL and response, but not the body shape.
 4. **The executor runs only public API routes.** A script cannot replay the internal routes, because they need the browser's session. A UI-only action needs a browser agent that follows `ui_steps`.
 5. **Descriptions of `documented` actions are the spec summaries.** Only the UI-only actions have descriptions written for an agent.
 6. **Some inputs still need extra lookups.** 123 ID inputs have no finder, because the API has no plain list route for them. In 93 actions, a deeply nested input schema is cut at depth 6. Some list actions cannot filter by name, so an agent must page through results to find "Newsletter".
 7. **151 lint gaps remain.** 126 writes have no read-back yet (G001): 82 `documented`, 40 `seen` and 4 `gated`. 25 entity names are weak, for example `detail` (G002). They are listed in `catalog/lint.json`, and `tools/catalog_lint.py` prints the count.
 8. **Free plan only.** Paid features are listed as `gated`, not tested.
-9. **Search is keyword matching.** For every request tried, `find_actions` puts the right action in its top three, but not always first. The agent reads the entries to choose.
+9. **Search is keyword matching.** `find_actions` ranks the right action first for the 10 requests in `tests/test_mcp_server.py` and the demo, but it has no semantic matching. The agent reads the entries to choose.
 
 ## Next steps
 

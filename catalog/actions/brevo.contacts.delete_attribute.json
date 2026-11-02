@@ -69,7 +69,7 @@
   "preconditions": [],
   "postcondition": {
     "check_with": "brevo.contacts.get_attributes",
-    "assert": "the read-back step 'attribute_gone' passes"
+    "assert": "`attributes` no longer holds an item whose `name` is the one that was sent"
   },
   "side_effects": {
     "reversible": false,

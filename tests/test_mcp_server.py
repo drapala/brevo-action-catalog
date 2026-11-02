@@ -35,6 +35,21 @@ def test_requests_from_the_reviewer_find_the_right_action_first():
         "mark a task as done": "brevo.tasks.update_task",
         "which webhooks do we have": "brevo.webhooks.get_webhooks",
         "delete the old sign-up form": "brevo.forms.delete_form",
+        "which lists do we have": "brevo.contacts.get_lists",
+        "which forms do we have": "brevo.forms.list_forms",
     }
     for request, expected in cases.items():
         assert mcp_server.find_actions(request, limit=3)[0]["id"] == expected, request
+
+
+def test_a_missing_api_key_is_a_refusal_not_a_crash(monkeypatch):
+    def no_key():
+        raise RuntimeError("No Brevo API key")
+    monkeypatch.setattr(mcp_server.brevo_exec, "api_key", no_key)
+    reply = mcp_server.run_action("brevo.contacts.get_lists", {})
+    assert reply == {"ran": False, "reason": "No Brevo API key"}
+
+
+def test_plural_requests_do_not_push_writes_up():
+    ids = [e["id"] for e in mcp_server.find_actions("which forms do we have", limit=3)]
+    assert "brevo.forms.duplicate_form" not in ids[:2]

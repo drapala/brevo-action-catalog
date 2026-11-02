@@ -33,7 +33,8 @@ def test_matched_line_adds_a_ui_route_and_new_line_becomes_a_valid_seen_action(t
     monkeypatch.setattr(build_catalog, "UI_MAP", write_map(tmp_path, lines))
     actions = {api_action["id"]: api_action}
 
-    stats = build_catalog.apply_ui_map(actions)
+    walk = build_catalog.apply_ui_map(actions)
+    stats = build_catalog.walk_stats(actions, walk)
 
     assert {r["kind"] for r in api_action["routes"]} == {"documented_api", "ui_path"}
     seen = actions["brevo.contacts.duplicate_list"]
@@ -64,3 +65,14 @@ def test_every_ui_path_is_kept_and_a_new_action_cannot_replace_an_existing_one(t
     except ValueError:
         return
     raise AssertionError("a new walk action replaced an existing catalog action")
+
+
+def test_a_gated_walk_line_marks_a_documented_action_gated(tmp_path, monkeypatch):
+    target = {"id": "brevo.program.create_new_lp", "routes": [{"kind": "documented_api"}],
+              "verification": {"status": "documented"}, "availability": {"free_plan": "unknown"}}
+    lines = [{"area": "Loyalty", "ui": "Create a loyalty program", "steps": ["Open the loyalty page"],
+              "catalog_id": target["id"], "status": "gated"}]
+    monkeypatch.setattr(build_catalog, "UI_MAP", write_map(tmp_path, lines))
+    walk = build_catalog.apply_ui_map({target["id"]: target})
+    assert target["verification"]["status"] == "gated" and target["availability"]["free_plan"] == "gated"
+    assert build_catalog.walk_stats({target["id"]: target}, walk)["blocked_on_free_plan"] == 1

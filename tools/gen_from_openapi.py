@@ -502,7 +502,6 @@ def main() -> None:
         (OUT / f"{d['id']}.json").write_text(json.dumps(action, indent=2, ensure_ascii=False) + "\n")
         written += 1
     print(f"wrote {written} actions")
-    sys.path.insert(0, str(ROOT / "tools"))
     import catalog_lint
     import corrections
 

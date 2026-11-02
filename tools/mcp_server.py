@@ -36,14 +36,14 @@ def load(action_id: str) -> dict | None:
 
 # Words a user says for an operation, mapped to the words in action ids and labels.
 SYNONYMS = {"mark": "update", "done": "update", "complete": "update", "rename": "update", "edit": "update",
-            "change": "update", "remove": "delete", "which": "get", "show": "get", "have": "get"}
+            "change": "update", "remove": "delete", "which": "get", "show": "get"}
 
 
 def ui_paths(action: dict) -> list[list[str]]:
     return [r["ui_steps"] for r in action["routes"] if r["kind"] == "ui_path"]
 
 
-STOPWORDS = {"the", "and", "for", "our", "you", "your", "with", "from", "this", "that", "all", "any"}
+STOPWORDS = {"the", "and", "for", "our", "you", "your", "with", "from", "this", "that", "all", "any", "have", "has"}
 
 
 def words(text: str) -> set[str]:
@@ -74,8 +74,8 @@ def find_actions(request: str, limit: int = 8) -> list[dict]:
         if score:
             trust = {"verified": 3, "observed": 2, "failed": 2, "documented": 1}.get(entry["verification"], 0)
             required = len(action.get("inputs", {}).get("schema", {}).get("required", []))
-            if entry["entity"].split("_")[-1] in plural and not required:
-                score += 2  # "which webhooks": the list action, not the get-one action
+            if entry["operation_class"] == "read" and entry["entity"].split("_")[-1] in plural and not required:
+                score += 3  # "which webhooks": the list action, not the get-one action
             scored.append((score, trust, required, entry))
     # Ties go to the more trusted action, then to the one that needs fewer inputs (a list before a get-by-id).
     scored.sort(key=lambda s: (-s[0], -s[1], s[2]))
@@ -120,8 +120,11 @@ def run_action(action_id: str, inputs: dict, confirmed: bool = False) -> dict:
             "reason": "this action needs the user's confirmation. Ask the user, then call again with confirmed=true.",
             "side_effects": action["side_effects"],
         }
-    with brevo_exec.client() as c:
-        code, payload = brevo_exec.call(action_id, inputs, c, RUN, action=action)
+    try:
+        with brevo_exec.client() as c:
+            code, payload = brevo_exec.call(action_id, inputs, c, RUN, action=action)
+    except RuntimeError as error:
+        return {"ran": False, "reason": str(error)}
     reply = {"ran": True, "http_status": code, "response": payload, "catalog_status": status}
     if status == "failed":
         reply["warning"] = action["verification"].get("notes")

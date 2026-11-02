@@ -44,7 +44,7 @@ def api_key() -> str:
         ["security", "find-generic-password", "-s", "brevo-api-key", "-w"], capture_output=True, text=True
     )
     if out.returncode != 0:
-        sys.exit(
+        raise RuntimeError(
             "No Brevo API key: set BREVO_API_KEY or store it with `security add-generic-password -s brevo-api-key -a brevo -w`"
         )
     return out.stdout.strip()
@@ -260,7 +260,7 @@ def scenario(file: str) -> int:
     return failures
 
 
-if __name__ == "__main__":
+def main() -> None:
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "call":
         with client() as c:
@@ -272,3 +272,10 @@ if __name__ == "__main__":
         sys.exit(1 if scenario(sys.argv[2]) else 0)
     else:
         print(__doc__)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except RuntimeError as error:
+        sys.exit(str(error))
