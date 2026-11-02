@@ -182,6 +182,13 @@
         "Click 'Create a task'",
         "Fill the task and save"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/companies/detail/{companyId}",
+        "Click 'Create a task'"
+      ]
     }
   ],
   "preconditions": [],

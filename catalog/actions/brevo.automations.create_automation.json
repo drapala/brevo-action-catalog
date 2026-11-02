@@ -42,6 +42,14 @@
       "success_status": [
         200
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/automation/automations",
+        "Click 'Create an automation'",
+        "Click 'Create from scratch'"
+      ]
     }
   ],
   "preconditions": [],

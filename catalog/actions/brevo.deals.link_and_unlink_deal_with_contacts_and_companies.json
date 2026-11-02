@@ -154,7 +154,7 @@
     "undo_with": "brevo.deals.link_and_unlink_deal_with_contacts_and_companies",
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "available",

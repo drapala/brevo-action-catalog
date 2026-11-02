@@ -56,6 +56,15 @@
       "success_status": [
         204
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/segment",
+        "On the segment row, click 'more segment actions'",
+        "Click 'Delete segment'",
+        "Confirm"
+      ]
     }
   ],
   "preconditions": [],

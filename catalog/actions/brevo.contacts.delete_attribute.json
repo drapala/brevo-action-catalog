@@ -67,7 +67,10 @@
     }
   ],
   "preconditions": [],
-  "postcondition": null,
+  "postcondition": {
+    "check_with": "brevo.contacts.get_attributes",
+    "assert": "the read-back step 'attribute_gone' passes"
+  },
   "side_effects": {
     "reversible": false,
     "undo_with": null,

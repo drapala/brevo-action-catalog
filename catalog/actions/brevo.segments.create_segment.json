@@ -61,6 +61,13 @@
       "success_status": [
         201
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/segment",
+        "Click 'Create a segment'"
+      ]
     }
   ],
   "preconditions": [],

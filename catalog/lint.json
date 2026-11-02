@@ -6,6 +6,18 @@
     "message": "write with no postcondition"
   },
   {
+    "check": "G001",
+    "target": "brevo.balance.cancel_transaction",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.balance.complete_transaction",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
     "check": "G002",
     "target": "brevo.balance.create_balance_limit",
     "severity": "gap",
@@ -49,25 +61,31 @@
   },
   {
     "check": "G001",
+    "target": "brevo.companies.import_companies_creation_and_updation",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.companies.update_attribute",
     "severity": "gap",
     "message": "write with no postcondition"
   },
   {
     "check": "G001",
-    "target": "brevo.contacts.create_attribute",
-    "severity": "gap",
-    "message": "write with no postcondition"
-  },
-  {
-    "check": "G001",
-    "target": "brevo.contacts.delete_attribute",
-    "severity": "gap",
-    "message": "write with no postcondition"
-  },
-  {
-    "check": "G001",
     "target": "brevo.contacts.delete_multi_attribute_options",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.contacts.import_contacts",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.contacts.request_contact_export",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -90,6 +108,18 @@
     "message": "weak entity name 'message'"
   },
   {
+    "check": "G001",
+    "target": "brevo.conversations.send_automated_message_to_visitor",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.conversations.send_message_as_agent",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
     "check": "G002",
     "target": "brevo.conversations.send_message_as_agent",
     "severity": "gap",
@@ -102,6 +132,12 @@
     "message": "write with no postcondition"
   },
   {
+    "check": "G001",
+    "target": "brevo.conversations.sets_agent_status_to_online_for_2_3_minutes",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
     "check": "G002",
     "target": "brevo.conversations.update_message_sent_by_agent",
     "severity": "gap",
@@ -110,6 +146,12 @@
   {
     "check": "G001",
     "target": "brevo.coupons.create_coupons",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.custom_objects.batch_delete_object_records",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -145,7 +187,37 @@
   },
   {
     "check": "G001",
+    "target": "brevo.deals.import_deals_creation_and_updation",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.domains.authenticate_domain",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.domains.create_domain",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.ecommerce.activate_e_commerce_app",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.ecommerce.create_batch_order",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.ecommerce.create_order",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -175,6 +247,30 @@
   },
   {
     "check": "G001",
+    "target": "brevo.email_campaigns.email_export_recipients",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.email_campaigns.send_email_campaign_now",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.email_campaigns.send_report",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.email_campaigns.send_test_email",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.email_campaigns.upload_image_to_gallery",
     "severity": "gap",
     "message": "write with no postcondition"
@@ -199,6 +295,12 @@
   },
   {
     "check": "G001",
+    "target": "brevo.master_account.associate_ip_to_sub_accounts",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.master_account.change_admin_user_permissions",
     "severity": "gap",
     "message": "write with no postcondition"
@@ -217,7 +319,25 @@
   },
   {
     "check": "G001",
+    "target": "brevo.master_account.dissociate_ip_to_sub_accounts",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.master_account.enable_disable_sub_account_application",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.master_account.generate_sso_token_to_access_admin_account",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.master_account.generate_sso_token_to_access_sub_account",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -232,6 +352,12 @@
     "target": "brevo.master_account.get_sub_account_groups",
     "severity": "gap",
     "message": "weak entity name 'group'"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.master_account.invite_admin_user",
+    "severity": "gap",
+    "message": "write with no postcondition"
   },
   {
     "check": "G001",
@@ -277,6 +403,12 @@
   },
   {
     "check": "G001",
+    "target": "brevo.program.publish_loyalty_program",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.program.subscribe_member_to_asubscription",
     "severity": "gap",
     "message": "write with no postcondition"
@@ -289,7 +421,25 @@
   },
   {
     "check": "G001",
+    "target": "brevo.reward.complete_redeem_transaction",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.reward.create_reward",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.reward.validate_reward",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.senders.create_sender",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -302,6 +452,36 @@
   {
     "check": "G001",
     "target": "brevo.senders.update_sender",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.senders.validate_sender_by_otp",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.sms_campaigns.request_sms_recipient_export",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.sms_campaigns.send_sms_campaign_now",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.sms_campaigns.send_sms_report",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.sms_campaigns.send_test_sms",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -343,6 +523,12 @@
   },
   {
     "check": "G001",
+    "target": "brevo.transactional_emails.delete_hardbounces",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.transactional_emails.delete_smtp_transactional_log",
     "severity": "gap",
     "message": "write with no postcondition"
@@ -352,6 +538,24 @@
     "target": "brevo.transactional_emails.get_smtp_report",
     "severity": "gap",
     "message": "weak entity name 'report'"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_emails.post_preview_smtp_email_templates",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_emails.send_test_template",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_emails.send_transac_email",
+    "severity": "gap",
+    "message": "write with no postcondition"
   },
   {
     "check": "G001",
@@ -367,7 +571,31 @@
   },
   {
     "check": "G001",
+    "target": "brevo.transactional_sms.send_async_transactional_sms",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_sms.send_transac_sms",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.transactional_whats_app.send_whatsapp_message",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.user.edit_user_permission",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.user.inviteuser",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -385,7 +613,31 @@
   },
   {
     "check": "G001",
+    "target": "brevo.wallet.redeem_wallet_pass",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.webhooks.export_webhooks_history",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.whats_app_campaigns.create_whats_app_campaign",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.whats_app_campaigns.create_whats_app_template",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.whats_app_campaigns.send_whats_app_template_approval",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -404,6 +656,24 @@
   {
     "check": "G001",
     "target": "brevo.contacts.copy_sms_number_to_whatsapp",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.automations.add_contacts_to_automation",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.contacts.send_individual_email",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.contacts.send_individual_sms",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -457,6 +727,12 @@
   },
   {
     "check": "G001",
+    "target": "brevo.crm.activate_sales_crm",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.email_campaigns.create_campaign_folder",
     "severity": "gap",
     "message": "write with no postcondition"
@@ -476,6 +752,12 @@
   {
     "check": "G001",
     "target": "brevo.email_campaigns.add_campaign_to_folder",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.email_campaigns.resend_campaign",
     "severity": "gap",
     "message": "write with no postcondition"
   },
@@ -595,6 +877,12 @@
   },
   {
     "check": "G001",
+    "target": "brevo.ecommerce.install_store_plugin",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
     "target": "brevo.landing_pages.create_landing_page",
     "severity": "gap",
     "message": "write with no postcondition"
@@ -602,6 +890,18 @@
   {
     "check": "G001",
     "target": "brevo.conversions.create_conversion",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.phone.buy_phone_package",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.meetings.set_up_meetings",
     "severity": "gap",
     "message": "write with no postcondition"
   }

@@ -29,6 +29,7 @@ import httpx
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
+CATALOG = ROOT / "catalog/actions"
 ACTIONS = ROOT / "build/openapi_actions"
 UI_ACTIONS = ROOT / "sources/ui_actions"
 EVIDENCE = ROOT / "evidence/runs.jsonl"
@@ -50,7 +51,7 @@ def api_key() -> str:
 
 
 def load_action(action_id: str) -> dict:
-    for folder in (ACTIONS, UI_ACTIONS):
+    for folder in (CATALOG, ACTIONS, UI_ACTIONS):
         path = folder / f"{action_id}.json"
         if path.exists():
             return json.loads(path.read_text())
@@ -81,8 +82,8 @@ def record(entry: dict) -> None:
         fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
-def call(action_id: str, inputs: dict, client: httpx.Client, run: str = "manual") -> tuple[int, object]:
-    action = load_action(action_id)
+def call(action_id: str, inputs: dict, client: httpx.Client, run: str = "manual", action: dict | None = None) -> tuple[int, object]:
+    action = action or load_action(action_id)
     route = next(r for r in action["routes"] if r["kind"] == "documented_api")
     url = route["url"]
     query, body = {}, {}
@@ -164,33 +165,41 @@ def render(value, ctx: dict):
     return value
 
 
+def lookup(payload, path: str):
+    cur = payload
+    for part in path.split("."):
+        if isinstance(cur, list) and part.isdigit() and int(part) < len(cur):
+            cur = cur[int(part)]
+        elif isinstance(cur, dict):
+            cur = cur.get(part)
+        else:
+            return None
+    return cur
+
+
 def check(assertion: dict, status: int, payload, ctx: dict) -> tuple[bool, str]:
     if "status" in assertion and status not in (
         assertion["status"] if isinstance(assertion["status"], list) else [assertion["status"]]
     ):
         return False, f"status {status} not in {assertion['status']}"
     for path, expected in (assertion.get("equals") or {}).items():
-        cur = payload
-        for part in path.split("."):
-            cur = cur[int(part)] if isinstance(cur, list) else (cur or {}).get(part)
+        cur = lookup(payload, path)
         expected = render(expected, ctx)
         if cur != expected:
             return False, f"{path} = {cur!r}, expected {expected!r}"
     contains = assertion.get("list_contains")
     if contains:
-        items = payload
-        for part in contains["path"].split("."):
-            items = (items or {}).get(part)
+        items = lookup(payload, contains["path"])
         field, want = contains["field"], render(contains["value"], ctx)
-        if not any(isinstance(i, dict) and i.get(field) == want for i in (items or [])):
+        if not isinstance(items, list) or not any(isinstance(i, dict) and i.get(field) == want for i in items):
             return False, f"no item with {field}={want!r} in {contains['path']}"
     excludes = assertion.get("list_excludes")
     if excludes:
-        items = payload
-        for part in excludes["path"].split("."):
-            items = (items or {}).get(part)
+        items = lookup(payload, excludes["path"])
         field, unwanted = excludes["field"], render(excludes["value"], ctx)
-        if any(isinstance(i, dict) and i.get(field) == unwanted for i in (items or [])):
+        if not isinstance(items, list):
+            return False, f"{excludes['path']} is not a list in the response"
+        if any(isinstance(i, dict) and i.get(field) == unwanted for i in items):
             return False, f"{excludes['path']} still has an item with {field}={unwanted!r}"
     return True, "ok"
 
@@ -205,7 +214,7 @@ def scenario(file: str) -> int:
         for step in spec["steps"]:
             inputs = render(step.get("inputs") or {}, ctx)
             retry = step.get("retry") or {}
-            attempts = 1 + int(retry.get("times", 0))
+            attempts = 1 + max(0, int(retry.get("times", 0)))
             for attempt in range(1, attempts + 1):
                 status, payload = call(step["action"], inputs, c, run)
                 ok, why = check(step.get("assert") or {}, status, payload, ctx)

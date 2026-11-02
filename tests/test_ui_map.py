@@ -22,7 +22,8 @@ def write_map(tmp_path, lines):
 
 
 def test_matched_line_adds_a_ui_route_and_new_line_becomes_a_valid_seen_action(tmp_path, monkeypatch):
-    api_action = {"id": "brevo.contacts.create_list", "routes": [{"kind": "documented_api"}]}
+    api_action = {"id": "brevo.contacts.create_list", "routes": [{"kind": "documented_api"}],
+                  "verification": {"status": "verified"}, "availability": {"free_plan": "available"}}
     lines = [
         {"area": "Lists", "ui": "Create a list", "steps": ["Open the lists page", "Click 'Create a list'"], "catalog_id": api_action["id"]},
         {"area": "Lists", "ui": "Duplicate", "steps": ["Open the lists page", "Click 'Duplicate'"],
@@ -42,3 +43,24 @@ def test_matched_line_adds_a_ui_route_and_new_line_becomes_a_valid_seen_action(t
     jsonschema.validate(seen, schema)
     assert stats == {"view_only": 1, "business_actions": 2, "in_catalog_before_walk": 1, "added_by_walk": 1,
                      "runs_through_public_api": 1, "ui_steps_only": 1}
+
+
+def test_every_ui_path_is_kept_and_a_new_action_cannot_replace_an_existing_one(tmp_path, monkeypatch):
+    target = {"id": "brevo.email_campaigns.update_email_campaign", "routes": [{"kind": "documented_api"}],
+              "verification": {"status": "verified"}, "availability": {"free_plan": "available"}}
+    lines = [
+        {"area": "Email Campaigns", "ui": "Edit", "steps": ["Click 'Edit'"], "catalog_id": target["id"]},
+        {"area": "Email Campaigns", "ui": "Schedule", "steps": ["Click 'Schedule'"], "catalog_id": target["id"]},
+    ]
+    monkeypatch.setattr(build_catalog, "UI_MAP", write_map(tmp_path, lines))
+    build_catalog.apply_ui_map({target["id"]: target})
+    assert [r["ui_steps"] for r in target["routes"] if r["kind"] == "ui_path"] == [["Click 'Edit'"], ["Click 'Schedule'"]]
+
+    clash = [{"area": "Lists", "ui": "Duplicate", "steps": ["x"],
+              "new": {"id": target["id"], "entity": "list", "operation_class": "create", "description": "d"}}]
+    monkeypatch.setattr(build_catalog, "UI_MAP", write_map(tmp_path, clash))
+    try:
+        build_catalog.apply_ui_map({target["id"]: target})
+    except ValueError:
+        return
+    raise AssertionError("a new walk action replaced an existing catalog action")

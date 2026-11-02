@@ -95,7 +95,7 @@ add(
         "brevo.contacts.copy_sms_number_to_whatsapp",
         "contact",
         "update",
-        "Copy each selected contact's SMS number into its WhatsApp field. The public API has no route for this; update_contact can set the WHATSAPP attribute one contact at a time.",
+        "Copy each selected contact's SMS number into its WhatsApp field. The public API has no route for this; update_batch_contacts can set the WHATSAPP attribute for many contacts at once.",
     ),
 )
 add(
@@ -933,6 +933,7 @@ add(
     "Create a loyalty program",
     [f"Open {A}/loyalty", "The free plan shows Upgrade to Enterprise"],
     "brevo.program.create_new_lp",
+    status="gated",
 )
 
 doc = {

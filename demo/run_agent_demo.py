@@ -10,7 +10,6 @@ Needs: the `claude` CLI logged in, and a Brevo API key (see README).
 from __future__ import annotations
 
 import json
-import os
 import subprocess
 import sys
 from datetime import date
@@ -40,8 +39,10 @@ REQUESTS = [
 def run(request: str, config: Path) -> tuple[list[dict], str]:
     cmd = ["claude", "-p", request, "--system-prompt", SYSTEM, "--mcp-config", str(config), "--strict-mcp-config",
            "--allowedTools", ",".join(TOOLS), "--output-format", "stream-json", "--verbose", "--max-turns", "30"]
-    env = {**os.environ, "TURN_GUARD_OFF": "1"}
-    out = subprocess.run(cmd, capture_output=True, text=True, env=env, cwd="/tmp", timeout=900)
+    try:
+        out = subprocess.run(cmd, capture_output=True, text=True, cwd="/tmp", timeout=900)
+    except subprocess.TimeoutExpired:
+        return [], "(the agent did not finish within 15 minutes)"
     steps, final = [], ""
     pending = {}
     for line in out.stdout.splitlines():
@@ -64,6 +65,12 @@ def run(request: str, config: Path) -> tuple[list[dict], str]:
                     steps.append({**call, "result": text})
         elif event.get("type") == "result":
             final = event.get("result", "")
+            if event.get("is_error"):
+                final = f"(the agent session ended with an error) {final}"
+    if out.returncode != 0 and not final:
+        final = f"(claude exited with code {out.returncode}: {out.stderr.strip()[:300]})"
+    for call in pending.values():
+        steps.append({**call, "result": "(no reply recorded)"})
     return steps, final
 
 

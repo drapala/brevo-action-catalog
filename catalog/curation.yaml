@@ -1,0 +1,14 @@
+# Reviewed corrections applied on top of the generated and walked entries.
+# Every entry needs a `why`; the builder rejects one without it.
+
+brevo.settings.create_api_key:
+  preconditions: ["A verified phone number on the account"]
+  why: "Settings > SMTP & API asked for phone verification before it showed the key form (2026-10-30 to 2026-11-02, AI_LOG C004)."
+
+brevo.email_campaigns.send_email_campaign_now:
+  preconditions: ["A verified phone number on the account"]
+  why: "The web app walk on 2026-10-30 recorded that sending a campaign needs a verified phone (sources/ui/areas-2026-10-30.yaml, Email campaigns)."
+
+brevo.email_campaigns.send_test_email:
+  preconditions: ["A verified phone number on the account"]
+  why: "Same sending check as send_email_campaign_now (sources/ui/areas-2026-10-30.yaml, Email campaigns)."

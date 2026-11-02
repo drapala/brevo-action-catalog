@@ -13,16 +13,17 @@ import build_catalog  # noqa: E402
 
 def entry(action_id):
     op = "read" if action_id.split(".")[-1].startswith("get_") else "update"
-    return {"id": action_id, "operation_class": op, "verification": {"status": "documented"}, "availability": {"free_plan": "unknown"}}
+    return {"id": action_id, "operation_class": op, "routes": [{"kind": "documented_api", "success_status": [200]}],
+            "verification": {"status": "documented"}, "availability": {"free_plan": "unknown"}}
 
 
 def test_failed_read_back_marks_the_write_action_failed(tmp_path, monkeypatch):
     runs = [
-        {"run": "crm-1", "action": "brevo.tasks.update_task", "verdict": "pass", "why": "ok", "at": "2026-11-02T16:11:08+00:00"},
-        {"run": "crm-1", "action": "brevo.tasks.get_task", "verdict": "fail", "at": "2026-11-02T16:11:09+00:00",
+        {"run": "crm-1", "step": "s", "action": "brevo.tasks.update_task", "verdict": "pass", "why": "ok", "at": "2026-11-02T16:11:08+00:00"},
+        {"run": "crm-1", "step": "s", "action": "brevo.tasks.get_task", "verdict": "fail", "at": "2026-11-02T16:11:09+00:00",
          "why": "done = False, expected True", "postcondition_of": "brevo.tasks.update_task",
          "note": "update_task answers 204 to done=true but the task stays not done"},
-        {"run": "crm-1", "action": "brevo.tasks.get_task", "verdict": "pass", "why": "ok", "at": "2026-11-02T16:11:10+00:00"},
+        {"run": "crm-1", "step": "s", "action": "brevo.tasks.get_task", "verdict": "pass", "why": "ok", "at": "2026-11-02T16:11:10+00:00"},
     ]
     evidence = tmp_path / "runs.jsonl"
     evidence.write_text("\n".join(json.dumps(r) for r in runs) + "\n")
@@ -38,8 +39,8 @@ def test_failed_read_back_marks_the_write_action_failed(tmp_path, monkeypatch):
 
 def test_passing_read_back_keeps_the_write_action_verified(tmp_path, monkeypatch):
     runs = [
-        {"run": "c-1", "action": "brevo.contacts.update_list", "verdict": "pass", "why": "ok", "at": "2026-11-02T16:12:00+00:00"},
-        {"run": "c-1", "action": "brevo.contacts.get_list", "verdict": "pass", "why": "ok", "at": "2026-11-02T16:12:01+00:00",
+        {"run": "c-1", "step": "s", "action": "brevo.contacts.update_list", "verdict": "pass", "why": "ok", "at": "2026-11-02T16:12:00+00:00"},
+        {"run": "c-1", "step": "s", "action": "brevo.contacts.get_list", "verdict": "pass", "why": "ok", "at": "2026-11-02T16:12:01+00:00",
          "postcondition_of": "brevo.contacts.update_list"},
     ]
     evidence = tmp_path / "runs.jsonl"
@@ -54,10 +55,38 @@ def test_passing_read_back_keeps_the_write_action_verified(tmp_path, monkeypatch
 
 def test_write_without_a_read_back_is_not_verified(tmp_path, monkeypatch):
     # The reviewer found 11 writes marked verified from their own 2xx, with no read-back.
-    runs = [{"run": "c-2", "action": "brevo.contacts.create_folder", "verdict": "pass", "why": "ok", "at": "2026-11-02T18:00:00+00:00"}]
+    runs = [{"run": "c-2", "step": "s", "action": "brevo.contacts.create_folder", "verdict": "pass", "why": "ok", "at": "2026-11-02T18:00:00+00:00"}]
     evidence = tmp_path / "runs.jsonl"
     evidence.write_text(json.dumps(runs[0]) + "\n")
     monkeypatch.setattr(build_catalog, "EVIDENCE", evidence)
     actions = {"brevo.contacts.create_folder": entry("brevo.contacts.create_folder")}
     build_catalog.apply_evidence(actions)
     assert actions["brevo.contacts.create_folder"]["verification"]["status"] == "documented"
+
+
+def test_failed_read_back_does_not_mark_the_read_action_failed(tmp_path, monkeypatch):
+    runs = [
+        {"run": "c-3", "step": "s", "action": "brevo.tasks.update_task", "verdict": "pass", "why": "ok", "at": "2026-11-02T18:10:00+00:00"},
+        {"run": "c-3", "step": "s", "action": "brevo.tasks.get_task", "verdict": "fail", "why": "done = False", "at": "2026-11-02T18:10:01+00:00",
+         "postcondition_of": "brevo.tasks.update_task"},
+    ]
+    evidence = tmp_path / "runs.jsonl"
+    evidence.write_text("\n".join(json.dumps(r) for r in runs) + "\n")
+    monkeypatch.setattr(build_catalog, "EVIDENCE", evidence)
+    actions = {a: entry(a) for a in ("brevo.tasks.update_task", "brevo.tasks.get_task")}
+    build_catalog.apply_evidence(actions)
+    assert actions["brevo.tasks.update_task"]["verification"]["status"] == "failed"
+    assert actions["brevo.tasks.get_task"]["verification"]["status"] != "failed"
+
+
+def test_the_newest_own_result_wins(tmp_path, monkeypatch):
+    runs = [
+        {"run": "r1", "step": "s", "action": "brevo.contacts.get_lists", "verdict": "pass", "why": "ok", "at": "2026-11-02T18:00:00+00:00"},
+        {"run": "r2", "step": "s", "action": "brevo.contacts.get_lists", "verdict": "fail", "why": "status 500", "at": "2026-11-02T18:05:00+00:00"},
+    ]
+    evidence = tmp_path / "runs.jsonl"
+    evidence.write_text("\n".join(json.dumps(r) for r in runs) + "\n")
+    monkeypatch.setattr(build_catalog, "EVIDENCE", evidence)
+    actions = {"brevo.contacts.get_lists": entry("brevo.contacts.get_lists")}
+    build_catalog.apply_evidence(actions)
+    assert actions["brevo.contacts.get_lists"]["verification"]["status"] == "failed"

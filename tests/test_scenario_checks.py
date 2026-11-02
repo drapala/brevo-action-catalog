@@ -18,3 +18,13 @@ def test_list_excludes_fails_while_the_item_is_still_listed():
 
 def test_list_excludes_passes_once_the_item_is_gone():
     assert brevo_exec.check(CHECK, 200, {"contacts": [{"email": "b@example.com"}]}, {}) == (True, "ok")
+
+
+def test_list_excludes_fails_when_the_path_is_missing():
+    ok, why = brevo_exec.check(CHECK, 200, {"contactz": []}, {})
+    assert not ok and "not a list" in why
+
+
+def test_checks_do_not_crash_on_a_text_payload():
+    ok, _ = brevo_exec.check(CHECK, 200, "Bad gateway", {})
+    assert not ok

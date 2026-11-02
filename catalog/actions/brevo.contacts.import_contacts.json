@@ -183,6 +183,14 @@
         "Map the columns and pick a list",
         "Confirm the import"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/list-listing",
+        "On the list row, click 'more list actions'",
+        "Click 'Import contacts to the list'"
+      ]
     }
   ],
   "preconditions": [],

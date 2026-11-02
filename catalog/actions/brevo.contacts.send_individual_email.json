@@ -25,6 +25,13 @@
         "Click 'Compose an email'",
         "Write and send"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/companies/detail/{companyId}",
+        "Click 'Compose an email'"
+      ]
     }
   ],
   "preconditions": [],

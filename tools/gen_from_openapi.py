@@ -15,10 +15,12 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from catalog_lint import DESTRUCTIVE_NAME  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 SPEC = ROOT / "sources/openapi/brevo-v3.yml"
 OUT = ROOT / "build/openapi_actions"
-INDEX = ROOT / "build/openapi_index.json"
 BASE_URL = "https://api.brevo.com/v3"
 METHODS = ("get", "post", "put", "patch", "delete")
 
@@ -130,8 +132,6 @@ PARAM_ENTITY = {
 
 STOPWORDS = {"a", "an", "the", "s", "its", "your", "based"}
 
-# An action whose name says it deletes or cancels something asks the user first.
-DESTRUCTIVE_NAME = re.compile(r"(^|_)(delete|remove|cancel|revoke|clear|purge)(_|$)")
 
 
 def slug(text: str) -> str:
@@ -385,7 +385,7 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     for old in OUT.glob("*.json"):
         old.unlink()
-    index = []
+    written = 0
     for d in drafts:
         refs = []
         for pname, loc in d["params"].items():
@@ -500,20 +500,8 @@ def main() -> None:
             ],
         }
         (OUT / f"{d['id']}.json").write_text(json.dumps(action, indent=2, ensure_ascii=False) + "\n")
-        index.append(
-            {
-                "id": d["id"],
-                "label": action["label"],
-                "area": d["area"],
-                "entity": d["entity"],
-                "operation_class": d["oclass"],
-                "route_kinds": ["documented_api"],
-                "verification": "documented",
-                "requires_confirmation": requires_confirmation,
-            }
-        )
-    INDEX.write_text(json.dumps(sorted(index, key=lambda x: x["id"]), indent=2, ensure_ascii=False) + "\n")
-    print(f"wrote {len(index)} actions")
+        written += 1
+    print(f"wrote {written} actions")
     sys.path.insert(0, str(ROOT / "tools"))
     import catalog_lint
     import corrections

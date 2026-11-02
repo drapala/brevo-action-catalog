@@ -67,6 +67,15 @@
         "On the list row, click 'more list actions'",
         "Click 'Rename'"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/list-listing",
+        "On the list row, click 'more list actions'",
+        "Click 'Move'",
+        "Pick the folder"
+      ]
     }
   ],
   "preconditions": [],

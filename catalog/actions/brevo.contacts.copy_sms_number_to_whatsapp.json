@@ -5,7 +5,7 @@
   "entity": "contact",
   "operation_class": "update",
   "label": "Copy SMS number to WhatsApp",
-  "description": "Copy each selected contact's SMS number into its WhatsApp field. The public API has no route for this; update_contact can set the WHATSAPP attribute one contact at a time.",
+  "description": "Copy each selected contact's SMS number into its WhatsApp field. The public API has no route for this; update_batch_contacts can set the WHATSAPP attribute for many contacts at once.",
   "inputs": {
     "schema": {
       "type": "object",

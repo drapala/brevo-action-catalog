@@ -16,7 +16,12 @@ def test_action_that_needs_confirmation_does_not_run_without_it():
 
 def test_seen_action_does_not_run_and_returns_the_ui_steps():
     reply = mcp_server.run_action("brevo.segments.rename_segment", {})
-    assert reply["ran"] is False and reply["ui_steps"]
+    assert reply["ran"] is False and "seen" in reply["reason"] and reply["ui_paths"]
+
+
+def test_gated_action_with_a_public_api_does_not_run():
+    reply = mcp_server.run_action("brevo.ecommerce.get_orders", {}, confirmed=True)
+    assert reply["ran"] is False and "gated" in reply["reason"]
 
 
 def test_ui_only_action_does_not_run_even_when_confirmed():
@@ -28,7 +33,7 @@ def test_requests_from_the_reviewer_find_the_right_action_first():
     cases = {
         "add a contact to the newsletter list": "brevo.contacts.add_contact_to_list",
         "mark a task as done": "brevo.tasks.update_task",
-        "which webhooks do we have": "brevo.webhooks.get_webhook",
+        "which webhooks do we have": "brevo.webhooks.get_webhooks",
         "delete the old sign-up form": "brevo.forms.delete_form",
     }
     for request, expected in cases.items():

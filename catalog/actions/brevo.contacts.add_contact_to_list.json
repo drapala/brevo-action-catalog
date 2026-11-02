@@ -103,7 +103,10 @@
     }
   ],
   "preconditions": [],
-  "postcondition": null,
+  "postcondition": {
+    "check_with": "brevo.contacts.get_contacts_from_list",
+    "assert": "add_contact_to_list took effect"
+  },
   "side_effects": {
     "reversible": true,
     "undo_with": "brevo.contacts.remove_contact_from_list",

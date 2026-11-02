@@ -198,7 +198,7 @@
         "name": "body"
       },
       "success_status": [
-        200
+        204
       ]
     }
   ],
@@ -222,7 +222,8 @@
     "status": "verified",
     "route_kind": "documented_api",
     "checked_at": "2026-11-02T17:12:40+00:00",
-    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793639557"
+    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793639557",
+    "notes": "The spec documents HTTP [200], the live API returns [204]."
   },
   "sources": [
     {

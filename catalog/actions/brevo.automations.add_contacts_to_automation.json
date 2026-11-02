@@ -27,6 +27,14 @@
         "Click 'Add to automation'",
         "Pick an automation"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/index/{contactId}",
+        "Click 'More quick actions'",
+        "Click 'Add to automation'"
+      ]
     }
   ],
   "preconditions": [],

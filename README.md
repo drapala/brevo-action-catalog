@@ -6,16 +6,16 @@ A catalog of 348 Brevo actions that an AI agent can find, fill, run and check. I
 |---|---|---|
 | `verified` | 81 | Ran on a live free-plan account, and a read-back proved the effect. |
 | `observed` | 9 | Done in the web app, with the app's own network calls captured. These actions have no public API. |
-| `gated` | 21 | The free plan refuses them. The entry keeps the exact refusal or the upgrade screen. |
-| `failed` | 1 | Ran, returned success, and did nothing. |
+| `gated` | 22 | The free plan refuses them, or they need a setup step first. The entry keeps the exact refusal or the screen the app shows. |
+| `failed` | 1 | Ran and returned success, but the read-back showed the change did not happen. |
 | `seen` | 42 | Seen in the web app (a button or a menu item) and not run. The entry gives the UI steps. These actions have no public API. |
-| `documented` | 194 | In the official API spec only. Not run. |
+| `documented` | 193 | In the official API spec only. Not run. |
 
 The 81 verified actions include 31 writes (create, update, delete, link). Every write was read back after it ran. The evidence is in `evidence/runs.jsonl` (400 live API calls). Coverage by area is in `catalog/coverage.json`.
 
 ## Review in 2 minutes
 
-1. [`demo/agent-demo-2026-11-02.md`](demo/agent-demo-2026-11-02.md): a fresh Claude agent gets four user requests and only the catalog's three MCP tools. Every tool call and reply is in the file.
+1. [`demo/agent-demo-2026-11-02.md`](demo/agent-demo-2026-11-02.md): a fresh Claude agent gets four user requests and only the catalog's three MCP tools. Every tool call is in the file, with each reply cut to its first 400 characters.
 2. [`catalog/coverage.json`](catalog/coverage.json): the counts in this README, built by `tools/build_catalog.py`.
 3. Three entries: a verified write ([`add_contact_to_list`](catalog/actions/brevo.contacts.add_contact_to_list.json)), a failed one ([`update_task`](catalog/actions/brevo.tasks.update_task.json)) and a web-app-only one ([`create_form`](catalog/actions/brevo.forms.create_form.json)).
 4. [`docs/AI_LOG.md`](docs/AI_LOG.md): every mistake the AI made while building this, what caught it, and the fix.
@@ -27,7 +27,7 @@ The brief asks for everything a user can do by clicking around the product, so t
 
 1. A browser agent opened every page of the main menu and the settings menu (40 pages). It did not open the visual automation editor, the deal and task screens, or the Conversations inbox (see the gaps). One test item of each kind (list, contact, company, deal, campaign, template) was created first, so that row menus and bulk actions appear. The items were deleted after the walk.
 2. It found 107 business actions, plus 15 controls that only change the screen (filters, columns, tabs).
-3. `sources/ui/ui_map.yaml` joins each of the 107 to the catalog. 58 lead to an action with a route an agent can run: 51 through the public API and 7 through the web app's internal calls. The other 49 have UI steps only. Each action also gets the UI steps as a route.
+3. `sources/ui/ui_map.yaml` joins each of the 107 to the catalog. 57 lead to an action with a route an agent can run: 50 through the public API and 7 through the web app's internal calls. 6 are blocked on the free plan. The other 44 have UI steps only. Every UI path is also kept on its catalog action as a route.
 4. Before this walk, 59 of the 107 matched a catalog action (55%). The walk added 46 new actions for the other 48: 42 `seen` and 4 `gated`. The numbers are in `catalog/coverage.json` under `web_app_walk`, and the raw walk is in `evidence/ui-walk-2026-11-02.json`.
 
 Areas that the free plan blocks, or that need a setup step first, are listed with the screen the app shows instead: deals and tasks (the sales CRM must be turned on first, although the public API creates deals and tasks without that step), custom objects, landing pages, conversions, Analytics studio, loyalty, phone and meetings.
@@ -36,16 +36,16 @@ Areas that the free plan blocks, or that need a setup step first, are listed wit
 
 These are the reasons a catalog built from the spec alone would mislead an agent.
 
-1. **A success code is not proof.** `brevo.tasks.update_task` answers 204 to `done: true`, but the task stays open. The same call does change the name. The entry is `failed`, with the evidence.
+1. **A success code is not proof.** `brevo.tasks.update_task` answers 204 to `done: true` and sets a completion time, but `get_task` still returns `done: false`. The entry is `failed`, with the evidence.
 2. **The spec and the API disagree.**
    - `create_deal` returns 200. The spec says 201.
    - `get_transac_emails_list` marks every filter optional. The API rejects a call without `email`, `messageId` or `templateId`.
    - `get_webhooks` returns 400 "Webhook record does not exist" on an account with no webhooks, not an empty list.
    Each entry keeps this in `verification.notes`, so an agent knows what to send and what to expect.
-3. **Some writes are eventually consistent.** A contact added to a list appears in the list a few seconds later. The verifier retries the read-back before it fails a step.
+3. **A read right after a write can miss it.** Once, a contact added to a list was not in the list on the first read. The verifier now retries a read-back a few times before it fails the step. Every later run passed on the first read.
 4. **Much of the product has no public API.** Segments (create, delete), forms, and automations exist only in the web app. The catalog has these as `observed` actions with two routes: UI steps for a browser agent, and the internal endpoint the app calls (for example `POST https://forms-api.brevo.com/forms-api/forms`).
-5. **The free plan blocks more than the pricing page says.** 16 read calls return 403 or an "upgrade" message (WhatsApp, e-commerce, corporate accounts, consent groups). Template folders show an upgrade dialog in the web app.
-6. **An API key needs a verified phone.** SMS and call verification failed for this account. Brevo support validated the account on Friday evening, so the live runs started on Monday. The phone check is a precondition in the catalog.
+5. **The free plan blocks more than the pricing page says.** 16 read calls return 403 or an "upgrade" message (WhatsApp, corporate accounts, consent groups). E-commerce answers "not yet activated": it needs a setup step, which the catalog lists as a precondition. Template folders show an upgrade dialog in the web app.
+6. **An API key needs a verified phone.** SMS and call verification failed for this account. Brevo support validated the account on Friday evening, so the live runs started on Monday. The phone check is a precondition of creating an API key and of sending a campaign in the catalog.
 
 ## The format
 
@@ -70,7 +70,7 @@ Each action is one JSON file in `catalog/actions/`, valid against `catalog/schem
 1. Read `catalog/index.json`. Pick candidates by area, entity and label.
 2. Open the action file. Prefer `verified`, then `observed`. Treat `documented` as untested. Treat `seen` as a pointer: a browser agent can follow its UI steps, but its inputs and exact effect are not known. Do not offer `gated` actions on a free account.
 3. For each ID input, call the `find_with` action first.
-4. If `requires_confirmation` is true, ask the user before the call. This covers sends, invitations, deletes, cancels and account settings (111 actions).
+4. If `requires_confirmation` is true, ask the user before the call. This covers sends, invitations, deletes, cancels, unlinks and account settings (115 actions).
 5. Run the action through the MCP server (next section), or with `tools/brevo_exec.py call <action_id> '<json inputs>'` for any `documented_api` route.
 6. Run the `postcondition` read and check the effect before telling the user it is done.
 
@@ -80,9 +80,9 @@ Each action is one JSON file in `catalog/actions/`, valid against `catalog/schem
 
 - An action that needs confirmation runs only with `confirmed=true`.
 - A `gated` or `seen` action, or one with no public API, does not run. The reply gives the UI steps.
-- Every run returns the read-back the agent must do before it reports success.
+- A run returns the read-back the agent must do before it reports success, when the entry has one. All 31 verified writes have one. Most `documented` writes do not yet (see the gaps).
 
-`demo/run_agent_demo.py` gave four requests to a fresh Claude agent in headless mode, with only these three tools and no other context. The full transcript is in `demo/agent-demo-2026-11-02.md`.
+`demo/run_agent_demo.py` gave four requests to a fresh Claude agent in headless mode, with only these three tools and no other context. The transcript is in `demo/agent-demo-2026-11-02.md`.
 
 | Request | What the agent did |
 |---|---|
@@ -91,7 +91,7 @@ Each action is one JSON file in `catalog/actions/`, valid against `catalog/schem
 | Delete the list | It stopped before the delete and wrote the confirmation question for the user. |
 | Create a segment of the contacts who opened last week's campaign | It found no campaigns on the account, saw that segments exist only in the web app, and asked the user what they meant instead of guessing. |
 
-`confirmed=true` is the agent's statement that the user agreed. In the demo the agent also set it on reads, where it has no effect. With an MCP client that asks a person before each tool call, a person checks that statement.
+`confirmed=true` is the agent's statement that the user agreed. In the demo the agent also set it on calls that need no confirmation (reads, `create_contact`, `update_task`), where it has no effect. With an MCP client that asks a person before each tool call, a person checks that statement.
 
 ## Approach
 
@@ -115,7 +115,7 @@ The main agent was Claude Code (Claude Opus 5.5). It used subagents for parallel
 
 The rule: the model drafts and explores, and code checks. No model output can set `verified`.
 
-`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 24 corrections: what went wrong, what caught it, and the fix. Examples:
+`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 28 corrections: what went wrong, what caught it, and the fix. Examples:
 
 - The ID generator dropped words, so `addContactToList` became `add_contact_list`. Lint check L001 now catches this.
 - The builder showed `update_task` as verified, because the failed read-back was filed under the read action. A test now replays this case.
@@ -125,7 +125,7 @@ The rule: the model drafts and explores, and code checks. No model output can se
 
 Most corrections led to a check that stops the same error from coming back: lint checks in `tools/catalog_lint.py`, tests in `tests/`, and `tools/presubmit_check.py`.
 
-As a last step, a reviewer agent with no memory of the build tried to complete 8 user requests from the catalog alone, for example "add jane@example.com to the Newsletter list" and "which webhooks do we have?". It found 4 severe problems. Two delete actions did not ask for confirmation. One ID pointed to the wrong finder. Two entries left out facts that an agent needs. I checked each finding against the files, fixed all 4, and logged them (C016 to C019). The minor findings are in the gaps below.
+A reviewer agent with no memory of the build tried to complete 8 user requests from the catalog alone, for example "add jane@example.com to the Newsletter list" and "which webhooks do we have?". It found 4 severe problems. Two delete actions did not ask for confirmation. One ID pointed to the wrong finder. Two entries left out facts that an agent needs. I checked each finding against the files, fixed all 4, and logged them (C016 to C019). The minor findings are in the gaps below.
 
 ## Assumptions
 
@@ -137,14 +137,15 @@ As a last step, a reviewer agent with no memory of the build tried to complete 8
 
 ## Known gaps and limits
 
-1. **194 actions are `documented` only.** They come from the spec and were not run. The largest groups are master accounts (22), loyalty balance (18), e-commerce (13) and transactional email (11).
+1. **193 actions are `documented` only.** They come from the spec and were not run. The largest groups are master accounts (22), loyalty balance (18), e-commerce (13) and transactional email (11).
 2. **46 web app actions are `seen` or `gated`, not run.** Only 9 UI-only actions were done end to end with their network calls captured. The walk also did not open the visual automation editor, the deal and task screens (they need the sales CRM turned on), or the Conversations inbox, which loaded without any control the walk could read.
 3. **Request bodies of internal calls are not captured.** The browser log kept headers and responses only. The internal routes give the method, URL and response, but not the body shape.
 4. **The executor runs only public API routes.** A script cannot replay the internal routes, because they need the browser's session. A UI-only action needs a browser agent that follows `ui_steps`.
 5. **Descriptions of `documented` actions are the spec summaries.** Only the UI-only actions have descriptions written for an agent.
 6. **Some inputs still need extra lookups.** 123 ID inputs have no finder, because the API has no plain list route for them. In 93 actions, a deeply nested input schema is cut at depth 6. Some list actions cannot filter by name, so an agent must page through results to find "Newsletter".
-7. **101 lint gaps remain.** 76 writes have no postcondition yet (G001), most of them `seen` actions. 25 entity names are weak, for example `detail` (G002). They are listed in `catalog/lint.json`.
+7. **151 lint gaps remain.** 126 writes have no read-back yet (G001): 82 `documented`, 40 `seen` and 4 `gated`. 25 entity names are weak, for example `detail` (G002). They are listed in `catalog/lint.json`, and `tools/catalog_lint.py` prints the count.
 8. **Free plan only.** Paid features are listed as `gated`, not tested.
+9. **Search is keyword matching.** For every request tried, `find_actions` puts the right action in its top three, but not always first. The agent reads the entries to choose.
 
 ## Next steps
 

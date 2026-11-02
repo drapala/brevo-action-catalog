@@ -62,6 +62,13 @@
       "success_status": [
         201
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/forms-app/subscription",
+        "Click 'Create sign-up form'"
+      ]
     }
   ],
   "preconditions": [],

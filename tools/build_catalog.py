@@ -113,7 +113,8 @@ def apply_ui_map(actions: dict[str, dict]) -> dict:
 
     A line with catalog_id adds its UI steps to that action as a ui_path route.
     A line with new becomes a `seen` action. A line with kind view only changes
-    what the screen shows, so it is listed but is not a business action.
+    what the screen shows, so it is listed but is not a business action. A line
+    with status gated marks its catalog action gated when nothing ran it.
     """
     if not UI_MAP.exists():
         return {}
@@ -122,15 +123,24 @@ def apply_ui_map(actions: dict[str, dict]) -> dict:
     added = {line["new"]["id"] for line in lines if line.get("new")}
     for line in lines:
         if line.get("new"):
+            if line["new"]["id"] in actions:
+                raise ValueError(f"ui_map adds {line['new']['id']}, which the catalog already has")
             actions[line["new"]["id"]] = seen_action(line, walk)
     stats = Counter(view_only=len(walk["actions"]) - len(lines), business_actions=len(lines))
     for line in lines:
         target = actions[line.get("catalog_id") or line["new"]["id"]]
-        if not any(r["kind"] == "ui_path" for r in target["routes"]):
-            target["routes"].append({"kind": "ui_path", "ui_steps": line["steps"]})
+        route = {"kind": "ui_path", "ui_steps": line["steps"]}
+        if route not in target["routes"]:
+            target["routes"].append(route)
+        if line.get("catalog_id") and line.get("status") == "gated" and target["verification"]["status"] == "documented":
+            target["verification"].update(status="gated", route_kind="ui_path", checked_at=walk["walked_at"],
+                                          evidence=walk["evidence"], notes="The free plan shows an upgrade screen instead.")
+            target["availability"]["free_plan"] = "gated"
         stats["added_by_walk" if target["id"] in added else "in_catalog_before_walk"] += 1
         kinds = {r["kind"] for r in target["routes"]}
-        if "documented_api" in kinds:
+        if target["verification"]["status"] == "gated":
+            stats["blocked_on_free_plan"] += 1
+        elif "documented_api" in kinds:
             stats["runs_through_public_api"] += 1
         elif "undocumented_api" in kinds:
             stats["runs_through_internal_api"] += 1
@@ -169,10 +179,18 @@ def apply_evidence(actions: dict[str, dict]) -> None:
             calls[entry["action"]].append(entry)
     for action_id, action in actions.items():
         v = action["verification"]
-        passed = [e for e in verdicts.get(action_id, []) if e["verdict"] == "pass"]
-        failed = [e for e in verdicts.get(action_id, []) if e["verdict"] == "fail"]
+        # A failed read-back judges the write it checks, not the read that ran it.
+        own = [e for e in verdicts.get(action_id, []) if e["verdict"] == "pass" or not e.get("postcondition_of")]
+        passed = [e for e in own if e["verdict"] == "pass"]
+        failed = [e for e in own if e["verdict"] == "fail"]
         probes = [c for c in calls.get(action_id, []) if c["run"].startswith("probe-reads")]
         checks = postconditions.get(action_id, [])
+        good = [c for c in checks if c["verdict"] == "pass"]
+        if good and not action.get("postcondition"):
+            action["postcondition"] = {
+                "check_with": good[-1]["action"],
+                "assert": good[-1].get("proves") or f"the read-back step '{good[-1]['step']}' passes",
+            }
         if checks and checks[-1]["verdict"] == "fail":
             last = checks[-1]
             v.update(
@@ -184,7 +202,9 @@ def apply_evidence(actions: dict[str, dict]) -> None:
             )
             action["availability"]["free_plan"] = "available"
             continue
-        if passed and action["operation_class"] != "read" and not any(c["verdict"] == "pass" for c in checks):
+        if own and own[-1]["verdict"] == "fail":
+            passed = []
+        if passed and action["operation_class"] != "read" and not good:
             v.update(
                 checked_at=passed[-1]["at"],
                 evidence=f"evidence/runs.jsonl#run={passed[-1]['run']}",
@@ -200,6 +220,13 @@ def apply_evidence(actions: dict[str, dict]) -> None:
             )
             action["availability"]["free_plan"] = "available"
             notes = [passed[-1]["note"]] if passed[-1].get("note") else []
+            route = next(r for r in action["routes"] if r["kind"] == "documented_api")
+            live = sorted({c["status"] for c in calls.get(action_id, []) if 200 <= c["status"] < 300})
+            spec = route.get("success_status") or [200]
+            if live and not set(live) <= set(spec):
+                route["success_status"] = live
+            if live and not set(live) <= set(spec) and not any("spec documents" in n for n in notes):
+                notes.append(f"the spec documents HTTP {spec}, the live API returns {live}")
             # Keep the bare-call error: an agent without setup hits it too.
             if probes and probes[-1]["status"] not in (probes[-1].get("expected") or [200]):
                 bare = probes[-1]
@@ -281,7 +308,7 @@ def main() -> None:
 
     by_status = Counter(i["verification"] for i in index)
     by_route = Counter(k for i in index for k in i["route_kinds"])
-    ui_only = [i["id"] for i in index if i["route_kinds"] == ["ui_path"] or "documented_api" not in i["route_kinds"]]
+    ui_only = [i["id"] for i in index if "documented_api" not in i["route_kinds"]]
     areas = defaultdict(Counter)
     for i in index:
         areas[i["area"]][i["verification"]] += 1

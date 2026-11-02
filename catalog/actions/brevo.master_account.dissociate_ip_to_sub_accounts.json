@@ -75,7 +75,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": true,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

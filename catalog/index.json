@@ -512,7 +512,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.companies.update_attribute",
@@ -1487,7 +1487,7 @@
     ],
     "verification": "verified",
     "free_plan": "available",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.deals.update_deal",
@@ -2499,7 +2499,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.master_account.enable_disable_sub_account_application",
@@ -2512,7 +2512,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.master_account.generate_sso_token_to_access_admin_account",
@@ -2902,8 +2902,8 @@
       "documented_api",
       "ui_path"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {

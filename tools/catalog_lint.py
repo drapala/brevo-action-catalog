@@ -80,7 +80,8 @@ def check_effect_needs_confirmation(action: dict) -> list[Finding]:
     return []
 
 
-DESTRUCTIVE_NAME = re.compile(r"(^|_)(delete|remove|cancel|revoke|clear|purge)(_|$)")
+# An action whose name says it deletes, cancels or detaches something asks the user first.
+DESTRUCTIVE_NAME = re.compile(r"(^|_)(delete|remove|cancel|revoke|clear|purge|dissociate|disable|unlink)(_|$)")
 
 
 def check_destructive_needs_confirmation(action: dict) -> list[Finding]:
@@ -117,7 +118,7 @@ def check_undo_points_to_real_action(action: dict, actions: dict[str, dict]) -> 
 
 def check_write_has_postcondition(action: dict) -> list[Finding]:
     """G001 (gap): a write without a way to prove it took effect."""
-    if action["operation_class"] in ("create", "update", "delete") and not action.get("postcondition"):
+    if action["operation_class"] != "read" and not action.get("postcondition"):
         return [Finding("G001", action["id"], "gap", "write with no postcondition")]
     return []
 
@@ -156,3 +157,19 @@ def generator_noop(gen_source: Path, output_dir: Path, stamp: Path) -> list[Find
 
 def as_dicts(findings: list[Finding]) -> list[dict]:
     return [asdict(f) for f in findings]
+
+
+def main() -> int:
+    actions = {a["id"]: a for a in (json.loads(f.read_text()) for f in sorted((ROOT / "catalog/actions").glob("*.json")))}
+    findings = lint(actions)
+    for f in findings:
+        if f.severity == "error":
+            print(f"{f.check} {f.target}: {f.message}")
+    errors = sum(1 for f in findings if f.severity == "error")
+    gaps = sum(1 for f in findings if f.severity == "gap")
+    print(f"{len(actions)} actions: {errors} errors, {gaps} gaps")
+    return 1 if errors else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

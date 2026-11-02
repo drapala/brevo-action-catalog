@@ -107,7 +107,7 @@
         "text": "body"
       },
       "success_status": [
-        200
+        201
       ]
     },
     {
@@ -116,6 +116,13 @@
         "Open https://app.brevo.com/contact/index/{contactId}",
         "Click 'Add a note'",
         "Type the note and save"
+      ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/companies/detail/{companyId}",
+        "Click 'Add a note'"
       ]
     }
   ],
@@ -139,7 +146,8 @@
     "status": "verified",
     "route_kind": "documented_api",
     "checked_at": "2026-11-02T17:12:43+00:00",
-    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793639557"
+    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793639557",
+    "notes": "The spec documents HTTP [200], the live API returns [201]."
   },
   "sources": [
     {

@@ -69,7 +69,9 @@
       ]
     }
   ],
-  "preconditions": [],
+  "preconditions": [
+    "A verified phone number on the account"
+  ],
   "postcondition": null,
   "side_effects": {
     "reversible": false,

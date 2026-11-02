@@ -114,7 +114,7 @@
         "name": "body"
       },
       "success_status": [
-        201
+        200
       ]
     },
     {
@@ -124,6 +124,13 @@
         "Click 'More quick actions'",
         "Click 'Deal'",
         "Fill the deal and save"
+      ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/companies/detail/{companyId}",
+        "Click 'Add a deal'"
       ]
     }
   ],

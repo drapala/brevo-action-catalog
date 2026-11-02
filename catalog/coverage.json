@@ -2,10 +2,10 @@
   "total_actions": 348,
   "by_verification": {
     "verified": 81,
-    "gated": 21,
+    "gated": 22,
     "seen": 42,
     "observed": 9,
-    "documented": 194,
+    "documented": 193,
     "failed": 1
   },
   "by_route_kind": {
@@ -14,15 +14,16 @@
     "undocumented_api": 9
   },
   "without_public_api": 56,
-  "curated_entries": 0,
+  "curated_entries": 3,
   "web_app_walk": {
     "view_only": 15,
     "business_actions": 107,
     "in_catalog_before_walk": 59,
-    "runs_through_public_api": 51,
+    "runs_through_public_api": 50,
     "added_by_walk": 48,
-    "ui_steps_only": 49,
-    "runs_through_internal_api": 7
+    "ui_steps_only": 44,
+    "runs_through_internal_api": 7,
+    "blocked_on_free_plan": 6
   },
   "by_area": {
     "Account": {
@@ -132,7 +133,8 @@
       "verified": 1
     },
     "Program": {
-      "documented": 11,
+      "gated": 1,
+      "documented": 10,
       "verified": 1
     },
     "Reward": {
@@ -192,7 +194,7 @@
     }
   },
   "lint": {
-    "G001 (gap)": 76,
+    "G001 (gap)": 126,
     "G002 (gap)": 25
   }
 }

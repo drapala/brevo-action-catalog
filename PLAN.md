@@ -40,7 +40,7 @@ Verification statuses:
 
 ## Discovery: three sources, cross-checked
 
-1. **The official OpenAPI spec** (`api.brevo.com/v3/swagger_definition_v3.yml`, 292 operations, 35 areas). A deterministic generator turns it into draft entries. This is the coverage baseline, with no LLM involved.
+1. **The official OpenAPI spec** (`api.brevo.com/v3/swagger_definition_v3.yml`, 292 operations under 35 tags). A deterministic generator turns it into draft entries. This is the coverage baseline, with no LLM involved.
 2. **The web app's navigation.** A browser agent walks every menu and screen and lists what a user can click. This finds actions the public API does not have.
 3. **The web app's network calls.** While the browser agent performs an action, the network log shows the endpoint the app uses. This gives an undocumented route for UI-only actions.
 
@@ -64,7 +64,7 @@ The difference between sources 2 and 1 is the main finding: what a user can do i
 | A retried create is never assumed safe. | `side_effects.idempotent`. Brevo has no idempotency keys, so a create says to search before a retry. | A duplicate contact or campaign after a timeout. |
 | Anything that reaches people asks first. | `requires_confirmation` on sends, invitations and deletes. | A test email sent to a real list. |
 | Every live call leaves a record, and no record holds a credential. | `tools/brevo_exec.py` writes one evidence line per call. `tools/presubmit_check.py` scans for keys. | A claim nobody can check, or a leaked key. |
-| Every failed check becomes a correction with its reason. | `catalog/curation.yaml` rejects an entry without `why`. | The same wrong entry coming back when the spec is regenerated. |
+| Every failed check becomes a correction with its reason. | `docs/corrections.jsonl` records each one. `catalog/curation.yaml` holds manual fixes and rejects one without `why`. | The same wrong entry coming back when the spec is regenerated. |
 
 ## Priorities
 

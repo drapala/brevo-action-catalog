@@ -90,7 +90,7 @@ actions:
     id: brevo.contacts.copy_sms_number_to_whatsapp
     entity: contact
     operation_class: update
-    description: Copy each selected contact's SMS number into its WhatsApp field. The public API has no route for this; update_contact can set the WHATSAPP attribute one contact at a time.
+    description: Copy each selected contact's SMS number into its WhatsApp field. The public API has no route for this; update_batch_contacts can set the WHATSAPP attribute for many contacts at once.
 - area: Contacts
   ui: Add to automation
   steps:
@@ -1102,3 +1102,4 @@ actions:
   - Open https://app.brevo.com/loyalty
   - The free plan shows Upgrade to Enterprise
   catalog_id: brevo.program.create_new_lp
+  status: gated

@@ -218,16 +218,17 @@
     "requires_confirmation": false
   },
   "availability": {
-    "free_plan": "unknown",
+    "free_plan": "gated",
     "requires": [
       "Loyalty app activated"
     ]
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "gated",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T17:05:00+00:00",
+    "evidence": "evidence/ui-walk-2026-11-02.json",
+    "notes": "The free plan shows an upgrade screen instead."
   },
   "sources": [
     {

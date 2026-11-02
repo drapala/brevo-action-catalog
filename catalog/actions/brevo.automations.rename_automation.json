@@ -62,6 +62,14 @@
       "success_status": [
         200
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/automation/automations",
+        "On the automation row, click the actions menu",
+        "Click 'Rename'"
+      ]
     }
   ],
   "preconditions": [],

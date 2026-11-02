@@ -26,7 +26,6 @@ END = "<!-- corrections:end -->"
 
 ERRED_BY = ["ai_agent", "ai_generated_code", "brevo_platform", "human", "tooling"]
 CAUGHT_BY = ["human", "catalog_lint", "live_verifier", "reviewer_agent", "agent_self_check", "brevo_platform"]
-AUTOMATED = {"catalog_lint", "live_verifier", "reviewer_agent"}
 
 
 def head() -> str:
@@ -61,14 +60,16 @@ def load() -> list[dict]:
 
 def block() -> str:
     entries = load()
-    auto = sum(1 for e in entries if e["caught_by"] in AUTOMATED)
+    deterministic = sum(1 for e in entries if e["caught_by"] in ("catalog_lint", "live_verifier"))
+    reviewers = sum(1 for e in entries if e["caught_by"] == "reviewer_agent")
     by_agent = sum(1 for e in entries if e["caught_by"] == "agent_self_check")
     by_human = sum(1 for e in entries if e["caught_by"] == "human")
     by_platform = sum(1 for e in entries if e["caught_by"] == "brevo_platform")
     open_n = sum(1 for e in entries if e.get("status", "fixed") == "open")
     lines = [
         START,
-        f"{len(entries)} corrections: {auto} caught by automated checks, {by_agent} by the agent during the session, "
+        f"{len(entries)} corrections: {deterministic} caught by deterministic checks (lint, live verifier), "
+        f"{reviewers} by reviewer agents with no memory of the build, {by_agent} by the agent during the session, "
         f"{by_human} by a human, {by_platform} by Brevo itself. Open: {open_n}.",
         "",
         "| ID | Phase | What went wrong | Caught by | Status | Fix |",

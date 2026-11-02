@@ -338,6 +338,30 @@
         "Open https://app.brevo.com/campaigns/listing",
         "On the campaign row, click 'Edit draft' or 'Edit'"
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/campaigns/listing",
+        "On the campaign row, click 'list-actions'",
+        "Click 'Assign tag'"
+      ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/marketing-campaign/edit/{campaignId}",
+        "Click the edit button of the part to change",
+        "Save"
+      ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/marketing-campaign/edit/{campaignId}",
+        "Click 'Schedule'",
+        "Pick a date and time"
+      ]
     }
   ],
   "preconditions": [],
