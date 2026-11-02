@@ -54,6 +54,13 @@
       "success_status": [
         201
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://content-library.brevo.com/content-hub",
+        "Click 'Add file'"
+      ]
     }
   ],
   "preconditions": [],

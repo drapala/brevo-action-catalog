@@ -1,29 +1,44 @@
 {
-  "total_actions": 302,
+  "total_actions": 348,
   "by_verification": {
     "verified": 81,
-    "gated": 17,
+    "gated": 21,
+    "seen": 42,
     "observed": 9,
     "documented": 194,
     "failed": 1
   },
   "by_route_kind": {
     "documented_api": 292,
-    "ui_path": 10,
+    "ui_path": 96,
     "undocumented_api": 9
   },
-  "without_public_api": 10,
+  "without_public_api": 56,
   "curated_entries": 0,
+  "web_app_walk": {
+    "business_actions": 107,
+    "in_catalog_with_public_api": 51,
+    "view_only": 15,
+    "seen_only": 46,
+    "in_catalog_ui_only": 10
+  },
   "by_area": {
     "Account": {
       "verified": 1,
       "gated": 1
     },
+    "Analytics": {
+      "gated": 2
+    },
     "Automations": {
+      "seen": 4,
       "observed": 4
     },
     "Balance": {
       "documented": 18
+    },
+    "Commerce": {
+      "seen": 1
     },
     "Companies": {
       "verified": 6,
@@ -34,6 +49,7 @@
       "gated": 1
     },
     "Contacts": {
+      "seen": 13,
       "verified": 21,
       "documented": 9,
       "observed": 2
@@ -49,6 +65,7 @@
       "documented": 4
     },
     "Deals": {
+      "seen": 1,
       "verified": 8,
       "documented": 3
     },
@@ -61,6 +78,7 @@
       "gated": 5
     },
     "Email Campaigns": {
+      "seen": 7,
       "verified": 5,
       "documented": 8
     },
@@ -77,15 +95,25 @@
       "verified": 1
     },
     "Forms": {
-      "observed": 3
+      "observed": 3,
+      "seen": 1
     },
     "Inbound Parsing": {
       "documented": 2,
       "verified": 1
     },
+    "Landing pages": {
+      "gated": 1
+    },
+    "Library": {
+      "seen": 2
+    },
     "Master account": {
       "documented": 22,
       "gated": 4
+    },
+    "Meetings": {
+      "seen": 1
     },
     "Notes": {
       "verified": 4,
@@ -93,6 +121,9 @@
     },
     "Payments": {
       "documented": 3
+    },
+    "Phone": {
+      "gated": 1
     },
     "Process": {
       "documented": 1,
@@ -116,12 +147,16 @@
       "documented": 5,
       "verified": 2
     },
+    "Settings": {
+      "seen": 9
+    },
     "Tasks": {
       "verified": 5,
       "failed": 1
     },
     "Templates (marketing email)": {
-      "gated": 1
+      "gated": 1,
+      "seen": 3
     },
     "Tier": {
       "documented": 10
@@ -155,7 +190,7 @@
     }
   },
   "lint": {
-    "G001 (gap)": 41,
+    "G001 (gap)": 76,
     "G002 (gap)": 25
   }
 }

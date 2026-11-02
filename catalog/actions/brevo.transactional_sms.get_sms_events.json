@@ -115,6 +115,13 @@
       "success_status": [
         200
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/transactional/sms/logs",
+        "Click 'Download'"
+      ]
     }
   ],
   "preconditions": [],

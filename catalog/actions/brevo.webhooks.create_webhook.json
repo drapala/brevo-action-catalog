@@ -157,6 +157,14 @@
       "success_status": [
         201
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/app-store/webhooks",
+        "Open the 'Webhooks' tab",
+        "Add a webhook"
+      ]
     }
   ],
   "preconditions": [],

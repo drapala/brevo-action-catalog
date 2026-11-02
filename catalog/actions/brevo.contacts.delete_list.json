@@ -46,6 +46,15 @@
       "success_status": [
         204
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/list-listing",
+        "On the list row, click 'more list actions'",
+        "Click 'Delete list'",
+        "Confirm"
+      ]
     }
   ],
   "preconditions": [],

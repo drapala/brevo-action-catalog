@@ -46,6 +46,14 @@
       "success_status": [
         204
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/senders/list",
+        "On the sender row, click 'sender-item-actionList'",
+        "Click 'Delete sender'"
+      ]
     }
   ],
   "preconditions": [],

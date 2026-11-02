@@ -1,0 +1,56 @@
+{
+  "id": "brevo.settings.delete_api_key",
+  "product": "brevo",
+  "area": "Settings",
+  "entity": "api_key",
+  "operation_class": "delete",
+  "label": "Delete API Key",
+  "description": "Delete an API key. Anything that uses the key stops working if it is deactivated or deleted.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/settings/keys/api",
+        "On the key row, click 'More actions'",
+        "Click 'Delete API Key'"
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "changes_account",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "seen",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T17:05:00+00:00",
+    "evidence": "evidence/ui-walk-2026-11-02.json",
+    "notes": "Seen in the web app and not run, so the inputs and the exact effect are not known."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/ui_map.yaml (Settings: Delete API Key)"
+    }
+  ]
+}

@@ -96,6 +96,13 @@
       "success_status": [
         200
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/senders/domain/list",
+        "Click 'Add a domain'"
+      ]
     }
   ],
   "preconditions": [],

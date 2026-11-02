@@ -134,6 +134,14 @@
       "success_status": [
         200
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/transactional/email/logs",
+        "Pick the filters",
+        "Click 'Download CSV'"
+      ]
     }
   ],
   "preconditions": [],

@@ -3,8 +3,9 @@
 Inputs, in order of authority (later wins):
   1. build/openapi_actions/   drafts generated from the official spec
   2. sources/ui_actions/      actions found by walking the web app
-  3. catalog/curation.yaml    reviewed corrections, each with a reason
-  4. evidence/runs.jsonl      live results, which set verification status
+  3. sources/ui/ui_map.yaml   every action seen in the web app, joined to the catalog
+  4. catalog/curation.yaml    reviewed corrections, each with a reason
+  5. evidence/runs.jsonl      live results, which set verification status
 
 Outputs: catalog/actions/*.json, catalog/index.json, catalog/coverage.json
 """
@@ -25,6 +26,7 @@ import corrections
 ROOT = Path(__file__).resolve().parent.parent
 DRAFTS = ROOT / "build/openapi_actions"
 UI = ROOT / "sources/ui_actions"
+UI_MAP = ROOT / "sources/ui/ui_map.yaml"
 CURATION = ROOT / "catalog/curation.yaml"
 EVIDENCE = ROOT / "evidence/runs.jsonl"
 OUT = ROOT / "catalog/actions"
@@ -67,6 +69,71 @@ def load_actions() -> dict[str, dict]:
             else:
                 actions[action["id"]] = action
     return actions
+
+
+def seen_action(line: dict, walk: dict) -> dict:
+    new = line["new"]
+    writes = new["operation_class"] != "read"
+    return {
+        "id": new["id"],
+        "product": "brevo",
+        "area": line["area"],
+        "entity": new["entity"],
+        "operation_class": new["operation_class"],
+        "label": line["ui"],
+        "description": new["description"],
+        "inputs": {"schema": {"type": "object", "properties": {}}, "entity_refs": [], "credential_ref": "brevo_web_session"},
+        "outputs": {"produces_entity": None},
+        "routes": [{"kind": "ui_path", "ui_steps": line["steps"]}],
+        "preconditions": [],
+        "postcondition": None,
+        "side_effects": {
+            "reversible": new.get("reversible", not writes),
+            "undo_with": None,
+            "external_effect": new.get("external_effect", "none"),
+            "idempotent": None,
+            "requires_confirmation": new.get("requires_confirmation", writes),
+        },
+        "availability": {"free_plan": line.get("free_plan", "available"), "requires": line.get("requires", [])},
+        "verification": {
+            "status": line.get("status", "seen"),
+            "route_kind": "ui_path",
+            "checked_at": walk["walked_at"],
+            "evidence": walk["evidence"],
+            "notes": "The free plan shows an upgrade or setup screen instead."
+            if line.get("status") == "gated"
+            else "Seen in the web app and not run, so the inputs and the exact effect are not known.",
+        },
+        "sources": [{"kind": "ui_walk", "ref": f"sources/ui/ui_map.yaml ({line['area']}: {line['ui']})"}],
+    }
+
+
+def apply_ui_map(actions: dict[str, dict]) -> dict:
+    """Join every action seen in the web app to the catalog, and count the result.
+
+    A line with catalog_id adds its UI steps to that action as a ui_path route.
+    A line with new becomes a `seen` action. A line with kind view only changes
+    what the screen shows, so it is listed but is not a business action.
+    """
+    if not UI_MAP.exists():
+        return {}
+    walk = yaml.safe_load(UI_MAP.read_text())
+    stats = Counter()
+    for line in walk["actions"]:
+        if line.get("kind") == "view":
+            stats["view_only"] += 1
+            continue
+        stats["business_actions"] += 1
+        if line.get("catalog_id"):
+            action = actions[line["catalog_id"]]
+            if not any(r["kind"] == "ui_path" for r in action["routes"]):
+                action["routes"].append({"kind": "ui_path", "ui_steps": line["steps"]})
+            public = any(r["kind"] == "documented_api" for r in action["routes"])
+            stats["in_catalog_with_public_api" if public else "in_catalog_ui_only"] += 1
+        else:
+            actions[line["new"]["id"]] = seen_action(line, walk)
+            stats["seen_only"] += 1
+    return dict(stats)
 
 
 def apply_curation(actions: dict[str, dict]) -> int:
@@ -174,6 +241,7 @@ def apply_evidence(actions: dict[str, dict]) -> None:
 
 def main() -> None:
     actions = load_actions()
+    ui_walk = apply_ui_map(actions)
     n_curated = apply_curation(actions)
     apply_evidence(actions)
 
@@ -214,6 +282,7 @@ def main() -> None:
         "by_route_kind": dict(by_route),
         "without_public_api": len(ui_only),
         "curated_entries": n_curated,
+        "web_app_walk": ui_walk,
         "by_area": {a: dict(c) for a, c in sorted(areas.items())},
     }
     findings = catalog_lint.as_dicts(catalog_lint.lint(actions))

@@ -173,6 +173,16 @@
       "success_status": [
         202
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/list",
+        "Click 'Import contacts'",
+        "Pick 'Import from a file' or 'Copy-paste'",
+        "Map the columns and pick a list",
+        "Confirm the import"
+      ]
     }
   ],
   "preconditions": [],

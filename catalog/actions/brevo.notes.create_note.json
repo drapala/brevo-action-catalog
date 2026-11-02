@@ -109,6 +109,14 @@
       "success_status": [
         200
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/index/{contactId}",
+        "Click 'Add a note'",
+        "Type the note and save"
+      ]
     }
   ],
   "preconditions": [],

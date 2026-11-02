@@ -343,6 +343,15 @@
       "success_status": [
         201
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/campaigns/listing",
+        "Click 'Create campaign'",
+        "Pick Email",
+        "Type the name and create"
+      ]
     }
   ],
   "preconditions": [],

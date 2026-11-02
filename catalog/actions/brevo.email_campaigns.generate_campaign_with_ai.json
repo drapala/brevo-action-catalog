@@ -1,0 +1,55 @@
+{
+  "id": "brevo.email_campaigns.generate_campaign_with_ai",
+  "product": "brevo",
+  "area": "Email Campaigns",
+  "entity": "email_campaign",
+  "operation_class": "create",
+  "label": "Generate campaign with AI",
+  "description": "Draft a campaign from a prompt with Brevo's AI. The result is a draft; nothing is sent.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/campaigns/listing",
+        "Click 'Generate campaign with AI'"
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "seen",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T17:05:00+00:00",
+    "evidence": "evidence/ui-walk-2026-11-02.json",
+    "notes": "Seen in the web app and not run, so the inputs and the exact effect are not known."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/ui_map.yaml (Email Campaigns: Generate campaign with AI)"
+    }
+  ]
+}

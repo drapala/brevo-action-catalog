@@ -1,0 +1,58 @@
+{
+  "id": "brevo.landing_pages.create_landing_page",
+  "product": "brevo",
+  "area": "Landing pages",
+  "entity": "landing_page",
+  "operation_class": "create",
+  "label": "Landing pages",
+  "description": "Build and publish a landing page.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/list",
+        "Click 'Landing pages' in the Marketing menu",
+        "The app opens the plans page"
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "publishes",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "gated",
+    "requires": [
+      "a paid plan"
+    ]
+  },
+  "verification": {
+    "status": "gated",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T17:05:00+00:00",
+    "evidence": "evidence/ui-walk-2026-11-02.json",
+    "notes": "The free plan shows an upgrade or setup screen instead."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/ui_map.yaml (Landing pages: Landing pages)"
+    }
+  ]
+}

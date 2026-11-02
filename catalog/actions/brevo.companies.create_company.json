@@ -126,6 +126,14 @@
       "success_status": [
         200
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/companies",
+        "Click 'Create company'",
+        "Fill the fields and save"
+      ]
     }
   ],
   "preconditions": [],

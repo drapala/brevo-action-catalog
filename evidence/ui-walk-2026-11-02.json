@@ -1,0 +1,407 @@
+{
+  "walked_at": "2026-11-02T17:05:00+00:00",
+  "method": "Playwright on the free plan account, viewport 1600x1000. Buttons, tabs and the first row's menu were read from each page. Navigation and header buttons were left out. Test items were created through the API before the walk and deleted after it (evidence/runs.jsonl, runs ui-walk-fixtures-* and ui-walk-cleanup-*).",
+  "pages": {
+    "/contact/list": {
+      "buttons": [
+        "Create a contact",
+        "Import contacts",
+        "Load a list or a segment",
+        "Add filter",
+        "Customize columns"
+      ],
+      "bulk_after_ticking_a_row": [
+        "Add to a list(s)",
+        "Blocklist",
+        "More actions"
+      ],
+      "bulk_more_actions": [
+        "Edit",
+        "Assign",
+        "Copy SMS number to WhatsApp",
+        "Add to automation",
+        "Export",
+        "Delete permanently"
+      ]
+    },
+    "/contact/index/{id}": {
+      "buttons": [
+        "Add a note",
+        "Compose an email",
+        "Send an SMS",
+        "Create a task",
+        "More quick actions",
+        "Edit preferences",
+        "Add companies",
+        "Add deals"
+      ],
+      "tabs": [
+        "Overview",
+        "History",
+        "Lists",
+        "Preferences"
+      ],
+      "more_quick_actions": [
+        "Meeting",
+        "Deal",
+        "File",
+        "Add to automation",
+        "Delete permanently"
+      ]
+    },
+    "/contact/list-listing": {
+      "buttons": [
+        "Create a list",
+        "Recalculate now"
+      ],
+      "row_menu": [
+        "List settings",
+        "Duplicate",
+        "Import contacts to the list",
+        "Rename",
+        "Move",
+        "Delete list"
+      ]
+    },
+    "/contact/segment": {
+      "buttons": [
+        "Create a segment"
+      ],
+      "row_menu (from the 2026-11-02 segment capture)": [
+        "Rename",
+        "Duplicate",
+        "Move segment",
+        "Split into lists",
+        "Refresh data",
+        "Delete segment"
+      ]
+    },
+    "/companies": {
+      "buttons": [
+        "Import companies",
+        "Create company",
+        "Add filter",
+        "Customize columns"
+      ]
+    },
+    "/companies/detail/{id}": {
+      "buttons": [
+        "Add a note",
+        "Create a task",
+        "Add a deal",
+        "Compose an email",
+        "More quick actions",
+        "Add contacts"
+      ],
+      "tabs": [
+        "Overview",
+        "History"
+      ]
+    },
+    "/crm/deals and /tasks": {
+      "landed": "/crm/onboarding",
+      "buttons": [
+        "Start for free"
+      ]
+    },
+    "/objects": {
+      "landed": "/objects/upgrade",
+      "buttons": [
+        "Upgrade"
+      ]
+    },
+    "/contact/settings": {
+      "buttons": [
+        "Contact attributes",
+        "Companies attributes",
+        "Scores",
+        "Last detected location",
+        "Webhooks",
+        "Unengaged contacts",
+        "Apple MPP opens in segments",
+        "Per-contact pixel tracking consent",
+        "Consent Groups"
+      ]
+    },
+    "/objects/settings/contact": {
+      "buttons": [
+        "Manage attributes visibility",
+        "Create attribute"
+      ],
+      "tabs": [
+        "Normal Attributes",
+        "Transactional Attributes",
+        "Calculated Values"
+      ]
+    },
+    "/companies/settings/company-attributes": {
+      "buttons": [
+        "Create an attribute",
+        "Manage form attributes"
+      ]
+    },
+    "/app-store/webhooks": {
+      "tabs": [
+        "All Integrations",
+        "My Integrations",
+        "Webhooks"
+      ]
+    },
+    "/contact/settings/consent-groups": {
+      "buttons": [
+        "Upgrade"
+      ]
+    },
+    "/contact/import/options": {
+      "buttons": [
+        "Import from a file",
+        "Copy-paste",
+        "Try Forms",
+        "Try Landing pages"
+      ]
+    },
+    "/campaigns/listing": {
+      "buttons": [
+        "Create folder",
+        "Generate campaign with AI",
+        "Create campaign",
+        "All statuses",
+        "Select tags",
+        "Edit draft"
+      ],
+      "row_menu": [
+        "Edit",
+        "Preview & test",
+        "Duplicate",
+        "Add to folder",
+        "Assign tag",
+        "Resend campaign",
+        "Share template",
+        "Delete"
+      ]
+    },
+    "/marketing-campaign/edit/{id}": {
+      "buttons": [
+        "Campaign name edit button",
+        "Preview & Test",
+        "Schedule",
+        "Add languages",
+        "Manage sender",
+        "Add recipients",
+        "Edit subject",
+        "Edit design",
+        "Edit settings"
+      ],
+      "design_actions": [
+        "Reset design",
+        "View the HTML code",
+        "Download the HTML code",
+        "View the plain text version"
+      ]
+    },
+    "/marketing-reports/statistics": {
+      "buttons": [
+        "Export (.csv file)"
+      ]
+    },
+    "/templates/listing": {
+      "buttons": [
+        "Create folder",
+        "Create template",
+        "Edit"
+      ],
+      "row_menu": [
+        "Preview",
+        "Duplicate",
+        "Activate",
+        "Generate translation",
+        "Share",
+        "Delete"
+      ]
+    },
+    "/contact/forms-app/subscription": {
+      "buttons": [
+        "Create sign-up form"
+      ],
+      "row_menu": [
+        "Duplicate",
+        "Delete"
+      ],
+      "tabs": [
+        "Sign-up",
+        "Unsubscribe",
+        "Profile update"
+      ]
+    },
+    "/automation/automations": {
+      "buttons": [
+        "Generate automation with AI",
+        "Create an automation"
+      ],
+      "row_menu": [
+        "Duplicate",
+        "Rename",
+        "Assign a tag",
+        "View report",
+        "See details",
+        "Access logs",
+        "Delete"
+      ]
+    },
+    "/automation/logs/scenarios": {
+      "tabs": [
+        "Workflow logs",
+        "Contacts in workflow"
+      ],
+      "buttons": [
+        "View event logs",
+        "Refresh"
+      ]
+    },
+    "/automation/messages and /event-logs": {
+      "buttons": []
+    },
+    "/transactional/email/real-time (and /statistics)": {
+      "tabs": [
+        "SMTP settings",
+        "API Settings",
+        "Config with Postfix",
+        "Config with PHP"
+      ],
+      "note": "setup wizard until the first transactional email is sent"
+    },
+    "/transactional/email/logs": {
+      "buttons": [
+        "Refresh",
+        "Download CSV",
+        "More filters"
+      ]
+    },
+    "/transactional/sms/real-time and /statistics": {
+      "buttons": [
+        "Next"
+      ],
+      "note": "setup wizard"
+    },
+    "/transactional/sms/logs": {
+      "buttons": [
+        "Refresh",
+        "Download",
+        "More filters"
+      ]
+    },
+    "/senders/list": {
+      "buttons": [
+        "Add sender",
+        "Edit"
+      ],
+      "tabs": [
+        "Senders",
+        "Domains",
+        "Dedicated IPs",
+        "Sending cadence"
+      ],
+      "row_menu": [
+        "Delete sender"
+      ]
+    },
+    "/senders/domain/list": {
+      "buttons": [
+        "Add a domain"
+      ]
+    },
+    "/settings/keys/api": {
+      "buttons": [
+        "Generate API key",
+        "Activate for API keys"
+      ],
+      "row_menu": [
+        "Edit API Key",
+        "Deactivate API Key",
+        "Delete API Key"
+      ]
+    },
+    "/settings/keys/smtp": {
+      "buttons": [
+        "Generate SMTP key",
+        "Activate for SMTP keys"
+      ]
+    },
+    "/settings/advanced": {
+      "buttons": [
+        "Save (time zone)",
+        "Definitively close your account"
+      ]
+    },
+    "settings menu": {
+      "sections": [
+        "Profile",
+        "General",
+        "Language",
+        "Individual email",
+        "Users",
+        "Senders, domains, IPs",
+        "SMTP & API",
+        "Aura AI control center",
+        "Security",
+        "Localization",
+        "Deliverability Center",
+        "UTM parameters",
+        "Custom objects",
+        "Data feeds",
+        "Contacts",
+        "Companies",
+        "Deals",
+        "Campaigns",
+        "Inbox",
+        "Meetings",
+        "Automations",
+        "Transactional emails",
+        "Transactional SMS",
+        "E-commerce",
+        "Conversions"
+      ]
+    },
+    "content-library.brevo.com/content-hub": {
+      "buttons": [
+        "Create folder",
+        "Generate image",
+        "Add file",
+        "Grid layout",
+        "List layout"
+      ]
+    },
+    "/ecommerce": {
+      "buttons": [
+        "Install plugin"
+      ]
+    },
+    "/loyalty": {
+      "buttons": [
+        "Upgrade to Enterprise"
+      ]
+    },
+    "/conversions/listing": {
+      "buttons": [
+        "Upgrade"
+      ]
+    },
+    "/analytics": {
+      "buttons": [
+        "Upgrade",
+        "Select Professional",
+        "Talk to sales"
+      ]
+    },
+    "Landing pages (menu)": {
+      "landed": "/billing/account/plans/subscriptions"
+    },
+    "/meetings/offer/all": {
+      "landed": "/meetings/onboarding"
+    },
+    "conversations-app.brevo.com": {
+      "buttons": [],
+      "note": "the inbox loaded without any button that the walk could read"
+    }
+  }
+}

@@ -43,6 +43,16 @@
       "success_status": [
         204
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/list",
+        "Tick the contact rows",
+        "Click 'More actions'",
+        "Click 'Edit'",
+        "Set the attribute values and save"
+      ]
     }
   ],
   "preconditions": [],

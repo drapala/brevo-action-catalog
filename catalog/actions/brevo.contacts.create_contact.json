@@ -143,6 +143,15 @@
         201,
         204
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/list",
+        "Click 'Create a contact'",
+        "Fill the email and attributes",
+        "Click 'Create'"
+      ]
     }
   ],
   "preconditions": [],

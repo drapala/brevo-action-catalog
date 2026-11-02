@@ -1,0 +1,55 @@
+{
+  "id": "brevo.senders.set_sending_cadence",
+  "product": "brevo",
+  "area": "Settings",
+  "entity": "account_setting",
+  "operation_class": "update",
+  "label": "Sending cadence",
+  "description": "Limit how many emails the account sends per hour.",
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "properties": {}
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/senders/list",
+        "Click 'Sending cadence'"
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": null,
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "changes_account",
+    "idempotent": null,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "seen",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T17:05:00+00:00",
+    "evidence": "evidence/ui-walk-2026-11-02.json",
+    "notes": "Seen in the web app and not run, so the inputs and the exact effect are not known."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/ui_map.yaml (Settings: Sending cadence)"
+    }
+  ]
+}

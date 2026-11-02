@@ -58,6 +58,15 @@
       "success_status": [
         204
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/campaigns/listing",
+        "On the campaign row, click 'list-actions'",
+        "Click 'Preview & test'",
+        "Send the test to your own address"
+      ]
     }
   ],
   "preconditions": [],

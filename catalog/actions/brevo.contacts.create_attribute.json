@@ -134,6 +134,13 @@
       "success_status": [
         201
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/objects/settings/contact",
+        "Click 'Create attribute'"
+      ]
     }
   ],
   "preconditions": [],

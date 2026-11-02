@@ -1,0 +1,1104 @@
+# Every action seen in the web app on 2026-11-02, joined to the catalog.
+# catalog_id: the catalog action that does the same thing. new: an action the catalog
+# did not have, added with status 'seen'. kind view: changes the screen only.
+walked_at: '2026-11-02T17:05:00+00:00'
+evidence: evidence/ui-walk-2026-11-02.json
+method: Playwright on the free plan account. One test item of each kind (folder, list, contact, company, deal, campaign, template) was created through the API so that row menus appear, and deleted after
+  the walk.
+actions:
+- area: Contacts
+  ui: Create a contact
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Click 'Create a contact'
+  - Fill the email and attributes
+  - Click 'Create'
+  catalog_id: brevo.contacts.create_contact
+- area: Contacts
+  ui: Import contacts
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Click 'Import contacts'
+  - Pick 'Import from a file' or 'Copy-paste'
+  - Map the columns and pick a list
+  - Confirm the import
+  catalog_id: brevo.contacts.import_contacts
+- area: Contacts
+  ui: Load a list or a segment
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Click 'Load a list or a segment'
+  kind: view
+- area: Contacts
+  ui: Add filter
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Click 'Add filter'
+  kind: view
+- area: Contacts
+  ui: Customize columns
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Click 'Customize columns'
+  kind: view
+- area: Contacts
+  ui: Add to a list(s)
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Tick the contact rows
+  - Click 'Add to a list(s)'
+  - Pick the lists and confirm
+  catalog_id: brevo.contacts.add_contact_to_list
+- area: Contacts
+  ui: Blocklist
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Tick the contact rows
+  - Click 'Blocklist'
+  - Confirm
+  catalog_id: brevo.contacts.update_contact
+- area: Contacts
+  ui: Edit (bulk)
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Tick the contact rows
+  - Click 'More actions'
+  - Click 'Edit'
+  - Set the attribute values and save
+  catalog_id: brevo.contacts.update_batch_contacts
+- area: Contacts
+  ui: Assign
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Tick the contact rows
+  - Click 'More actions'
+  - Click 'Assign'
+  - Pick a contact owner
+  new:
+    id: brevo.contacts.assign_contact_owner
+    entity: contact
+    operation_class: update
+    description: Set the contact owner (a user of the account) for the selected contacts. The public API has no route for this.
+- area: Contacts
+  ui: Copy SMS number to WhatsApp
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Tick the contact rows
+  - Click 'More actions'
+  - Click 'Copy SMS number to WhatsApp'
+  new:
+    id: brevo.contacts.copy_sms_number_to_whatsapp
+    entity: contact
+    operation_class: update
+    description: Copy each selected contact's SMS number into its WhatsApp field. The public API has no route for this; update_contact can set the WHATSAPP attribute one contact at a time.
+- area: Contacts
+  ui: Add to automation
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Tick the contact rows
+  - Click 'More actions'
+  - Click 'Add to automation'
+  - Pick an automation
+  new:
+    id: brevo.automations.add_contacts_to_automation
+    entity: automation
+    operation_class: action
+    description: Put the selected contacts into an automation now. The public API can only start an automation through a tracked event.
+    requires_confirmation: true
+- area: Contacts
+  ui: Export
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Tick the contact rows
+  - Click 'More actions'
+  - Click 'Export'
+  catalog_id: brevo.contacts.request_contact_export
+- area: Contacts
+  ui: Delete permanently
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Tick the contact rows
+  - Click 'More actions'
+  - Click 'Delete permanently'
+  - Confirm
+  catalog_id: brevo.contacts.delete_contact
+- area: Contacts
+  ui: 'Contact page: Add a note'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'Add a note'
+  - Type the note and save
+  catalog_id: brevo.notes.create_note
+- area: Contacts
+  ui: 'Contact page: Compose an email'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'Compose an email'
+  - Write and send
+  new:
+    id: brevo.contacts.send_individual_email
+    entity: contact
+    operation_class: action
+    description: Write and send a one-to-one email to this contact from the CRM, from your connected mailbox.
+    external_effect: sends_email
+    requires_confirmation: true
+    reversible: false
+- area: Contacts
+  ui: 'Contact page: Send an SMS'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'Send an SMS'
+  - Write and send
+  new:
+    id: brevo.contacts.send_individual_sms
+    entity: contact
+    operation_class: action
+    description: Send a one-to-one SMS to this contact. Needs SMS credits.
+    external_effect: sends_sms
+    requires_confirmation: true
+    reversible: false
+- area: Contacts
+  ui: 'Contact page: Create a task'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'Create a task'
+  - Fill the task and save
+  catalog_id: brevo.tasks.create_task
+- area: Contacts
+  ui: 'Contact page: Meeting'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'More quick actions'
+  - Click 'Meeting'
+  new:
+    id: brevo.meetings.book_meeting_with_contact
+    entity: meeting
+    operation_class: create
+    description: Book a meeting with this contact. The Meetings app must be set up first.
+    external_effect: notifies_people
+    requires_confirmation: true
+  free_plan: limited
+  requires:
+  - Meetings set up
+- area: Contacts
+  ui: 'Contact page: Deal'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'More quick actions'
+  - Click 'Deal'
+  - Fill the deal and save
+  catalog_id: brevo.deals.create_deal
+- area: Contacts
+  ui: 'Contact page: File'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'More quick actions'
+  - Click 'File'
+  - Pick a file
+  catalog_id: brevo.files.upload_file
+- area: Contacts
+  ui: 'Contact page: Add to automation'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'More quick actions'
+  - Click 'Add to automation'
+  catalog_id: brevo.automations.add_contacts_to_automation
+- area: Contacts
+  ui: 'Contact page: Edit preferences'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'Edit preferences'
+  - Change the email and SMS subscriptions
+  catalog_id: brevo.contacts.update_contact
+- area: Contacts
+  ui: 'Contact page: Add companies'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'Add companies'
+  - Pick companies
+  catalog_id: brevo.companies.link_and_unlink_company_with_contact_and_deal
+- area: Contacts
+  ui: 'Contact page: Add deals'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click 'Add deals'
+  - Pick deals
+  catalog_id: brevo.deals.link_and_unlink_deal_with_contacts_and_companies
+- area: Contacts
+  ui: 'Contact page: Overview, History, Lists, Preferences tabs'
+  steps:
+  - Open https://app.brevo.com/contact/index/{contactId}
+  - Click a tab
+  kind: view
+- area: Contacts
+  ui: Create a list
+  steps:
+  - Open https://app.brevo.com/contact/list-listing
+  - Click 'Create a list'
+  - Type the name, pick the folder, click 'Create'
+  catalog_id: brevo.contacts.create_list
+- area: Contacts
+  ui: Recalculate now
+  steps:
+  - Open https://app.brevo.com/contact/list-listing
+  - Click 'Recalculate now'
+  kind: view
+- area: Contacts
+  ui: List settings
+  steps:
+  - Open https://app.brevo.com/contact/list-listing
+  - On the list row, click 'more list actions'
+  - Click 'List settings'
+  new:
+    id: brevo.contacts.edit_list_settings
+    entity: list
+    operation_class: update
+    description: Open the settings of a list in the web app. The fields behind this screen were not captured.
+- area: Contacts
+  ui: Duplicate
+  steps:
+  - Open https://app.brevo.com/contact/list-listing
+  - On the list row, click 'more list actions'
+  - Click 'Duplicate'
+  new:
+    id: brevo.contacts.duplicate_list
+    entity: list
+    operation_class: create
+    description: Copy a list with its contacts. The public API has no route for this.
+    requires_confirmation: false
+    reversible: true
+- area: Contacts
+  ui: Import contacts to the list
+  steps:
+  - Open https://app.brevo.com/contact/list-listing
+  - On the list row, click 'more list actions'
+  - Click 'Import contacts to the list'
+  catalog_id: brevo.contacts.import_contacts
+- area: Contacts
+  ui: Rename
+  steps:
+  - Open https://app.brevo.com/contact/list-listing
+  - On the list row, click 'more list actions'
+  - Click 'Rename'
+  catalog_id: brevo.contacts.update_list
+- area: Contacts
+  ui: Move
+  steps:
+  - Open https://app.brevo.com/contact/list-listing
+  - On the list row, click 'more list actions'
+  - Click 'Move'
+  - Pick the folder
+  catalog_id: brevo.contacts.update_list
+- area: Contacts
+  ui: Delete list
+  steps:
+  - Open https://app.brevo.com/contact/list-listing
+  - On the list row, click 'more list actions'
+  - Click 'Delete list'
+  - Confirm
+  catalog_id: brevo.contacts.delete_list
+- area: Contacts
+  ui: Create a segment
+  steps:
+  - Open https://app.brevo.com/contact/segment
+  - Click 'Create a segment'
+  catalog_id: brevo.segments.create_segment
+- area: Contacts
+  ui: Rename
+  steps:
+  - Open https://app.brevo.com/contact/segment
+  - On the segment row, click 'more segment actions'
+  - Click 'Rename'
+  new:
+    id: brevo.segments.rename_segment
+    entity: segment
+    operation_class: update
+    description: Change the name of a segment. The public API has no route for this.
+- area: Contacts
+  ui: Duplicate
+  steps:
+  - Open https://app.brevo.com/contact/segment
+  - On the segment row, click 'more segment actions'
+  - Click 'Duplicate'
+  new:
+    id: brevo.segments.duplicate_segment
+    entity: segment
+    operation_class: create
+    description: Copy a segment with its rules. The public API has no route for this.
+- area: Contacts
+  ui: Move segment
+  steps:
+  - Open https://app.brevo.com/contact/segment
+  - On the segment row, click 'more segment actions'
+  - Click 'Move segment'
+  new:
+    id: brevo.segments.move_segment
+    entity: segment
+    operation_class: update
+    description: Move a segment to another segment folder. The public API has no route for this.
+- area: Contacts
+  ui: Split into lists
+  steps:
+  - Open https://app.brevo.com/contact/segment
+  - On the segment row, click 'more segment actions'
+  - Click 'Split into lists'
+  new:
+    id: brevo.segments.split_segment_into_lists
+    entity: segment
+    operation_class: create
+    description: Split the contacts of a segment into several static lists. The public API has no route for this.
+- area: Contacts
+  ui: Refresh data
+  steps:
+  - Open https://app.brevo.com/contact/segment
+  - On the segment row, click 'more segment actions'
+  - Click 'Refresh data'
+  kind: view
+- area: Contacts
+  ui: Delete segment
+  steps:
+  - Open https://app.brevo.com/contact/segment
+  - On the segment row, click 'more segment actions'
+  - Click 'Delete segment'
+  - Confirm
+  catalog_id: brevo.segments.delete_segment
+- area: Companies
+  ui: Import companies
+  steps:
+  - Open https://app.brevo.com/companies
+  - Click 'Import companies'
+  catalog_id: brevo.companies.import_companies_creation_and_updation
+- area: Companies
+  ui: Create company
+  steps:
+  - Open https://app.brevo.com/companies
+  - Click 'Create company'
+  - Fill the fields and save
+  catalog_id: brevo.companies.create_company
+- area: Companies
+  ui: Add filter, Customize columns
+  steps:
+  - Open https://app.brevo.com/companies
+  - Click 'Add filter' or 'Customize columns'
+  kind: view
+- area: Companies
+  ui: 'Company page: Add a note'
+  steps:
+  - Open https://app.brevo.com/companies/detail/{companyId}
+  - Click 'Add a note'
+  catalog_id: brevo.notes.create_note
+- area: Companies
+  ui: 'Company page: Create a task'
+  steps:
+  - Open https://app.brevo.com/companies/detail/{companyId}
+  - Click 'Create a task'
+  catalog_id: brevo.tasks.create_task
+- area: Companies
+  ui: 'Company page: Add a deal'
+  steps:
+  - Open https://app.brevo.com/companies/detail/{companyId}
+  - Click 'Add a deal'
+  catalog_id: brevo.deals.create_deal
+- area: Companies
+  ui: 'Company page: Compose an email'
+  steps:
+  - Open https://app.brevo.com/companies/detail/{companyId}
+  - Click 'Compose an email'
+  catalog_id: brevo.contacts.send_individual_email
+- area: Companies
+  ui: 'Company page: Add contacts'
+  steps:
+  - Open https://app.brevo.com/companies/detail/{companyId}
+  - Click 'Add contacts'
+  - Pick contacts
+  catalog_id: brevo.companies.link_and_unlink_company_with_contact_and_deal
+- area: Companies
+  ui: Create an attribute (companies)
+  steps:
+  - Open https://app.brevo.com/companies/settings/company-attributes
+  - Click 'Create an attribute'
+  catalog_id: brevo.companies.create_company_deal_attribute
+- area: Contacts
+  ui: Create attribute
+  steps:
+  - Open https://app.brevo.com/objects/settings/contact
+  - Click 'Create attribute'
+  catalog_id: brevo.contacts.create_attribute
+- area: Contacts
+  ui: Manage attributes visibility, attribute tabs
+  steps:
+  - Open https://app.brevo.com/objects/settings/contact
+  - Click 'Manage attributes visibility' or a tab
+  kind: view
+- area: Contacts
+  ui: Change contact data settings
+  steps:
+  - Open https://app.brevo.com/contact/settings
+  - Pick Scores, Last detected location, Unengaged contacts, Apple MPP opens in segments, or Per-contact pixel tracking consent
+  new:
+    id: brevo.settings.update_contact_data_settings
+    entity: account_setting
+    operation_class: update
+    description: 'Change account-wide contact data settings: scores, last detected location, unengaged contacts, Apple MPP opens in segments, per-contact pixel tracking consent.'
+    external_effect: changes_account
+    requires_confirmation: true
+- area: Contacts
+  ui: Webhooks
+  steps:
+  - Open https://app.brevo.com/app-store/webhooks
+  - Open the 'Webhooks' tab
+  - Add a webhook
+  catalog_id: brevo.webhooks.create_webhook
+- area: Deals
+  ui: Start for free (activate the sales CRM)
+  steps:
+  - Open https://app.brevo.com/crm/deals
+  - The page redirects to /crm/onboarding
+  - Click 'Start for free'
+  new:
+    id: brevo.crm.activate_sales_crm
+    entity: account_setting
+    operation_class: action
+    description: Turn on the sales CRM app (deals and tasks screens). Notably, the public API creates deals and tasks without this step; only the web app asks for it.
+    external_effect: changes_account
+    requires_confirmation: true
+- area: Email Campaigns
+  ui: Create folder
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - Click 'Create folder'
+  new:
+    id: brevo.email_campaigns.create_campaign_folder
+    entity: campaign_folder
+    operation_class: create
+    description: Create a folder to group campaigns. The public API has no route for this.
+- area: Email Campaigns
+  ui: Generate campaign with AI
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - Click 'Generate campaign with AI'
+  new:
+    id: brevo.email_campaigns.generate_campaign_with_ai
+    entity: email_campaign
+    operation_class: create
+    description: Draft a campaign from a prompt with Brevo's AI. The result is a draft; nothing is sent.
+- area: Email Campaigns
+  ui: Create campaign
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - Click 'Create campaign'
+  - Pick Email
+  - Type the name and create
+  catalog_id: brevo.email_campaigns.create_email_campaign
+- area: Email Campaigns
+  ui: Status and tag filters
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - Use 'All statuses' or 'Select tags'
+  kind: view
+- area: Email Campaigns
+  ui: Edit
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - On the campaign row, click 'Edit draft' or 'Edit'
+  catalog_id: brevo.email_campaigns.update_email_campaign
+- area: Email Campaigns
+  ui: Preview & test
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - On the campaign row, click 'list-actions'
+  - Click 'Preview & test'
+  - Send the test to your own address
+  catalog_id: brevo.email_campaigns.send_test_email
+- area: Email Campaigns
+  ui: Duplicate
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - On the campaign row, click 'list-actions'
+  - Click 'Duplicate'
+  new:
+    id: brevo.email_campaigns.duplicate_campaign
+    entity: email_campaign
+    operation_class: create
+    description: Copy a campaign as a new draft. The public API has no route for this.
+    requires_confirmation: false
+    reversible: true
+- area: Email Campaigns
+  ui: Add to folder
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - On the campaign row, click 'list-actions'
+  - Click 'Add to folder'
+  new:
+    id: brevo.email_campaigns.add_campaign_to_folder
+    entity: email_campaign
+    operation_class: update
+    description: Put a campaign in a campaign folder.
+- area: Email Campaigns
+  ui: Assign tag
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - On the campaign row, click 'list-actions'
+  - Click 'Assign tag'
+  catalog_id: brevo.email_campaigns.update_email_campaign
+- area: Email Campaigns
+  ui: Resend campaign
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - On the campaign row, click 'list-actions'
+  - Click 'Resend campaign'
+  new:
+    id: brevo.email_campaigns.resend_campaign
+    entity: email_campaign
+    operation_class: action
+    description: Send a sent campaign again, for example to contacts who did not open it.
+    external_effect: sends_email
+    requires_confirmation: true
+    reversible: false
+- area: Email Campaigns
+  ui: Share template
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - On the campaign row, click 'list-actions'
+  - Click 'Share template'
+  catalog_id: brevo.email_campaigns.get_shared_template_url
+- area: Email Campaigns
+  ui: Delete
+  steps:
+  - Open https://app.brevo.com/campaigns/listing
+  - On the campaign row, click 'list-actions'
+  - Click 'Delete'
+  - Confirm
+  catalog_id: brevo.email_campaigns.delete_email_campaign
+- area: Email Campaigns
+  ui: 'Editor: rename, sender, recipients, subject, design, settings'
+  steps:
+  - Open https://app.brevo.com/marketing-campaign/edit/{campaignId}
+  - Click the edit button of the part to change
+  - Save
+  catalog_id: brevo.email_campaigns.update_email_campaign
+- area: Email Campaigns
+  ui: 'Editor: Schedule'
+  steps:
+  - Open https://app.brevo.com/marketing-campaign/edit/{campaignId}
+  - Click 'Schedule'
+  - Pick a date and time
+  catalog_id: brevo.email_campaigns.update_email_campaign
+- area: Email Campaigns
+  ui: 'Editor: Add languages'
+  steps:
+  - Open https://app.brevo.com/marketing-campaign/edit/{campaignId}
+  - Click 'Add languages'
+  new:
+    id: brevo.email_campaigns.add_campaign_language
+    entity: email_campaign
+    operation_class: update
+    description: Add a translated version of the campaign. The public API has no route for this.
+- area: Email Campaigns
+  ui: 'Editor: design actions (reset, view or download HTML, plain text)'
+  steps:
+  - Open https://app.brevo.com/marketing-campaign/edit/{campaignId}
+  - Click 'Design actions'
+  kind: view
+- area: Email Campaigns
+  ui: Export (.csv file)
+  steps:
+  - Open https://app.brevo.com/marketing-reports/statistics
+  - Pick the dates
+  - Click 'Export (.csv file)'
+  new:
+    id: brevo.marketing_reports.export_statistics_csv
+    entity: marketing_statistics
+    operation_class: read
+    description: Download the marketing statistics for a date range as a CSV file.
+- area: Templates (marketing email)
+  ui: Create template
+  steps:
+  - Open https://app.brevo.com/templates/listing
+  - Click 'Create template'
+  catalog_id: brevo.transactional_emails.create_smtp_template
+- area: Templates (marketing email)
+  ui: Create folder
+  steps:
+  - Open https://app.brevo.com/templates/listing
+  - Click 'Create folder'
+  catalog_id: brevo.templates.create_template_folder
+- area: Templates (marketing email)
+  ui: Edit
+  steps:
+  - Open https://app.brevo.com/templates/listing
+  - On the template row, click 'Edit'
+  catalog_id: brevo.transactional_emails.update_smtp_template
+- area: Templates (marketing email)
+  ui: Preview
+  steps:
+  - Open https://app.brevo.com/templates/listing
+  - On the template row, click 'list-actions'
+  - Click 'Preview'
+  catalog_id: brevo.transactional_emails.post_preview_smtp_email_templates
+- area: Templates (marketing email)
+  ui: Duplicate
+  steps:
+  - Open https://app.brevo.com/templates/listing
+  - On the template row, click 'list-actions'
+  - Click 'Duplicate'
+  new:
+    id: brevo.templates.duplicate_template
+    entity: email_template
+    operation_class: create
+    description: Copy a template. The public API has no route for this; create_smtp_template with the same content does the same.
+    requires_confirmation: false
+    reversible: true
+- area: Templates (marketing email)
+  ui: Activate
+  steps:
+  - Open https://app.brevo.com/templates/listing
+  - On the template row, click 'list-actions'
+  - Click 'Activate'
+  catalog_id: brevo.transactional_emails.update_smtp_template
+- area: Templates (marketing email)
+  ui: Generate translation
+  steps:
+  - Open https://app.brevo.com/templates/listing
+  - On the template row, click 'list-actions'
+  - Click 'Generate translation'
+  new:
+    id: brevo.templates.generate_translation
+    entity: email_template
+    operation_class: create
+    description: Make a translated copy of a template with Brevo's AI.
+- area: Templates (marketing email)
+  ui: Share
+  steps:
+  - Open https://app.brevo.com/templates/listing
+  - On the template row, click 'list-actions'
+  - Click 'Share'
+  new:
+    id: brevo.templates.share_template
+    entity: email_template
+    operation_class: read
+    description: Get a link that lets another Brevo account import this template.
+- area: Templates (marketing email)
+  ui: Delete
+  steps:
+  - Open https://app.brevo.com/templates/listing
+  - On the template row, click 'list-actions'
+  - Click 'Delete'
+  - Confirm
+  catalog_id: brevo.transactional_emails.delete_smtp_template
+- area: Forms
+  ui: Create sign-up form
+  steps:
+  - Open https://app.brevo.com/contact/forms-app/subscription
+  - Click 'Create sign-up form'
+  catalog_id: brevo.forms.create_form
+- area: Forms
+  ui: Duplicate
+  steps:
+  - Open https://app.brevo.com/contact/forms-app/subscription
+  - On the form row, click 'More Actions'
+  - Click 'Duplicate'
+  new:
+    id: brevo.forms.duplicate_form
+    entity: form
+    operation_class: create
+    description: Copy a form as a new draft.
+    requires_confirmation: false
+    reversible: true
+- area: Forms
+  ui: Delete
+  steps:
+  - Open https://app.brevo.com/contact/forms-app/subscription
+  - On the form row, click 'More Actions'
+  - Click 'Delete'
+  - Confirm with 'Delete form'
+  catalog_id: brevo.forms.delete_form
+- area: Forms
+  ui: Sign-up, Unsubscribe, Profile update tabs
+  steps:
+  - Open https://app.brevo.com/contact/forms-app/subscription
+  - Click a tab
+  kind: view
+- area: Automations
+  ui: Create an automation
+  steps:
+  - Open https://app.brevo.com/automation/automations
+  - Click 'Create an automation'
+  - Click 'Create from scratch'
+  catalog_id: brevo.automations.create_automation
+- area: Automations
+  ui: Create from a template
+  steps:
+  - Open https://app.brevo.com/automation/automations
+  - Click 'Create an automation'
+  - Pick a template, for example 'Welcome message'
+  new:
+    id: brevo.automations.create_from_template
+    entity: automation
+    operation_class: create
+    description: Start an automation from one of 16 templates (welcome message, abandoned cart, anniversary date and others). It starts inactive.
+- area: Automations
+  ui: Generate automation with AI
+  steps:
+  - Open https://app.brevo.com/automation/automations
+  - Click 'Generate automation with AI'
+  new:
+    id: brevo.automations.generate_with_ai
+    entity: automation
+    operation_class: create
+    description: Draft an automation from a prompt with Brevo's AI. It starts inactive.
+- area: Automations
+  ui: Rename
+  steps:
+  - Open https://app.brevo.com/automation/automations
+  - On the automation row, click the actions menu
+  - Click 'Rename'
+  catalog_id: brevo.automations.rename_automation
+- area: Automations
+  ui: Duplicate
+  steps:
+  - Open https://app.brevo.com/automation/automations
+  - On the automation row, click the actions menu
+  - Click 'Duplicate'
+  new:
+    id: brevo.automations.duplicate_automation
+    entity: automation
+    operation_class: create
+    description: Copy an automation. The copy starts inactive.
+    requires_confirmation: false
+    reversible: true
+- area: Automations
+  ui: Assign a tag
+  steps:
+  - Open https://app.brevo.com/automation/automations
+  - On the automation row, click the actions menu
+  - Click 'Assign a tag'
+  new:
+    id: brevo.automations.assign_tag
+    entity: automation
+    operation_class: update
+    description: Add a tag to an automation to group it.
+- area: Automations
+  ui: View report, See details, Access logs
+  steps:
+  - Open https://app.brevo.com/automation/automations
+  - On the automation row, click the actions menu
+  - Pick the view
+  kind: view
+- area: Automations
+  ui: Delete
+  steps:
+  - Open https://app.brevo.com/automation/automations
+  - On the automation row, click the actions menu
+  - Click 'Delete'
+  - Confirm with 'Delete automation'
+  catalog_id: brevo.automations.delete_automation
+- area: Automations
+  ui: Workflow logs, Contacts in workflow
+  steps:
+  - Open https://app.brevo.com/automation/logs/scenarios
+  - Pick a tab
+  kind: view
+- area: Transactional email
+  ui: Setup tabs (SMTP, API, Postfix, PHP)
+  steps:
+  - Open https://app.brevo.com/transactional/email/real-time
+  - Pick a tab
+  kind: view
+- area: Transactional email
+  ui: Download CSV of logs
+  steps:
+  - Open https://app.brevo.com/transactional/email/logs
+  - Pick the filters
+  - Click 'Download CSV'
+  catalog_id: brevo.transactional_emails.get_email_event_report
+- area: Transactional SMS
+  ui: Download SMS logs
+  steps:
+  - Open https://app.brevo.com/transactional/sms/logs
+  - Click 'Download'
+  catalog_id: brevo.transactional_sms.get_sms_events
+- area: Settings
+  ui: Add sender
+  steps:
+  - Open https://app.brevo.com/senders/list
+  - Click 'Add sender'
+  catalog_id: brevo.senders.create_sender
+- area: Settings
+  ui: Edit sender
+  steps:
+  - Open https://app.brevo.com/senders/list
+  - On the sender row, click 'Edit'
+  catalog_id: brevo.senders.update_sender
+- area: Settings
+  ui: Delete sender
+  steps:
+  - Open https://app.brevo.com/senders/list
+  - On the sender row, click 'sender-item-actionList'
+  - Click 'Delete sender'
+  catalog_id: brevo.senders.delete_sender
+- area: Settings
+  ui: Add a domain
+  steps:
+  - Open https://app.brevo.com/senders/domain/list
+  - Click 'Add a domain'
+  catalog_id: brevo.domains.create_domain
+- area: Settings
+  ui: Dedicated IPs tab
+  steps:
+  - Open https://app.brevo.com/senders/list
+  - Click 'Dedicated IPs'
+  catalog_id: brevo.senders.get_ips
+- area: Settings
+  ui: Sending cadence
+  steps:
+  - Open https://app.brevo.com/senders/list
+  - Click 'Sending cadence'
+  new:
+    id: brevo.senders.set_sending_cadence
+    entity: account_setting
+    operation_class: update
+    description: Limit how many emails the account sends per hour.
+    external_effect: changes_account
+    requires_confirmation: true
+- area: Settings
+  ui: Generate API key
+  steps:
+  - Open https://app.brevo.com/settings/keys/api
+  - Click 'Generate API key'
+  - Type a name, pick the access, click 'Generate'
+  - Copy the key; it is shown once
+  new:
+    id: brevo.settings.create_api_key
+    entity: api_key
+    operation_class: create
+    description: Create an API key. Needs a verified phone number. Done once in the web app for this project; the network call was not captured.
+    external_effect: changes_account
+    requires_confirmation: true
+- area: Settings
+  ui: Edit API Key
+  steps:
+  - Open https://app.brevo.com/settings/keys/api
+  - On the key row, click 'More actions'
+  - Click 'Edit API Key'
+  new:
+    id: brevo.settings.edit_api_key
+    entity: api_key
+    operation_class: update
+    description: Edit an API key. Anything that uses the key stops working if it is deactivated or deleted.
+    external_effect: changes_account
+    requires_confirmation: true
+    reversible: true
+- area: Settings
+  ui: Deactivate API Key
+  steps:
+  - Open https://app.brevo.com/settings/keys/api
+  - On the key row, click 'More actions'
+  - Click 'Deactivate API Key'
+  new:
+    id: brevo.settings.deactivate_api_key
+    entity: api_key
+    operation_class: update
+    description: Deactivate an API key. Anything that uses the key stops working if it is deactivated or deleted.
+    external_effect: changes_account
+    requires_confirmation: true
+    reversible: true
+- area: Settings
+  ui: Delete API Key
+  steps:
+  - Open https://app.brevo.com/settings/keys/api
+  - On the key row, click 'More actions'
+  - Click 'Delete API Key'
+  new:
+    id: brevo.settings.delete_api_key
+    entity: api_key
+    operation_class: delete
+    description: Delete an API key. Anything that uses the key stops working if it is deactivated or deleted.
+    external_effect: changes_account
+    requires_confirmation: true
+    reversible: false
+- area: Settings
+  ui: Activate for API keys (authorized IPs)
+  steps:
+  - Open https://app.brevo.com/settings/keys/api
+  - Click 'Activate for API keys'
+  new:
+    id: brevo.settings.restrict_api_keys_by_ip
+    entity: account_setting
+    operation_class: update
+    description: Allow API calls only from listed IP addresses.
+    external_effect: changes_account
+    requires_confirmation: true
+- area: Settings
+  ui: Generate SMTP key
+  steps:
+  - Open https://app.brevo.com/settings/keys/smtp
+  - Click 'Generate SMTP key'
+  new:
+    id: brevo.settings.create_smtp_key
+    entity: smtp_key
+    operation_class: create
+    description: Create an SMTP key for sending through Brevo's SMTP relay.
+    external_effect: changes_account
+    requires_confirmation: true
+- area: Settings
+  ui: Save time zone
+  steps:
+  - Open https://app.brevo.com/settings/advanced
+  - Pick the time zone
+  - Click 'Save'
+  new:
+    id: brevo.settings.update_time_zone
+    entity: account_setting
+    operation_class: update
+    description: Change the account time zone used for scheduling and reports.
+    external_effect: changes_account
+    requires_confirmation: true
+- area: Settings
+  ui: Definitively close your account
+  steps:
+  - Open https://app.brevo.com/settings/advanced
+  - Click 'Definitively close your account'
+  new:
+    id: brevo.settings.close_account
+    entity: account
+    operation_class: delete
+    description: Close the Brevo account and delete its data. This cannot be undone.
+    external_effect: changes_account
+    requires_confirmation: true
+    reversible: false
+- area: Settings
+  ui: Invite a user
+  steps:
+  - Open settings from the profile menu
+  - Click 'Users' under Organization settings
+  - Invite a user
+  catalog_id: brevo.user.inviteuser
+- area: Library
+  ui: Add file
+  steps:
+  - Open https://content-library.brevo.com/content-hub
+  - Click 'Add file'
+  catalog_id: brevo.email_campaigns.upload_image_to_gallery
+- area: Library
+  ui: Create folder
+  steps:
+  - Open https://content-library.brevo.com/content-hub
+  - Click 'Create folder'
+  new:
+    id: brevo.library.create_media_folder
+    entity: media_folder
+    operation_class: create
+    description: Create a folder in the media library.
+- area: Library
+  ui: Generate image
+  steps:
+  - Open https://content-library.brevo.com/content-hub
+  - Click 'Generate image'
+  new:
+    id: brevo.library.generate_image
+    entity: media_file
+    operation_class: create
+    description: Make an image with Brevo's AI and save it in the media library.
+- area: Library
+  ui: Grid or list layout
+  steps:
+  - Open https://content-library.brevo.com/content-hub
+  - Pick a layout
+  kind: view
+- area: Commerce
+  ui: Install plugin
+  steps:
+  - Open https://app.brevo.com/ecommerce
+  - Click 'Install plugin'
+  new:
+    id: brevo.ecommerce.install_store_plugin
+    entity: integration
+    operation_class: action
+    description: Connect an online store through a plugin. Until a store is connected, the e-commerce screens stay on setup.
+    external_effect: changes_account
+    requires_confirmation: true
+  free_plan: limited
+  requires:
+  - an online store
+- area: Landing pages
+  ui: Landing pages
+  steps:
+  - Open https://app.brevo.com/contact/list
+  - Click 'Landing pages' in the Marketing menu
+  - The app opens the plans page
+  new:
+    id: brevo.landing_pages.create_landing_page
+    entity: landing_page
+    operation_class: create
+    description: Build and publish a landing page.
+    external_effect: publishes
+    requires_confirmation: true
+  status: gated
+  free_plan: gated
+  requires:
+  - a paid plan
+- area: Analytics
+  ui: Conversions
+  steps:
+  - Open https://app.brevo.com/conversions/listing
+  new:
+    id: brevo.conversions.create_conversion
+    entity: conversion
+    operation_class: create
+    description: Define a conversion to track revenue from campaigns.
+  status: gated
+  free_plan: gated
+  requires:
+  - a paid plan
+- area: Analytics
+  ui: Analytics studio
+  steps:
+  - Open https://app.brevo.com/analytics
+  new:
+    id: brevo.analytics.open_analytics_studio
+    entity: custom_report
+    operation_class: read
+    description: Build custom reports across channels.
+  status: gated
+  free_plan: gated
+  requires:
+  - Professional plan
+- area: Phone
+  ui: Phone
+  steps:
+  - Open https://app.brevo.com/phone/onboarding
+  - Click 'Get package'
+  new:
+    id: brevo.phone.buy_phone_package
+    entity: phone_number
+    operation_class: action
+    description: Buy a phone package to call contacts from Brevo.
+    external_effect: spends_credits
+    requires_confirmation: true
+    reversible: false
+  status: gated
+  free_plan: gated
+  requires:
+  - a paid add-on
+- area: Meetings
+  ui: Meetings
+  steps:
+  - Open https://app.brevo.com/meetings/offer/all
+  - The page redirects to /meetings/onboarding
+  new:
+    id: brevo.meetings.set_up_meetings
+    entity: meeting
+    operation_class: action
+    description: Set up the Meetings app (booking pages and calendar link).
+    external_effect: changes_account
+    requires_confirmation: true
+  free_plan: limited
+  requires:
+  - Meetings set up
+- area: Loyalty
+  ui: Create a loyalty program
+  steps:
+  - Open https://app.brevo.com/loyalty
+  - The free plan shows Upgrade to Enterprise
+  catalog_id: brevo.program.create_new_lp

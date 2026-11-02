@@ -126,6 +126,13 @@
       "success_status": [
         200
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/companies/settings/company-attributes",
+        "Click 'Create an attribute'"
+      ]
     }
   ],
   "preconditions": [],

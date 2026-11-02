@@ -132,6 +132,13 @@
       "success_status": [
         201
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/templates/listing",
+        "Click 'Create template'"
+      ]
     }
   ],
   "preconditions": [],

@@ -46,6 +46,15 @@
       "success_status": [
         204
       ]
+    },
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/templates/listing",
+        "On the template row, click 'list-actions'",
+        "Click 'Delete'",
+        "Confirm"
+      ]
     }
   ],
   "preconditions": [],

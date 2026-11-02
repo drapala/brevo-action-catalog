@@ -26,6 +26,45 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.analytics.open_analytics_studio",
+    "label": "Analytics studio",
+    "area": "Analytics",
+    "entity": "custom_report",
+    "operation_class": "read",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "gated",
+    "free_plan": "gated",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.automations.add_contacts_to_automation",
+    "label": "Add to automation",
+    "area": "Contacts",
+    "entity": "automation",
+    "operation_class": "action",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.automations.assign_tag",
+    "label": "Assign a tag",
+    "area": "Automations",
+    "entity": "automation",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.automations.create_automation",
     "label": "Create an automation",
     "area": "Automations",
@@ -40,6 +79,19 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.automations.create_from_template",
+    "label": "Create from a template",
+    "area": "Automations",
+    "entity": "automation",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.automations.delete_automation",
     "label": "Delete an automation",
     "area": "Automations",
@@ -50,6 +102,32 @@
       "undocumented_api"
     ],
     "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.automations.duplicate_automation",
+    "label": "Duplicate",
+    "area": "Automations",
+    "entity": "automation",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.automations.generate_with_ai",
+    "label": "Generate automation with AI",
+    "area": "Automations",
+    "entity": "automation",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
     "free_plan": "available",
     "requires_confirmation": true
   },
@@ -322,7 +400,8 @@
     "entity": "company",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -335,7 +414,8 @@
     "entity": "crm_attribute",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -413,7 +493,8 @@
     "entity": "company",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -426,7 +507,8 @@
     "entity": "company",
     "operation_class": "update",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -530,11 +612,38 @@
     "entity": "contact",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
     "requires_confirmation": false
+  },
+  {
+    "id": "brevo.contacts.assign_contact_owner",
+    "label": "Assign",
+    "area": "Contacts",
+    "entity": "contact",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.contacts.copy_sms_number_to_whatsapp",
+    "label": "Copy SMS number to WhatsApp",
+    "area": "Contacts",
+    "entity": "contact",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
   },
   {
     "id": "brevo.contacts.create_attribute",
@@ -543,7 +652,8 @@
     "entity": "contact_attribute",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -556,7 +666,8 @@
     "entity": "contact",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -595,7 +706,8 @@
     "entity": "list",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -621,7 +733,8 @@
     "entity": "contact",
     "operation_class": "delete",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -647,7 +760,8 @@
     "entity": "list",
     "operation_class": "delete",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -664,6 +778,32 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.contacts.duplicate_list",
+    "label": "Duplicate",
+    "area": "Contacts",
+    "entity": "list",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.contacts.edit_list_settings",
+    "label": "List settings",
+    "area": "Contacts",
+    "entity": "list",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -816,7 +956,8 @@
     "entity": "contact",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -842,11 +983,38 @@
     "entity": "contact",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
     "requires_confirmation": false
+  },
+  {
+    "id": "brevo.contacts.send_individual_email",
+    "label": "Contact page: Compose an email",
+    "area": "Contacts",
+    "entity": "contact",
+    "operation_class": "action",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.contacts.send_individual_sms",
+    "label": "Contact page: Send an SMS",
+    "area": "Contacts",
+    "entity": "contact",
+    "operation_class": "action",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
   },
   {
     "id": "brevo.contacts.update_attribute",
@@ -868,7 +1036,8 @@
     "entity": "contact",
     "operation_class": "update",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -881,7 +1050,8 @@
     "entity": "contact",
     "operation_class": "update",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -907,7 +1077,8 @@
     "entity": "list",
     "operation_class": "update",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -1044,6 +1215,19 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.conversions.create_conversion",
+    "label": "Conversions",
+    "area": "Analytics",
+    "entity": "conversion",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "gated",
+    "free_plan": "gated",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.coupons.create_coupon_collection",
     "label": "Create а coupon collection",
     "area": "Coupons",
@@ -1109,6 +1293,19 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.crm.activate_sales_crm",
+    "label": "Start for free (activate the sales CRM)",
+    "area": "Deals",
+    "entity": "account_setting",
+    "operation_class": "action",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.custom_objects.batch_delete_object_records",
     "label": "Delete multiple object records (up to 1000) asynchronously",
     "area": "Custom Objects",
@@ -1167,7 +1364,8 @@
     "entity": "deal",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -1284,7 +1482,8 @@
     "entity": "deal",
     "operation_class": "update",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -1323,7 +1522,8 @@
     "entity": "sender_domain",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -1590,6 +1790,19 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.ecommerce.install_store_plugin",
+    "label": "Install plugin",
+    "area": "Commerce",
+    "entity": "integration",
+    "operation_class": "action",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "limited",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.ecommerce.set_config_display_currency",
     "label": "Set the ISO 4217 compliant display currency code for your Brevo account",
     "area": "Ecommerce",
@@ -1603,13 +1816,53 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.email_campaigns.add_campaign_language",
+    "label": "Editor: Add languages",
+    "area": "Email Campaigns",
+    "entity": "email_campaign",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.email_campaigns.add_campaign_to_folder",
+    "label": "Add to folder",
+    "area": "Email Campaigns",
+    "entity": "email_campaign",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.email_campaigns.create_campaign_folder",
+    "label": "Create folder",
+    "area": "Email Campaigns",
+    "entity": "campaign_folder",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.email_campaigns.create_email_campaign",
     "label": "Create an email campaign",
     "area": "Email Campaigns",
     "entity": "email_campaign",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -1622,11 +1875,25 @@
     "entity": "email_campaign",
     "operation_class": "delete",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
     "requires_confirmation": true
+  },
+  {
+    "id": "brevo.email_campaigns.duplicate_campaign",
+    "label": "Duplicate",
+    "area": "Email Campaigns",
+    "entity": "email_campaign",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": false
   },
   {
     "id": "brevo.email_campaigns.email_export_recipients",
@@ -1640,6 +1907,19 @@
     "verification": "documented",
     "free_plan": "unknown",
     "requires_confirmation": false
+  },
+  {
+    "id": "brevo.email_campaigns.generate_campaign_with_ai",
+    "label": "Generate campaign with AI",
+    "area": "Email Campaigns",
+    "entity": "email_campaign",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
   },
   {
     "id": "brevo.email_campaigns.get_ab_test_campaign_result",
@@ -1687,11 +1967,25 @@
     "entity": "shared_url",
     "operation_class": "read",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
     "requires_confirmation": false
+  },
+  {
+    "id": "brevo.email_campaigns.resend_campaign",
+    "label": "Resend campaign",
+    "area": "Email Campaigns",
+    "entity": "email_campaign",
+    "operation_class": "action",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
   },
   {
     "id": "brevo.email_campaigns.send_email_campaign_now",
@@ -1726,7 +2020,8 @@
     "entity": "email_campaign",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -1752,7 +2047,8 @@
     "entity": "email_campaign",
     "operation_class": "update",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -1765,7 +2061,8 @@
     "entity": "image",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -1934,7 +2231,8 @@
     "entity": "file",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -1967,6 +2265,19 @@
     "verification": "observed",
     "free_plan": "available",
     "requires_confirmation": true
+  },
+  {
+    "id": "brevo.forms.duplicate_form",
+    "label": "Duplicate",
+    "area": "Forms",
+    "entity": "form",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": false
   },
   {
     "id": "brevo.forms.list_forms",
@@ -2019,6 +2330,58 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.landing_pages.create_landing_page",
+    "label": "Landing pages",
+    "area": "Landing pages",
+    "entity": "landing_page",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "gated",
+    "free_plan": "gated",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.library.create_media_folder",
+    "label": "Create folder",
+    "area": "Library",
+    "entity": "media_folder",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.library.generate_image",
+    "label": "Generate image",
+    "area": "Library",
+    "entity": "media_file",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.marketing_reports.export_statistics_csv",
+    "label": "Export (.csv file)",
+    "area": "Email Campaigns",
+    "entity": "marketing_statistics",
+    "operation_class": "read",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2360,13 +2723,40 @@
     "requires_confirmation": true
   },
   {
+    "id": "brevo.meetings.book_meeting_with_contact",
+    "label": "Contact page: Meeting",
+    "area": "Contacts",
+    "entity": "meeting",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "limited",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.meetings.set_up_meetings",
+    "label": "Meetings",
+    "area": "Meetings",
+    "entity": "meeting",
+    "operation_class": "action",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "limited",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.notes.create_note",
     "label": "Create a note",
     "area": "Notes",
     "entity": "note",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -2464,6 +2854,19 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.phone.buy_phone_package",
+    "label": "Phone",
+    "area": "Phone",
+    "entity": "phone_number",
+    "operation_class": "action",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "gated",
+    "free_plan": "gated",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.process.get_process",
     "label": "Get process details",
     "area": "Process",
@@ -2496,7 +2899,8 @@
     "entity": "program",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -2804,13 +3208,66 @@
     "requires_confirmation": true
   },
   {
+    "id": "brevo.segments.duplicate_segment",
+    "label": "Duplicate",
+    "area": "Contacts",
+    "entity": "segment",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.segments.move_segment",
+    "label": "Move segment",
+    "area": "Contacts",
+    "entity": "segment",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.segments.rename_segment",
+    "label": "Rename",
+    "area": "Contacts",
+    "entity": "segment",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.segments.split_segment_into_lists",
+    "label": "Split into lists",
+    "area": "Contacts",
+    "entity": "segment",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.senders.create_sender",
     "label": "Create email sender",
     "area": "Senders",
     "entity": "sender",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -2823,7 +3280,8 @@
     "entity": "sender",
     "operation_class": "delete",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -2836,7 +3294,8 @@
     "entity": "ip",
     "operation_class": "read",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -2869,13 +3328,27 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.senders.set_sending_cadence",
+    "label": "Sending cadence",
+    "area": "Settings",
+    "entity": "account_setting",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.senders.update_sender",
     "label": "Update a sender",
     "area": "Senders",
     "entity": "sender",
     "operation_class": "update",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -2893,6 +3366,123 @@
     "verification": "documented",
     "free_plan": "unknown",
     "requires_confirmation": false
+  },
+  {
+    "id": "brevo.settings.close_account",
+    "label": "Definitively close your account",
+    "area": "Settings",
+    "entity": "account",
+    "operation_class": "delete",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.settings.create_api_key",
+    "label": "Generate API key",
+    "area": "Settings",
+    "entity": "api_key",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.settings.create_smtp_key",
+    "label": "Generate SMTP key",
+    "area": "Settings",
+    "entity": "smtp_key",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.settings.deactivate_api_key",
+    "label": "Deactivate API Key",
+    "area": "Settings",
+    "entity": "api_key",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.settings.delete_api_key",
+    "label": "Delete API Key",
+    "area": "Settings",
+    "entity": "api_key",
+    "operation_class": "delete",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.settings.edit_api_key",
+    "label": "Edit API Key",
+    "area": "Settings",
+    "entity": "api_key",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.settings.restrict_api_keys_by_ip",
+    "label": "Activate for API keys (authorized IPs)",
+    "area": "Settings",
+    "entity": "account_setting",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.settings.update_contact_data_settings",
+    "label": "Change contact data settings",
+    "area": "Contacts",
+    "entity": "account_setting",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.settings.update_time_zone",
+    "label": "Save time zone",
+    "area": "Settings",
+    "entity": "account_setting",
+    "operation_class": "update",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
   },
   {
     "id": "brevo.sms_campaigns.create_sms_campaign",
@@ -3044,7 +3634,8 @@
     "entity": "task",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -3126,6 +3717,45 @@
     ],
     "verification": "gated",
     "free_plan": "gated",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.templates.duplicate_template",
+    "label": "Duplicate",
+    "area": "Templates (marketing email)",
+    "entity": "email_template",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.templates.generate_translation",
+    "label": "Generate translation",
+    "area": "Templates (marketing email)",
+    "entity": "email_template",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
+    "id": "brevo.templates.share_template",
+    "label": "Share",
+    "area": "Templates (marketing email)",
+    "entity": "email_template",
+    "operation_class": "read",
+    "route_kinds": [
+      "ui_path"
+    ],
+    "verification": "seen",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3278,7 +3908,8 @@
     "entity": "email_template",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -3330,7 +3961,8 @@
     "entity": "email_template",
     "operation_class": "delete",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -3382,7 +4014,8 @@
     "entity": "event",
     "operation_class": "read",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -3486,7 +4119,8 @@
     "entity": "email_template",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -3538,7 +4172,8 @@
     "entity": "email_template",
     "operation_class": "update",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -3551,7 +4186,8 @@
     "entity": "event",
     "operation_class": "read",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
@@ -3681,7 +4317,8 @@
     "entity": "invitation",
     "operation_class": "action",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "documented",
     "free_plan": "unknown",
@@ -3746,7 +4383,8 @@
     "entity": "webhook",
     "operation_class": "create",
     "route_kinds": [
-      "documented_api"
+      "documented_api",
+      "ui_path"
     ],
     "verification": "verified",
     "free_plan": "available",
