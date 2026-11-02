@@ -3,7 +3,8 @@
 1. No credential in any tracked file (Brevo keys, bearer tokens, cookies).
 2. Every action in the catalog validates against the schema.
 3. The corrections table in docs/AI_LOG.md matches docs/corrections.jsonl.
-4. The public repository URL answers 200 to a client that is not logged in.
+4. Every action a scenario calls exists in the catalog.
+5. The public repository URL answers 200 to a client that is not logged in.
 
 Usage: presubmit_check.py [repo_url]
 """
@@ -68,8 +69,21 @@ def check_ledger() -> list[str]:
     return [] if out.returncode == 0 else [out.stdout.strip()]
 
 
+def check_scenarios() -> list[str]:
+    import yaml
+
+    known = {entry["id"] for entry in json.loads((ROOT / "catalog/index.json").read_text())}
+    missing = []
+    for path in sorted((ROOT / "scenarios").glob("*.yaml")):
+        for step in yaml.safe_load(path.read_text())["steps"]:
+            for key in ("action", "postcondition_of"):
+                if step.get(key) and step[key] not in known:
+                    missing.append(f"{path.name}: step {step['name']} names unknown action {step[key]}")
+    return missing
+
+
 def main() -> int:
-    problems = check_secrets() + check_schema() + check_ledger()
+    problems = check_secrets() + check_schema() + check_ledger() + check_scenarios()
     if len(sys.argv) > 1:
         problems += check_public(sys.argv[1])
     for problem in problems:
