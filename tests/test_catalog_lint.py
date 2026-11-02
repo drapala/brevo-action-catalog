@@ -98,8 +98,7 @@ def test_dangling_undo_is_caught():
 
 
 def test_l007_delete_named_action_without_confirmation_is_caught():
-    # delete_hardbounces is class "action", so the delete rule missed it and an empty call
-    # could clear every hard bounce without asking. Found by the fresh-context reviewer.
+    # Class "action", so the delete-class rule missed it.
     entry = action(id="brevo.transactional_emails.delete_hardbounces")
     assert [f.check for f in lint.check_destructive_needs_confirmation(entry)] == ["L007"]
     entry["side_effects"]["requires_confirmation"] = True

@@ -228,8 +228,7 @@ def scenario(file: str) -> int:
             )
             label = "PASS" if ok else ("KNOWN" if step.get("known_defect") else "FAIL")
             print(f"{label:5} {step['name']:28} {step['action']} {status} {'' if ok else why}")
-            # A known_defect is a Brevo defect, already recorded as failed in the catalog. The run
-            # continues and the ledger stays closed, because no change on our side can fix it.
+            # A known Brevo defect: recorded as evidence, never a ledger entry.
             if not ok and not step.get("known_defect"):
                 failures += 1
                 findings.append(

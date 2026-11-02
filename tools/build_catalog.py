@@ -200,8 +200,7 @@ def apply_evidence(actions: dict[str, dict]) -> None:
             )
             action["availability"]["free_plan"] = "available"
             notes = [passed[-1]["note"]] if passed[-1].get("note") else []
-            # The scenario passed with setup, but a bare call failed. Keep that answer, because
-            # an agent hits the same error on an empty account or with no filter.
+            # Keep the bare-call error: an agent without setup hits it too.
             if probes and probes[-1]["status"] not in (probes[-1].get("expected") or [200]):
                 bare = probes[-1]
                 message = json.dumps(bare.get("response"), ensure_ascii=False)
