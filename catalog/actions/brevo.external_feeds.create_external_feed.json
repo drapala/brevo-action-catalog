@@ -25,15 +25,9 @@
           "description": "Authentication type for accessing the feed",
           "default": "noAuth",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "basic",
+            "token",
+            "noAuth"
           ],
           "example": "token",
           "type": "string"
@@ -71,14 +65,22 @@
           "description": "Custom HTTP headers for the feed request",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "name": {
+                "description": "Header name",
+                "example": "Authorization",
+                "type": "string"
+              },
+              "value": {
+                "description": "Header value",
+                "example": "Bearer xyz789",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "name",
+              "value"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

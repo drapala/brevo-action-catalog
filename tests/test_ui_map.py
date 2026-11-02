@@ -29,6 +29,8 @@ def test_matched_line_adds_a_ui_route_and_new_line_becomes_a_valid_seen_action(t
         {"area": "Lists", "ui": "Duplicate", "steps": ["Open the lists page", "Click 'Duplicate'"],
          "new": {"id": "brevo.contacts.duplicate_list", "entity": "list", "operation_class": "create", "description": "Copy a list."}},
         {"area": "Lists", "ui": "Recalculate now", "steps": ["Click 'Recalculate now'"], "kind": "view"},
+        # A second button for the same action counts as a web app action, not as a second catalog action.
+        {"area": "Folders", "ui": "Add a list", "steps": ["Open a folder", "Click 'Add a list'"], "catalog_id": api_action["id"]},
     ]
     monkeypatch.setattr(build_catalog, "UI_MAP", write_map(tmp_path, lines))
     actions = {api_action["id"]: api_action}
@@ -42,8 +44,8 @@ def test_matched_line_adds_a_ui_route_and_new_line_becomes_a_valid_seen_action(t
     assert seen["side_effects"]["requires_confirmation"] is True
     schema = json.loads((ROOT / "catalog/schema/business_action.schema.json").read_text())
     jsonschema.validate(seen, schema)
-    assert stats == {"view_only": 1, "business_actions": 2, "in_catalog_before_walk": 1, "added_by_walk": 1,
-                     "runs_through_public_api": 1, "ui_steps_only": 1}
+    assert stats == {"view_only": 1, "business_actions": 3, "catalog_actions": 2, "in_catalog_before_walk": 2,
+                     "added_by_walk": 1, "runs_through_public_api": 2, "ui_steps_only": 1}
 
 
 def test_every_ui_path_is_kept_and_a_new_action_cannot_replace_an_existing_one(tmp_path, monkeypatch):

@@ -23,30 +23,18 @@
         "constraintType": {
           "description": "Defines whether the limit applies to transaction count or amount.",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "transaction",
+            "amount"
           ],
           "type": "string"
         },
         "durationUnit": {
           "description": "Unit of time for which the limit is applicable.",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "day",
+            "week",
+            "month",
+            "year"
           ],
           "type": "string"
         },
@@ -61,12 +49,8 @@
         "transactionType": {
           "description": "Specifies whether the limit applies to credit or debit transactions.",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "credit",
+            "debit"
           ],
           "type": "string"
         },
@@ -105,105 +89,63 @@
     "schema": {
       "properties": {
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the balance limit.",
+          "format": "uuid",
+          "type": "string"
         },
         "balanceDefinitionId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Balance definition ID.",
+          "format": "uuid",
+          "type": "string"
         },
         "transactionType": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Specifies whether the limit applies to credit or debit transactions.",
+          "enum": [
+            "credit",
+            "debit"
+          ],
+          "type": "string"
         },
         "constraintType": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Defines the type of constraint (transaction count or amount).",
+          "enum": [
+            "transaction",
+            "amount"
+          ],
+          "type": "string"
         },
         "durationValue": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Number of time units the balance limit applies to.",
+          "type": "integer"
         },
         "durationUnit": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Time unit for the balance limit.",
+          "enum": [
+            "hour",
+            "day",
+            "week",
+            "month",
+            "year"
+          ],
+          "type": "string"
         },
         "value": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "The maximum allowed value for the defined constraint.",
+          "type": "number"
         },
         "slidingSchedule": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Indicates if the limit resets periodically based on a sliding schedule.",
+          "type": "boolean"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp of when the balance limit was created.",
+          "format": "date-time",
+          "type": "string"
         },
         "updatedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp of the last update to the balance limit.",
+          "format": "date-time",
+          "type": "string"
         }
       },
       "type": "object"

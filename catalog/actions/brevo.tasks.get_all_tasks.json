@@ -92,7 +92,99 @@
         "items": {
           "description": "List of tasks",
           "items": {
-            "description": "(nested schema truncated)"
+            "description": "Task Details",
+            "properties": {
+              "id": {
+                "description": "Unique task id",
+                "example": "61a5cd07ca1347c82306ad06",
+                "type": "string"
+              },
+              "taskTypeId": {
+                "description": "Id for type of task e.g Call / Email / Meeting etc.",
+                "example": "61a5cd07ca1347c82306ad09",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name of task",
+                "example": "Task: Connect with client",
+                "type": "string"
+              },
+              "companiesIds": {
+                "description": "Companies ids for companies a task is linked to",
+                "example": [
+                  "61a5ce58c5d4795761045990",
+                  "61a5ce58c5d4795761045991",
+                  "61a5ce58c5d4795761045992"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "dealsIds": {
+                "description": "Deal ids for deals a task is linked to",
+                "example": [
+                  "61a5ce58c5d4795761045990",
+                  "61a5ce58c5d4795761045991",
+                  "61a5ce58c5d4795761045992"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "contactsIds": {
+                "description": "Contact ids for contacts linked to this task",
+                "example": [
+                  1,
+                  2,
+                  3
+                ],
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              "assignToId": {
+                "description": "Account id of the user assigned to this task",
+                "example": "5faab4b7f195bb3c4c31e62a",
+                "type": "string"
+              },
+              "date": {
+                "description": "Task due date and time",
+                "example": "2021-11-01T17:44:54.668Z",
+                "format": "date-time",
+                "type": "string"
+              },
+              "notes": {
+                "description": "Notes added to a task",
+                "example": "In communication with client for resolution of queries.",
+                "type": "string"
+              },
+              "done": {
+                "description": "Whether the task is marked as done",
+                "example": false,
+                "type": "boolean"
+              },
+              "createdAt": {
+                "description": "Task creation date/time",
+                "example": "2021-11-01T17:44:54.668Z",
+                "format": "date-time",
+                "type": "string"
+              },
+              "updatedAt": {
+                "description": "Task last update date/time",
+                "example": "2021-11-01T17:44:54.668Z",
+                "format": "date-time",
+                "type": "string"
+              }
+            },
+            "required": [
+              "taskTypeId",
+              "name",
+              "date"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

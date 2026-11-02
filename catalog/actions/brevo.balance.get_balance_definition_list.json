@@ -77,7 +77,139 @@
         "items": {
           "description": "list of balance definitions",
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "id": {
+                "description": "Unique identifier for the balance definition.",
+                "format": "uuid",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name of the balance definition.",
+                "type": "string"
+              },
+              "description": {
+                "description": "Short description of the balance definition.",
+                "type": "string"
+              },
+              "imageRef": {
+                "description": "Optional image reference URL.",
+                "format": "uri",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": {},
+                "description": "Additional metadata for the balance definition.",
+                "type": "object"
+              },
+              "unit": {
+                "description": "Unit of balance measurement.",
+                "enum": [
+                  "POINTS",
+                  "EUR",
+                  "USD",
+                  "MXN",
+                  "GBP",
+                  "INR",
+                  "CAD",
+                  "SGD",
+                  "RON",
+                  "JPY",
+                  "MYR",
+                  "CLP",
+                  "PEN",
+                  "MAD",
+                  "AUD",
+                  "CHF",
+                  "BRL"
+                ],
+                "type": "string"
+              },
+              "minAmount": {
+                "description": "Minimum allowable balance.",
+                "type": "number"
+              },
+              "maxAmount": {
+                "description": "Maximum allowable balance.",
+                "type": "number"
+              },
+              "maxCreditAmountLimit": {
+                "description": "Maximum credit allowed per operation.",
+                "type": "number"
+              },
+              "maxDebitAmountLimit": {
+                "description": "Maximum debit allowed per operation.",
+                "type": "number"
+              },
+              "balanceOptionAmountOvertakingStrategy": {
+                "description": "Partial enables partial credit of balance if maximum balance limit is reached. Strict enables rejection of a transaction if it will breach the max balance limit.",
+                "enum": [
+                  "strict",
+                  "partial"
+                ],
+                "type": "string"
+              },
+              "balanceOptionCreditRounding": {
+                "description": "Rounding strategy for credit transactions.",
+                "enum": [
+                  "lower",
+                  "upper",
+                  "natural"
+                ],
+                "type": "string"
+              },
+              "balanceOptionDebitRounding": {
+                "description": "Rounding strategy for debit transactions.",
+                "enum": [
+                  "lower",
+                  "upper",
+                  "natural"
+                ],
+                "type": "string"
+              },
+              "balanceAvailabilityDurationValue": {
+                "description": "Number of time units before the balance expires.",
+                "type": "integer"
+              },
+              "balanceAvailabilityDurationUnit": {
+                "description": "Unit of time for the balance availability duration.",
+                "enum": [
+                  "day",
+                  "week",
+                  "month",
+                  "year"
+                ],
+                "type": "string"
+              },
+              "balanceAvailabilityDurationModifier": {
+                "description": "Modifier for balance availability duration. startOfPeriod causes expiry at the start of the period, endOfPeriod at the end. noModification uses the exact duration from the credit date.",
+                "enum": [
+                  "noModification",
+                  "startOfPeriod",
+                  "endOfPeriod"
+                ],
+                "type": "string"
+              },
+              "balanceExpirationDate": {
+                "description": "Fixed expiration date in dd/mm format. The balance expires when this date next appears in the calendar. Only one of balanceExpirationDate or balance availability duration fields can be used.",
+                "type": "string"
+              },
+              "createdAt": {
+                "description": "Timestamp of balance definition creation.",
+                "format": "date-time",
+                "type": "string"
+              },
+              "updatedAt": {
+                "description": "Timestamp of the last update.",
+                "format": "date-time",
+                "type": "string"
+              },
+              "deletedAt": {
+                "description": "Timestamp of balance definition deletion (nullable).",
+                "format": "date-time",
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
           "type": "array"
         }

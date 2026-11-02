@@ -33,154 +33,88 @@
       "description": "Task Details",
       "properties": {
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique task id",
+          "example": "61a5cd07ca1347c82306ad06",
+          "type": "string"
         },
         "taskTypeId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Id for type of task e.g Call / Email / Meeting etc.",
+          "example": "61a5cd07ca1347c82306ad09",
+          "type": "string"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Name of task",
+          "example": "Task: Connect with client",
+          "type": "string"
         },
         "companiesIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Companies ids for companies a task is linked to",
+          "example": [
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
+          ],
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "dealsIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Deal ids for deals a task is linked to",
+          "example": [
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
+          ],
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "contactsIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Contact ids for contacts linked to this task",
+          "example": [
+            1,
+            2,
+            3
+          ],
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "integer"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "assignToId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Account id of the user assigned to this task",
+          "example": "5faab4b7f195bb3c4c31e62a",
+          "type": "string"
         },
         "date": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Task due date and time",
+          "example": "2021-11-01T17:44:54.668Z",
+          "format": "date-time",
+          "type": "string"
         },
         "notes": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Notes added to a task",
+          "example": "In communication with client for resolution of queries.",
+          "type": "string"
         },
         "done": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Whether the task is marked as done",
+          "example": false,
+          "type": "boolean"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Task creation date/time",
+          "example": "2021-11-01T17:44:54.668Z",
+          "format": "date-time",
+          "type": "string"
         },
         "updatedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Task last update date/time",
+          "example": "2021-11-01T17:44:54.668Z",
+          "format": "date-time",
+          "type": "string"
         }
       },
       "required": [

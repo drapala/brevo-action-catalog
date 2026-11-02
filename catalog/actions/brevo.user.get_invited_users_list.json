@@ -21,14 +21,50 @@
           "description": "Get invited users list",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "email": {
+                "description": "Email address of the user.",
+                "example": "pendingInvitedUser@company.com",
+                "type": "string"
+              },
+              "feature_access": {
+                "description": "Feature accessiblity given to the user.",
+                "properties": {
+                  "conversations": {
+                    "description": "Conversations features accessiblity.",
+                    "example": "none",
+                    "type": "string"
+                  },
+                  "crm": {
+                    "description": "CRM features accessiblity.",
+                    "example": "full",
+                    "type": "string"
+                  },
+                  "marketing": {
+                    "description": "Marketing features accessiblity.",
+                    "example": "custom",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "is_owner": {
+                "description": "Flag for indicating is user owner of the organization.",
+                "example": true,
+                "type": "string"
+              },
+              "status": {
+                "description": "Status of the invited user.",
+                "example": "active",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "email",
+              "is_owner",
+              "status",
+              "feature_access"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

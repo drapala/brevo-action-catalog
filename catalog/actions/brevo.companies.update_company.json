@@ -16,33 +16,15 @@
         "attributes": {
           "description": "Attributes for company update",
           "example": {
-            "category": {
-              "description": "(nested schema truncated)"
-            },
-            "date": {
-              "description": "(nested schema truncated)"
-            },
-            "domain": {
-              "description": "(nested schema truncated)"
-            },
-            "industry": {
-              "description": "(nested schema truncated)"
-            },
-            "number_of_contacts": {
-              "description": "(nested schema truncated)"
-            },
-            "number_of_employees": {
-              "description": "(nested schema truncated)"
-            },
-            "owner": {
-              "description": "(nested schema truncated)"
-            },
-            "phone_number": {
-              "description": "(nested schema truncated)"
-            },
-            "revenue": {
-              "description": "(nested schema truncated)"
-            }
+            "category": "label_2",
+            "date": "2022-05-04T00:00:00+05:30",
+            "domain": "xyz",
+            "industry": "flipkart",
+            "number_of_contacts": 1,
+            "number_of_employees": 100,
+            "owner": "5b1a17d914b73d35a76ca0c7",
+            "phone_number": "81718441912",
+            "revenue": 10000.34222
           },
           "type": "object"
         },
@@ -55,46 +37,26 @@
         "linkedContactsIds": {
           "description": "Warning - Using PATCH on linkedContactIds replaces the list of linked contacts. Omitted IDs will be removed.",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            1,
+            2,
+            3
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },
         "linkedDealsIds": {
           "description": "Warning - Using PATCH on linkedDealsIds replaces the list of linked deals. Omitted IDs will be removed.",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "objectID",
+            "type": "string"
           },
           "type": "array"
         },
@@ -123,60 +85,50 @@
       "description": "Company Details",
       "properties": {
         "attributes": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Company attributes with values",
           "example": {
-            "description": "(nested schema truncated)"
+            "created_at": "2022-01-13T19:04:24.376+05:30",
+            "domain": "xyz",
+            "last_updated_at": "2022-04-01T18:47:48.283+05:30",
+            "name": "text",
+            "number_of_contacts": 0,
+            "owner": "62260474111b1101704a9d85",
+            "owner_assign_date": "2022-04-01T18:21:13.379+05:30",
+            "phone_number": 8171844192,
+            "revenue": 10
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique company id",
+          "example": "629475917295261d9b1f4403",
+          "type": "string"
         },
         "linkedContactsIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Contact ids for contacts linked to this company",
+          "example": [
+            1,
+            2,
+            3
+          ],
+          "format": "int64",
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "integer"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "linkedDealsIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Deal ids for deals linked to this company",
+          "example": [
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
+          ],
+          "format": "objectID",
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         }
       },
       "type": "object"

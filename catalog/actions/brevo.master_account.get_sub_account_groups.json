@@ -19,20 +19,12 @@
       "items": {
         "properties": {
           "groupName": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "The name of the group of sub-accounts",
+            "type": "string"
           },
           "id": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Unique id of the group",
+            "type": "string"
           }
         },
         "type": "object"

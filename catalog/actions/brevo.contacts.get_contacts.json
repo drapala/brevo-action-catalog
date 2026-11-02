@@ -78,25 +78,123 @@
       "properties": {
         "contacts": {
           "items": {
-            "description": "(nested schema truncated)"
+            "allOf": [
+              {
+                "properties": {
+                  "attributes": {
+                    "description": "Set of attributes of the contact",
+                    "example": {
+                      "email": "joe@example.com",
+                      "name": "Joe"
+                    },
+                    "properties": {},
+                    "type": "object"
+                  },
+                  "createdAt": {
+                    "description": "Creation UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                    "example": "2017-05-12T12:30:00Z",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "Email address of the contact for which you requested the details",
+                    "example": "john.smith@example.com",
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "emailBlacklisted": {
+                    "description": "Blacklist status for email campaigns (true=blacklisted, false=not blacklisted)",
+                    "example": false,
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "description": "ID of the contact for which you requested the details",
+                    "example": 32,
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "listIds": {
+                    "items": {
+                      "description": "List(s) in which the contact is included",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "type": "array"
+                  },
+                  "listUnsubscribed": {
+                    "items": {
+                      "description": "List(s) in which the contact is included (only available if unsubscription per list is activated for the account)",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "type": "array"
+                  },
+                  "modifiedAt": {
+                    "description": "Last modification UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                    "example": "2017-05-12T12:30:00Z",
+                    "type": "string"
+                  },
+                  "smsBlacklisted": {
+                    "description": "Blacklist status for SMS campaigns (true=blacklisted, false=not blacklisted)",
+                    "example": true,
+                    "type": "boolean"
+                  },
+                  "whatsappBlacklisted": {
+                    "description": "Blacklist status for WhatsApp campaigns (true=blacklisted, false=not blacklisted)",
+                    "example": false,
+                    "type": "boolean"
+                  },
+                  "consentGroups": {
+                    "type": "array",
+                    "description": "Consent groups the contact belongs to, with their subscription status. Only present when the Consent Groups feature is enabled for your account.",
+                    "items": {
+                      "type": "object",
+                      "description": "A contact's membership status in a single consent group.",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "ID of the consent group",
+                          "example": 42
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "subscribed",
+                            "unsubscribed"
+                          ],
+                          "description": "The contact's subscription status within this consent group",
+                          "example": "subscribed"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "status"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "attributes",
+                  "createdAt",
+                  "emailBlacklisted",
+                  "id",
+                  "listIds",
+                  "modifiedAt",
+                  "smsBlacklisted",
+                  "whatsappBlacklisted"
+                ],
+                "type": "object"
+              }
+            ],
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "count": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Number of contacts",
+          "example": 17655,
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [

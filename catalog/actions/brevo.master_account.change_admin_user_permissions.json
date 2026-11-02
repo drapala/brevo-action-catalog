@@ -17,27 +17,54 @@
         "all_features_access": {
           "description": "All access to the features",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            true,
+            false
           ],
           "example": true,
           "type": "boolean"
         },
         "privileges": {
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
+            "description": "Permission on features",
             "properties": {
-              "description": "(nested schema truncated)"
+              "feature": {
+                "description": "feature name",
+                "enum": [
+                  "user_management",
+                  "api",
+                  "my_plan",
+                  "apps_management",
+                  "analytics",
+                  "sub_organization_groups",
+                  "create_sub_organizations",
+                  "manage_sub_organizations",
+                  "security"
+                ],
+                "example": "user_management",
+                "type": "string"
+              },
+              "permissions": {
+                "description": "Permission for the feature",
+                "example": [
+                  "all"
+                ],
+                "items": {
+                  "enum": [
+                    "all",
+                    "none",
+                    "create",
+                    "edit_delete",
+                    "create_alerts",
+                    "download_data",
+                    "my_looks",
+                    "explore_create"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         }

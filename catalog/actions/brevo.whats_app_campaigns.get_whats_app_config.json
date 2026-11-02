@@ -25,15 +25,9 @@
         "phoneNumberNameStatus": {
           "description": "Status of the name associated with WhatsApp Phone number",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "APPROVED",
+            "PENDING",
+            "REJECTED"
           ],
           "example": "APPROVED",
           "type": "string"
@@ -41,15 +35,9 @@
         "phoneNumberQuality": {
           "description": "Quality status of phone number associated with WhatsApp account. There are three quality ratings. example - **High (GREEN) , Medium (YELLOW) and Low(RED)**",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "GREEN",
+            "YELLOW",
+            "RED"
           ],
           "example": "GREEN",
           "type": "string"
@@ -67,15 +55,9 @@
         "whatsappBusinessAccountStatus": {
           "description": "Status information related to WhatsApp Api account",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "APPROVED",
+            "PENDING",
+            "REJECTED"
           ],
           "example": "APPROVED",
           "type": "string"

@@ -18,15 +18,9 @@
         },
         "coupons": {
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Name of the coupon",
+            "example": "Uf12AF",
+            "type": "string"
           },
           "maxItems": 10000,
           "minItems": 1,
@@ -70,7 +64,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

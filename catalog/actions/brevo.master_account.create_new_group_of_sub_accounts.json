@@ -18,23 +18,13 @@
         "subAccountIds": {
           "description": "Pass the list of sub-account Ids to be included in the group",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            234322,
+            325553,
+            893432
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         }

@@ -52,25 +52,50 @@
       "allOf": [
         {
           "properties": {
-            "description": "(nested schema truncated)"
+            "averageBasket": {
+              "format": "float",
+              "type": "number"
+            },
+            "conversionSource": {
+              "enum": [
+                "email_campaign",
+                "sms_campaign",
+                "automation_workflow_email",
+                "automation_workflow_sms"
+              ],
+              "type": "string"
+            },
+            "id": {
+              "format": "integer",
+              "type": "number"
+            },
+            "ordersCount": {
+              "format": "integer",
+              "type": "number"
+            },
+            "revenue": {
+              "format": "float",
+              "type": "number"
+            }
           },
-          "required": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "required": [
+            "id",
+            "conversionSource",
+            "ordersCount",
+            "revenue",
+            "averageBasket"
+          ],
+          "type": "object"
         },
         {
           "properties": {
             "newCustomersCount": {
-              "description": "(nested schema truncated)"
+              "format": "integer",
+              "type": "number"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            }
+            "newCustomersCount"
           ],
           "type": "object"
         }

@@ -62,34 +62,79 @@
         "description": "Note Details",
         "properties": {
           "id": {
-            "description": "(nested schema truncated)"
+            "description": "Unique note Id",
+            "example": "61a5cd07ca1347c82306ad09",
+            "type": "string"
           },
           "text": {
-            "description": "(nested schema truncated)"
+            "description": "Content of the note. Supports HTML for rich text formatting. Supported tags include: `<p>` (paragraph), `<b>` / `<strong>` (bold), `<i>` / `<em>` (italic), `<u>` (underline), `<br>` (line break), `<a href=\"...\">` (labelled hyperlink). Example labelled link: `<a href=\"https://example.com\">Link text</a>`.",
+            "example": "<p>Meeting notes: <b>Action item</b> - visit <a href=\"https://www.brevo.com/\">Brevo</a> for details.</p>",
+            "maxLength": 10000,
+            "minLength": 1,
+            "type": "string"
           },
           "contactIds": {
-            "description": "(nested schema truncated)"
+            "description": "Contact ids linked to a note",
+            "example": [
+              247,
+              1,
+              2
+            ],
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
           },
           "companyIds": {
-            "description": "(nested schema truncated)"
+            "description": "Company ids linked to a note",
+            "example": [
+              "61a5ce58c5d4795761045990",
+              "61a5ce58c5d4795761045991"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
           },
           "dealIds": {
-            "description": "(nested schema truncated)"
+            "description": "Deal ids linked to a note",
+            "example": [
+              "61a5ce58c5d4795761045990",
+              "61a5ce58c5d4795761045991"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
           },
           "authorId": {
-            "description": "(nested schema truncated)"
+            "description": "Account details of user which created the note",
+            "example": {
+              "email": "johndoe@example.com",
+              "id": "61a5ce58y5d4795761045991",
+              "locale": "en_GB",
+              "name": {
+                "fullName": "John Doe"
+              },
+              "timezone": "Asia/Kolkata"
+            },
+            "type": "object"
           },
           "createdAt": {
-            "description": "(nested schema truncated)"
+            "description": "Note created date/time",
+            "example": "2017-05-01T17:05:03.000Z",
+            "format": "date-time",
+            "type": "string"
           },
           "updatedAt": {
-            "description": "(nested schema truncated)"
+            "description": "Note updated date/time",
+            "example": "2017-05-01T17:05:03.000Z",
+            "format": "date-time",
+            "type": "string"
           }
         },
         "required": [
-          {
-            "description": "(nested schema truncated)"
-          }
+          "text"
         ],
         "type": "object"
       },

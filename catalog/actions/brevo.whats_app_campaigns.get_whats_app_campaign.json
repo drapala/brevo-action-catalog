@@ -41,30 +41,14 @@
         "campaignStatus": {
           "description": "Status of the WhatsApp Campaign",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "draft",
+            "scheduled",
+            "pending",
+            "approved",
+            "running",
+            "suspended",
+            "rejected",
+            "sent"
           ],
           "example": "draft",
           "type": "string"
@@ -94,16 +78,36 @@
           "description": "Recipients of the WhatsApp Campaign",
           "properties": {
             "excludedLists": {
-              "description": "(nested schema truncated)"
+              "description": "List of excluded list IDs",
+              "items": {
+                "example": 45,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             },
             "includedLists": {
-              "description": "(nested schema truncated)"
+              "description": "List of included list IDs",
+              "items": {
+                "example": 22,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             },
             "segments": {
-              "description": "(nested schema truncated)"
+              "description": "List of segment IDs",
+              "items": {
+                "example": 23,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             },
             "type": {
-              "description": "(nested schema truncated)"
+              "description": "Type of recipients (list or segment)",
+              "example": "list",
+              "type": "string"
             }
           },
           "type": "object"
@@ -115,49 +119,132 @@
         },
         "stats": {
           "properties": {
-            "description": "(nested schema truncated)"
+            "delivered": {
+              "example": 3,
+              "type": "integer"
+            },
+            "notSent": {
+              "example": 4,
+              "type": "integer"
+            },
+            "read": {
+              "example": 2,
+              "type": "integer"
+            },
+            "sent": {
+              "example": 3,
+              "type": "integer"
+            },
+            "unsubscribe": {
+              "example": 0,
+              "type": "integer"
+            }
           },
-          "required": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "required": [
+            "sent",
+            "delivered",
+            "read",
+            "unsubscribe",
+            "notSent"
+          ],
+          "type": "object"
         },
         "template": {
           "properties": {
             "body_variables": {
-              "description": "(nested schema truncated)"
+              "description": "array of variables item variables",
+              "items": {
+                "properties": {
+                  "datatype": {
+                    "example": "text",
+                    "type": "string"
+                  },
+                  "default": {
+                    "example": "INVALID_HEADER",
+                    "type": "string"
+                  },
+                  "name": {
+                    "example": "FIRSTNAME",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
             },
             "button_type": {
-              "description": "(nested schema truncated)"
+              "example": "QUICK_REPLIES",
+              "type": "string"
             },
             "category": {
-              "description": "(nested schema truncated)"
+              "description": "description of the template",
+              "example": "Marketing",
+              "type": "string"
             },
             "components": {
-              "description": "(nested schema truncated)"
+              "description": "array of component item objects",
+              "items": {
+                "properties": {
+                  "text": {
+                    "example": "Life is a long lesson in humility",
+                    "type": "string"
+                  },
+                  "type": {
+                    "example": "BODY",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
             },
             "contains_button": {
-              "description": "(nested schema truncated)"
+              "example": false,
+              "type": "boolean"
             },
             "display_header": {
-              "description": "(nested schema truncated)"
+              "example": true,
+              "type": "boolean"
             },
             "header_type": {
-              "description": "(nested schema truncated)"
+              "description": "type of header",
+              "example": "text",
+              "type": "string"
             },
             "header_variables": {
-              "description": "(nested schema truncated)"
+              "description": "array of variables item object",
+              "items": {
+                "properties": {
+                  "datatype": {
+                    "example": "text",
+                    "type": "string"
+                  },
+                  "default": {
+                    "example": "INVALID_HEADER",
+                    "type": "string"
+                  },
+                  "name": {
+                    "example": "FIRSTNAME",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
             },
             "hide_footer": {
-              "description": "(nested schema truncated)"
+              "example": true,
+              "type": "boolean"
             },
             "language": {
-              "description": "(nested schema truncated)"
+              "description": "language of the template",
+              "example": "en_GB",
+              "type": "string"
             },
             "name": {
-              "description": "(nested schema truncated)"
+              "description": "name of the template",
+              "example": "wta107",
+              "type": "string"
             }
           },
           "type": "object"

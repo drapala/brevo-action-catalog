@@ -34,14 +34,124 @@
           "description": "Get invited users list",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "email": {
+                "description": "Email address of the user.",
+                "example": "master-user@company.com",
+                "type": "string"
+              },
+              "feature_access": {
+                "description": "Feature accessiblity given to the user. (Required only\nif status is active)",
+                "properties": {
+                  "analytics": {
+                    "description": "Analytics dashboard accessibility",
+                    "items": {
+                      "example": [
+                        "download_data",
+                        "create_alerts",
+                        "my_looks",
+                        "explore_create"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "api_keys": {
+                    "description": "Api keys accessiblity.",
+                    "items": {
+                      "example": "all / none",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "apps_management": {
+                    "description": "Apps management accessiblity | Not available in\nENTv2",
+                    "items": {
+                      "example": "all / none",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "create_sub_organizations": {
+                    "description": "Authorization to create sub-organization in the\nadmin account. If the user creating the\nsub-organization, belongs to a group, the user must\nchoose a group at the sub-organization creation.",
+                    "items": {
+                      "example": "all / none",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "manage_sub_organizations": {
+                    "description": "Authorization to manage and access sub-organizations\nin the admin account.",
+                    "items": {
+                      "example": "all / none",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "my_plan": {
+                    "description": "My plan accessiblity.",
+                    "items": {
+                      "example": "all / none",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "sub_organization_groups": {
+                    "description": "Group creation, modification or deletion\naccessibility",
+                    "items": {
+                      "example": [
+                        "create",
+                        "edit_delete"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "user_management": {
+                    "description": "User management accessiblity.",
+                    "items": {
+                      "example": "all / none",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              },
+              "groups": {
+                "description": "Admin user groups list",
+                "properties": {
+                  "id": {
+                    "description": "group id",
+                    "example": "a5c4f22c08d9ed37ef1ca342",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "group name",
+                    "example": "My group",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "is_owner": {
+                "description": "Flag for indicating is user owner of the organization.",
+                "example": false,
+                "type": "string"
+              },
+              "status": {
+                "description": "Status of the invited user.",
+                "example": "active",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "groups",
+              "email",
+              "is_owner",
+              "status",
+              "feature_access"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

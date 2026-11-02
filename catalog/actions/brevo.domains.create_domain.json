@@ -52,25 +52,106 @@
           "description": "DNS records required for domain authentication",
           "properties": {
             "brevo_code": {
-              "description": "(nested schema truncated)"
+              "description": "Brevo verification code record",
+              "properties": {
+                "host_name": {
+                  "description": "DNS record hostname",
+                  "example": "@",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "DNS record type",
+                  "example": "TXT",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "DNS record value",
+                  "example": "brevo-code=abc123def456",
+                  "type": "string"
+                },
+                "status": {
+                  "description": "Whether the record is properly configured",
+                  "example": false,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "host_name",
+                "type",
+                "value",
+                "status"
+              ],
+              "type": "object"
             },
             "dkim_record": {
-              "description": "(nested schema truncated)"
+              "description": "DKIM authentication record",
+              "properties": {
+                "host_name": {
+                  "description": "DNS record hostname",
+                  "example": "mail._domainkey",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "DNS record type",
+                  "example": "TXT",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "DNS record value",
+                  "example": "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GN...",
+                  "type": "string"
+                },
+                "status": {
+                  "description": "Whether the record is properly configured",
+                  "example": false,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "host_name",
+                "type",
+                "value",
+                "status"
+              ],
+              "type": "object"
             },
             "dmarc_record": {
-              "description": "(nested schema truncated)"
+              "description": "DMARC policy record",
+              "properties": {
+                "host_name": {
+                  "description": "DNS record hostname",
+                  "example": "_dmarc",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "DNS record type",
+                  "example": "TXT",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "DNS record value",
+                  "example": "v=DMARC1; p=none; rua=mailto:dmarc@mycompany.com",
+                  "type": "string"
+                },
+                "status": {
+                  "description": "Whether the record is properly configured",
+                  "example": false,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "host_name",
+                "type",
+                "value",
+                "status"
+              ],
+              "type": "object"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "brevo_code",
+            "dkim_record",
+            "dmarc_record"
           ],
           "type": "object"
         }

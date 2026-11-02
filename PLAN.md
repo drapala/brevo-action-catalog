@@ -62,7 +62,8 @@ The difference between sources 2 and 1 is the main finding: what a user can do i
 | Uncertainty is a status, never a guess. | `documented`, `observed`, `gated`, `failed`, and `free_plan: unknown`. | A paid-only action presented as runnable. |
 | Every input tells the agent where its value comes from. | `entity_refs` name the action that lists or creates each referenced ID. | An ID guessed instead of looked up. |
 | A retried create is never assumed safe. | `side_effects.idempotent`. Brevo has no idempotency keys, so a create says to search before a retry. | A duplicate contact or campaign after a timeout. |
-| Anything that reaches people asks first. | `requires_confirmation` on sends, invitations and deletes. | A test email sent to a real list. |
+| Anything that reaches people, or that nothing undoes, asks first. | `requires_confirmation` on sends, invitations, deletes and every write without an undo. Lint checks L003, L007 and L008. | A test email sent to a real list, or an import nobody approved. |
+| Inputs match the entry before a call. | `brevo_exec.input_errors` checks the input schema in the MCP server and the CLI. Lint check L009 keeps every schema valid. | An unknown field sent in silence, or a call that Brevo rejects. |
 | Every live call leaves a record, and no record holds a credential. | `tools/brevo_exec.py` writes one evidence line per call. `tools/presubmit_check.py` scans for keys. | A claim nobody can check, or a leaked key. |
 | Every failed check becomes a correction with its reason. | `docs/corrections.jsonl` records each one. `catalog/curation.yaml` holds manual fixes and rejects one without `why`. | The same wrong entry coming back when the spec is regenerated. |
 

@@ -24,15 +24,9 @@
           "default": "real_time",
           "description": "Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "real_time",
+            "membership_anniversary",
+            "tier_anniversary"
           ],
           "type": "string"
         },
@@ -44,13 +38,12 @@
           "additionalProperties": true,
           "description": "Additional metadata for the tier group.",
           "example": {
-            "isInternal": {
-              "description": "(nested schema truncated)"
-            }
+            "isInternal": true
           },
           "properties": {
             "isInternal": {
-              "description": "(nested schema truncated)"
+              "description": "Indicates whether the tier group is internal.",
+              "type": "boolean"
             }
           },
           "type": "object"
@@ -59,12 +52,8 @@
           "description": "Order of the tiers in the group in ascending order",
           "example": [],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "uuid",
+            "type": "string"
           },
           "type": "array"
         },
@@ -72,15 +61,9 @@
           "default": "real_time",
           "description": "Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "real_time",
+            "membership_anniversary",
+            "tier_anniversary"
           ],
           "type": "string"
         }
@@ -114,120 +97,129 @@
     "schema": {
       "properties": {
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the tier group was created",
+          "format": "date-time",
+          "type": "string"
         },
         "downgradeStrategy": {
-          "default": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "default": "real_time",
+          "description": "Select real_time to downgrade tier on real time balance updates. Select membership_anniversary to downgrade tier on subscription anniversary. Select tier_anniversary to downgrade tier on tier anniversary.",
+          "enum": [
+            "real_time",
+            "membership_anniversary",
+            "tier_anniversary"
+          ],
+          "type": "string"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Tier group unique identifier",
+          "format": "uuid",
+          "type": "string"
         },
         "loyaltyProgramId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Associated loyalty program Id",
+          "format": "uuid",
+          "type": "string"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Tier group name",
+          "type": "string"
         },
         "tierOrder": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Order of the tiers in the group in ascending order",
+          "example": [],
           "items": {
-            "description": "(nested schema truncated)"
+            "format": "uuid",
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "updatedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the tier group was last updated",
+          "format": "date-time",
+          "type": "string"
         },
         "upgradeStrategy": {
-          "default": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "default": "real_time",
+          "description": "Select real_time to upgrade tier on real time balance updates. Select membership_anniversary to upgrade tier on subscription anniversary. Select tier_anniversary to upgrade tier on tier anniversary.",
+          "enum": [
+            "real_time",
+            "membership_anniversary",
+            "tier_anniversary"
+          ],
+          "type": "string"
         },
         "upgradeSchedule": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Schedule configuration for tier upgrades.",
           "properties": {
-            "description": "(nested schema truncated)"
+            "strategy": {
+              "description": "Schedule strategy type.",
+              "type": "string"
+            },
+            "durationValue": {
+              "description": "Duration value for the schedule.",
+              "type": "integer"
+            },
+            "durationUnit": {
+              "description": "Duration unit for the schedule.",
+              "enum": [
+                "day",
+                "week",
+                "month",
+                "year"
+              ],
+              "type": "string"
+            },
+            "durationModifier": {
+              "description": "Modifier for the duration.",
+              "enum": [
+                "start_of_period",
+                "end_of_period"
+              ],
+              "type": "string"
+            },
+            "scheduledDate": {
+              "description": "Scheduled date in DD/MM format.",
+              "type": "string"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "downgradeSchedule": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Schedule configuration for tier downgrades.",
           "properties": {
-            "description": "(nested schema truncated)"
+            "strategy": {
+              "description": "Schedule strategy type.",
+              "type": "string"
+            },
+            "durationValue": {
+              "description": "Duration value for the schedule.",
+              "type": "integer"
+            },
+            "durationUnit": {
+              "description": "Duration unit for the schedule.",
+              "enum": [
+                "day",
+                "week",
+                "month",
+                "year"
+              ],
+              "type": "string"
+            },
+            "durationModifier": {
+              "description": "Modifier for the duration.",
+              "enum": [
+                "start_of_period",
+                "end_of_period"
+              ],
+              "type": "string"
+            },
+            "scheduledDate": {
+              "description": "Scheduled date in DD/MM format.",
+              "type": "string"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         }
       },
       "type": "object"

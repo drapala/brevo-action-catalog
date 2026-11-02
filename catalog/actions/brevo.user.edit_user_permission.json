@@ -11,40 +11,106 @@
       "type": "object",
       "properties": {
         "all_features_access": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "All access to the features",
+          "enum": [
+            true,
+            false
+          ],
+          "example": true,
+          "type": "boolean"
         },
         "email": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Email address for the organization",
+          "example": "inviteuser@example.com",
+          "format": "email",
+          "type": "string"
         },
         "privileges": {
           "items": {
-            "description": "(nested schema truncated)"
+            "description": "Privileges given to the user",
+            "example": [
+              {
+                "feature": "email_campaigns",
+                "permissions": [
+                  "create_edit_delete",
+                  "send_schedule_suspend"
+                ]
+              },
+              {
+                "feature": "sms_campaigns",
+                "permissions": [
+                  "create_edit_delete",
+                  "send_schedule_suspend"
+                ]
+              }
+            ],
+            "properties": {
+              "feature": {
+                "description": "Feature name",
+                "enum": [
+                  "email_campaigns",
+                  "sms_campaigns",
+                  "contacts",
+                  "templates",
+                  "workflows",
+                  "landing_pages",
+                  "transactional_emails",
+                  "smtp_api",
+                  "user_management",
+                  "sales_platform",
+                  "phone",
+                  "conversations",
+                  "senders_domains_dedicated_ips",
+                  "push_notifications",
+                  "companies"
+                ],
+                "example": "email_campaigns",
+                "type": "string"
+              },
+              "permissions": {
+                "description": "Permissions for a given feature",
+                "items": {
+                  "enum": [
+                    "create_edit_delete",
+                    "send_schedule_suspend",
+                    "view",
+                    "import",
+                    "export",
+                    "list_and_attributes",
+                    "forms",
+                    "activate_deactivate",
+                    "activate_deactivate_pause",
+                    "settings",
+                    "schedule_pause",
+                    "all",
+                    "logs",
+                    "access",
+                    "assign",
+                    "configure",
+                    "create_edit_deals",
+                    "delete_deals",
+                    "manage_others_deals_tasks",
+                    "manage_owned_companies",
+                    "manage_others_companies",
+                    "reports",
+                    "senders_management",
+                    "domains_management",
+                    "dedicated_ips_management",
+                    "send",
+                    "smtp",
+                    "api_keys",
+                    "authorized_ips",
+                    "none"
+                  ],
+                  "example": "'create_edit_delete', 'send_schedule_suspend'",
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         }
       },
       "required": [
@@ -62,24 +128,16 @@
         "credit_notes": {
           "description": "Credit note",
           "items": {
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "example": "TEST-123",
+            "type": "string"
           },
           "type": "array"
         },
         "invoice_id": {
           "description": "Invoice id",
           "items": {
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "example": "TEST-ID",
+            "type": "string"
           },
           "type": "string"
         },
@@ -119,7 +177,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

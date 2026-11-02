@@ -55,200 +55,134 @@
     "schema": {
       "properties": {
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the balance definition.",
+          "format": "uuid",
+          "type": "string"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Name of the balance definition.",
+          "type": "string"
         },
         "description": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Short description of the balance definition.",
+          "type": "string"
         },
         "imageRef": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Optional image reference URL.",
+          "format": "uri",
+          "type": "string"
         },
         "meta": {
-          "additionalProperties": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "additionalProperties": {},
+          "description": "Additional metadata for the balance definition.",
+          "type": "object"
         },
         "unit": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unit of balance measurement.",
+          "enum": [
+            "POINTS",
+            "EUR",
+            "USD",
+            "MXN",
+            "GBP",
+            "INR",
+            "CAD",
+            "SGD",
+            "RON",
+            "JPY",
+            "MYR",
+            "CLP",
+            "PEN",
+            "MAD",
+            "AUD",
+            "CHF",
+            "BRL"
+          ],
+          "type": "string"
         },
         "minAmount": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Minimum allowable balance.",
+          "type": "number"
         },
         "maxAmount": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Maximum allowable balance.",
+          "type": "number"
         },
         "maxCreditAmountLimit": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Maximum credit allowed per operation.",
+          "type": "number"
         },
         "maxDebitAmountLimit": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Maximum debit allowed per operation.",
+          "type": "number"
         },
         "balanceOptionAmountOvertakingStrategy": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Partial enables partial credit of balance if maximum balance limit is reached. Strict enables rejection of a transaction if it will breach the max balance limit.",
+          "enum": [
+            "strict",
+            "partial"
+          ],
+          "type": "string"
         },
         "balanceOptionCreditRounding": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Rounding strategy for credit transactions.",
+          "enum": [
+            "lower",
+            "upper",
+            "natural"
+          ],
+          "type": "string"
         },
         "balanceOptionDebitRounding": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Rounding strategy for debit transactions.",
+          "enum": [
+            "lower",
+            "upper",
+            "natural"
+          ],
+          "type": "string"
         },
         "balanceAvailabilityDurationValue": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Number of time units before the balance expires.",
+          "type": "integer"
         },
         "balanceAvailabilityDurationUnit": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unit of time for the balance availability duration.",
+          "enum": [
+            "day",
+            "week",
+            "month",
+            "year"
+          ],
+          "type": "string"
         },
         "balanceAvailabilityDurationModifier": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Modifier for balance availability duration. startOfPeriod causes expiry at the start of the period, endOfPeriod at the end. noModification uses the exact duration from the credit date.",
+          "enum": [
+            "noModification",
+            "startOfPeriod",
+            "endOfPeriod"
+          ],
+          "type": "string"
         },
         "balanceExpirationDate": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Fixed expiration date in dd/mm format. The balance expires when this date next appears in the calendar. Only one of balanceExpirationDate or balance availability duration fields can be used.",
+          "type": "string"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp of balance definition creation.",
+          "format": "date-time",
+          "type": "string"
         },
         "updatedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp of the last update.",
+          "format": "date-time",
+          "type": "string"
         },
         "deletedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp of balance definition deletion (nullable).",
+          "format": "date-time",
+          "type": "string"
         }
       },
       "type": "object"

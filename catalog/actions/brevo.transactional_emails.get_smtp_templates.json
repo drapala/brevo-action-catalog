@@ -60,7 +60,111 @@
         },
         "templates": {
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "createdAt": {
+                "description": "Creation UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2017-05-01T12:30:00Z",
+                "type": "string"
+              },
+              "doiTemplate": {
+                "description": "It is true if template is a valid Double opt-in (DOI) template, otherwise it is false. This field will be available only in case of single template detail call.",
+                "example": false,
+                "type": "boolean"
+              },
+              "htmlContent": {
+                "description": "HTML content of the template",
+                "example": "Your order n°xxxxx has been confirmed. Thanks for your purchase.",
+                "type": "string"
+              },
+              "id": {
+                "description": "ID of the template",
+                "example": 4,
+                "format": "int64",
+                "type": "integer"
+              },
+              "isActive": {
+                "description": "Status of template (true=active, false=inactive)",
+                "example": true,
+                "type": "boolean"
+              },
+              "modifiedAt": {
+                "description": "Last modification UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2017-05-12T12:30:00Z",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name of the template",
+                "example": "Order Confirmation - EN",
+                "type": "string"
+              },
+              "replyTo": {
+                "description": "Email defined as the \"Reply to\" for the template",
+                "example": "replyto@domain.com",
+                "format": "email",
+                "type": "string"
+              },
+              "sender": {
+                "properties": {
+                  "email": {
+                    "description": "From email for the template",
+                    "example": "contact@myshop.fr",
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "Sender id of the template",
+                    "example": 43,
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Sender name for the template",
+                    "example": "Mary from MyShop",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "subject": {
+                "description": "Subject of the template",
+                "example": "Thanks for your order !",
+                "type": "string"
+              },
+              "tag": {
+                "description": "Tag of the template",
+                "example": "sports",
+                "type": "string"
+              },
+              "testSent": {
+                "description": "Status of test sending for the template (true=test email has been sent, false=test email has not been sent)",
+                "example": true,
+                "type": "boolean"
+              },
+              "toField": {
+                "description": "Customisation of the \"to\" field for the template",
+                "example": "{FIRSTNAME} {LASTNAME}",
+                "type": "string"
+              },
+              "customTemplateId": {
+                "description": "Custom template identifier, if one was assigned during template creation. Only present when the template has a custom ID.",
+                "example": "my-custom-template-001",
+                "type": "string"
+              }
+            },
+            "required": [
+              "createdAt",
+              "htmlContent",
+              "id",
+              "isActive",
+              "modifiedAt",
+              "name",
+              "replyTo",
+              "sender",
+              "subject",
+              "tag",
+              "testSent",
+              "toField"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

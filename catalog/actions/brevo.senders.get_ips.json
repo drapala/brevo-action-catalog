@@ -21,14 +21,35 @@
           "description": "Dedicated IP(s) available on your account. Returns empty array\nfor standard accounts without dedicated IPs.",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "id": {
+                "description": "ID of the dedicated IP",
+                "example": 1,
+                "format": "int64",
+                "type": "integer"
+              },
+              "active": {
+                "description": "Status of the IP (true=active, false=inactive)",
+                "example": true,
+                "type": "boolean"
+              },
+              "domain": {
+                "description": "Domain associated to the IP",
+                "example": "mailing.enterprise.com",
+                "type": "string"
+              },
+              "ip": {
+                "description": "Dedicated IP address",
+                "example": "192.168.1.100",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "id",
+              "active",
+              "domain",
+              "ip"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

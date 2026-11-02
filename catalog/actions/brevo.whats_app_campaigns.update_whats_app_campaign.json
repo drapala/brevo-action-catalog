@@ -24,12 +24,8 @@
           "default": "scheduled",
           "description": "Status of the campaign",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "scheduled",
+            "suspended"
           ],
           "example": "scheduled",
           "type": "string"
@@ -38,13 +34,31 @@
           "description": "Segment ids and List ids to include/exclude from campaign",
           "properties": {
             "excludedListIds": {
-              "description": "(nested schema truncated)"
+              "description": "List ids to exclude from the campaign",
+              "items": {
+                "example": 8,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             },
             "listIds": {
-              "description": "(nested schema truncated)"
+              "description": "**Mandatory if scheduledAt is not empty**. List Ids to send the campaign to\n",
+              "items": {
+                "example": 32,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             },
             "segments": {
-              "description": "(nested schema truncated)"
+              "description": "**Mandatory if listIds are not used**. Segment ids to send the campaign to.\n",
+              "items": {
+                "example": 23,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             }
           },
           "type": "object"

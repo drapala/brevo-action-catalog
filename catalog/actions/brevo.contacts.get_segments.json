@@ -51,14 +51,34 @@
           "description": "Listing of all the segments available in your account",
           "type": "array",
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
+            "type": "object",
+            "required": [
+              "id",
+              "segmentName",
+              "categoryName"
+            ],
             "properties": {
-              "description": "(nested schema truncated)"
+              "categoryName": {
+                "description": "Name of the Segment Category",
+                "example": "New Category",
+                "type": "string"
+              },
+              "id": {
+                "description": "ID of the segment",
+                "example": 23,
+                "format": "int64",
+                "type": "integer"
+              },
+              "segmentName": {
+                "description": "Name of the Segment",
+                "example": "My Segment",
+                "type": "string"
+              },
+              "updatedAt": {
+                "description": "Last update UTC date-time of the segment (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2017-03-13T17:05:09Z",
+                "type": "string"
+              }
             }
           }
         }

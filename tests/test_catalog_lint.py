@@ -9,6 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 
 import catalog_lint as lint  # noqa: E402
+import gen_from_openapi as gen  # noqa: E402
 
 
 def action(**over):
@@ -110,6 +111,32 @@ def test_l007_covers_dissociate_disable_and_unlink():
                  "link_and_unlink_deal_with_contacts_and_companies"):
         entry = action(id=f"brevo.x.{name}")
         assert [f.check for f in lint.check_destructive_needs_confirmation(entry)] == ["L007"], name
+
+
+def test_l008_irreversible_write_without_confirmation_is_caught():
+    # import_contacts and edit_user_permission ran with no confirmation, though nothing undoes them.
+    entry = action(id="brevo.contacts.import_contacts")
+    assert [f.check for f in lint.check_irreversible_needs_confirmation(entry)] == ["L008"]
+    entry["side_effects"]["requires_confirmation"] = True
+    assert lint.check_irreversible_needs_confirmation(entry) == []
+
+
+def test_l009_keyword_replaced_by_an_object_is_caught():
+    # The old resolver replaced "type": "integer" with an object below depth 6.
+    items = {"type": {"description": "(nested schema truncated)"}}
+    schema = {"type": "object", "properties": {"listIds": {"type": "array", "items": items}}}
+    entry = action(inputs={"schema": schema, "entity_refs": []})
+    assert [f.check for f in lint.check_input_schema_is_valid(entry)] == ["L009"]
+    items["type"] = "integer"
+    assert lint.check_input_schema_is_valid(entry) == []
+
+
+def test_resolver_keeps_keyword_values_behind_several_references():
+    schemas = {f"S{i}": {"$ref": f"#/components/schemas/S{i + 1}"} for i in range(3)}
+    schemas["S3"] = {"type": "object", "properties": {"ids": {"type": "array", "items": {"type": "integer"}}}}
+    body = {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/S0"}}}}
+    out = gen.Resolver({"components": {"schemas": schemas}}).resolve(body)
+    assert out["content"]["application/json"]["schema"]["properties"]["ids"]["items"] == {"type": "integer"}
 
 
 def test_g001_counts_writes_of_the_action_class():

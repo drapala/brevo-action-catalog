@@ -13,27 +13,13 @@
         "attributeType": {
           "description": "The type of attribute (must be one of the defined enums)",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "text",
+            "user",
+            "number",
+            "single-select",
+            "date",
+            "boolean",
+            "multi-choice"
           ],
           "example": "single-select",
           "type": "string"
@@ -51,12 +37,8 @@
         "objectType": {
           "description": "The type of object the attribute belongs to. Must be either `companies` or `deals`.",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "companies",
+            "deals"
           ],
           "example": "companies",
           "type": "string"
@@ -64,20 +46,12 @@
         "optionsLabels": {
           "description": "Options for multi-choice or single-select attributes",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "Option 1",
+            "Option 2",
+            "Option 3"
           ],
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         }

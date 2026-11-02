@@ -116,15 +116,60 @@
         "transactionHistory": {
           "description": "List of past transactions associated with the balance.",
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
+            "description": "Represents a record of a past transaction, including status and key timestamps.",
             "properties": {
-              "description": "(nested schema truncated)"
+              "amount": {
+                "description": "The transaction amount.",
+                "type": "number",
+                "format": "float"
+              },
+              "transactionType": {
+                "description": "The type of the transaction.",
+                "enum": [
+                  "credit",
+                  "debit"
+                ],
+                "type": "string"
+              },
+              "balanceExpirationDate": {
+                "description": "Expiration date of the balance associated with this transaction.",
+                "type": "string"
+              },
+              "cancelledAt": {
+                "description": "Timestamp when the transaction was canceled, if applicable.",
+                "type": "string"
+              },
+              "completedAt": {
+                "description": "Timestamp when the transaction was successfully completed.",
+                "type": "string"
+              },
+              "createdAt": {
+                "description": "Timestamp when the transaction was initiated.",
+                "type": "string"
+              },
+              "id": {
+                "description": "Unique identifier of the transaction.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": true,
+                "description": "Optional metadata associated with the transaction.",
+                "type": "object"
+              },
+              "rejectReason": {
+                "description": "Reason for rejection, if the transaction was declined.",
+                "type": "string"
+              },
+              "rejectedAt": {
+                "description": "Timestamp when the transaction was rejected.",
+                "type": "string"
+              },
+              "status": {
+                "description": "Current status of the transaction (e.g., pending, completed, rejected).",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         }

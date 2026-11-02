@@ -1,9 +1,11 @@
-"""The MCP server enforces the catalog's rules, so an agent cannot skip them.
+"""The MCP server applies the catalog's rules on every call.
 None of these tests calls Brevo: each refusal happens before any request."""
 
 import subprocess
 import sys
 from pathlib import Path
+
+import httpx
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 
@@ -65,3 +67,47 @@ def test_a_missing_api_key_is_a_refusal_not_a_crash(monkeypatch):
 def test_plural_requests_do_not_push_writes_up():
     ids = [e["id"] for e in mcp_server.find_actions("which forms do we have", limit=3)]
     assert "brevo.forms.duplicate_form" not in ids[:2]
+
+
+def test_irreversible_write_does_not_run_without_confirmation():
+    inputs = {"email": "zz-catalog-test@example.com", "all_features_access": True, "privileges": []}
+    reply = mcp_server.run_action("brevo.user.edit_user_permission", inputs)
+    assert reply["ran"] is False and "confirmation" in reply["reason"]
+
+
+def test_inputs_that_break_the_schema_do_not_run_even_when_confirmed():
+    reply = mcp_server.run_action("brevo.user.edit_user_permission", {}, confirmed=True)
+    assert reply["ran"] is False and any("required" in e for e in reply["errors"])
+    reply = mcp_server.run_action("brevo.contacts.get_lists", {"limt": 5})
+    assert reply["ran"] is False and "unknown inputs ['limt']" in reply["errors"][0]
+
+
+def test_a_rule_seen_live_is_checked_before_the_call():
+    # The API answered 400 to a transactional log query with no email, messageId or templateId.
+    reply = mcp_server.run_action("brevo.transactional_emails.get_transac_emails_list", {"limit": 10})
+    assert reply["ran"] is False and reply["errors"] == ["inputs: needs one of: email; messageId; templateId"]
+
+
+def test_bodies_that_the_spec_writes_as_one_of_overlapping_branches_pass():
+    action = mcp_server.load("brevo.contacts.add_contact_to_list")
+    inputs = {"listId": 2, "body": {"emails": ["zz-catalog-test@example.com"]}}
+    assert mcp_server.brevo_exec.input_errors(action, inputs) == []
+
+
+def test_path_values_are_encoded_except_email_characters(tmp_path, monkeypatch):
+    monkeypatch.setattr(mcp_server.brevo_exec, "EVIDENCE", tmp_path / "runs.jsonl")
+    seen = []
+    transport = httpx.MockTransport(lambda request: seen.append(request.url.raw_path) or httpx.Response(404))
+    with httpx.Client(transport=transport) as client:
+        mcp_server.brevo_exec.call("brevo.contacts.get_contact_info", {"identifier": "a+b@example.com"}, client, "test")
+        mcp_server.brevo_exec.call("brevo.contacts.get_contact_info", {"identifier": "x/../y"}, client, "test")
+    assert seen[0].endswith(b"/contacts/a+b@example.com") and seen[1].endswith(b"/contacts/x%2F..%2Fy")
+
+
+def test_a_network_error_is_a_refusal_not_a_crash(monkeypatch):
+    def broken():
+        return httpx.Client(transport=httpx.MockTransport(lambda request: (_ for _ in ()).throw(httpx.ConnectError("down"))))
+
+    monkeypatch.setattr(mcp_server.brevo_exec, "client", broken)
+    reply = mcp_server.run_action("brevo.contacts.get_lists", {})
+    assert reply["ran"] is False and "did not complete" in reply["reason"]

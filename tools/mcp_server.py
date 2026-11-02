@@ -1,10 +1,13 @@
 """MCP server that lets an AI agent use the catalog to operate Brevo.
 
 The agent finds an action, reads its entry, runs it, and checks the effect. The
-server enforces the catalog's rules, so the agent cannot skip them:
+server applies the catalog's rules on every call:
+  - inputs that break the entry's input schema do not run;
   - an action that needs confirmation runs only with confirmed=true;
   - a gated, seen or UI-only action does not run, and the reply says why;
   - a run returns the read-back to do before reporting success, when the entry has one.
+confirmed=true is the agent's statement that the user agreed. The server cannot check
+it, so the MCP client's approval prompt for each tool call is where a person checks it.
 
 Run: .venv/bin/python tools/mcp_server.py   (stdio)
 The Brevo API key comes from BREVO_API_KEY or the macOS keychain, as in brevo_exec.py.
@@ -17,6 +20,7 @@ import re
 import time
 from pathlib import Path
 
+import httpx
 from fastmcp import FastMCP
 
 import brevo_exec
@@ -35,8 +39,17 @@ def load(action_id: str) -> dict | None:
 
 
 # Words a user says for an operation, mapped to the words in action ids and labels.
-SYNONYMS = {"mark": "update", "done": "update", "complete": "update", "rename": "update", "edit": "update",
-            "change": "update", "remove": "delete", "which": "get", "show": "get"}
+SYNONYMS = {
+    "mark": "update",
+    "done": "update",
+    "complete": "update",
+    "rename": "update",
+    "edit": "update",
+    "change": "update",
+    "remove": "delete",
+    "which": "get",
+    "show": "get",
+}
 
 
 def ui_paths(action: dict) -> list[list[str]]:
@@ -120,6 +133,9 @@ def run_action(action_id: str, inputs: dict, confirmed: bool = False) -> dict:
             "reason": "this action has no public API. A browser agent must follow the UI steps.",
             "ui_paths": ui_paths(action),
         }
+    errors = brevo_exec.input_errors(action, inputs)
+    if errors:
+        return {"ran": False, "reason": "the inputs do not match the catalog entry", "errors": errors}
     if action["side_effects"]["requires_confirmation"] and not confirmed:
         return {
             "ran": False,
@@ -129,8 +145,10 @@ def run_action(action_id: str, inputs: dict, confirmed: bool = False) -> dict:
     try:
         with brevo_exec.client() as c:
             code, payload = brevo_exec.call(action_id, inputs, c, RUN, action=action)
-    except RuntimeError as error:
+    except (RuntimeError, ValueError) as error:
         return {"ran": False, "reason": str(error)}
+    except httpx.HTTPError as error:
+        return {"ran": False, "reason": f"the request to Brevo did not complete: {error!r}"}
     reply = {"ran": True, "http_status": code, "response": payload, "catalog_status": status}
     if status == "failed":
         reply["warning"] = action["verification"].get("notes")

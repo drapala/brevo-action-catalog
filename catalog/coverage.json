@@ -14,10 +14,11 @@
     "undocumented_api": 9
   },
   "without_public_api": 56,
-  "curated_entries": 3,
+  "curated_entries": 4,
   "web_app_walk": {
     "view_only": 15,
     "business_actions": 106,
+    "catalog_actions": 93,
     "in_catalog_before_walk": 58,
     "runs_through_public_api": 49,
     "added_by_walk": 48,

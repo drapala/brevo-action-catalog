@@ -34,128 +34,78 @@
     "schema": {
       "properties": {
         "auth": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Authentication header to be send with the webhook requests",
           "example": {
-            "description": "(nested schema truncated)"
+            "token": "test-auth-token1234",
+            "type": "bearer"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "batched": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Batching configuration of the webhook, we send batched webhooks if its\ntrue",
+          "example": true,
+          "type": "boolean"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Creation UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2016-12-01T12:50:00Z",
+          "type": "string"
         },
         "description": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Description of the webhook",
+          "example": "Webhook triggered on campaign openings",
+          "type": "string"
         },
         "events": {
           "items": {
-            "description": "(nested schema truncated)"
+            "description": "Events which will trigger the webhook when they occure",
+            "example": "opens,clicks",
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "headers": {
           "items": {
-            "description": "(nested schema truncated)"
+            "description": "Headers send with the requests to the webhook",
+            "example": {
+              "key": "cf-secret",
+              "value": "test-header-value"
+            },
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "ID of the webhook",
+          "example": 654,
+          "format": "int64",
+          "type": "integer"
         },
         "modifiedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Last modification UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2017-05-12T13:15:00Z",
+          "type": "string"
         },
         "type": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Type of webhook (marketing, transactional, or inbound)",
+          "enum": [
+            "marketing",
+            "transactional",
+            "inbound"
+          ],
+          "example": "marketing",
+          "type": "string"
         },
         "domain": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Inbound domain of the webhook, only returned for inbound type webhooks",
+          "example": "example.com",
+          "type": "string"
         },
         "url": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "URL of the webhook",
+          "example": "http://requestb.in/173lyyx1",
+          "format": "url",
+          "type": "string"
         }
       },
       "required": [

@@ -16,35 +16,43 @@
           "description": "Id of the campaign"
         },
         "email": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Custom attributes for the report email.",
           "properties": {
-            "description": "(nested schema truncated)"
+            "body": {
+              "description": "Custom text message to be presented in the report email.",
+              "example": "Please find attached the report of our last email campaign.",
+              "type": "string"
+            },
+            "to": {
+              "description": "Email addresses of the recipients",
+              "items": {
+                "description": "Email address of the recipient",
+                "example": "jim.suehan@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "type": "array"
+            }
           },
-          "required": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "required": [
+            "body",
+            "to"
+          ],
+          "type": "object"
         },
         "language": {
-          "default": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "default": "fr",
+          "description": "Language of email content for campaign report sending.",
+          "enum": [
+            "fr",
+            "es",
+            "pt",
+            "it",
+            "de",
+            "en"
+          ],
+          "example": "en",
+          "type": "string"
         }
       },
       "required": [

@@ -51,14 +51,98 @@
           "description": "List of background processes on your account",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "id": {
+                "description": "Unique identifier of the process",
+                "example": 217,
+                "format": "int64",
+                "type": "integer"
+              },
+              "name": {
+                "description": "Name/type of the process",
+                "enum": [
+                  "IMPORTUSER",
+                  "SEARCH_EXPORT_USERS",
+                  "TRANS-CALC",
+                  "TRANS-GLOBAL-CALC",
+                  "CAMPAIGN_PROCESSING",
+                  "LIST_EXPORT",
+                  "CONTACT_EXPORT"
+                ],
+                "example": "IMPORTUSER",
+                "type": "string"
+              },
+              "status": {
+                "description": "Current status of the process",
+                "enum": [
+                  "queued",
+                  "processing",
+                  "completed",
+                  "failed",
+                  "cancelled"
+                ],
+                "example": "completed",
+                "type": "string"
+              },
+              "info": {
+                "description": "Additional process information, only returned for completed IMPORTUSER processes. Contains URLs to CSV files with details about problematic records.",
+                "properties": {
+                  "import": {
+                    "description": "Import process details with URLs to CSV reports",
+                    "properties": {
+                      "invalid_emails": {
+                        "description": "URL to CSV file containing invalid email addresses, or null if none",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "duplicate_contact_id": {
+                        "description": "URL to CSV file containing duplicate contact IDs, or null if none",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "duplicate_ext_id": {
+                        "description": "URL to CSV file containing duplicate external IDs, or null if none",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "duplicate_email_id": {
+                        "description": "URL to CSV file containing duplicate email IDs, or null if none",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "duplicate_phone_id": {
+                        "description": "URL to CSV file containing duplicate phone numbers, or null if none",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "duplicate_whatsapp_id": {
+                        "description": "URL to CSV file containing duplicate WhatsApp numbers, or null if none",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "duplicate_landline_number_id": {
+                        "description": "URL to CSV file containing duplicate landline numbers, or null if none",
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "export_url": {
+                "description": "Download URL for completed export processes (returned for SEARCH_EXPORT_USERS, SEARCH_EXPORT_USERS_API, CAMPAIGN_USER_DETAILS, and EXPORT_WEBHOOK process types)",
+                "example": "https://s3.eu-west-1.amazonaws.com/api-export.example.com/upload/contacts_export.csv",
+                "format": "url",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "id",
+              "name",
+              "status"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

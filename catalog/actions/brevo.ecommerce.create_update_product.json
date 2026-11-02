@@ -19,9 +19,7 @@
         "categories": {
           "description": "Category ID-s of the product",
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         },
@@ -55,18 +53,19 @@
         },
         "metaInfo": {
           "additionalProperties": {
-            "oneOf": {
-              "description": "(nested schema truncated)"
-            }
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
           },
           "description": "Meta data of product such as description, vendor, producer, stock level. The total characters of cumulative metaInfo shall not exceed **20000 characters**.",
           "example": {
-            "brand": {
-              "description": "(nested schema truncated)"
-            },
-            "description": {
-              "description": "(nested schema truncated)"
-            }
+            "brand": "addidas",
+            "description": "Shoes for sports"
           },
           "type": "object"
         },
@@ -179,7 +178,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

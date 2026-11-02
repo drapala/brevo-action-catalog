@@ -24,9 +24,11 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import quote
 
 import httpx
 import yaml
+from jsonschema import Draft7Validator
 
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "catalog/actions"
@@ -82,7 +84,39 @@ def record(entry: dict) -> None:
         fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
-def call(action_id: str, inputs: dict, client: httpx.Client, run: str = "manual", action: dict | None = None) -> tuple[int, object]:
+def input_errors(action: dict, inputs: dict) -> list[str]:
+    """Inputs the action does not take, then every place the inputs break its schema."""
+    schema = action["inputs"]["schema"]
+    unknown = sorted(set(inputs) - set(schema.get("properties") or {}))
+    if unknown:
+        return [f"unknown inputs {unknown}. This action takes {sorted(schema.get('properties') or {})}"]
+    return [describe(e) for e in Draft7Validator(any_of(schema)).iter_errors(inputs)]
+
+
+def describe(error) -> str:
+    where = ".".join(map(str, error.path)) or "inputs"
+    if error.validator == "anyOf":
+        needs = [
+            " and ".join(b["required"]) for b in error.validator_value if isinstance(b, dict) and b.get("required")
+        ]
+        if needs:
+            return f"{where}: needs one of: {'; '.join(needs)}"
+    return f"{where}: {error.message}"
+
+
+def any_of(node):
+    """The Brevo spec writes oneOf over branches that share fields and require none, so a valid
+    body such as {"emails": [...]} matches every branch. Read oneOf as anyOf."""
+    if isinstance(node, dict):
+        return {("anyOf" if k == "oneOf" else k): any_of(v) for k, v in node.items()}
+    if isinstance(node, list):
+        return [any_of(v) for v in node]
+    return node
+
+
+def call(
+    action_id: str, inputs: dict, client: httpx.Client, run: str = "manual", action: dict | None = None
+) -> tuple[int, object]:
     action = action or load_action(action_id)
     route = next(r for r in action["routes"] if r["kind"] == "documented_api")
     url = route["url"]
@@ -90,7 +124,7 @@ def call(action_id: str, inputs: dict, client: httpx.Client, run: str = "manual"
     for name, value in inputs.items():
         loc = route["params"].get(name)
         if loc == "path":
-            url = url.replace("{" + name + "}", str(value))
+            url = url.replace("{" + name + "}", quote(str(value), safe="@+"))
         elif loc == "query":
             query[name] = value
         elif loc == "body" and name == "body":
@@ -266,8 +300,12 @@ def scenario(file: str) -> int:
 def main() -> None:
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "call":
+        inputs = json.loads(sys.argv[3]) if len(sys.argv) > 3 else {}
+        errors = input_errors(load_action(sys.argv[2]), inputs)
+        if errors:
+            sys.exit("inputs do not match the catalog entry:\n" + "\n".join(errors))
         with client() as c:
-            status, payload = call(sys.argv[2], json.loads(sys.argv[3]) if len(sys.argv) > 3 else {}, c)
+            status, payload = call(sys.argv[2], inputs, c)
         print(status, json.dumps(payload, indent=2)[:3000])
     elif cmd == "probe-reads":
         probe_reads()

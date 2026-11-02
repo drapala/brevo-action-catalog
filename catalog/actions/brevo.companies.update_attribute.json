@@ -23,17 +23,23 @@
           "type": "array",
           "description": "Updated labels for selectable options",
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            },
-            "additionalProperties": {
-              "description": "(nested schema truncated)"
-            },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key",
+              "value"
+            ],
             "properties": {
-              "description": "(nested schema truncated)"
+              "key": {
+                "type": "string",
+                "description": "Internal option identifier",
+                "example": "value_1"
+              },
+              "value": {
+                "type": "string",
+                "description": "Display label for the option",
+                "example": "Updated value"
+              }
             }
           }
         },
@@ -41,12 +47,8 @@
           "type": "string",
           "description": "The type of object the attribute belongs to, it cannot be updated after creation",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "companies",
+            "deals"
           ],
           "example": "companies"
         }

@@ -73,14 +73,108 @@
           "description": "List of external feeds",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "id": {
+                "description": "Unique identifier of the feed",
+                "example": "b1c2d3e4-f5a6-47b8-89c0-d1e2f3a4b5c6",
+                "format": "uuidv4",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name of the feed",
+                "example": "Product Catalog Feed",
+                "type": "string"
+              },
+              "url": {
+                "description": "URL of the external data source",
+                "example": "https://api.example.com/products",
+                "format": "url",
+                "type": "string"
+              },
+              "authType": {
+                "description": "Authentication type for accessing the feed",
+                "enum": [
+                  "basic",
+                  "token",
+                  "noAuth"
+                ],
+                "example": "token",
+                "type": "string"
+              },
+              "username": {
+                "description": "Username for basic authentication. Only returned when authType is 'basic'. Excluded when authType is 'token'.",
+                "example": "apiuser",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password for basic authentication. Only returned when authType is 'basic'. Excluded when authType is 'token'.",
+                "example": "apipass",
+                "type": "string"
+              },
+              "token": {
+                "description": "Token for token-based authentication. Only returned when authType is 'token'. Excluded when authType is 'basic' or 'noAuth'.",
+                "example": "abc123token456",
+                "type": "string"
+              },
+              "maxRetries": {
+                "description": "Maximum number of retry attempts for failed requests",
+                "example": 3,
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "cache": {
+                "description": "Whether to cache the feed response",
+                "example": true,
+                "type": "boolean"
+              },
+              "headers": {
+                "description": "Custom HTTP headers for the feed request",
+                "items": {
+                  "properties": {
+                    "name": {
+                      "description": "Header name",
+                      "example": "Authorization",
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "Header value",
+                      "example": "Bearer xyz789",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "value"
+                  ],
+                  "type": "object"
+                },
+                "type": "array",
+                "nullable": true
+              },
+              "createdAt": {
+                "description": "Feed creation timestamp",
+                "example": "2025-09-18T13:29:27.208Z",
+                "format": "date-time",
+                "type": "string"
+              },
+              "modifiedAt": {
+                "description": "Feed last modification timestamp",
+                "example": "2025-09-18T13:29:27.208Z",
+                "format": "date-time",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "id",
+              "name",
+              "url",
+              "authType",
+              "maxRetries",
+              "cache",
+              "createdAt",
+              "modifiedAt"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

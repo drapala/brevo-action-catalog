@@ -14,10 +14,14 @@
           "description": "Add authentication on webhook url",
           "properties": {
             "token": {
-              "description": "(nested schema truncated)"
+              "description": "Webhook authentication token",
+              "example": "test-auth-token1234",
+              "type": "string"
             },
             "type": {
-              "description": "(nested schema truncated)"
+              "description": "Type of authentication",
+              "example": "bearer",
+              "type": "string"
             }
           },
           "type": "object"
@@ -31,12 +35,8 @@
           "default": "email",
           "description": "Channel of the webhook",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "email",
+            "sms"
           ],
           "example": "email",
           "type": "string"
@@ -54,15 +54,28 @@
         "events": {
           "description": "Events triggering the webhook. Required for transactional and\nmarketing types, optional for inbound type (defaults to\n`inboundEmailProcessed`). Possible values for **Transactional**\ntype webhook: `sent` OR `request`, `delivered`, `hardBounce`,\n`softBounce`, `blocked`, `spam`, `invalid`, `deferred`, `click`,\n`opened`, `uniqueOpened` and `unsubscribed`. Possible values for\n**Marketing** type webhook: `spam`, `opened`, `click`,\n`hardBounce`, `softBounce`, `unsubscribed`, `listAddition`,\n`delivered`, `contactUpdated` & `contactDeleted`. Possible values\nfor **Inbound** type webhook: `inboundEmailProcessed`.",
           "items": {
-            "enum": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "enum": [
+              "sent",
+              "hardBounce",
+              "softBounce",
+              "blocked",
+              "spam",
+              "delivered",
+              "request",
+              "click",
+              "invalid",
+              "deferred",
+              "opened",
+              "uniqueOpened",
+              "unsubscribed",
+              "listAddition",
+              "contactUpdated",
+              "contactDeleted",
+              "inboundEmailProcessed",
+              "reply"
+            ],
+            "example": "unsubscribed",
+            "type": "string"
           },
           "type": "array"
         },
@@ -70,11 +83,18 @@
           "description": "Custom headers to be send with webhooks",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "key": {
+                "description": "Header key name",
+                "example": "cf-secret",
+                "type": "string"
+              },
+              "value": {
+                "description": "Header value",
+                "example": "test-header-value",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
@@ -82,15 +102,9 @@
           "default": "transactional",
           "description": "Type of the webhook",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "transactional",
+            "marketing",
+            "inbound"
           ],
           "example": "marketing",
           "type": "string"
@@ -113,18 +127,10 @@
     "schema": {
       "properties": {
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "ID of the object created",
+          "example": 5,
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [

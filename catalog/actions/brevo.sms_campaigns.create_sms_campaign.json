@@ -28,16 +28,28 @@
         "recipients": {
           "properties": {
             "exclusionListIds": {
-              "description": "(nested schema truncated)"
+              "description": "List ids which have to be excluded from a campaign",
+              "items": {
+                "description": "List Id to exclude from the campaign",
+                "example": 15,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             },
             "listIds": {
-              "description": "(nested schema truncated)"
+              "description": "Lists Ids to send the campaign to. **REQUIRED if scheduledAt is not empty**\n",
+              "items": {
+                "description": "List Id to send the campaign to",
+                "example": 54,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            }
+            "listIds"
           ],
           "type": "object"
         },
@@ -77,18 +89,10 @@
     "schema": {
       "properties": {
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "ID of the object created",
+          "example": 5,
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [

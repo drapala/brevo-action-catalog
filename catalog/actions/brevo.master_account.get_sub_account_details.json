@@ -45,11 +45,16 @@
           "description": "List of groups associated with the sub-account",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "id": {
+                "description": "Group id",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name of the group",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
@@ -61,13 +66,164 @@
           "description": "Sub-account plan details",
           "properties": {
             "credits": {
-              "description": "(nested schema truncated)"
+              "description": "Credits quota and remaining credits on the sub-account",
+              "properties": {
+                "emails": {
+                  "description": "Email credits remaining on the sub-account",
+                  "properties": {
+                    "quantity": {
+                      "description": "Quantity of email messaging limits provided",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "remaining": {
+                      "description": "Available email messaging limits for use",
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "externalFeeds": {
+                  "description": "externalFeeds credits remaining on the sub-account",
+                  "properties": {
+                    "quantity": {
+                      "description": "Quantity of externalFeeds messaging limits\nprovided",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "remaining": {
+                      "description": "Available externalFeeds messaging limits for use",
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "sms": {
+                  "description": "SMS credits remaining on the sub-account",
+                  "properties": {
+                    "quantity": {
+                      "description": "Quantity of SMS messaging limits provided",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "remaining": {
+                      "description": "Available SMS messaging limits for use",
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "whatsapp": {
+                  "description": "Whatsapp credits remaining on the sub-account",
+                  "properties": {
+                    "quantity": {
+                      "description": "Quantity of whatsapp messaging limits provided",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "remaining": {
+                      "description": "Available whatsapp messaging limits for use",
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "wpSubscribers": {
+                  "description": "Push credits remaining on the sub-account",
+                  "properties": {
+                    "quantity": {
+                      "description": "Quantity of Push sending limits provided",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "remaining": {
+                      "description": "Available Push sending limits for use",
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
             "features": {
-              "description": "(nested schema truncated)"
+              "description": "Features available on the sub-account",
+              "properties": {
+                "inbox": {
+                  "description": "Inbox details / Not applicable on ENTv2",
+                  "properties": {
+                    "quantity": {
+                      "description": "Quantity of inbox provided",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "remaining": {
+                      "description": "Available inboxes for use",
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "landingPage": {
+                  "description": "Landing page details / Not applicable on ENTv2",
+                  "properties": {
+                    "quantity": {
+                      "description": "Quantity of landing pages provided",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "remaining": {
+                      "description": "Available landing pages for use",
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "salesUsers": {
+                  "description": "Sales and service users to use phone, sales and\nconversations",
+                  "properties": {
+                    "quantity": {
+                      "description": "Quantity of sales users provided",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "remaining": {
+                      "description": "Available sales users for use",
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "users": {
+                  "description": "Marketing users to manage the marketing channels",
+                  "properties": {
+                    "quantity": {
+                      "description": "Quantity of marketing users provided",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "remaining": {
+                      "description": "Available marketing users for use",
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             },
             "planType": {
-              "description": "(nested schema truncated)"
+              "description": "type of the plan",
+              "type": "string"
             }
           },
           "type": "object"

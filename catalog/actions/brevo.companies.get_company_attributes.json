@@ -21,70 +21,46 @@
         "description": "Company attribute details",
         "properties": {
           "internalName": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Internal name of the attribute",
+            "example": "name",
+            "type": "string"
           },
           "attributeTypeName": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Type of the attribute",
+            "example": "text",
+            "type": "string"
           },
           "label": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Display label of the attribute",
+            "example": "Company Name",
+            "type": "string"
           },
           "attributeOptions": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
+            "description": "Options for single-select or multi-choice attributes",
             "items": {
-              "description": "(nested schema truncated)"
+              "properties": {
+                "key": {
+                  "example": "custom key",
+                  "type": "string"
+                },
+                "value": {
+                  "example": "custom label",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "array"
           },
           "isRequired": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Whether this attribute is required",
+            "example": true,
+            "type": "boolean"
           },
           "isValueReadonly": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Whether this attribute value is read-only",
+            "example": false,
+            "type": "boolean"
           }
         },
         "type": "object"

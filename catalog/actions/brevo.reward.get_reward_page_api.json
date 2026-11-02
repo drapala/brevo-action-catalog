@@ -63,11 +63,50 @@
           "description": "Items for the current reward",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "createdAt": {
+                "description": "Timestamp for when this reward was created",
+                "format": "date-time",
+                "type": "string"
+              },
+              "endDate": {
+                "description": "Timestamp for when this reward attribution ended",
+                "format": "date-time",
+                "type": "string"
+              },
+              "id": {
+                "description": "Unique identifier for the reward",
+                "format": "uuid",
+                "type": "string"
+              },
+              "loyaltyProgramId": {
+                "description": "Loyalty Program to which current reward is associated",
+                "format": "uuid",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name of the reward",
+                "type": "string"
+              },
+              "publicImage": {
+                "description": "Public image of the reward",
+                "type": "string"
+              },
+              "startDate": {
+                "description": "Timestamp for when this reward attribution started",
+                "format": "date-time",
+                "type": "string"
+              },
+              "state": {
+                "description": "State of the reward",
+                "type": "string"
+              },
+              "updatedAt": {
+                "description": "Timestamp for when this reward attribution was updated",
+                "format": "date-time",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },

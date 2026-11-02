@@ -23,11 +23,17 @@
         "accessConditions": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "balanceDefinitionId": {
+                "description": "Balance definition identifier for accessing the tier",
+                "format": "uuid",
+                "type": "string"
+              },
+              "minimumValue": {
+                "description": "Minimum value required to access the tier",
+                "type": "integer"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
@@ -42,11 +48,13 @@
         "tierRewards": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "rewardId": {
+                "description": "Reward unique identifier",
+                "format": "uuid",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         }
@@ -79,91 +87,83 @@
     "schema": {
       "properties": {
         "accessConditions": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Conditions required to access this tier",
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "balanceDefinitionId": {
+                "description": "Balance definition identifier",
+                "format": "uuid",
+                "type": "string"
+              },
+              "createdAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "minimumValue": {
+                "description": "Minimum value required to access this tier",
+                "type": "integer"
+              },
+              "updatedAt": {
+                "format": "date-time",
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "createdAt": {
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "format": "date-time",
+          "type": "string"
         },
         "groupId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Associated group Id",
+          "format": "uuid",
+          "type": "string"
         },
         "imageRef": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Tier image reference",
+          "type": "string"
         },
         "loyaltyProgramId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Associated loyalty program Id",
+          "format": "uuid",
+          "type": "string"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Tier name",
+          "type": "string"
         },
         "tierId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Tier id",
+          "format": "uuid",
+          "type": "string"
         },
         "tierRewards": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Rewards associated with this tier",
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "createdAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "rewardId": {
+                "description": "Reward to be attributed on tier assignment",
+                "format": "uuid",
+                "type": "string"
+              },
+              "updatedAt": {
+                "format": "date-time",
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "updatedAt": {
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "format": "date-time",
+          "type": "string"
         }
       },
       "type": "object"

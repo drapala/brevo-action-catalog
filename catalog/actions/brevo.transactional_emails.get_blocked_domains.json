@@ -20,15 +20,9 @@
         "domains": {
           "description": "List of all blocked domains",
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "name of blocked domain",
+            "example": "contact.com",
+            "type": "string"
           },
           "type": "array"
         }

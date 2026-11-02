@@ -21,33 +21,19 @@
         "groupIds": {
           "description": "Set the group(s) for the sub-account",
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         },
         "language": {
           "description": "Set the language of the sub-account",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "en",
+            "fr",
+            "it",
+            "es",
+            "pt",
+            "de"
           ],
           "type": "string"
         },

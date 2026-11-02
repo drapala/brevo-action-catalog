@@ -77,7 +77,56 @@
         "items": {
           "description": "List of deals",
           "items": {
-            "description": "(nested schema truncated)"
+            "description": "Deal Details",
+            "properties": {
+              "id": {
+                "description": "Unique deal id",
+                "example": "629475917295261d9b1f4403",
+                "type": "string"
+              },
+              "attributes": {
+                "description": "Deal attributes with values",
+                "example": {
+                  "amount": 12,
+                  "created_at": "2022-05-30T07:42:05.671Z",
+                  "deal_name": "testname",
+                  "deal_owner": "6093d2425a9b436e9519d034",
+                  "deal_stage": "9e577ff7-8e42-4ab3-be26-2b5e01b42518",
+                  "last_activity_date": "2022-06-06T08:38:36.000Z",
+                  "last_updated_date": "2022-06-06T08:38:36.761Z",
+                  "number_of_activities": 0,
+                  "number_of_contacts": 1,
+                  "pipeline": "6093d296ad1e9c5cf2140a58",
+                  "stage_updated_at": "2022-05-30T07:42:05.671Z"
+                },
+                "type": "object"
+              },
+              "linkedContactsIds": {
+                "description": "Contact ids for contacts linked to this deal",
+                "example": [
+                  1,
+                  2,
+                  3
+                ],
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              "linkedCompaniesIds": {
+                "description": "Companies ids for companies linked to this deal",
+                "example": [
+                  "61a5ce58c5d4795761045990",
+                  "61a5ce58c5d4795761045991",
+                  "61a5ce58c5d4795761045992"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
           },
           "type": "array"
         }

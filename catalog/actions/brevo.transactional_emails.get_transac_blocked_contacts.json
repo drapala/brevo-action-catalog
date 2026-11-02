@@ -59,14 +59,56 @@
         "contacts": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "blockedAt": {
+                "description": "Date when the contact was blocked or unsubscribed on",
+                "example": "2017-05-01T12:30:00Z",
+                "type": "string"
+              },
+              "email": {
+                "description": "Email address of the blocked or unsubscribed contact",
+                "example": "john.smith@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "reason": {
+                "description": "Reason for blocking / unsubscribing",
+                "example": "Admin blocked",
+                "properties": {
+                  "code": {
+                    "description": "Reason code for blocking / unsubscribing (This code is safe for comparison)",
+                    "enum": [
+                      "unsubscribedViaMA",
+                      "unsubscribedViaEmail",
+                      "adminBlocked",
+                      "unsubscribedViaApi",
+                      "hardBounce",
+                      "contactFlaggedAsSpam"
+                    ],
+                    "example": "AdminBlocked",
+                    "type": "string"
+                  },
+                  "message": {
+                    "description": "Reason for blocking / unsubscribing (This string is not safe for comparison)",
+                    "example": "Admin blocked",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "senderEmail": {
+                "description": "Sender email address of the blocked or unsubscribed contact",
+                "example": "john.smith@example.com",
+                "format": "email",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "blockedAt",
+              "email",
+              "reason",
+              "senderEmail"
+            ],
+            "type": "object"
           },
           "type": "array"
         },

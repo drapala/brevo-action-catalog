@@ -48,14 +48,40 @@
           "description": "Get user activity logs",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "action": {
+                "description": "Type of activity in the account.",
+                "example": "login-success",
+                "type": "string"
+              },
+              "date": {
+                "description": "Time of the activity.",
+                "example": "2023-03-27T16:30:00Z",
+                "type": "string"
+              },
+              "user_agent": {
+                "description": "Browser details of the user who performed the activity.",
+                "example": "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us)",
+                "type": "string"
+              },
+              "user_email": {
+                "description": "Email address of the user who performed activity in the\naccount.",
+                "example": "test@mycompany.com",
+                "type": "string"
+              },
+              "user_ip": {
+                "description": "IP address of the user who performed activity in the\naccount.",
+                "example": "192.158.1.38",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "action",
+              "date",
+              "user_email",
+              "user_ip",
+              "user_agent"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

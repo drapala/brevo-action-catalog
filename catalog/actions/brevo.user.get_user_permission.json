@@ -42,14 +42,23 @@
           "description": "Granular feature permissions given to the user.",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "feature": {
+                "example": "Email campaign",
+                "type": "string"
+              },
+              "permissions": {
+                "items": {
+                  "example": "Create / edit / delete",
+                  "type": "string"
+                },
+                "type": "array"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "feature",
+              "permissions"
+            ],
+            "type": "object"
           },
           "type": "array"
         },

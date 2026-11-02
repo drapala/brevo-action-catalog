@@ -63,51 +63,84 @@
           "description": "List of conversion attribution metrics",
           "example": [
             {
-              "description": "(nested schema truncated)"
+              "averageBasket": 3,
+              "conversionSource": "email_campaign",
+              "id": "sale01",
+              "ordersCount": 300,
+              "revenue": 900
             },
             {
-              "description": "(nested schema truncated)"
+              "averageBasket": 4,
+              "conversionSource": "email_campaign",
+              "id": "sale02",
+              "ordersCount": 200,
+              "revenue": 800
             }
           ],
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "averageBasket": {
+                "format": "float",
+                "type": "number"
+              },
+              "conversionSource": {
+                "enum": [
+                  "email_campaign",
+                  "sms_campaign",
+                  "automation_workflow_email",
+                  "automation_workflow_sms"
+                ],
+                "type": "string"
+              },
+              "id": {
+                "format": "integer",
+                "type": "number"
+              },
+              "ordersCount": {
+                "format": "integer",
+                "type": "number"
+              },
+              "revenue": {
+                "format": "float",
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "conversionSource",
+              "ordersCount",
+              "revenue",
+              "averageBasket"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "totals": {
           "description": "Attribution list aggregated totals",
           "example": {
-            "averageBasket": {
-              "description": "(nested schema truncated)"
-            },
-            "ordersCount": {
-              "description": "(nested schema truncated)"
-            },
-            "revenue": {
-              "description": "(nested schema truncated)"
-            }
+            "averageBasket": 3.4,
+            "ordersCount": 500,
+            "revenue": 1700
           },
           "properties": {
             "averageBasket": {
-              "description": "(nested schema truncated)"
+              "format": "float",
+              "type": "number"
             },
             "ordersCount": {
-              "description": "(nested schema truncated)"
+              "format": "integer",
+              "type": "number"
             },
             "revenue": {
-              "description": "(nested schema truncated)"
+              "format": "float",
+              "type": "number"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "ordersCount",
+            "revenue",
+            "averageBasket"
           ],
           "type": "object"
         }

@@ -51,131 +51,295 @@
         "clicked": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "campaignId": {
+                "description": "ID of the campaign which generated the event",
+                "example": 3,
+                "format": "int64",
+                "type": "integer"
+              },
+              "links": {
+                "items": {
+                  "properties": {
+                    "count": {
+                      "description": "Number of clicks on this link for the campaign",
+                      "example": 1,
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "eventTime": {
+                      "description": "UTC date-time of the event",
+                      "example": "2017-03-12T20:15:13Z",
+                      "type": "string"
+                    },
+                    "ip": {
+                      "description": "IP from which the user has clicked on the link",
+                      "example": "165.87.3.15",
+                      "type": "string"
+                    },
+                    "url": {
+                      "description": "URL of the clicked link",
+                      "example": "www.myshop.com",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "count",
+                    "eventTime",
+                    "ip",
+                    "url"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "campaignId",
+              "links"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "complaints": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "campaignId": {
+                "description": "ID of the campaign which generated the event",
+                "example": 3,
+                "format": "int64",
+                "type": "integer"
+              },
+              "eventTime": {
+                "description": "UTC date-time of the event",
+                "example": "2017-03-12T20:15:13Z",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "campaignId",
+              "eventTime"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "delivered": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "campaignId": {
+                "description": "ID of the campaign which generated the event",
+                "example": 3,
+                "format": "int64",
+                "type": "integer"
+              },
+              "eventTime": {
+                "description": "UTC date-time of the event",
+                "example": "2017-03-12T20:15:13Z",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "campaignId",
+              "eventTime"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "hardBounces": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "campaignId": {
+                "description": "ID of the campaign which generated the event",
+                "example": 3,
+                "format": "int64",
+                "type": "integer"
+              },
+              "eventTime": {
+                "description": "UTC date-time of the event",
+                "example": "2017-03-12T20:15:13Z",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "campaignId",
+              "eventTime"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "messagesSent": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "campaignId": {
+                "description": "ID of the campaign which generated the event",
+                "example": 3,
+                "format": "int64",
+                "type": "integer"
+              },
+              "eventTime": {
+                "description": "UTC date-time of the event",
+                "example": "2017-03-12T20:15:13Z",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "campaignId",
+              "eventTime"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "opened": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "campaignId": {
+                "description": "ID of the campaign which generated the event",
+                "example": 3,
+                "format": "int64",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of openings of the campaign",
+                "example": 3,
+                "format": "int64",
+                "type": "integer"
+              },
+              "eventTime": {
+                "description": "UTC date-time of the event",
+                "example": "2017-03-12T20:15:13Z",
+                "type": "string"
+              },
+              "ip": {
+                "description": "IP from which the user has opened the campaign",
+                "example": "165.87.3.15",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "campaignId",
+              "count",
+              "eventTime",
+              "ip"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "softBounces": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "campaignId": {
+                "description": "ID of the campaign which generated the event",
+                "example": 3,
+                "format": "int64",
+                "type": "integer"
+              },
+              "eventTime": {
+                "description": "UTC date-time of the event",
+                "example": "2017-03-12T20:15:13Z",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "campaignId",
+              "eventTime"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "transacAttributes": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "orderDate": {
+                "description": "Date of the order",
+                "example": "2017-03-12",
+                "format": "date",
+                "type": "string"
+              },
+              "orderId": {
+                "description": "ID of the order",
+                "example": 248,
+                "format": "int64",
+                "type": "integer"
+              },
+              "orderPrice": {
+                "description": "Price of the order",
+                "example": 24.99,
+                "format": "float",
+                "type": "number"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "orderDate",
+              "orderId",
+              "orderPrice"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "unsubscriptions": {
           "properties": {
             "adminUnsubscription": {
-              "description": "(nested schema truncated)"
+              "description": "Contact has been unsubscribed from the administrator",
+              "items": {
+                "properties": {
+                  "eventTime": {
+                    "description": "UTC date-time of the event",
+                    "example": "2017-03-12T20:15:13Z",
+                    "type": "string"
+                  },
+                  "ip": {
+                    "description": "IP from which the user has been unsubscribed",
+                    "example": "165.87.3.15",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "eventTime"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "userUnsubscription": {
-              "description": "(nested schema truncated)"
+              "description": "Contact has unsubscribed via the unsubscription link in the email",
+              "items": {
+                "properties": {
+                  "campaignId": {
+                    "description": "ID of the campaign which generated the event",
+                    "example": 3,
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "eventTime": {
+                    "description": "UTC date-time of the event",
+                    "example": "2017-03-12T20:15:13Z",
+                    "type": "string"
+                  },
+                  "ip": {
+                    "description": "IP from which the user has unsubscribed",
+                    "example": "165.87.3.15",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "campaignId",
+                  "eventTime"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "adminUnsubscription",
+            "userUnsubscription"
           ],
           "type": "object"
         }

@@ -33,79 +33,37 @@
     "schema": {
       "properties": {
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Creation UTC date-time of the category (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2017-05-12T12:30:00Z",
+          "type": "string"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Category ID for which you requested the details",
+          "example": "C11",
+          "format": "string",
+          "type": "string"
         },
         "isDeleted": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "category deleted from the shop's database",
+          "example": true,
+          "type": "boolean"
         },
         "modifiedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Last modification UTC date-time of the category (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2017-05-12T12:30:00Z",
+          "type": "string"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Name of the category for which you requested the details",
+          "example": "Electronics",
+          "format": "string",
+          "type": "string"
         },
         "url": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "URL to the category",
+          "example": "http://mydomain.com/category/clothing",
+          "format": "string",
+          "type": "string"
         }
       },
       "required": [

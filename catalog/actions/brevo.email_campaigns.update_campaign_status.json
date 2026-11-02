@@ -16,15 +16,19 @@
           "description": "Id of the campaign"
         },
         "status": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Note:- **replicateTemplate** status will be available **only for template type campaigns.**\n",
+          "enum": [
+            "suspended",
+            "archive",
+            "darchive",
+            "sent",
+            "queued",
+            "replicate",
+            "replicateTemplate",
+            "cancel",
+            "draft"
+          ],
+          "type": "string"
         }
       },
       "required": [

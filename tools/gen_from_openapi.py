@@ -133,7 +133,6 @@ PARAM_ENTITY = {
 STOPWORDS = {"a", "an", "the", "s", "its", "your", "based"}
 
 
-
 def slug(text: str) -> str:
     text = re.sub(r"([a-z])([A-Z])", r"\1_\2", text)
     words = re.findall(r"[a-zA-Z0-9]+", text.lower())
@@ -150,25 +149,31 @@ def singular(word: str) -> str:
     return word
 
 
+MAX_REF_HOPS = 6
+
+
 class Resolver:
     def __init__(self, spec: dict) -> None:
         self.spec = spec
 
-    def resolve(self, node, depth: int = 0, seen: tuple = ()):
-        if depth > 6:
-            return {"description": "(nested schema truncated)"}
+    def resolve(self, node, seen: tuple = ()):
+        """Inline every $ref. Only reference hops count toward the limit, so a keyword
+        value such as "type": "integer" is never replaced."""
         if isinstance(node, dict):
             if "$ref" in node:
                 ref = node["$ref"]
+                name = ref.split("/")[-1]
                 if ref in seen:
-                    return {"description": f"(recursive reference to {ref.split('/')[-1]})"}
+                    return {"description": f"(recursive reference to {name})"}
+                if len(seen) >= MAX_REF_HOPS:
+                    return {"description": f"(nested schema {name} not expanded)"}
                 target = self.spec
                 for part in ref.lstrip("#/").split("/"):
                     target = target[part]
-                return self.resolve(target, depth + 1, seen + (ref,))
-            return {k: self.resolve(v, depth + 1, seen) for k, v in node.items() if k not in ("xml",)}
+                return self.resolve(target, seen + (ref,))
+            return {k: self.resolve(v, seen) for k, v in node.items() if k != "xml"}
         if isinstance(node, list):
-            return [self.resolve(v, depth + 1, seen) for v in node]
+            return [self.resolve(v, seen) for v in node]
         return node
 
 
@@ -358,7 +363,8 @@ def main() -> None:
     def find_lister(entity: str):
         """A read that lists the entity and needs no other ID, or None when the API has no such route."""
         candidates = [
-            d for d in by_entity.get(entity, [])
+            d
+            for d in by_entity.get(entity, [])
             if d["oclass"] == "read"
             and not any(loc == "path" and name in d["inputs"].get("required", []) for name, loc in d["params"].items())
         ]
@@ -431,7 +437,9 @@ def main() -> None:
         if effect != "none":
             reversible, undo = False, None
         destructive = d["oclass"] == "delete" or DESTRUCTIVE_NAME.search(name) is not None
-        requires_confirmation = effect != "none" or destructive or "and all its" in d["summary"].lower()
+        requires_confirmation = (
+            effect != "none" or destructive or not reversible or "and all its" in d["summary"].lower()
+        )
 
         produces = None
         out = d["out"] or {}

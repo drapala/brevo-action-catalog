@@ -12,21 +12,32 @@
       "properties": {
         "attributes": {
           "additionalProperties": {
-            "oneOf": {
-              "description": "(nested schema truncated)"
-            }
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            ]
           },
           "description": "Pass the set of attributes and their values. **These attributes must be present in your Brevo account**. For eg. **{'FNAME':'Elly', 'LNAME':'Roger', 'COUNTRIES': ['India','China']}**\n",
           "example": {
-            "COUNTRIES": {
-              "description": "(nested schema truncated)"
-            },
-            "FNAME": {
-              "description": "(nested schema truncated)"
-            },
-            "LNAME": {
-              "description": "(nested schema truncated)"
-            }
+            "COUNTRIES": [
+              "India",
+              "China"
+            ],
+            "FNAME": "Elly",
+            "LNAME": "Roger"
           },
           "type": "object"
         },
@@ -44,36 +55,20 @@
         "excludeListIds": {
           "description": "Lists under user account where contact should not be added",
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Id of the list",
+            "example": 36,
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },
         "includeListIds": {
           "description": "Lists under user account where contact should be added",
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Id of the list",
+            "example": 36,
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },

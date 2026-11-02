@@ -18,12 +18,8 @@
         "category": {
           "description": "Category of the template",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "MARKETING",
+            "UTILITY"
           ],
           "example": "MARKETING",
           "type": "string"
@@ -51,12 +47,8 @@
         "source": {
           "description": "source of the template",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "Automation",
+            "Conversations"
           ],
           "type": "string"
         }
@@ -75,18 +67,10 @@
     "schema": {
       "properties": {
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "ID of the object created",
+          "example": 5,
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [
@@ -128,7 +112,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

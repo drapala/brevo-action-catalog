@@ -86,11 +86,55 @@
           "description": "List of all the rewards for current contact",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "code": {
+                "description": "Generated code",
+                "type": "string"
+              },
+              "consumedAt": {
+                "description": "Timestamp when the reward limit was consumed",
+                "type": "string"
+              },
+              "createdAt": {
+                "description": "Timestamp when the reward limit was created",
+                "type": "string"
+              },
+              "expirationDate": {
+                "description": "Reward expiration date",
+                "type": "string"
+              },
+              "id": {
+                "description": "Unique identifier for the contact",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": {},
+                "description": "Additional data for the reward",
+                "type": "object"
+              },
+              "rewardId": {
+                "description": "Unique identifier for the reward",
+                "type": "string"
+              },
+              "unit": {
+                "description": "Unit of the balance selected in the reward definition",
+                "type": "string"
+              },
+              "updatedAt": {
+                "description": "Timestamp when the reward limit was updated",
+                "type": "string"
+              },
+              "value": {
+                "description": "Value of the selected reward config",
+                "format": "double",
+                "type": "number"
+              },
+              "validFrom": {
+                "description": "Date from which the voucher becomes valid",
+                "format": "date-time",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },

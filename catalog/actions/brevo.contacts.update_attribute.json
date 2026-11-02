@@ -28,23 +28,29 @@
           "description": "List of the values and labels that the attribute can take. **Use only if the attribute's category is \"category\"** None of the category options can exceed max 200 characters. For example, **[{\"value\":1, \"label\":\"male\"}, {\"value\":2, \"label\":\"female\"}]**\n",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "label": {
+                "description": "Label of the value",
+                "example": "Men",
+                "type": "string"
+              },
+              "value": {
+                "description": "Id of the value",
+                "example": 1,
+                "type": "integer"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "label",
+              "value"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
         "multiCategoryOptions": {
           "description": "Use this option to add multiple-choice attributes options only if the attribute's category is \"normal\". **This option is specifically designed for updating multiple-choice attributes. None of the multicategory options can exceed max 200 characters.**. For example: **[\"USA\",\"INDIA\"]**\n",
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         },

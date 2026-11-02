@@ -41,19 +41,69 @@
         "clickedLinks": {
           "properties": {
             "Version A": {
-              "description": "(nested schema truncated)"
+              "description": "Information on clicked links for a particular version",
+              "items": {
+                "properties": {
+                  "clickRate": {
+                    "description": "Percentage of clicks of link with respect to total clicks",
+                    "example": "40%",
+                    "type": "string"
+                  },
+                  "clicksCount": {
+                    "description": "Number of times a link is clicked",
+                    "example": 3,
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "link": {
+                    "description": "URL of the link",
+                    "example": "https://facbook.com/versionA",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "clickRate",
+                  "clicksCount",
+                  "link"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "Version B": {
-              "description": "(nested schema truncated)"
+              "description": "Information on clicked links for a particular version",
+              "items": {
+                "properties": {
+                  "clickRate": {
+                    "description": "Percentage of clicks of link with respect to total clicks",
+                    "example": "40%",
+                    "type": "string"
+                  },
+                  "clicksCount": {
+                    "description": "Number of times a link is clicked",
+                    "example": 3,
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "link": {
+                    "description": "URL of the link",
+                    "example": "https://facbook.com/versionA",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "clickRate",
+                  "clicksCount",
+                  "link"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "Version A",
+            "Version B"
           ],
           "type": "object"
         },
@@ -65,55 +115,141 @@
         "statistics": {
           "properties": {
             "clicks": {
-              "description": "(nested schema truncated)"
+              "description": "Percentage of a particular event for both versions",
+              "properties": {
+                "Version A": {
+                  "description": "percentage of an event for version A",
+                  "example": "50%",
+                  "type": "string"
+                },
+                "Version B": {
+                  "description": "percentage of an event for version B",
+                  "example": "50%",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Version A",
+                "Version B"
+              ],
+              "type": "object"
             },
             "complaints": {
-              "description": "(nested schema truncated)"
+              "description": "Percentage of a particular event for both versions",
+              "properties": {
+                "Version A": {
+                  "description": "percentage of an event for version A",
+                  "example": "50%",
+                  "type": "string"
+                },
+                "Version B": {
+                  "description": "percentage of an event for version B",
+                  "example": "50%",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Version A",
+                "Version B"
+              ],
+              "type": "object"
             },
             "hardBounces": {
-              "description": "(nested schema truncated)"
+              "description": "Percentage of a particular event for both versions",
+              "properties": {
+                "Version A": {
+                  "description": "percentage of an event for version A",
+                  "example": "50%",
+                  "type": "string"
+                },
+                "Version B": {
+                  "description": "percentage of an event for version B",
+                  "example": "50%",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Version A",
+                "Version B"
+              ],
+              "type": "object"
             },
             "openers": {
-              "description": "(nested schema truncated)"
+              "description": "Percentage of a particular event for both versions",
+              "properties": {
+                "Version A": {
+                  "description": "percentage of an event for version A",
+                  "example": "50%",
+                  "type": "string"
+                },
+                "Version B": {
+                  "description": "percentage of an event for version B",
+                  "example": "50%",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Version A",
+                "Version B"
+              ],
+              "type": "object"
             },
             "softBounces": {
-              "description": "(nested schema truncated)"
+              "description": "Percentage of a particular event for both versions",
+              "properties": {
+                "Version A": {
+                  "description": "percentage of an event for version A",
+                  "example": "50%",
+                  "type": "string"
+                },
+                "Version B": {
+                  "description": "percentage of an event for version B",
+                  "example": "50%",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Version A",
+                "Version B"
+              ],
+              "type": "object"
             },
             "unsubscribed": {
-              "description": "(nested schema truncated)"
+              "description": "Percentage of a particular event for both versions",
+              "properties": {
+                "Version A": {
+                  "description": "percentage of an event for version A",
+                  "example": "50%",
+                  "type": "string"
+                },
+                "Version B": {
+                  "description": "percentage of an event for version B",
+                  "example": "50%",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Version A",
+                "Version B"
+              ],
+              "type": "object"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "clicks",
+            "complaints",
+            "hardBounces",
+            "openers",
+            "softBounces",
+            "unsubscribed"
           ],
           "type": "object"
         },
         "winningCriteria": {
           "description": "Criteria chosen for winning version (Open/Click)",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "Open",
+            "Click"
           ],
           "example": "Open",
           "type": "string"
@@ -126,21 +262,11 @@
         "winningVersion": {
           "description": "Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "notAvailable",
+            "pending",
+            "tie",
+            "A",
+            "B"
           ],
           "example": "A",
           "type": "string"

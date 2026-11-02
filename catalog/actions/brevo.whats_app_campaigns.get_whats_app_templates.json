@@ -66,14 +66,64 @@
         "templates": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "category": {
+                "description": "category of the template",
+                "example": "MARKETING",
+                "type": "string"
+              },
+              "createdAt": {
+                "description": "Creation UTC date-time of the whatsApp template (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2017-06-01T12:30:00Z",
+                "type": "string"
+              },
+              "errorReason": {
+                "description": "Error reason in the template creation",
+                "example": "NONE",
+                "type": "string"
+              },
+              "id": {
+                "description": "ID of the whatsApp template",
+                "example": 235,
+                "format": "int64",
+                "type": "integer"
+              },
+              "language": {
+                "description": "Language in which template exists",
+                "example": "en",
+                "type": "string"
+              },
+              "modifiedAt": {
+                "description": "UTC date-time of last modification of the whatsApp template (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2017-05-01T12:30:00Z",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name of the whatsApp template",
+                "example": "Test template",
+                "type": "string"
+              },
+              "status": {
+                "description": "Status of the whatsApp template",
+                "example": "approved",
+                "type": "string"
+              },
+              "type": {
+                "description": "Type of the whatsApp template",
+                "example": "whatsapp",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "id",
+              "name",
+              "status",
+              "type",
+              "language",
+              "category",
+              "createdAt",
+              "modifiedAt"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

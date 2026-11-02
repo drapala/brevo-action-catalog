@@ -27,15 +27,9 @@
     "schema": {
       "properties": {
         "token": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Session token, it will remain valid for 15 days.",
+          "example": "ede520dxxxxxxxxxxxx76d631fba2",
+          "type": "string"
         }
       },
       "required": [

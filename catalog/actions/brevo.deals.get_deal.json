@@ -33,54 +33,50 @@
       "description": "Deal Details",
       "properties": {
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique deal id",
+          "example": "629475917295261d9b1f4403",
+          "type": "string"
         },
         "attributes": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Deal attributes with values",
           "example": {
-            "description": "(nested schema truncated)"
+            "amount": 12,
+            "created_at": "2022-05-30T07:42:05.671Z",
+            "deal_name": "testname",
+            "deal_owner": "6093d2425a9b436e9519d034",
+            "deal_stage": "9e577ff7-8e42-4ab3-be26-2b5e01b42518",
+            "last_activity_date": "2022-06-06T08:38:36.000Z",
+            "last_updated_date": "2022-06-06T08:38:36.761Z",
+            "number_of_activities": 0,
+            "number_of_contacts": 1,
+            "pipeline": "6093d296ad1e9c5cf2140a58",
+            "stage_updated_at": "2022-05-30T07:42:05.671Z"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "linkedContactsIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Contact ids for contacts linked to this deal",
+          "example": [
+            1,
+            2,
+            3
+          ],
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "integer"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "linkedCompaniesIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Companies ids for companies linked to this deal",
+          "example": [
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
+          ],
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         }
       },
       "type": "object"

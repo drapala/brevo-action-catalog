@@ -42,7 +42,145 @@
         "order": {
           "allOf": [
             {
-              "description": "(nested schema truncated)"
+              "properties": {
+                "amount": {
+                  "description": "Total amount of the order",
+                  "format": "float64",
+                  "type": "number"
+                },
+                "billing": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "address": {
+                          "description": "Address of the user",
+                          "type": "string"
+                        },
+                        "city": {
+                          "description": "City of the user",
+                          "type": "string"
+                        },
+                        "countryCode": {
+                          "description": "Country code of the user",
+                          "type": "string"
+                        },
+                        "paymentMethod": {
+                          "description": "Payment method opted by the user",
+                          "type": "string"
+                        },
+                        "phone": {
+                          "description": "Phone number of the user",
+                          "format": "int64",
+                          "type": "integer"
+                        },
+                        "postCode": {
+                          "description": "Postal Code of user's location",
+                          "format": "int64",
+                          "type": "integer"
+                        },
+                        "region": {
+                          "description": "Region where user resides",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "description": "Billing information for the order"
+                },
+                "contact_id": {
+                  "description": "Unique identifier for the contact",
+                  "format": "int64",
+                  "type": "integer"
+                },
+                "coupons": {
+                  "description": "List of coupon codes applied to the order",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "createdAt": {
+                  "description": "Timestamp when the order was created",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "email": {
+                  "description": "Email address associated with the order",
+                  "format": "email",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "Unique identifier for the order",
+                  "type": "string"
+                },
+                "identifiers": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "ext_id": {
+                          "description": "External identifier for the order",
+                          "type": "string"
+                        },
+                        "loyalty_subscription_id": {
+                          "description": "Identifier for the loyalty subscription",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "description": "Additional identifiers for the order"
+                },
+                "products": {
+                  "description": "List of products in the order",
+                  "items": {
+                    "properties": {
+                      "category": {
+                        "description": "List of categories the product belongs to",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "price": {
+                        "description": "Price of the product",
+                        "format": "float64",
+                        "type": "number"
+                      },
+                      "productId": {
+                        "description": "Unique identifier for the product",
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "description": "Quantity of the product",
+                        "format": "float64",
+                        "type": "number"
+                      },
+                      "variantId": {
+                        "description": "Identifier for the product variant",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "status": {
+                  "description": "Current status of the order",
+                  "type": "string"
+                },
+                "storeId": {
+                  "description": "Identifier for the store where the order was placed",
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "description": "Timestamp when the order was last updated",
+                  "format": "date-time",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             }
           ],
           "description": "Order details for the redemption"
@@ -80,152 +218,72 @@
     "schema": {
       "properties": {
         "cancelledAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was cancelled",
+          "format": "date-time",
+          "type": "string"
         },
         "completedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was completed",
+          "format": "date-time",
+          "type": "string"
         },
         "contactId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the contact",
+          "format": "int64",
+          "type": "integer"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was created",
+          "format": "date-time",
+          "type": "string"
         },
         "debitTransactionId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the debit transaction",
+          "format": "uuid",
+          "type": "string"
         },
         "expiresAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption expires",
+          "format": "date-time",
+          "type": "string"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the redemption",
+          "format": "uuid",
+          "type": "string"
         },
         "loyaltyProgramId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the loyalty program",
+          "format": "uuid",
+          "type": "string"
         },
         "meta": {
-          "additionalProperties": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "additionalProperties": {},
+          "description": "Additional metadata associated with the redemption",
+          "type": "object"
         },
         "rejectReason": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Reason for rejection if the redemption was rejected",
+          "type": "string"
         },
         "rejectedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was rejected",
+          "format": "date-time",
+          "type": "string"
         },
         "rewardAttributionId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the reward attribution",
+          "format": "uuid",
+          "type": "string"
         },
         "status": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Current status of the redemption",
+          "type": "string"
         },
         "updatedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was last updated",
+          "format": "date-time",
+          "type": "string"
         }
       },
       "type": "object"

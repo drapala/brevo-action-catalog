@@ -19,19 +19,13 @@
       "items": {
         "properties": {
           "domain": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "ip": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "transactional": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "boolean"
           }
         },
         "type": "object"

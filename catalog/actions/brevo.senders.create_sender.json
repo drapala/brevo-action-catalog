@@ -20,14 +20,30 @@
           "description": "**Mandatory in case of dedicated IP**. IPs to associate to the\nsender. Not required for standard accounts.",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "domain": {
+                "description": "Domain of the IP",
+                "example": "example.com",
+                "type": "string"
+              },
+              "ip": {
+                "description": "Dedicated IP available in your account",
+                "example": "203.0.113.100",
+                "type": "string"
+              },
+              "weight": {
+                "description": "Weight to apply to the IP. Sum of all IP weights must be\n100. Should be passed for either ALL or NONE of the IPs.\nIf it's not passed, the sending will be equally balanced\non all IPs.",
+                "example": 50,
+                "format": "int64",
+                "maximum": 100,
+                "minimum": 1,
+                "type": "integer"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "domain",
+              "ip"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -102,7 +118,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

@@ -19,10 +19,14 @@
           "description": "Add authentication on webhook url",
           "properties": {
             "token": {
-              "description": "(nested schema truncated)"
+              "description": "Webhook authentication token",
+              "example": "test-auth-token1234",
+              "type": "string"
             },
             "type": {
-              "description": "(nested schema truncated)"
+              "description": "Type of authentication",
+              "example": "bearer",
+              "type": "string"
             }
           },
           "type": "object"
@@ -45,15 +49,28 @@
         "events": {
           "description": "- Events triggering the webhook. Possible values for\n**Transactional** type webhook: #### `sent` OR `request`,\n`delivered`, `hardBounce`, `softBounce`, `blocked`, `spam`,\n`invalid`, `deferred`, `click`, `opened`, `uniqueOpened` and\n`unsubscribed` - Possible values for **Marketing** type webhook:\n#### `spam`, `opened`, `click`, `hardBounce`, `softBounce`,\n`unsubscribed`, `listAddition` & `delivered` - Possible values\nfor **Inbound** type webhook: #### `inboundEmailProcessed`\n#### `reply`",
           "items": {
-            "enum": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "enum": [
+              "sent",
+              "hardBounce",
+              "softBounce",
+              "blocked",
+              "spam",
+              "delivered",
+              "request",
+              "click",
+              "invalid",
+              "deferred",
+              "opened",
+              "uniqueOpened",
+              "unsubscribed",
+              "listAddition",
+              "contactUpdated",
+              "contactDeleted",
+              "inboundEmailProcessed",
+              "reply"
+            ],
+            "example": "hardBounce",
+            "type": "string"
           },
           "type": "array"
         },
@@ -61,11 +78,18 @@
           "description": "Custom headers to be send with webhooks",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "key": {
+                "description": "Header key name",
+                "example": "cf-secret",
+                "type": "string"
+              },
+              "value": {
+                "description": "Header value",
+                "example": "test-header-value",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },

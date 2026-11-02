@@ -56,14 +56,34 @@
         "events": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "date": {
+                "description": "Date when email was received on SMTP relay",
+                "format": "date-time",
+                "type": "string"
+              },
+              "recipient": {
+                "description": "Recipient’s email address",
+                "format": "email",
+                "type": "string"
+              },
+              "sender": {
+                "description": "Sender’s email address",
+                "format": "email",
+                "type": "string"
+              },
+              "uuid": {
+                "description": "UUID that can be used to fetch additional data",
+                "format": "uuid",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "uuid",
+              "sender",
+              "date",
+              "recipient"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

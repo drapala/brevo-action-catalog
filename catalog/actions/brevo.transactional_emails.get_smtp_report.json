@@ -62,14 +62,101 @@
         "reports": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "blocked": {
+                "description": "Number of blocked emails for the date",
+                "example": 0,
+                "format": "int64",
+                "type": "integer"
+              },
+              "clicks": {
+                "description": "Number of clicks for the date",
+                "example": 6,
+                "format": "int64",
+                "type": "integer"
+              },
+              "date": {
+                "description": "Date of the statistics",
+                "example": "2017-04-06",
+                "format": "date",
+                "type": "string"
+              },
+              "delivered": {
+                "description": "Number of delivered emails for the date",
+                "example": 63,
+                "format": "int64",
+                "type": "integer"
+              },
+              "hardBounces": {
+                "description": "Number of hardbounces for the date",
+                "example": 1,
+                "format": "int64",
+                "type": "integer"
+              },
+              "invalid": {
+                "description": "Number of invalid emails for the date",
+                "example": 0,
+                "format": "int64",
+                "type": "integer"
+              },
+              "opens": {
+                "description": "Number of openings for the date",
+                "example": 58,
+                "format": "int64",
+                "type": "integer"
+              },
+              "requests": {
+                "description": "Number of requests for the date",
+                "example": 65,
+                "format": "int64",
+                "type": "integer"
+              },
+              "softBounces": {
+                "description": "Number of softbounces for the date",
+                "example": 1,
+                "format": "int64",
+                "type": "integer"
+              },
+              "spamReports": {
+                "description": "Number of complaints (spam reports) for the date",
+                "example": 0,
+                "format": "int64",
+                "type": "integer"
+              },
+              "uniqueClicks": {
+                "description": "Number of unique clicks for the date",
+                "example": 5,
+                "format": "int64",
+                "type": "integer"
+              },
+              "uniqueOpens": {
+                "description": "Number of unique openings for the date",
+                "example": 52,
+                "format": "int64",
+                "type": "integer"
+              },
+              "unsubscribed": {
+                "description": "Number of unsubscribed emails for the date",
+                "example": 0,
+                "format": "int64",
+                "type": "integer"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "blocked",
+              "clicks",
+              "date",
+              "delivered",
+              "hardBounces",
+              "invalid",
+              "opens",
+              "requests",
+              "softBounces",
+              "spamReports",
+              "uniqueClicks",
+              "uniqueOpens",
+              "unsubscribed"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

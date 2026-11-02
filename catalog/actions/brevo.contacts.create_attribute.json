@@ -29,14 +29,22 @@
           "description": "List of values and labels that the attribute can take. **Use only if the attribute's category is \"category\"**. None of the category options can exceed max 200 characters. For example: **[{\"value\":1, \"label\":\"male\"}, {\"value\":2, \"label\":\"female\"}]**\n",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "label": {
+                "description": "Label of the value",
+                "example": "Women",
+                "type": "string"
+              },
+              "value": {
+                "description": "Id of the value",
+                "example": 1,
+                "type": "integer"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "label",
+              "value"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -48,39 +56,21 @@
         "multiCategoryOptions": {
           "description": "List of options you want to add for multiple-choice attribute. **Use only if the attribute's category is \"normal\" and attribute's type is \"multiple-choice\". None of the multicategory options can exceed max 200 characters.** For example: **[\"USA\",\"INDIA\"]**\n",
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         },
         "type": {
           "description": "Type of the attribute. **Use only if the attribute's category is 'normal', 'category' or 'transactional'** Type **user and multiple-choice** is only available if the category is **normal** attribute Type **id** is only available if the category is **transactional** attribute Type **category** is only available if the category is **category** attribute\n",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "text",
+            "date",
+            "float",
+            "boolean",
+            "id",
+            "category",
+            "multiple-choice",
+            "user"
           ],
           "example": "text",
           "type": "string"

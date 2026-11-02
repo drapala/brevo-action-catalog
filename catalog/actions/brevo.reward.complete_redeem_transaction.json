@@ -45,152 +45,72 @@
     "schema": {
       "properties": {
         "cancelledAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was cancelled",
+          "format": "date-time",
+          "type": "string"
         },
         "completedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was completed",
+          "format": "date-time",
+          "type": "string"
         },
         "contactId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the contact",
+          "format": "int64",
+          "type": "integer"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was created",
+          "format": "date-time",
+          "type": "string"
         },
         "debitTransactionId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the debit transaction",
+          "format": "uuid",
+          "type": "string"
         },
         "expiresAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption expires",
+          "format": "date-time",
+          "type": "string"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the redemption",
+          "format": "uuid",
+          "type": "string"
         },
         "loyaltyProgramId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the loyalty program",
+          "format": "uuid",
+          "type": "string"
         },
         "meta": {
-          "additionalProperties": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "additionalProperties": {},
+          "description": "Additional metadata associated with the redemption",
+          "type": "object"
         },
         "rejectReason": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Reason for rejection if the redemption was rejected",
+          "type": "string"
         },
         "rejectedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was rejected",
+          "format": "date-time",
+          "type": "string"
         },
         "rewardAttributionId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique identifier for the reward attribution",
+          "format": "uuid",
+          "type": "string"
         },
         "status": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Current status of the redemption",
+          "type": "string"
         },
         "updatedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the redemption was last updated",
+          "format": "date-time",
+          "type": "string"
         }
       },
       "type": "object"
@@ -221,7 +141,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

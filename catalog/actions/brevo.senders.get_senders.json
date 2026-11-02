@@ -30,14 +30,67 @@
           "description": "List of the senders available in your account",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "active": {
+                "description": "Status of sender (true=activated, false=deactivated)",
+                "example": true,
+                "type": "boolean"
+              },
+              "email": {
+                "description": "From Email associated to the sender",
+                "example": "support@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "id": {
+                "description": "Id of the sender",
+                "example": 1,
+                "format": "int64",
+                "type": "integer"
+              },
+              "ips": {
+                "description": "List of dedicated IP(s) available in the account. This\ndata is displayed only for dedicated IPs. For standard accounts,\nthis will be an empty array.",
+                "items": {
+                  "properties": {
+                    "domain": {
+                      "description": "Domain of the IP",
+                      "example": "example.com",
+                      "type": "string"
+                    },
+                    "ip": {
+                      "description": "Dedicated IP available in your account",
+                      "example": "203.0.113.100",
+                      "type": "string"
+                    },
+                    "weight": {
+                      "description": "Weight of the IP for this sender",
+                      "example": 50,
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "domain",
+                    "ip",
+                    "weight"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "name": {
+                "description": "From Name associated to the sender",
+                "example": "Support Team",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "active",
+              "email",
+              "id",
+              "name",
+              "ips"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

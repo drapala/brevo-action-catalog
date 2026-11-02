@@ -13,23 +13,13 @@
         "ids": {
           "description": "Pass the list of sub-account Ids to be associated with the IP\naddress",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            234322,
+            325553,
+            893432
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },
@@ -77,7 +67,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

@@ -14,14 +14,107 @@
           "description": "array of products objects",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "brand": {
+                "description": "Brand of the product",
+                "example": "Adidas",
+                "type": "string",
+                "maxLength": 128
+              },
+              "categories": {
+                "description": "Category ID-s of the product",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "deletedAt": {
+                "description": "UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of the product deleted from the shop's database",
+                "example": "2017-05-12T12:30:00Z",
+                "type": "string"
+              },
+              "description": {
+                "description": "Description of the product",
+                "example": "Shoes for sports",
+                "type": "string",
+                "maxLength": 3000
+              },
+              "id": {
+                "description": "Product ID for which you requested the details",
+                "example": "P11",
+                "format": "string",
+                "type": "string"
+              },
+              "imageUrl": {
+                "description": "Absolute URL to the cover image of the product",
+                "example": "http://mydomain.com/product-absoulte-url/img.jpeg",
+                "format": "string",
+                "type": "string"
+              },
+              "isDeleted": {
+                "description": "product deleted from the shop's database",
+                "example": true,
+                "type": "boolean"
+              },
+              "metaInfo": {
+                "additionalProperties": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ]
+                },
+                "description": "Meta data of product such as description, vendor, producer, stock level. The total characters of cumulative metaInfo shall not exceed **20000 characters**.",
+                "example": {
+                  "brand": "addidas",
+                  "description": "Shoes for sports"
+                },
+                "type": "object"
+              },
+              "name": {
+                "description": "**Mandatory in case of creation**. Name of the product, as displayed in the shop",
+                "example": "Iphone 11",
+                "type": "string"
+              },
+              "parentId": {
+                "description": "Parent product id of the product",
+                "format": "string",
+                "type": "string"
+              },
+              "price": {
+                "description": "Price of the product",
+                "format": "float",
+                "type": "number"
+              },
+              "alternativePrice": {
+                "description": "Alternative price of the product",
+                "format": "float",
+                "type": "number"
+              },
+              "sku": {
+                "description": "Product identifier from the shop",
+                "format": "string",
+                "type": "string"
+              },
+              "stock": {
+                "description": "Current stock value of the product from the shop's database",
+                "example": 100,
+                "type": "number"
+              },
+              "url": {
+                "description": "URL to the product",
+                "example": "http://mydomain.com/product/electronics/product1",
+                "format": "string",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "id",
+              "name"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -84,7 +177,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

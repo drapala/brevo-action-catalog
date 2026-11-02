@@ -20,35 +20,288 @@
         {
           "allOf": [
             {
-              "description": "(nested schema truncated)"
+              "properties": {
+                "organization_id": {
+                  "description": "Unique identifier for the organization",
+                  "example": "5fa2b8c123456789abcdef01",
+                  "type": "string"
+                },
+                "user_id": {
+                  "description": "Unique identifier for the user",
+                  "example": 1234567,
+                  "type": "integer"
+                },
+                "enterprise": {
+                  "description": "Indicates if the account has enterprise features",
+                  "example": false,
+                  "type": "boolean"
+                },
+                "companyName": {
+                  "description": "Name of the company",
+                  "example": "Acme Marketing Corp",
+                  "type": "string"
+                },
+                "email": {
+                  "description": "Login Email",
+                  "example": "michael.davis@example.com",
+                  "format": "email",
+                  "type": "string"
+                },
+                "firstName": {
+                  "description": "First Name",
+                  "example": "Michael",
+                  "type": "string"
+                },
+                "lastName": {
+                  "description": "Last Name",
+                  "example": "Davis",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "organization_id",
+                "user_id",
+                "enterprise",
+                "companyName",
+                "email",
+                "firstName",
+                "lastName"
+              ],
+              "type": "object"
             },
             {
-              "description": "(nested schema truncated)"
+              "properties": {
+                "address": {
+                  "description": "Address informations",
+                  "properties": {
+                    "city": {
+                      "description": "City information",
+                      "example": "New York",
+                      "type": "string"
+                    },
+                    "country": {
+                      "description": "Country information",
+                      "example": "United States",
+                      "type": "string"
+                    },
+                    "street": {
+                      "description": "Street information",
+                      "example": "456 Business Ave",
+                      "type": "string"
+                    },
+                    "zipCode": {
+                      "description": "Zip Code information",
+                      "example": "10001",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "city",
+                    "country",
+                    "street",
+                    "zipCode"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
             }
           ]
         },
         {
           "properties": {
             "marketingAutomation": {
-              "description": "(nested schema truncated)"
+              "properties": {
+                "enabled": {
+                  "description": "Status of Marketing Automation Plateform activation\nfor your account (true=enabled, false=disabled)",
+                  "example": false,
+                  "type": "boolean"
+                },
+                "key": {
+                  "description": "Marketing Automation Tracker ID",
+                  "example": "ma8k2x9v4h7p3d6f1c5e8b2a",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "type": "object"
             },
             "plan": {
-              "description": "(nested schema truncated)"
+              "description": "Information about your plans and credits",
+              "items": {
+                "properties": {
+                  "credits": {
+                    "description": "Remaining credits of the user",
+                    "example": 250,
+                    "format": "float",
+                    "type": "number"
+                  },
+                  "creditsType": {
+                    "description": "This is the type of the credit, \"Send Limit\" is one\nof the possible types of credit of a user. \"Send\nLimit\" implies the total number of emails you can\nsend to the subscribers in your account.",
+                    "enum": [
+                      "sendLimit"
+                    ],
+                    "example": "sendLimit",
+                    "type": "string"
+                  },
+                  "endDate": {
+                    "description": "Date of the period from which the plan will end\n(Unix timestamp format)",
+                    "example": "1753826567",
+                    "type": "string"
+                  },
+                  "startDate": {
+                    "description": "Date of the period from which the plan will start\n(Unix timestamp format)",
+                    "example": "1751234567",
+                    "type": "string"
+                  },
+                  "type": {
+                    "description": "Displays the plan type of the user",
+                    "enum": [
+                      "payAsYouGo",
+                      "free",
+                      "subscription",
+                      "sms"
+                    ],
+                    "example": "subscription",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "credits",
+                  "creditsType",
+                  "type"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "planVerticals": {
-              "description": "(nested schema truncated)"
+              "description": "Detailed information about different plan categories",
+              "items": {
+                "properties": {
+                  "planCategory": {
+                    "description": "Category of the plan",
+                    "enum": [
+                      "Marketing",
+                      "Chat",
+                      "CRM"
+                    ],
+                    "example": "Marketing",
+                    "type": "string"
+                  },
+                  "planType": {
+                    "description": "Type of plan within the category",
+                    "example": "free",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Name of the plan",
+                    "example": "Free",
+                    "type": "string"
+                  },
+                  "status": {
+                    "description": "Current status of the plan",
+                    "enum": [
+                      "active",
+                      "inactive"
+                    ],
+                    "example": "active",
+                    "type": "string"
+                  },
+                  "startDate": {
+                    "description": "Plan start date (Unix timestamp)",
+                    "example": "1751234567",
+                    "type": "string"
+                  },
+                  "endDate": {
+                    "description": "Plan end date (Unix timestamp)",
+                    "example": "1753826567",
+                    "type": "string"
+                  },
+                  "users": {
+                    "description": "User seat information for the plan",
+                    "properties": {
+                      "purchasedSeats": {
+                        "description": "Number of purchased user seats",
+                        "example": "1",
+                        "type": "string"
+                      },
+                      "usedSeats": {
+                        "description": "Number of used user seats",
+                        "example": "1",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "purchasedSeats",
+                      "usedSeats"
+                    ],
+                    "type": "object"
+                  },
+                  "credits": {
+                    "description": "Credits allocated for this plan category (optional, may not be present for all plan categories)",
+                    "example": "250",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "planCategory",
+                  "planType",
+                  "name",
+                  "status"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "relay": {
-              "description": "(nested schema truncated)"
+              "description": "Information about your transactional email account",
+              "properties": {
+                "data": {
+                  "description": "Data regarding the transactional email account",
+                  "properties": {
+                    "port": {
+                      "description": "Port used for SMTP Relay",
+                      "example": 587,
+                      "type": "integer"
+                    },
+                    "relay": {
+                      "description": "URL of the SMTP Relay",
+                      "example": "smtp-relay.brevo.com",
+                      "type": "string"
+                    },
+                    "userName": {
+                      "description": "Email to use as login on transactional platform",
+                      "example": "michael.davis@example.com",
+                      "format": "email",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "port",
+                    "relay",
+                    "userName"
+                  ],
+                  "type": "object"
+                },
+                "enabled": {
+                  "description": "Status of your transactional email Account\n(true=Enabled, false=Disabled)",
+                  "example": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "data",
+                "enabled"
+              ],
+              "type": "object"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "plan",
+            "relay"
           ],
           "type": "object"
         }

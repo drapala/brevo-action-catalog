@@ -144,7 +144,11 @@ def walk_stats(actions: dict[str, dict], walk: dict) -> dict:
         return {}
     lines = [line for line in walk["actions"] if line.get("kind") != "view"]
     added = {line["new"]["id"] for line in lines if line.get("new")}
-    stats = Counter(view_only=len(walk["actions"]) - len(lines), business_actions=len(lines))
+    targets = {line.get("catalog_id") or line["new"]["id"] for line in lines}
+    # One catalog action can serve several buttons: Rename and Move both call update_list.
+    stats = Counter(
+        view_only=len(walk["actions"]) - len(lines), business_actions=len(lines), catalog_actions=len(targets)
+    )
     for line in lines:
         target = actions[line.get("catalog_id") or line["new"]["id"]]
         stats["added_by_walk" if target["id"] in added else "in_catalog_before_walk"] += 1

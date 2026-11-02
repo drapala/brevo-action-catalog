@@ -12,18 +12,22 @@
       "properties": {
         "contact_properties": {
           "additionalProperties": {
-            "anyOf": {
-              "description": "(nested schema truncated)"
-            }
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
           },
           "description": "Properties defining the state of the contact associated to this event. Useful to update contact attributes defined in your contacts database while passing the event. For example: **\"FIRSTNAME\": \"Jane\" , \"AGE\": 37**",
           "example": {
-            "AGE": {
-              "description": "(nested schema truncated)"
-            },
-            "GENDER": {
-              "description": "(nested schema truncated)"
-            }
+            "AGE": 32,
+            "GENDER": "FEMALE"
           },
           "type": "object"
         },
@@ -41,27 +45,32 @@
         },
         "event_properties": {
           "additionalProperties": {
-            "anyOf": {
-              "description": "(nested schema truncated)"
-            }
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object"
+              },
+              {
+                "items": {},
+                "type": "array"
+              }
+            ]
           },
           "description": "Properties of the event. Top level properties and nested properties can be used to better segment contacts and personalise workflow conditions. The following field types are supported: string, number, boolean (true/false), date (Timestamp e.g. \"2024-01-24T17:39:57+01:00\"). Keys are limited to 255 characters, alphanumerical characters and - _ only. Size is limited to 50KB.",
           "example": {
-            "autoplayed": {
-              "description": "(nested schema truncated)"
-            },
-            "duration": {
-              "description": "(nested schema truncated)"
-            },
-            "upload_date": {
-              "description": "(nested schema truncated)"
-            },
-            "video_description": {
-              "description": "(nested schema truncated)"
-            },
-            "video_title": {
-              "description": "(nested schema truncated)"
-            }
+            "autoplayed": false,
+            "duration": 142,
+            "upload_date": "2023-11-24T12:09:10+01:00",
+            "video_description": "Create your free account today!",
+            "video_title": "Brevo — The most approachable CRM suite"
           },
           "type": "object"
         },
@@ -70,22 +79,35 @@
           "minProperties": 1,
           "properties": {
             "contact_id": {
-              "description": "(nested schema truncated)"
+              "description": "Internal unique contact ID. When present, this takes priority over all other identifiers for event attribution and contact resolution.",
+              "example": 211,
+              "format": "int64",
+              "type": "integer"
             },
             "email_id": {
-              "description": "(nested schema truncated)"
+              "description": "Email Id associated with the event",
+              "example": "jane.doe@example.com",
+              "type": "string"
             },
             "ext_id": {
-              "description": "(nested schema truncated)"
+              "description": "ext_id associated with the event",
+              "example": "abc123",
+              "type": "string"
             },
             "landline_number_id": {
-              "description": "(nested schema truncated)"
+              "description": "landline_number associated with the event",
+              "example": "+91xxxxxxxxxx",
+              "type": "string"
             },
             "phone_id": {
-              "description": "(nested schema truncated)"
+              "description": "SMS associated with the event",
+              "example": "+91xxxxxxxxxx",
+              "type": "string"
             },
             "whatsapp_id": {
-              "description": "(nested schema truncated)"
+              "description": "whatsapp associated with the event",
+              "example": "+91xxxxxxxxxx",
+              "type": "string"
             }
           },
           "type": "object"
@@ -94,10 +116,25 @@
           "description": "Identifiers of the object record associated with this event. Ignored if the object type or identifier for this record does not exist on the account.",
           "properties": {
             "identifiers": {
-              "description": "(nested schema truncated)"
+              "description": "Identifiers for the object.",
+              "properties": {
+                "ext_id": {
+                  "description": "External object ID",
+                  "example": "sub-59374-linwn",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "Internal object ID",
+                  "example": "178140",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             },
             "type": {
-              "description": "(nested schema truncated)"
+              "description": "Type of object (e.g., subscription, vehicle, etc.)",
+              "example": "subscription",
+              "type": "string"
             }
           },
           "type": "object"
@@ -143,7 +180,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

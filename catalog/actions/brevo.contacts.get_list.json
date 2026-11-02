@@ -43,37 +43,213 @@
       "allOf": [
         {
           "properties": {
-            "description": "(nested schema truncated)"
+            "id": {
+              "description": "ID of the list",
+              "example": 23,
+              "format": "int64",
+              "type": "integer"
+            },
+            "name": {
+              "description": "Name of the list",
+              "example": "Magento Customers - EN",
+              "type": "string"
+            },
+            "totalBlacklisted": {
+              "description": "Number of blacklisted contacts in the list",
+              "example": 13,
+              "format": "int64",
+              "type": "integer"
+            },
+            "totalSubscribers": {
+              "description": "Number of contacts in the list",
+              "example": 1776,
+              "format": "int64",
+              "type": "integer"
+            },
+            "uniqueSubscribers": {
+              "description": "Number of unique contacts in the list",
+              "example": 1789,
+              "format": "int64",
+              "type": "integer"
+            }
           },
-          "required": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "required": [
+            "id",
+            "name",
+            "totalBlacklisted",
+            "totalSubscribers",
+            "uniqueSubscribers"
+          ],
+          "type": "object"
         },
         {
           "properties": {
             "campaignStats": {
-              "description": "(nested schema truncated)"
+              "items": {
+                "properties": {
+                  "campaignId": {
+                    "description": "ID of the campaign",
+                    "example": 143,
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "stats": {
+                    "properties": {
+                      "appleMppOpens": {
+                        "description": "Numbers of times your email has been opened automatically through Apple MPP.",
+                        "example": 10,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "clickers": {
+                        "description": "Number of total clicks for the campaign",
+                        "example": 2665,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "complaints": {
+                        "description": "Number of complaints (Spam reports) for the campaign",
+                        "example": 1,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "deferred": {
+                        "description": "Number of deferred emails for the campaign",
+                        "example": 30,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "delivered": {
+                        "description": "Number of delivered emails for the campaign",
+                        "example": 19765,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "estimatedViews": {
+                        "description": "Rate of recipients without any privacy protection option enabled in their email client, applied to all delivered emails",
+                        "example": 560,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "hardBounces": {
+                        "description": "Number of hard bounces for the campaign",
+                        "example": 87,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "listId": {
+                        "description": "List Id of email campaign (only in case of get email campaign(s)(not for global stats))",
+                        "example": 2,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "opensRate": {
+                        "description": "Percentage of recipients who open the email out of your total number of recipients. Depending on your Campaign settings, they may include Apple MPP opens.",
+                        "example": 29.54,
+                        "format": "float",
+                        "type": "number"
+                      },
+                      "returnBounce": {
+                        "description": "Total number of non-delivered campaigns for a particular campaign id.",
+                        "example": 5,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "sent": {
+                        "description": "Number of sent emails for the campaign",
+                        "example": 19887,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "softBounces": {
+                        "description": "Number of softbounce for the campaign",
+                        "example": 100,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "trackableViews": {
+                        "description": "Recipients without any privacy protection option enabled in their email email client",
+                        "example": 5661,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "trackableViewsRate": {
+                        "description": "Rate of recipients without any privacy protection option enabled in their email client",
+                        "example": 23.45,
+                        "format": "float",
+                        "type": "number"
+                      },
+                      "uniqueClicks": {
+                        "description": "Number of unique clicks for the campaign",
+                        "example": 2300,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "uniqueViews": {
+                        "description": "Number of unique openings for the campaign",
+                        "example": 7779,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "unsubscriptions": {
+                        "description": "Number of unsubscription for the campaign",
+                        "example": 2,
+                        "format": "int64",
+                        "type": "integer"
+                      },
+                      "viewed": {
+                        "description": "Number of openings for the campaign",
+                        "example": 8999,
+                        "format": "int64",
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "clickers",
+                      "complaints",
+                      "delivered",
+                      "hardBounces",
+                      "sent",
+                      "softBounces",
+                      "uniqueClicks",
+                      "uniqueViews",
+                      "unsubscriptions",
+                      "viewed",
+                      "trackableViews",
+                      "opensRate",
+                      "appleMppOpens"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "campaignId",
+                  "stats"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "createdAt": {
-              "description": "(nested schema truncated)"
+              "description": "Creation UTC date-time of the list (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+              "example": "2017-03-13T17:05:09Z",
+              "type": "string"
             },
             "dynamicList": {
-              "description": "(nested schema truncated)"
+              "description": "Status telling if the list is dynamic or not (true=dynamic, false=not dynamic)",
+              "example": false,
+              "type": "boolean"
             },
             "folderId": {
-              "description": "(nested schema truncated)"
+              "description": "ID of the folder",
+              "example": 2,
+              "format": "int64",
+              "type": "integer"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "createdAt",
+            "folderId"
           ],
           "type": "object"
         }

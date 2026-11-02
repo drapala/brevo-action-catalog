@@ -11,128 +11,176 @@
       "type": "object",
       "properties": {
         "amount": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Total amount of the order, including all shipping expenses, tax and the price of items.",
+          "example": 308.42,
+          "type": "number"
         },
         "billing": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Billing details of an order.",
           "properties": {
-            "description": "(nested schema truncated)"
+            "address": {
+              "description": "Full billing address.",
+              "example": "15 Somewhere Road, Brynmenyn",
+              "type": "string"
+            },
+            "city": {
+              "description": "Exact city of the address.",
+              "example": "Basel",
+              "type": "string"
+            },
+            "country": {
+              "description": "Billing country name.",
+              "example": "Canada",
+              "type": "string"
+            },
+            "countryCode": {
+              "description": "Billing country 2-letter ISO code.",
+              "example": "CA",
+              "type": "string"
+            },
+            "paymentMethod": {
+              "description": "How the visitor will pay for the item(s), e.g. paypal, check, etc.",
+              "example": "PayPal",
+              "type": "string"
+            },
+            "phone": {
+              "description": "Billing phone number.",
+              "example": "01559 032133",
+              "type": "string"
+            },
+            "postCode": {
+              "description": "Postcode for delivery and billing.",
+              "example": "4052",
+              "type": "string"
+            },
+            "region": {
+              "description": "Exact region (state/province) for delivery and billing.",
+              "example": "Northwestern Switzerland",
+              "type": "string"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "coupons": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Coupons applied to the order. Stored case insensitive.",
+          "example": [
+            "EASTER15OFF"
+          ],
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Event occurrence UTC date-time (YYYY-MM-DDTHH:mm:ssZ), when order is actually created.",
+          "example": "2021-07-29T20:59:23.383Z",
+          "type": "string"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unique ID of the order.",
+          "example": "14",
+          "type": "string"
         },
         "identifiers": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Identifies the contact associated with the order.",
           "properties": {
-            "description": "(nested schema truncated)"
+            "email_id": {
+              "description": "Email of the contact associated with the order",
+              "example": "example@brevo.com",
+              "type": "string"
+            },
+            "ext_id": {
+              "description": "ext_id associated with the order",
+              "example": "ext_id_1",
+              "type": "string"
+            },
+            "loyalty_subscription_id": {
+              "description": "loyalty_subscription_id associated with the order",
+              "example": "loyalty_id_1",
+              "type": "string"
+            },
+            "phone_id": {
+              "description": "Phone number of the contact associated with the order",
+              "example": "01559 032133",
+              "type": "string"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "metaInfo": {
           "additionalProperties": {
-            "description": "(nested schema truncated)"
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
           },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Meta data of order to store additional detail such as custom message, customer type, source.",
           "example": {
-            "description": "(nested schema truncated)"
+            "customer_loyalty_tier": "Gold",
+            "gift_message": "Happy Birthday!",
+            "order_source": "Website"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "products": {
           "items": {
-            "description": "(nested schema truncated)"
+            "description": "Details for the Products in an order.",
+            "properties": {
+              "price": {
+                "description": "The price of a unit of product",
+                "example": 99.99,
+                "type": "number"
+              },
+              "productId": {
+                "description": "ID of the product.",
+                "example": "P1",
+                "type": "string"
+              },
+              "variantId": {
+                "description": "Product ID of the red color shirts.",
+                "example": "P100",
+                "type": "string"
+              },
+              "quantity": {
+                "description": "**Required if quantityFloat is empty.**\n\nNumber of product units added to the cart (whole numbers only, e.g., 10)\n",
+                "example": 10,
+                "type": "integer"
+              },
+              "quantityFloat": {
+                "description": "**Required if quantity is empty.**\n\nNumber of product units added to the cart(supports decimals, e.g., 20.52)\n",
+                "example": 20.52,
+                "type": "number"
+              }
+            },
+            "required": [
+              "productId",
+              "price"
+            ],
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "status": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "State of the order.",
+          "example": "completed",
+          "type": "string"
         },
         "storeId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "ID of store where the order is placed",
+          "example": "ST-21",
+          "type": "string"
         },
         "updatedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Event updated UTC date-time (YYYY-MM-DDTHH:mm:ssZ), when the status of the order is actually changed/updated.",
+          "example": "2021-07-30T10:59:23.383Z",
+          "type": "string"
         }
       },
       "required": [
@@ -184,7 +232,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

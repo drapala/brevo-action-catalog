@@ -16,15 +16,9 @@
           "description": "Id of the folder"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Name of the folder",
+          "example": "Wordpress Contacts",
+          "type": "string"
         }
       },
       "required": [

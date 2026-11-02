@@ -31,10 +31,22 @@
           "description": "To reduce your carbon footprint, set an expiration date for your email. If supported, it will be automatically deleted from the recipient’s inbox, saving storage space and energy.",
           "properties": {
             "duration": {
-              "description": "(nested schema truncated)"
+              "description": "Duration of the email expiry. maximum duration can be 3600 days or 480 weeks or 120 months.",
+              "example": 30,
+              "format": "int64",
+              "maximum": 3600,
+              "minimum": 1,
+              "type": "integer"
             },
             "unit": {
-              "description": "(nested schema truncated)"
+              "description": "unit of the duration",
+              "enum": [
+                "days",
+                "weeks",
+                "months"
+              ],
+              "example": "weeks",
+              "type": "string"
             }
           },
           "type": "object"
@@ -100,12 +112,8 @@
           "additionalProperties": {},
           "description": "Pass the set of attributes to customize the type classic campaign. For example: **{\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}**. Only available if **type** is **classic**. It's considered only if campaign is in _New Template Language format_. The New Template Language is dependent on the values of **subject, htmlContent/htmlUrl, sender.name & toField**\n",
           "example": {
-            "FNAME": {
-              "description": "(nested schema truncated)"
-            },
-            "LNAME": {
-              "description": "(nested schema truncated)"
-            }
+            "FNAME": "Joe",
+            "LNAME": "Doe"
           },
           "type": "object"
         },
@@ -118,16 +126,40 @@
           "description": "Segment ids and List ids to include/exclude from campaign",
           "properties": {
             "exclusionListIds": {
-              "description": "(nested schema truncated)"
+              "description": "List ids which have to be excluded from a campaign",
+              "items": {
+                "example": 8,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             },
             "exclusionSegmentIds": {
-              "description": "(nested schema truncated)"
+              "description": "Segment ids which have to be excluded from a campaign.\n",
+              "items": {
+                "example": 13,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             },
             "listIds": {
-              "description": "(nested schema truncated)"
+              "description": "Lists Ids to send the campaign to. **Campaign should only be updated with listIds if listIds were used to create it. REQUIRED if already not present in campaign and scheduledAt is not empty**\n",
+              "items": {
+                "example": 32,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             },
             "segmentIds": {
-              "description": "(nested schema truncated)"
+              "description": "**Mandatory if listIds are not used. Campaign should only be updated with segmentIds if segmentIds were used to create it.** Segment ids to send the campaign to.\n",
+              "items": {
+                "example": 23,
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
             }
           },
           "type": "object"
@@ -158,13 +190,21 @@
           "description": "Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example: **{\"name\":\"xyz\", \"email\":\"example@abc.com\"}** **{\"name\":\"xyz\", \"id\":123}**\n",
           "properties": {
             "email": {
-              "description": "(nested schema truncated)"
+              "description": "Sender email from which the campaign emails are sent",
+              "example": "newsletter@myshop.com",
+              "format": "email",
+              "type": "string"
             },
             "id": {
-              "description": "(nested schema truncated)"
+              "description": "Select the sender for the campaign on the basis of sender id. **In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email)**.\n",
+              "example": 3,
+              "format": "int64",
+              "type": "integer"
             },
             "name": {
-              "description": "(nested schema truncated)"
+              "description": "Sender Name from which the campaign emails are sent",
+              "example": "Mary from MyShop",
+              "type": "string"
             }
           },
           "type": "object"
@@ -245,12 +285,8 @@
         "winnerCriteria": {
           "description": "Choose the metrics that will determinate the winning version. **Mandatory if _splitRule_ >= 1 and < 50**. If splitRule = 50, `winnerCriteria` is ignored if passed\n",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "open",
+            "click"
           ],
           "example": "open",
           "type": "string"

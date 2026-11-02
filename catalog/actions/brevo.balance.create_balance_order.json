@@ -44,12 +44,8 @@
         "source": {
           "description": "Specifies the origin of the order.",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "engine",
+            "user"
           ],
           "type": "string"
         }

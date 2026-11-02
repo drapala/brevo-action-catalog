@@ -33,231 +33,110 @@
     "schema": {
       "properties": {
         "brand": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "maxLength": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Brand of the product",
+          "example": "Adidas",
+          "type": "string",
+          "maxLength": 128
         },
         "categories": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Category ID-s of the product",
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Creation UTC date-time of the product (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2017-05-12T12:30:00Z",
+          "type": "string"
         },
         "description": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "maxLength": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Description of the product",
+          "example": "Shoes for sports",
+          "type": "string",
+          "maxLength": 3000
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Product ID for which you requested the details",
+          "example": "P11",
+          "format": "string",
+          "type": "string"
         },
         "imageUrl": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Absolute URL to the cover image of the product",
+          "example": "http://mydomain.com/product-absoulte-url/img.jpeg",
+          "format": "string",
+          "type": "string"
         },
         "isDeleted": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Product deleted from the shop's database but not from Brevo",
+          "example": true,
+          "type": "boolean"
         },
         "metaInfo": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Meta data of product such as description, vendor, producer, stock level, etc.",
           "example": {
-            "description": "(nested schema truncated)"
+            "brand": "addidas",
+            "description": "Shoes for sports"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "modifiedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Last modification UTC date-time of the product (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2017-05-12T12:30:00Z",
+          "type": "string"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Name of the product for which you requested the details",
+          "example": "Iphone 11",
+          "format": "string",
+          "type": "string"
         },
         "parentId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Parent product id of the product",
+          "format": "string",
+          "type": "string"
         },
         "price": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Price of the product",
+          "format": "float",
+          "type": "number"
         },
         "alternativePrice": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Alternative price of the product",
+          "format": "float",
+          "type": "number"
         },
         "s3Original": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "S3 url of original image",
+          "format": "string",
+          "type": "string"
         },
         "s3ThumbAnalytics": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "S3 thumbnail url of original image in 120x120 dimension for analytics section",
+          "format": "string",
+          "type": "string"
         },
         "s3ThumbEditor": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "S3 thumbnail url of original image in 600x400 dimension for editor section",
+          "format": "string",
+          "type": "string"
         },
         "sku": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Product identifier from the shop",
+          "format": "string",
+          "type": "string"
         },
         "stock": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Current stock value of the product from the shop's database",
+          "example": 100,
+          "type": "number"
         },
         "url": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "URL to the product",
+          "example": "http://mydomain.com/product/electronics/product1",
+          "format": "string",
+          "type": "string"
         }
       },
       "required": [

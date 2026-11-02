@@ -15,46 +15,83 @@
             {
               "properties": {
                 "days": {
-                  "description": "(nested schema truncated)"
+                  "description": "Number of days in the past including today (positive\ninteger). _Not compatible with 'startDate' and 'endDate'_",
+                  "example": 7,
+                  "type": "integer"
                 },
                 "email": {
-                  "description": "(nested schema truncated)"
+                  "description": "Filter the history for a specific email",
+                  "example": "example@brevo.com",
+                  "type": "string"
                 },
                 "endDate": {
-                  "description": "(nested schema truncated)"
+                  "description": "Mandatory if startDate is used. Ending date of the report\n(YYYY-MM-DD). Must be greater than equal to startDate",
+                  "example": "2023-02-17",
+                  "type": "string"
                 },
                 "event": {
-                  "description": "(nested schema truncated)"
+                  "description": "Filter the history for a specific event type",
+                  "enum": [
+                    "invalid_parameter",
+                    "missing_parameter",
+                    "hardBounce",
+                    "softBounce",
+                    "delivered",
+                    "spam",
+                    "request",
+                    "opened",
+                    "click",
+                    "invalid",
+                    "deferred",
+                    "blocked",
+                    "unsubscribed",
+                    "error",
+                    "uniqueOpened",
+                    "loadedByProxy",
+                    "allEvents"
+                  ],
+                  "example": "request",
+                  "type": "string"
                 },
                 "messageId": {
-                  "description": "(nested schema truncated)"
+                  "description": "Filter the history for a specific message id. Applicable\nonly for transactional webhooks.",
+                  "example": "<23befbae-1505-47a8-bd27-e30ef739f32c@fr.sib>",
+                  "type": "string"
                 },
                 "notifyURL": {
-                  "description": "(nested schema truncated)"
+                  "description": "Webhook URL to receive CSV file link",
+                  "example": "https://brevo.com",
+                  "type": "string"
                 },
                 "sort": {
-                  "description": "(nested schema truncated)"
+                  "description": "Sorting order of records (asc or desc)",
+                  "example": "desc",
+                  "type": "string"
                 },
                 "startDate": {
-                  "description": "(nested schema truncated)"
+                  "description": "Mandatory if endDate is used. Starting date of the history\n(YYYY-MM-DD). Must be lower than equal to endDate",
+                  "example": "2023-02-13",
+                  "type": "string"
                 },
                 "type": {
-                  "description": "(nested schema truncated)"
+                  "description": "Filter the history based on webhook type",
+                  "enum": [
+                    "transactional",
+                    "marketing"
+                  ],
+                  "example": "transactional",
+                  "type": "string"
                 },
                 "webhookId": {
-                  "description": "(nested schema truncated)"
+                  "description": "Filter the history for a specific webhook id",
+                  "example": 2345,
+                  "type": "integer"
                 }
               },
               "required": [
-                {
-                  "description": "(nested schema truncated)"
-                },
-                {
-                  "description": "(nested schema truncated)"
-                },
-                {
-                  "description": "(nested schema truncated)"
-                }
+                "event",
+                "notifyURL",
+                "type"
               ],
               "type": "object"
             }
@@ -72,18 +109,10 @@
     "schema": {
       "properties": {
         "processId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Id of the process created",
+          "example": 78,
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [
@@ -114,7 +143,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

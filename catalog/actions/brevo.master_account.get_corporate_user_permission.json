@@ -42,43 +42,104 @@
           "description": "Granular feature permissions given to the user.",
           "properties": {
             "analytics": {
-              "description": "(nested schema truncated)"
+              "description": "Permission on analytics",
+              "items": {
+                "description": "Permission details",
+                "example": [
+                  "create_alerts",
+                  "download_data",
+                  "my_looks",
+                  "explore_create"
+                ],
+                "type": "string"
+              },
+              "type": "array"
             },
             "api_keys": {
-              "description": "(nested schema truncated)"
+              "description": "Permission on api keys",
+              "items": {
+                "description": "Permission details",
+                "example": "all",
+                "type": "string"
+              },
+              "type": "array"
             },
             "apps_management": {
-              "description": "(nested schema truncated)"
+              "description": "Permission on apps management",
+              "items": {
+                "description": "Permission details",
+                "example": "all",
+                "type": "string"
+              },
+              "type": "array"
             },
             "create_sub_organizations": {
-              "description": "(nested schema truncated)"
+              "description": "Permission on create sub-accounts",
+              "items": {
+                "description": "Permission details",
+                "example": "all",
+                "type": "string"
+              },
+              "type": "array"
             },
             "manage_sub_organizations": {
-              "description": "(nested schema truncated)"
+              "description": "Permission on manage sub-accounts",
+              "items": {
+                "description": "Permission details",
+                "example": "all",
+                "type": "string"
+              },
+              "type": "array"
             },
             "my_plan": {
-              "description": "(nested schema truncated)"
+              "description": "Permission on my plan",
+              "items": {
+                "description": "Permission details",
+                "example": "all",
+                "type": "string"
+              },
+              "type": "array"
             },
             "sub_organization_groups": {
-              "description": "(nested schema truncated)"
+              "description": "Permission on groups",
+              "items": {
+                "description": "Permission details",
+                "example": [
+                  "create",
+                  "edit_delete"
+                ],
+                "type": "string"
+              },
+              "type": "array"
             },
             "user_management": {
-              "description": "(nested schema truncated)"
+              "description": "Permission on user management",
+              "items": {
+                "description": "Permission details",
+                "example": "none",
+                "type": "string"
+              },
+              "type": "array"
             }
           },
           "type": "object"
         },
         "groups": {
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
+            "description": "Groups details",
             "properties": {
-              "description": "(nested schema truncated)"
+              "id": {
+                "description": "group identifier",
+                "example": "6cbcxxxxxxxxxxxxxxxx457a",
+                "type": "string"
+              },
+              "name": {
+                "description": "Group name",
+                "example": "Staff",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },

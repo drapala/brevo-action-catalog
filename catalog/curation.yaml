@@ -12,3 +12,9 @@ brevo.email_campaigns.send_email_campaign_now:
 brevo.email_campaigns.send_test_email:
   preconditions: ["A verified phone number on the account"]
   why: "Same sending check as send_email_campaign_now (sources/ui/areas-2026-10-30.yaml, Email campaigns)."
+
+brevo.transactional_emails.get_transac_emails_list:
+  inputs:
+    schema:
+      anyOf: [{required: [email]}, {required: [messageId]}, {required: [templateId]}]
+  why: "A live call with no filter returned HTTP 400 missing_parameter: 'Please pass atleast one of the following filters: email, messageId, templateId' (evidence/runs.jsonl, probe-reads). The spec marks all three optional."

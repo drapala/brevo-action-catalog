@@ -170,7 +170,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.balance.cancel_transaction",
@@ -196,7 +196,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.balance.create_balance_definition",
@@ -248,7 +248,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.balance.delete_balance_definition",
@@ -498,7 +498,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.companies.link_and_unlink_company_with_contact_and_deal",
@@ -961,7 +961,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.contacts.remove_contact_from_list",
@@ -988,7 +988,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.contacts.send_individual_email",
@@ -1186,7 +1186,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.conversations.update_automated_message",
@@ -1238,7 +1238,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.coupons.create_coupons",
@@ -1251,7 +1251,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.coupons.get_coupon_collection",
@@ -1355,7 +1355,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.deals.create_deal",
@@ -1473,7 +1473,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.deals.link_and_unlink_deal_with_contacts_and_companies",
@@ -1513,7 +1513,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.domains.create_domain",
@@ -1579,7 +1579,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.ecommerce.create_batch_order",
@@ -1592,7 +1592,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.ecommerce.create_order",
@@ -1605,7 +1605,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.ecommerce.create_product_alert",
@@ -1618,7 +1618,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.ecommerce.create_update_batch_category",
@@ -1631,7 +1631,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.ecommerce.create_update_batch_products",
@@ -1644,7 +1644,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.ecommerce.create_update_category",
@@ -1657,7 +1657,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.ecommerce.create_update_product",
@@ -1670,7 +1670,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.ecommerce.get_attributed_product_sales_for_single_brevo_campaign_or_workflow",
@@ -1813,7 +1813,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.email_campaigns.add_campaign_language",
@@ -1906,7 +1906,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.email_campaigns.generate_campaign_with_ai",
@@ -2066,7 +2066,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.event.create_batch_events",
@@ -2079,7 +2079,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.event.create_event",
@@ -2092,7 +2092,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.event.get_events",
@@ -2395,7 +2395,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.master_account.change_admin_user_permissions",
@@ -3034,7 +3034,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.program.update_loyalty_program",
@@ -3060,7 +3060,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.reward.create_reward",
@@ -3073,7 +3073,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.reward.create_voucher",
@@ -3177,7 +3177,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.segments.create_segment",
@@ -3271,7 +3271,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.senders.delete_sender",
@@ -3365,7 +3365,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.settings.close_account",
@@ -3547,7 +3547,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.sms_campaigns.send_sms_campaign_now",
@@ -3769,7 +3769,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.tier.create_tier_for_tier_group",
@@ -4124,7 +4124,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.transactional_emails.send_test_template",
@@ -4282,7 +4282,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.user.get_invited_users_list",
@@ -4373,7 +4373,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.webhooks.create_webhook",
@@ -4413,7 +4413,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.webhooks.get_webhook",
@@ -4478,7 +4478,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.whats_app_campaigns.delete_whats_app_campaign",
@@ -4556,7 +4556,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.whats_app_campaigns.update_whats_app_campaign",

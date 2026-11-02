@@ -53,57 +53,89 @@
       "description": "Paginated list of consent groups.",
       "properties": {
         "consentGroups": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "type": "array",
+          "description": "List of consent groups matching the filter",
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "object",
+            "description": "A consent group representing a category of contact opt-in/opt-out preferences.",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Unique identifier for the consent group",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "description": "Display name of the consent group",
+                "example": "Newsletter EU"
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description of the consent group",
+                "example": "Consent group for EU newsletter subscribers"
+              },
+              "signupMode": {
+                "type": "string",
+                "enum": [
+                  "manual",
+                  "automatic"
+                ],
+                "description": "Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.",
+                "example": "manual"
+              },
+              "contactsCount": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Number of contacts currently in this consent group",
+                "example": 1234
+              },
+              "isDefault": {
+                "type": "boolean",
+                "description": "Whether this is a system-created default consent group",
+                "example": false
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "UTC date-time when the consent group was created (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2024-01-15T10:00:00Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "UTC date-time when the consent group was last updated (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2024-06-01T08:30:00Z"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "signupMode",
+              "contactsCount",
+              "isDefault",
+              "createdAt",
+              "updatedAt"
+            ]
           }
         },
         "total": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "integer",
+          "format": "int64",
+          "description": "Total number of consent groups matching the filter",
+          "example": 5
         },
         "limit": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "integer",
+          "format": "int64",
+          "description": "Maximum number of results returned",
+          "example": 10
         },
         "offset": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of results skipped",
+          "example": 0
         }
       },
       "required": [

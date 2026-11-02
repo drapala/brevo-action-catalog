@@ -51,11 +51,84 @@
         "templates": {
           "type": "array",
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            },
+            "type": "object",
             "properties": {
-              "description": "(nested schema truncated)"
+              "id": {
+                "description": "ID of the template",
+                "example": 4,
+                "format": "int64",
+                "type": "integer"
+              },
+              "name": {
+                "description": "Name of the template",
+                "example": "Order Confirmation - EN",
+                "type": "string"
+              },
+              "short_url_enabled": {
+                "description": "URL shortening is enabled",
+                "type": "boolean",
+                "example": false
+              },
+              "message": {
+                "description": "message content for the sms",
+                "example": "Thanks for your order !",
+                "type": "string"
+              },
+              "compliance": {
+                "type": "object",
+                "description": "Manage US compliance",
+                "properties": {
+                  "compliance_toggle": {
+                    "type": "boolean",
+                    "description": "US compliance is enabled.",
+                    "example": true
+                  },
+                  "organisation_prefix": {
+                    "type": "string",
+                    "description": "A recognizable prefix will ensure your audience knows who you are. Recommended by the U.S. carriers.",
+                    "example": "BREVO"
+                  },
+                  "stop_keyword": {
+                    "type": "string",
+                    "description": "Instructions to unsubscribe from future communications. Must include STOP keyword.",
+                    "example": "STOP"
+                  }
+                }
+              },
+              "encryption": {
+                "type": "boolean",
+                "description": "Enable Unicode encryption."
+              },
+              "unicode_sms": {
+                "type": "boolean",
+                "description": "Support unicode characters in the sms.",
+                "example": true
+              },
+              "media_file": {
+                "type": "string",
+                "example": "brv-logo.png",
+                "description": "file name of the media."
+              },
+              "media_file_size": {
+                "type": "string",
+                "example": 39752,
+                "description": "file size in bytes."
+              },
+              "media_url": {
+                "type": "string",
+                "example": "https://img-st2.mailinblue.com/1232/images/content_library/original/69282fe28f55fd22de6e0cf9.png",
+                "description": "URL of the image."
+              },
+              "createdAt": {
+                "description": "Creation UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2025-05-01T12:30:00Z",
+                "type": "string"
+              },
+              "updatedAt": {
+                "description": "Creation UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2025-05-01T12:30:00Z",
+                "type": "string"
+              }
             }
           }
         }

@@ -63,11 +63,18 @@
           "description": "Aggregate balance per balance definition.",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "balanceDefinitionId": {
+                "description": "Balance definition ID.",
+                "format": "uuid",
+                "type": "string"
+              },
+              "value": {
+                "description": "Aggregate balance value for this definition.",
+                "type": "number",
+                "format": "float"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         }

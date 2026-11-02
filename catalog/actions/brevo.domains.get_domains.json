@@ -21,14 +21,74 @@
           "description": "List of the domains available in your account",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "id": {
+                "description": "Unique identifier of the domain",
+                "example": "67e57b40130375f045064c45",
+                "type": "string"
+              },
+              "domain_name": {
+                "description": "Domain name",
+                "example": "mycompany.com",
+                "type": "string"
+              },
+              "authenticated": {
+                "description": "Status of domain authentication (true=authenticated,\nfalse=non authenticated)",
+                "example": true,
+                "type": "boolean"
+              },
+              "verified": {
+                "description": "Status of domain verification (true=verified, false=non\nverified)",
+                "example": true,
+                "type": "boolean"
+              },
+              "ip": {
+                "description": "Dedicated IP associated with domain (null if none)",
+                "example": "192.168.1.100",
+                "type": "string",
+                "nullable": true
+              },
+              "provider": {
+                "description": "DNS provider for the domain",
+                "example": "Cloudflare",
+                "type": "string"
+              },
+              "creator": {
+                "description": "Information about who created the domain",
+                "properties": {
+                  "id": {
+                    "description": "Creator's user ID",
+                    "example": "62e4fce597550d0b0177cb0c",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "Creator's email address",
+                    "example": "admin@mycompany.com",
+                    "type": "string"
+                  },
+                  "creationDate": {
+                    "description": "Domain creation date",
+                    "example": "2025-03-27T16:22:24+00:00",
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "id",
+                  "email",
+                  "creationDate"
+                ],
+                "type": "object"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "id",
+              "domain_name",
+              "authenticated",
+              "verified",
+              "provider",
+              "creator"
+            ],
+            "type": "object"
           },
           "type": "array"
         },

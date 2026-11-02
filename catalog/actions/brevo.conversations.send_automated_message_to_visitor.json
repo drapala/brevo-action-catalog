@@ -40,330 +40,339 @@
       "description": "a Conversations message",
       "properties": {
         "agentId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "ID of the agent on whose behalf the message was sent (only in messages sent by an agent).",
+          "example": "d9nKoegKSjmCtyK78",
+          "type": "string"
         },
         "agentName": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Agent’s name as displayed to the visitor. Only in the messages sent by an agent.",
+          "example": "Liz",
+          "type": "string"
         },
         "agentUserpic": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Only set if the agent has uploaded a profile picture.",
+          "example": "https://www.brevo.com/",
+          "type": "string"
         },
         "attachments": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "An array of file attachments.",
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "name": {
+                "description": "The name of the file.",
+                "type": "string"
+              },
+              "link": {
+                "description": "The URL of the file.",
+                "type": "string"
+              },
+              "mimeType": {
+                "description": "The MIME type of the file.",
+                "type": "string"
+              },
+              "isImage": {
+                "description": "`true` for images.",
+                "type": "boolean"
+              },
+              "isSticker": {
+                "description": "`true` for sticker files.",
+                "type": "boolean"
+              },
+              "isInline": {
+                "description": "`true` for inline files.",
+                "type": "boolean"
+              },
+              "inlineId": {
+                "description": "The ID of the inline file.",
+                "type": "string"
+              },
+              "size": {
+                "description": "The size of the file in bytes.",
+                "format": "int64",
+                "type": "integer"
+              },
+              "imageInfo": {
+                "description": "Image information (only present for image files).",
+                "properties": {
+                  "width": {
+                    "description": "Width of the image in pixels.",
+                    "format": "int64",
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "height": {
+                    "description": "Height of the image in pixels.",
+                    "format": "int64",
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "previewLink": {
+                    "description": "URL of the image preview.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "isAllowedFileType": {
+                "description": "Whether the file extension is allowed for download.",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "bcc": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "An array containing details of the blind carbon copy (BCC) recipients (applicable only to messages in email threads).",
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "cc": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "An array containing details of the carbon copy (CC) recipients (applicable only to messages in email threads).",
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "minimum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp in milliseconds.",
+          "example": 1470222622433,
+          "format": "int64",
+          "minimum": 0,
+          "type": "integer"
         },
         "file": {
           "properties": {
-            "description": "(nested schema truncated)"
+            "name": {
+              "description": "Name of the file.",
+              "example": "conversations.png",
+              "type": "string"
+            },
+            "link": {
+              "description": "URL of the file.",
+              "example": "https://ucarecdn.com/cee5c10c-8302-45c1-b1fb-43860ca941a9/",
+              "type": "string"
+            },
+            "mimeType": {
+              "description": "MIME type of the file.",
+              "type": "string"
+            },
+            "isImage": {
+              "description": "Whether the file is an image.",
+              "example": true,
+              "type": "boolean"
+            },
+            "isSticker": {
+              "description": "Whether the file is a sticker.",
+              "type": "boolean"
+            },
+            "isInline": {
+              "description": "Whether the file is inline.",
+              "type": "boolean"
+            },
+            "inlineId": {
+              "description": "The ID of the inline file.",
+              "type": "string"
+            },
+            "size": {
+              "description": "Size in bytes.",
+              "example": 15538,
+              "format": "int64",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "imageInfo": {
+              "description": "Image info, present when the file is an image.",
+              "properties": {
+                "width": {
+                  "description": "Width of the image in pixels.",
+                  "example": 1129,
+                  "format": "int64",
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "height": {
+                  "description": "Height of the image in pixels.",
+                  "example": 525,
+                  "format": "int64",
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "previewLink": {
+                  "description": "URL of the image preview.",
+                  "example": "https://ucarecdn.com/03cd56cd-1de9-4f65-996d-08afdf27fa1b/-/preview/800x800/-/quality/better/",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "isAllowedFileType": {
+              "description": "Whether the file extension is allowed for download.",
+              "type": "boolean"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "forwardedToSourceStatus": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Status of the message forwarding to the source.",
           "properties": {
-            "description": "(nested schema truncated)"
+            "error": {
+              "type": "string"
+            },
+            "isSuccess": {
+              "type": "boolean"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "from": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "An object containing details about the email sender (applicable only to messages in email threads).",
           "properties": {
-            "description": "(nested schema truncated)"
+            "email": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "html": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "The HTML content of the message.",
+          "example": "Good morning!<br>How can I help you?",
+          "type": "string"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Message ID. It can be used for further manipulations with the message.",
+          "example": "eYBEm3gq3zc5ayE2g",
+          "type": "string"
         },
         "integrations": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Integration details.",
+          "type": "object"
         },
         "isBot": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "`true` for automated messages generated by an AI bot.",
+          "type": "boolean"
         },
         "isMissed": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "`true` for missed and offline messages.",
+          "example": false,
+          "type": "boolean"
         },
         "isMissedByVisitor": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "`true` for unread agent’s messages in finished chats.",
+          "example": false,
+          "type": "boolean"
         },
         "isPushed": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "`true` for pushed messages",
+          "example": true,
+          "type": "boolean"
         },
         "isTrigger": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "`true` for automatic messages from “Targeted chats & triggers” and API (https://developers.brevo.com/docs/javascript-api-reference#sendautomessage)",
+          "example": false,
+          "type": "boolean"
         },
         "rawUnsafeHtml": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Unescaped HTML content of the message (may include unsafe HTML).",
+          "example": "Good morning!<br>How can I help you?",
+          "type": "string"
         },
         "receivedFrom": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "In two-way integrations, messages sent via REST API can be marked with receivedFrom property and then filtered out when received in a webhook to avoid infinite loop.",
+          "example": "SuperAwesomeHelpdesk",
+          "type": "string"
         },
         "replyTo": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "An object containing details of the reply-to email address (applicable only to messages in email threads).",
           "properties": {
-            "description": "(nested schema truncated)"
+            "email": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "sourceMessageId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "The ID of the message assigned by the integration source.",
+          "type": "string"
         },
         "subject": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "The subject line of the email message (only for messages sent to email threads).",
+          "example": "Invitation to a meeting",
+          "type": "string"
         },
         "text": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Message text or name of the attached file",
+          "example": "Good morning! How can I help you?",
+          "type": "string"
         },
         "to": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "An array containing details of the recipients (applicable only to messages in email threads).",
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "type": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "`\"agent\"` for agents’ messages, `\"visitor\"` for visitors’ messages.",
+          "enum": [
+            "agent",
+            "visitor"
+          ],
+          "example": "agent",
+          "type": "string"
         },
         "isSentViaJsApi": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "‘`true` if the message was sent via JavaScript API.’",
+          "type": "boolean"
         },
         "messageType": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "The type of message content (e.g. for integration-specific message types).",
+          "type": "string"
         },
         "isForward": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "‘`true` if the message is a forwarded message.’",
+          "type": "boolean"
         },
         "source": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Source information for the message.",
+          "type": "object"
         },
         "visitorId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "visitor’s ID",
+          "example": "kZMvWhf8npAu3H6qd57w2Hv6nh6rnxvg",
+          "type": "string"
         }
       },
       "type": "object"

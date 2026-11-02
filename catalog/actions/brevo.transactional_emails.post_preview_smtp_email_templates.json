@@ -19,10 +19,14 @@
           "description": "Key-value pairs of dynamic parameters for template rendering.(Required if email not provided) For example: **{\"Firstname\":\"John\", \"Lastname\":\"Doe\"}**\n",
           "properties": {
             "Firstname": {
-              "description": "(nested schema truncated)"
+              "description": "firstname of the contact. **Dynamic parameter**\n",
+              "example": "John",
+              "type": "string"
             },
             "Lastname": {
-              "description": "(nested schema truncated)"
+              "description": "Lastname of the contact. **Dynamic parameter**",
+              "example": "Doe",
+              "type": "string"
             }
           },
           "type": "object"
@@ -70,20 +74,12 @@
         },
         "usedFeedNames": {
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "feed_1",
+            "feed_2"
           ],
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "feeds alias used in the template",
+            "type": "string"
           },
           "type": "array"
         }
@@ -123,7 +119,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

@@ -16,54 +16,29 @@
           "description": "Installation ID. The unique identifier of the pass installation being redeemed (as issued when the contact added the pass to their wallet)."
         },
         "amountSpent": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Amount spent during the visit or transaction. Useful for point-of-sale integrations and purchase tracking.",
+          "example": 45.99,
+          "format": "float",
+          "type": "number"
         },
         "customData": {
-          "additionalProperties": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "additionalProperties": {},
+          "description": "Arbitrary key/value pairs merged into the scan event's properties, for use in automations and segmentation (e.g. register id, cashier, department). Reserved keys take precedence over the same keys supplied here: `passId` is always set by the endpoint, and `location`, `amountSpent` and `eventTag` are replaced by the matching top-level fields when those are sent.",
           "example": {
-            "description": "(nested schema truncated)"
+            "register_id": "POS-12",
+            "cashier": "Alice"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "eventTag": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Free-form tag identifying the event or context of the scan (e.g. an event name a contact attended). Useful to segment or route automations.",
+          "example": "Summer2026",
+          "type": "string"
         },
         "location": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Location where the scan occurred. Can be a store name, address, or any identifier relevant to your use case.",
+          "example": "Mall of America, Minneapolis",
+          "type": "string"
         }
       },
       "required": [
@@ -84,26 +59,14 @@
     "schema": {
       "properties": {
         "message": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Human-readable confirmation message.",
+          "example": "Installation redeemed successfully",
+          "type": "string"
         },
         "success": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Indicates whether the scan/redemption was recorded.",
+          "example": true,
+          "type": "boolean"
         }
       },
       "required": [
@@ -141,7 +104,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

@@ -75,14 +75,67 @@
         "events": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "body": {
+                "description": "Text of the reply (will be there only in case of `reply` event with text)",
+                "example": "Hi! I am a reply",
+                "type": "string"
+              },
+              "contactNumber": {
+                "description": "WhatsApp Number with country code. Example, 85264318721",
+                "example": 919876543210,
+                "format": "mobile",
+                "type": "string"
+              },
+              "date": {
+                "description": "UTC date-time on which the event has been generated",
+                "example": "2017-03-12T12:30:00Z",
+                "type": "string"
+              },
+              "event": {
+                "description": "Event which occurred",
+                "enum": [
+                  "sent",
+                  "delivered",
+                  "read",
+                  "error",
+                  "unsubscribe",
+                  "reply",
+                  "soft-bounce"
+                ],
+                "example": "delivered",
+                "type": "string"
+              },
+              "mediaUrl": {
+                "description": "Url of the media reply (will be there only in case of `reply` event with media)",
+                "example": "https://example.com/media.png",
+                "format": "url",
+                "type": "string"
+              },
+              "messageId": {
+                "description": "Message ID which generated the event",
+                "example": "23befbae-1505-47a8-bd27-e30ef739f32c",
+                "type": "string"
+              },
+              "reason": {
+                "description": "Reason for the event (will be there in case of `error` and `soft-bounce` events)",
+                "example": "23befbae-1505-47a8-bd27-e30ef739f32c",
+                "type": "string"
+              },
+              "senderNumber": {
+                "description": "WhatsApp Number with country code. Example, 85264318721",
+                "example": 919876543210,
+                "format": "mobile",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "contactNumber",
+              "date",
+              "messageId",
+              "event",
+              "senderNumber"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

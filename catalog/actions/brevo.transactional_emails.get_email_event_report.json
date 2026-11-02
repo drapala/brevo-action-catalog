@@ -96,14 +96,88 @@
         "events": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "date": {
+                "description": "UTC date-time on which the event has been generated",
+                "example": "2017-03-12T12:30:00Z",
+                "type": "string"
+              },
+              "email": {
+                "description": "Email address which generates the event",
+                "example": "john.smith@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "event": {
+                "description": "Event which occurred",
+                "enum": [
+                  "bounces",
+                  "hardBounces",
+                  "softBounces",
+                  "delivered",
+                  "spam",
+                  "requests",
+                  "opened",
+                  "clicks",
+                  "invalid",
+                  "deferred",
+                  "blocked",
+                  "unsubscribed",
+                  "error",
+                  "loadedByProxy"
+                ],
+                "example": "delivered",
+                "type": "string"
+              },
+              "from": {
+                "description": "Sender email from which the emails are sent",
+                "example": "john@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "ip": {
+                "description": "IP from which the user has opened the email or clicked on the link (only available if the event is opened or clicks)",
+                "example": "165.87.3.15",
+                "type": "string"
+              },
+              "link": {
+                "description": "The link which is sent to the user (only available if the event is requests or opened or clicks)",
+                "example": "https://www.someexamplelink.com",
+                "type": "string"
+              },
+              "messageId": {
+                "description": "Message ID which generated the event",
+                "example": "<201798300811.5787683@relay.domain.com>",
+                "type": "string"
+              },
+              "reason": {
+                "description": "Reason of bounce (only available if the event is hardbounce or softbounce)",
+                "example": "Error connection timeout",
+                "type": "string"
+              },
+              "subject": {
+                "description": "Subject of the event",
+                "example": "Sib client test",
+                "type": "string"
+              },
+              "tag": {
+                "description": "Tag of the email which generated the event",
+                "example": "OrderConfirmation",
+                "type": "string"
+              },
+              "templateId": {
+                "description": "ID of the template (only available if the email is template based)",
+                "example": 4,
+                "format": "int64",
+                "type": "integer"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "date",
+              "email",
+              "event",
+              "messageId"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

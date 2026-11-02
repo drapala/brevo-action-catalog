@@ -63,12 +63,209 @@
       "properties": {
         "campaigns": {
           "items": {
-            "allOf": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "allOf": [
+              {
+                "properties": {
+                  "content": {
+                    "description": "Content of the SMS Campaign",
+                    "example": "Visit our Store and get some discount !",
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "description": "Creation UTC date-time of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                    "example": "2017-06-01T12:30:00Z",
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "ID of the SMS Campaign",
+                    "example": 2,
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "modifiedAt": {
+                    "description": "UTC date-time of last modification of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                    "example": "2017-05-01T12:30:00Z",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Name of the SMS Campaign",
+                    "example": "PROMO CODE",
+                    "type": "string"
+                  },
+                  "organisationPrefix": {
+                    "description": "A recognizable prefix added as the Brand Name before the message content. Empty string if not set.",
+                    "example": "MyCompany",
+                    "type": "string"
+                  },
+                  "scheduledAt": {
+                    "description": "UTC date-time on which SMS campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format. Empty string if not scheduled.",
+                    "example": "2017-06-01T12:30:00Z",
+                    "type": "string"
+                  },
+                  "sender": {
+                    "description": "Sender of the SMS Campaign",
+                    "example": "MyCompany",
+                    "type": "string"
+                  },
+                  "sentDate": {
+                    "description": "UTC date-time on which the SMS campaign was sent (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if the campaign status is 'sent'.",
+                    "example": "2017-06-01T12:30:00Z",
+                    "type": "string"
+                  },
+                  "status": {
+                    "description": "Status of the SMS Campaign",
+                    "enum": [
+                      "draft",
+                      "sent",
+                      "archive",
+                      "queued",
+                      "suspended",
+                      "inProcess"
+                    ],
+                    "example": "draft",
+                    "type": "string"
+                  },
+                  "unsubscribeInstruction": {
+                    "description": "Instructions to unsubscribe from future communications. Empty string if not set.",
+                    "example": "send Stop if you want to unsubscribe.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content",
+                  "createdAt",
+                  "id",
+                  "modifiedAt",
+                  "name",
+                  "sender",
+                  "status"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "recipients": {
+                    "allOf": [
+                      {
+                        "properties": {
+                          "excludedSegments": {
+                            "description": "Segment IDs excluded from the campaign",
+                            "items": {
+                              "description": "Segment ID excluded from the campaign",
+                              "example": 14,
+                              "format": "int64",
+                              "type": "integer"
+                            },
+                            "type": "array"
+                          },
+                          "exclusionLists": {
+                            "items": {
+                              "description": "List IDs excluded of the campaign",
+                              "example": 13,
+                              "format": "int64",
+                              "type": "integer"
+                            },
+                            "type": "array"
+                          },
+                          "lists": {
+                            "items": {
+                              "description": "List IDs included in the campaign",
+                              "example": 21,
+                              "format": "int64",
+                              "type": "integer"
+                            },
+                            "type": "array"
+                          },
+                          "segments": {
+                            "description": "Segment IDs included in the campaign",
+                            "items": {
+                              "description": "Segment ID included in the campaign",
+                              "example": 23,
+                              "format": "int64",
+                              "type": "integer"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "required": [
+                          "exclusionLists",
+                          "lists"
+                        ],
+                        "type": "object"
+                      }
+                    ],
+                    "type": "object"
+                  },
+                  "statistics": {
+                    "allOf": [
+                      {
+                        "properties": {
+                          "answered": {
+                            "description": "Number of replies to the SMS",
+                            "example": 2,
+                            "format": "int64",
+                            "type": "integer"
+                          },
+                          "delivered": {
+                            "description": "Number of delivered SMS",
+                            "example": 2987,
+                            "format": "int64",
+                            "type": "integer"
+                          },
+                          "hardBounces": {
+                            "description": "Number of hardbounced SMS",
+                            "example": 1,
+                            "format": "int64",
+                            "type": "integer"
+                          },
+                          "processing": {
+                            "description": "Number of processing SMS",
+                            "example": 0,
+                            "format": "int64",
+                            "type": "integer"
+                          },
+                          "sent": {
+                            "description": "Number of sent SMS",
+                            "example": 3000,
+                            "format": "int64",
+                            "type": "integer"
+                          },
+                          "softBounces": {
+                            "description": "Number of softbounced SMS",
+                            "example": 3,
+                            "format": "int64",
+                            "type": "integer"
+                          },
+                          "unsubscriptions": {
+                            "description": "Number of unsubscription SMS",
+                            "example": 3,
+                            "format": "int64",
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "answered",
+                          "delivered",
+                          "hardBounces",
+                          "processing",
+                          "sent",
+                          "softBounces",
+                          "unsubscriptions"
+                        ],
+                        "type": "object"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "recipients",
+                  "statistics"
+                ],
+                "type": "object"
+              }
+            ],
+            "type": "object"
           },
           "type": "array"
         },

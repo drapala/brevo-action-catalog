@@ -76,11 +76,20 @@
         "balances": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "contactId": {
+                "type": "integer"
+              },
+              "loyaltySubscriptionId": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },

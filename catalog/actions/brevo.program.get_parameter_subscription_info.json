@@ -52,7 +52,38 @@
         "balance": {
           "allOf": [
             {
-              "description": "(nested schema truncated)"
+              "properties": {
+                "balances": {
+                  "description": "List of balance details associated with the contact.",
+                  "items": {
+                    "properties": {
+                      "balanceDefinitionId": {
+                        "description": "Unique identifier for the balance definition).",
+                        "type": "string"
+                      },
+                      "balanceDefinitionName": {
+                        "description": "Name of the balance definition.",
+                        "type": "string"
+                      },
+                      "value": {
+                        "description": "The amount of the balance.",
+                        "type": "number"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "contactId": {
+                  "description": "Unique identifier of the contact.",
+                  "type": "integer"
+                },
+                "loyaltyProgramId": {
+                  "description": "Unique identifier of the loyalty program.",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             }
           ],
           "description": "Balance details for the subscription."
@@ -65,11 +96,20 @@
           "description": "List of members associated with the subscription.",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "createdAt": {
+                "description": "Timestamp when the member was created.",
+                "type": "string"
+              },
+              "memberContactId": {
+                "description": "Unique identifier of the member.",
+                "type": "integer"
+              },
+              "updatedAt": {
+                "description": "Timestamp when the member was last updated.",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
@@ -77,13 +117,18 @@
           "description": "Membership details of the subscription. Returned when the subscription could be resolved from the provided `contactId` or `loyaltySubscriptionId`.",
           "properties": {
             "createdAt": {
-              "description": "(nested schema truncated)"
+              "description": "Timestamp when the subscription was created.",
+              "format": "date-time",
+              "type": "string"
             },
             "loyaltySubscriptionId": {
-              "description": "(nested schema truncated)"
+              "description": "Unique identifier of the loyalty subscription.",
+              "type": "string"
             },
             "updatedAt": {
-              "description": "(nested schema truncated)"
+              "description": "Timestamp when the subscription was last updated.",
+              "format": "date-time",
+              "type": "string"
             }
           },
           "type": "object"
@@ -92,11 +137,87 @@
           "description": "List of rewards associated with the subscription.",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "code": {
+                "description": "Reward code assigned to the contact.",
+                "type": "string"
+              },
+              "contactId": {
+                "description": "Unique identifier of the contact.",
+                "type": "integer"
+              },
+              "createdAt": {
+                "description": "Timestamp when the reward was created.",
+                "type": "string"
+              },
+              "expirationDate": {
+                "description": "Expiration date of the reward.",
+                "type": "string"
+              },
+              "id": {
+                "description": "Unique identifier of the reward.",
+                "type": "string"
+              },
+              "loyaltyProgramId": {
+                "description": "Unique identifier of the loyalty program.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": {},
+                "description": "Additional metadata related to the reward.",
+                "type": "object"
+              },
+              "publicDescription": {
+                "description": "Customer-facing description of the reward, as configured on the reward definition.",
+                "type": "string"
+              },
+              "rewardId": {
+                "description": "Unique identifier of the reward definition.",
+                "type": "string"
+              },
+              "rewardName": {
+                "description": "Customer-facing name of the reward. Falls back to the internal reward name when no public name is set.",
+                "type": "string"
+              },
+              "unit": {
+                "description": "Unit the reward's value is expressed in — one of the currency codes listed below, or PERCENT. Omitted when the reward has no unit (e.g. free-product rewards).",
+                "enum": [
+                  "PERCENT",
+                  "EUR",
+                  "USD",
+                  "MXN",
+                  "GBP",
+                  "INR",
+                  "CAD",
+                  "SGD",
+                  "RON",
+                  "JPY",
+                  "MYR",
+                  "CLP",
+                  "PEN",
+                  "MAD",
+                  "AUD",
+                  "CHF",
+                  "BRL"
+                ],
+                "type": "string"
+              },
+              "updatedAt": {
+                "description": "Timestamp when the reward was last updated.",
+                "format": "date-time",
+                "type": "string"
+              },
+              "validFrom": {
+                "description": "Date from which the voucher becomes valid.",
+                "format": "date-time",
+                "type": "string"
+              },
+              "value": {
+                "description": "The value recorded when this reward was attributed to the contact — a snapshot, not necessarily the reward's current configured value. Omitted when not set.",
+                "format": "double",
+                "type": "number"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
@@ -104,11 +225,45 @@
           "description": "List of tier assignments for the subscription.",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "contactId": {
+                "description": "Unique identifier of the contact.",
+                "type": "integer"
+              },
+              "createdAt": {
+                "description": "Timestamp when the tier was assigned.",
+                "type": "string"
+              },
+              "groupId": {
+                "description": "Unique identifier of the group associated with the tier.",
+                "type": "string"
+              },
+              "groupName": {
+                "description": "Name of the group associated with the tier.",
+                "type": "string"
+              },
+              "loyaltyProgramId": {
+                "description": "Unique identifier of the loyalty program.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": {},
+                "description": "Additional metadata related to the tier.",
+                "type": "object"
+              },
+              "tierId": {
+                "description": "Unique identifier of the tier.",
+                "type": "string"
+              },
+              "tierName": {
+                "description": "Name of the tier.",
+                "type": "string"
+              },
+              "updatedAt": {
+                "description": "Timestamp when the tier was last updated",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         }

@@ -36,107 +36,52 @@
       "description": "A consent group representing a category of contact opt-in/opt-out preferences.",
       "properties": {
         "id": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "integer",
+          "format": "int64",
+          "description": "Unique identifier for the consent group",
+          "example": 1
         },
         "name": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "string",
+          "description": "Display name of the consent group",
+          "example": "Newsletter EU"
         },
         "description": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "string",
+          "description": "Optional description of the consent group",
+          "example": "Consent group for EU newsletter subscribers"
         },
         "signupMode": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "string",
+          "enum": [
+            "manual",
+            "automatic"
+          ],
+          "description": "Controls how contacts are added to the group. `manual` — contacts are added explicitly via the API. `automatic` — contacts are added automatically at signup.",
+          "example": "manual"
         },
         "contactsCount": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of contacts currently in this consent group",
+          "example": 1234
         },
         "isDefault": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "boolean",
+          "description": "Whether this is a system-created default consent group",
+          "example": false
         },
         "createdAt": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC date-time when the consent group was created (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2024-01-15T10:00:00Z"
         },
         "updatedAt": {
-          "type": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC date-time when the consent group was last updated (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2024-06-01T08:30:00Z"
         }
       },
       "required": [

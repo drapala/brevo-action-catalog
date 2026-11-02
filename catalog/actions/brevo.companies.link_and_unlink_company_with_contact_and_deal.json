@@ -16,86 +16,50 @@
         "linkContactIds": {
           "description": "Contact ids for contacts to be linked with company",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            1,
+            2,
+            3
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },
         "linkDealsIds": {
           "description": "Deal ids for deals to be linked with company",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
           ],
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         },
         "unlinkContactIds": {
           "description": "Contact ids for contacts to be unlinked from company",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            4,
+            5,
+            6
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },
         "unlinkDealsIds": {
           "description": "Deal ids for deals to be unlinked from company",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "61a5ce58c5d4795761045994",
+            "61a5ce58c5d479576104595",
+            "61a5ce58c5d4795761045996"
           ],
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         }

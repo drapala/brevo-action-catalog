@@ -24,30 +24,14 @@
         "target": {
           "description": "**Set target after login success** * **automation** - Redirect\nto Automation after login * **email_campaign** - Redirect to\nEmail Campaign after login * **contacts** - Redirect to Contacts\nafter login * **landing_pages** - Redirect to Landing Pages\nafter login * **email_transactional** - Redirect to Email\nTransactional after login * **senders** - Redirect to Senders\nafter login * **sms_campaign** - Redirect to Sms Campaign after\nlogin * **sms_transactional** - Redirect to Sms Transactional\nafter login",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "automation",
+            "email_campaign",
+            "contacts",
+            "landing_pages",
+            "email_transactional",
+            "senders",
+            "sms_campaign",
+            "sms_transactional"
           ],
           "example": "contacts",
           "type": "string"
@@ -69,15 +53,9 @@
     "schema": {
       "properties": {
         "token": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Session token, it will remain valid for 15 days.",
+          "example": "ede520dxxxxxxxxxxxx76d631fba2",
+          "type": "string"
         }
       },
       "required": [

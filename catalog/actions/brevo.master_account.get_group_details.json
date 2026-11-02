@@ -35,13 +35,16 @@
         "group": {
           "properties": {
             "createdAt": {
-              "description": "(nested schema truncated)"
+              "description": "Group creation date",
+              "type": "string"
             },
             "groupName": {
-              "description": "(nested schema truncated)"
+              "description": "Name of the group",
+              "type": "string"
             },
             "id": {
-              "description": "(nested schema truncated)"
+              "description": "Group id",
+              "type": "string"
             }
           },
           "type": "object"
@@ -49,22 +52,41 @@
         "sub-accounts": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "companyName": {
+                "description": "Name of the sub-account organzation",
+                "type": "string"
+              },
+              "createdAt": {
+                "description": "Creation date of the sub-account organzation",
+                "type": "string"
+              },
+              "id": {
+                "description": "Id of the sub-account organzation",
+                "format": "int64",
+                "type": "integer"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
         "users": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "email": {
+                "description": "Email address of the user",
+                "type": "string"
+              },
+              "firstName": {
+                "description": "First name of the user",
+                "type": "string"
+              },
+              "lastName": {
+                "description": "Last name of the user",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         }

@@ -16,15 +16,14 @@
           "description": "Id of the campaign"
         },
         "emailTo": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "List of the email addresses of the recipients whom you wish to send the test mail. _If left empty, the test mail will be sent to your entire test list. You can not send more than 50 test emails per day_.\n",
           "items": {
-            "description": "(nested schema truncated)"
+            "description": "Email addres of the recipient",
+            "example": "helen.jurger@example.com",
+            "format": "email",
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         }
       },
       "required": [

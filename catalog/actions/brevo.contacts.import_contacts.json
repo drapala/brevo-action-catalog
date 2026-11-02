@@ -43,50 +43,49 @@
           "description": "**Mandatory if fileUrl and fileBody is not defined.** JSON content to be imported. **Maximum allowed json body size is 10MB** . However we recommend a safe limit of around 8 MB to avoid the issues caused due to increase of json body size while parsing. Please use fileUrl instead to import bigger files.\n",
           "items": {
             "example": {
-              "description": "(nested schema truncated)"
+              "attributes": {
+                "BIRTHDAY": "11/02/1989",
+                "COUNTRY": "DE",
+                "FNAME": "Dicky",
+                "LANDLINE_NUMBER": "33689965433",
+                "LNAME": "Noemi",
+                "PREFERED_COLOR": "BLACK",
+                "SMS": "33689965433",
+                "WHATSAPP": "33689965433"
+              },
+              "email": "ndicky0@ocn.ne.jp"
             },
             "properties": {
-              "description": "(nested schema truncated)"
+              "attributes": {
+                "additionalProperties": true,
+                "description": "List of attributes to be imported",
+                "type": "object"
+              },
+              "email": {
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
         "listIds": {
           "description": "**Mandatory if newList is not defined.** Ids of the lists in which the contacts shall be imported. For example, **[2, 4, 7]**.\n",
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "List Id in which the contacts shall be imported",
+            "example": 76,
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },
         "consentGroupIds": {
           "description": "**Optional.** Ids of the consent groups to which all imported contacts will be added. Requires consent groups to be enabled for the organisation. For example, **[1, 3]**.\n",
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Consent group Id",
+            "example": 1,
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },
@@ -94,10 +93,15 @@
           "description": "To create a new list and import the contacts into it, pass the listName and an optional folderId.",
           "properties": {
             "folderId": {
-              "description": "(nested schema truncated)"
+              "description": "Id of the folder where this new list shall be created. **Mandatory if listName is not empty**\n",
+              "example": 2,
+              "format": "int64",
+              "type": "integer"
             },
             "listName": {
-              "description": "(nested schema truncated)"
+              "description": "List with listName will be created first and users will be imported in it. **Mandatory if listIds is empty**.\n",
+              "example": "ContactImport - 2017-05",
+              "type": "string"
             }
           },
           "type": "object"
@@ -129,18 +133,10 @@
     "schema": {
       "properties": {
         "processId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Id of the process created",
+          "example": 78,
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [
@@ -200,7 +196,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

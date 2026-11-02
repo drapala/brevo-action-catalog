@@ -15,53 +15,70 @@
             {
               "properties": {
                 "contactNumbers": {
-                  "description": "(nested schema truncated)"
+                  "description": "List of phone numbers of the contacts",
+                  "items": {
+                    "description": "WhatsApp Number with country code. Example, 85264318721",
+                    "example": 919876543210,
+                    "format": "mobile",
+                    "type": "string"
+                  },
+                  "type": "array"
                 },
                 "params": {
-                  "description": "(nested schema truncated)"
+                  "description": "Pass the set of attributes to customize the template. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}.",
+                  "example": {
+                    "FNAME": "Joe",
+                    "LNAME": "Doe"
+                  },
+                  "type": "object"
                 },
                 "senderNumber": {
-                  "description": "(nested schema truncated)"
+                  "description": "WhatsApp Number with country code. Example, 85264318721",
+                  "example": 919876543210,
+                  "format": "mobile",
+                  "type": "string"
                 },
                 "templateId": {
-                  "description": "(nested schema truncated)"
+                  "description": "ID of the template to send",
+                  "example": 123,
+                  "type": "integer"
                 }
               },
               "required": [
-                {
-                  "description": "(nested schema truncated)"
-                },
-                {
-                  "description": "(nested schema truncated)"
-                },
-                {
-                  "description": "(nested schema truncated)"
-                }
+                "senderNumber",
+                "templateId",
+                "contactNumbers"
               ],
               "type": "object"
             },
             {
               "properties": {
                 "contactNumbers": {
-                  "description": "(nested schema truncated)"
+                  "description": "List of phone numbers of the contacts",
+                  "items": {
+                    "description": "WhatsApp Number with country code. Example, 85264318721",
+                    "example": 919876543210,
+                    "format": "mobile",
+                    "type": "string"
+                  },
+                  "type": "array"
                 },
                 "senderNumber": {
-                  "description": "(nested schema truncated)"
+                  "description": "WhatsApp Number with country code. Example, 85264318721",
+                  "example": 919876543210,
+                  "format": "mobile",
+                  "type": "string"
                 },
                 "text": {
-                  "description": "(nested schema truncated)"
+                  "description": "Text to be sent as message body (will be overridden if templateId is passed in the same request)",
+                  "example": "Hi! There i am a message",
+                  "type": "string"
                 }
               },
               "required": [
-                {
-                  "description": "(nested schema truncated)"
-                },
-                {
-                  "description": "(nested schema truncated)"
-                },
-                {
-                  "description": "(nested schema truncated)"
-                }
+                "senderNumber",
+                "contactNumbers",
+                "text"
               ],
               "type": "object"
             }

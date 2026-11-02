@@ -15,63 +15,45 @@
           "description": "Note ID to update"
         },
         "companyIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Company Ids linked to a note",
+          "example": [
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991"
+          ],
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "contactIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Contact Ids linked to a note",
+          "example": [
+            247,
+            1,
+            2
+          ],
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "integer"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "dealIds": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Deal Ids linked to a note",
+          "example": [
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991"
+          ],
           "items": {
-            "description": "(nested schema truncated)"
+            "type": "string"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "text": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "maxLength": {
-            "description": "(nested schema truncated)"
-          },
-          "minLength": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Content of the note. Supports HTML for rich text formatting. Supported tags include: `<p>` (paragraph), `<b>` / `<strong>` (bold), `<i>` / `<em>` (italic), `<u>` (underline), `<br>` (line break), `<a href=\"...\">` (labelled hyperlink). Example labelled link: `<a href=\"https://example.com\">Link text</a>`.",
+          "example": "<p>Meeting notes: <b>Action item</b> - visit <a href=\"https://www.brevo.com/\">Brevo</a> for details.</p>",
+          "maxLength": 10000,
+          "minLength": 1,
+          "type": "string"
         }
       },
       "required": [

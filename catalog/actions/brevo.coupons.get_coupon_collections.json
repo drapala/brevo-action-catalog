@@ -53,118 +53,54 @@
     "schema": {
       "properties": {
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Datetime on which the collection was created.",
+          "example": "2023-01-06T05:03:47.053000000Z",
+          "format": "date-time",
+          "type": "string"
         },
         "defaultCoupon": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "The default coupon of the collection.",
+          "example": "10 OFF",
+          "type": "string"
         },
         "expirationDate": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Expiration date for the coupon collection in RFC3339 format.",
+          "example": "2024-01-01T00:00:00Z",
+          "format": "date-time",
+          "type": "string"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "The id of the collection.",
+          "example": "23befbae-1505-47a8-bd27-e30ef739f32c",
+          "format": "uuidv4",
+          "type": "string"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "The name of the collection.",
+          "example": "SummerPromotions",
+          "type": "string"
         },
         "remainingCoupons": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Number of coupons that have not been sent yet.",
+          "example": 5000,
+          "format": "int64",
+          "type": "integer"
         },
         "remainingCouponsAlert": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "If present, an email notification is going to be sent when the total number of available coupons falls below the defined threshold.",
+          "example": 5,
+          "type": "integer"
         },
         "remainingDaysAlert": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "If present, an email notification is going to be sent the defined amount of days before to the expiration date.",
+          "example": 5,
+          "type": "integer"
         },
         "totalCoupons": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Total number of coupons in the collection.",
+          "example": 10000,
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [

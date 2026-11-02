@@ -24,13 +24,20 @@
         "contactIdentifiers": {
           "properties": {
             "email": {
-              "description": "(nested schema truncated)"
+              "description": "Email address of the contact",
+              "example": "elly@example.com",
+              "format": "email",
+              "type": "string"
             },
             "ext_id": {
-              "description": "(nested schema truncated)"
+              "description": "Contact ID in your system",
+              "example": "ExternalId",
+              "type": "string"
             },
             "sms": {
-              "description": "(nested schema truncated)"
+              "description": "Sms of the contact",
+              "example": "+91xxxxxxxxxx",
+              "type": "string"
             }
           },
           "type": "object"
@@ -86,7 +93,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

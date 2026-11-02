@@ -14,31 +14,72 @@
           "description": "Set the filter for the contacts to be exported.\n",
           "properties": {
             "actionForContacts": {
-              "description": "(nested schema truncated)"
+              "description": "**Mandatory if neither actionForEmailCampaigns nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of the provided action, restricted to the contacts selected by the other filters below. * **allContacts** - Fetch all the selected contacts. * **subscribed & unsubscribed** - Fetch the subscribed / unsubscribed (blacklisted via any means) contacts among the selected contacts. * **unsubscribedPerList** - Fetch the contacts that are unsubscribed from the given listId only; this action requires listId.\n\nThe selection must be narrowed by at least one of **listId**, **segmentId**, **modifiedSince** or **createdSince**. Any of them can be combined with the action, so for example `unsubscribed` together with `modifiedSince` exports the contacts that are currently blocklisted and were modified after the given date-time, with no list or segment involved.\n",
+              "enum": [
+                "allContacts",
+                "subscribed",
+                "unsubscribed",
+                "unsubscribedPerList"
+              ],
+              "type": "string"
             },
             "actionForEmailCampaigns": {
-              "description": "(nested schema truncated)"
+              "description": "**Mandatory if neither actionForContacts nor actionForSmsCampaigns is passed.** This will export the contacts on the basis of provided action applied on email campaigns. * **openers & nonOpeners** - emailCampaignId is mandatory. Fetch the list of readers / non-readers for a particular email campaign. * **clickers & nonClickers** - emailCampaignId is mandatory. Fetch the list of clickers / non-clickers for a particular email campaign. * **unsubscribed** - emailCampaignId is mandatory. Fetch the list of all unsubscribed (blacklisted via any means) contacts for a particular email campaign. * **hardBounces & softBounces** - emailCampaignId is optional. Fetch the list of hard bounces / soft bounces for a particular / all email campaign(s).\n",
+              "enum": [
+                "openers",
+                "nonOpeners",
+                "clickers",
+                "nonClickers",
+                "unsubscribed",
+                "hardBounces",
+                "softBounces"
+              ],
+              "type": "string"
             },
             "actionForSmsCampaigns": {
-              "description": "(nested schema truncated)"
+              "description": "**Mandatory if neither actionForContacts nor actionForEmailCampaigns is passed.** This will export the contacts on the basis of provided action applied on sms campaigns. * **unsubscribed** - Fetch the list of all unsubscribed (blacklisted via any means) contacts for all / particular sms campaigns. * **hardBounces & softBounces** - Fetch the list of hard bounces / soft bounces for all / particular sms campaigns.\n",
+              "enum": [
+                "hardBounces",
+                "softBounces",
+                "unsubscribed"
+              ],
+              "type": "string"
             },
             "createdSince": {
-              "description": "(nested schema truncated)"
+              "description": "Considered only if **actionForContacts** is passed, ignored otherwise. Exports only the contacts created after the given date-time. The value must be a full RFC 3339 date-time: a date-only value such as `2026-10-01` is rejected, and so is a value without a timezone, so pass either the `Z` suffix or an explicit `+HH:MM` offset.\n",
+              "example": "2026-10-01T00:00:00.000Z",
+              "format": "date-time",
+              "type": "string"
             },
             "emailCampaignId": {
-              "description": "(nested schema truncated)"
+              "description": "Considered only if **actionForEmailCampaigns** is passed, ignored otherwise. **Mandatory if action is one of the following - openers, nonOpeners, clickers, nonClickers, unsubscribed.** The id of the email campaign for which the corresponding action shall be applied in the filter.\n",
+              "example": 12,
+              "format": "int64",
+              "type": "integer"
             },
             "listId": {
-              "description": "(nested schema truncated)"
+              "description": "ID of the list. Considered only if **actionForContacts** is passed. At least one of listId, segmentId, modifiedSince or createdSince must be provided; listId and segmentId cannot be used together.\n",
+              "example": 2,
+              "format": "int64",
+              "type": "integer"
             },
             "modifiedSince": {
-              "description": "(nested schema truncated)"
+              "description": "Considered only if **actionForContacts** is passed, ignored otherwise. Exports only the contacts modified after the given date-time. The value must be a full RFC 3339 date-time: a date-only value such as `2026-10-01` is rejected, and so is a value without a timezone, so pass either the `Z` suffix or an explicit `+HH:MM` offset. Note that a contact's modification date changes on any update, not only on a subscription change.\n",
+              "example": "2026-10-01T00:00:00.000Z",
+              "format": "date-time",
+              "type": "string"
             },
             "segmentId": {
-              "description": "(nested schema truncated)"
+              "description": "ID of the segment. Considered only if **actionForContacts** is passed. At least one of listId, segmentId, modifiedSince or createdSince must be provided; listId and segmentId cannot be used together.\n",
+              "example": 2,
+              "format": "int64",
+              "type": "integer"
             },
             "smsCampaignId": {
-              "description": "(nested schema truncated)"
+              "description": "Considered only if **actionForSmsCampaigns** is passed, ignored otherwise. The id of sms campaign for which the corresponding action shall be applied in the filter.\n",
+              "example": 12,
+              "format": "int64",
+              "type": "integer"
             }
           },
           "type": "object"
@@ -52,12 +93,8 @@
         "exportAttributes": {
           "description": "List of all the attributes that you want to export. **These attributes must be present in your contact database. It is required if exportMandatoryAttributes is set false. ** For example: **['fname', 'lname', 'email']**\n",
           "items": {
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "example": "NAME",
+            "type": "string"
           },
           "type": "array"
         },
@@ -70,12 +107,8 @@
         "exportMetadata": {
           "description": "Export metadata of contacts such as _listIds, ADDED_TIME, MODIFIED_TIME.",
           "items": {
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "example": "_listIds",
+            "type": "string"
           },
           "type": "array"
         },
@@ -88,12 +121,8 @@
         "exportSubscriptionStatus": {
           "description": "Export subscription status of contacts for email & sms marketting. Pass email_marketing to obtain the marketing email subscription status & sms_marketing to retrieve the marketing SMS status of the contact.",
           "items": {
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "example": "email_marketing",
+            "type": "string"
           },
           "type": "array"
         },
@@ -115,18 +144,10 @@
     "schema": {
       "properties": {
         "processId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Id of the process created",
+          "example": 78,
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [
@@ -173,7 +194,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

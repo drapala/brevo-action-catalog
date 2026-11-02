@@ -14,11 +14,26 @@
           "description": "Array of attachment objects. Each attachment must include either an absolute URL (no local file paths) or base64-encoded content, along with the attachment filename. The `name` field is required when `content` is provided. Supported file extensions: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub, eps, odt, mp3, m4a, m4v, wma, ogg, flac, wav, aif, aifc, aiff, mp4, mov, avi, mkv, mpeg, mpg, wmv, pkpass, xlsm. When `templateId` is specified: if the template uses the New Template Language format, both `url` and `content` attachment types are supported; if the template uses the Old Template Language format, the `attachment` parameter is ignored.\n",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "content": {
+                "description": "Base64-encoded attachment data",
+                "example": "b3JkZXIucGRm",
+                "format": "byte",
+                "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+                "type": "string"
+              },
+              "name": {
+                "description": "Attachment filename. Required when `content` is provided.\n",
+                "example": "myAttachment.png",
+                "type": "string"
+              },
+              "url": {
+                "description": "Absolute URL of the attachment. Local file paths are not supported.\n",
+                "example": "https://attachment.domain.com/myAttachmentFromUrl.jpg",
+                "format": "url",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
@@ -31,14 +46,32 @@
           "description": "Array of BCC recipient objects. Each object contains an email address and an optional name.\n",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "contactPixelTrackingConsent": {
+                "description": "Consent of the recipient in bcc for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.\n",
+                "example": true,
+                "type": "boolean"
+              },
+              "email": {
+                "description": "BCC recipient email address",
+                "example": "helen9766@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "name": {
+                "description": "Display name of the BCC recipient. Maximum length is 70 characters.\n",
+                "example": "Helen",
+                "type": "string"
+              },
+              "removeTrackingPixel": {
+                "description": "Pass `true` to send the recipient in bcc no open pixel, so no open is recorded for them, not even in aggregate statistics. Only available to Enterprise plans: for other accounts the field is accepted but ignored. Considered only if the recipient is not tracked: `contactPixelTrackingConsent` is `false`, or not passed and your account does not track unknown-consent contacts. Click tracking is unchanged. If `false` or not passed, the open pixel is added as usual. A value other than `true`/`false` is rejected.\n",
+                "example": false,
+                "type": "boolean"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "email"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -46,14 +79,32 @@
           "description": "Array of CC recipient objects. Each object contains an email address and an optional name.\n",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "contactPixelTrackingConsent": {
+                "description": "Consent of the recipient in cc for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.\n",
+                "example": true,
+                "type": "boolean"
+              },
+              "email": {
+                "description": "CC recipient email address",
+                "example": "ann6533@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "name": {
+                "description": "Display name of the CC recipient. Maximum length is 70 characters.\n",
+                "example": "Ann",
+                "type": "string"
+              },
+              "removeTrackingPixel": {
+                "description": "Pass `true` to send the recipient in cc no open pixel, so no open is recorded for them, not even in aggregate statistics. Only available to Enterprise plans: for other accounts the field is accepted but ignored. Considered only if the recipient is not tracked: `contactPixelTrackingConsent` is `false`, or not passed and your account does not track unknown-consent contacts. Click tracking is unchanged. If `false` or not passed, the open pixel is added as usual. A value other than `true`/`false` is rejected.\n",
+                "example": false,
+                "type": "boolean"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "email"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -61,15 +112,9 @@
           "additionalProperties": {},
           "description": "Custom email headers (non-standard headers) to include in the email. The `sender.ip` header can be set to specify the IP address used for sending transactional emails (dedicated IP users only). Header names must use Title-Case-Format (words separated by hyphens with the first letter of each word capitalized). Headers not in this format are automatically converted. Standard email headers are not supported. Example: `{\"sender.ip\":\"1.2.3.4\", \"X-Mailin-custom\":\"some_custom_value\", \"IdempotencyKey\":\"abc-123\"}`\n",
           "example": {
-            "X-Mailin-custom": {
-              "description": "(nested schema truncated)"
-            },
-            "idempotencyKey": {
-              "description": "(nested schema truncated)"
-            },
-            "sender.ip": {
-              "description": "(nested schema truncated)"
-            }
+            "X-Mailin-custom": "some_custom_header",
+            "idempotencyKey": "abc-123",
+            "sender.ip": "1.2.3.4"
           },
           "type": "object"
         },
@@ -82,14 +127,154 @@
           "description": "Array of message version objects for sending customized email variants. The `templateId` can be customized per version only if a global `templateId` is provided. The `htmlContent` and `textContent` can be customized per version only if at least one of these is present in the global parameters. Global parameters such as `to` (required), `bcc`, `cc`, `replyTo`, and `subject` can be customized per version. Maximum total recipients per API request is 2000. Maximum recipients per message version is 99. Individual `params` objects must not exceed 100 KB. Cumulative `params` across all versions must not exceed 1000 KB. See https://developers.brevo.com/docs/batch-send-transactional-emails for detailed usage instructions.\n",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "bcc": {
+                "description": "Array of BCC recipient objects. Each object contains an email address and an optional name.\n",
+                "items": {
+                  "properties": {
+                    "contactPixelTrackingConsent": {
+                      "description": "Consent of the recipient in bcc for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.\n",
+                      "example": true,
+                      "type": "boolean"
+                    },
+                    "email": {
+                      "description": "BCC recipient email address",
+                      "example": "helen9766@example.com",
+                      "format": "email",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Display name of the BCC recipient. Maximum length is 70 characters.\n",
+                      "example": "Helen",
+                      "type": "string"
+                    },
+                    "removeTrackingPixel": {
+                      "description": "Pass `true` to send the recipient in bcc no open pixel, so no open is recorded for them, not even in aggregate statistics. Only available to Enterprise plans: for other accounts the field is accepted but ignored. Considered only if the recipient is not tracked: `contactPixelTrackingConsent` is `false`, or not passed and your account does not track unknown-consent contacts. Click tracking is unchanged. If `false` or not passed, the open pixel is added as usual. A value other than `true`/`false` is rejected.\n",
+                      "example": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "email"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "cc": {
+                "description": "Array of CC recipient objects. Each object contains an email address and an optional name.\n",
+                "items": {
+                  "properties": {
+                    "contactPixelTrackingConsent": {
+                      "description": "Consent of the recipient in cc for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.\n",
+                      "example": true,
+                      "type": "boolean"
+                    },
+                    "email": {
+                      "description": "CC recipient email address",
+                      "example": "ann6533@example.com",
+                      "format": "email",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Display name of the CC recipient. Maximum length is 70 characters.\n",
+                      "example": "Ann",
+                      "type": "string"
+                    },
+                    "removeTrackingPixel": {
+                      "description": "Pass `true` to send the recipient in cc no open pixel, so no open is recorded for them, not even in aggregate statistics. Only available to Enterprise plans: for other accounts the field is accepted but ignored. Considered only if the recipient is not tracked: `contactPixelTrackingConsent` is `false`, or not passed and your account does not track unknown-consent contacts. Click tracking is unchanged. If `false` or not passed, the open pixel is added as usual. A value other than `true`/`false` is rejected.\n",
+                      "example": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "email"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "htmlContent": {
+                "description": "HTML body content of the email. Required when `templateId` is not provided. Ignored when `templateId` is provided.\n",
+                "example": "<!DOCTYPE html> <html> <body> <h1>Confirm you email</h1> <p>Please confirm your email address by clicking on the link below</p> </body> </html>",
+                "type": "string"
+              },
+              "params": {
+                "additionalProperties": {},
+                "description": "Key-value pairs for template variable substitution. Only applicable when the template uses the New Template Language format.\n",
+                "example": {
+                  "FNAME": "Joe",
+                  "LNAME": "Doe"
+                },
+                "type": "object"
+              },
+              "replyTo": {
+                "description": "Reply-to email address (required) and optional display name. Recipients will use this address when replying to the email.\n",
+                "properties": {
+                  "email": {
+                    "description": "Email address in reply to",
+                    "example": "ann6533@example.com",
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Display name for the reply-to address. Maximum length is 70 characters.\n",
+                    "example": "Ann",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email"
+                ],
+                "type": "object"
+              },
+              "subject": {
+                "description": "Email subject line for this message version\n",
+                "example": "Login Email confirmation",
+                "type": "string"
+              },
+              "textContent": {
+                "description": "Plain text body content of the email. Ignored when `templateId` is provided.\n",
+                "example": "Please confirm your email address by clicking on the link https://text.domain.com",
+                "type": "string"
+              },
+              "to": {
+                "description": "Array of recipient objects. Each object contains an email address and an optional display name.\n",
+                "items": {
+                  "properties": {
+                    "contactPixelTrackingConsent": {
+                      "description": "Consent of the recipient for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.\n",
+                      "example": true,
+                      "type": "boolean"
+                    },
+                    "email": {
+                      "description": "Email address of the recipient",
+                      "example": "jimmy98@example.com",
+                      "format": "email",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Display name of the recipient. Maximum length is 70 characters.\n",
+                      "example": "Jimmy",
+                      "type": "string"
+                    },
+                    "removeTrackingPixel": {
+                      "description": "Pass `true` to send the recipient no open pixel, so no open is recorded for them, not even in aggregate statistics. Only available to Enterprise plans: for other accounts the field is accepted but ignored. Considered only if the recipient is not tracked: `contactPixelTrackingConsent` is `false`, or not passed and your account does not track unknown-consent contacts. Click tracking is unchanged. If `false` or not passed, the open pixel is added as usual. A value other than `true`/`false` is rejected.\n",
+                      "example": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "email"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "to"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -97,12 +282,8 @@
           "additionalProperties": {},
           "description": "Key-value pairs for template variable substitution. Only applicable when the template uses the New Template Language format.\n",
           "example": {
-            "FNAME": {
-              "description": "(nested schema truncated)"
-            },
-            "LNAME": {
-              "description": "(nested schema truncated)"
-            }
+            "FNAME": "Joe",
+            "LNAME": "Doe"
           },
           "type": "object"
         },
@@ -110,16 +291,19 @@
           "description": "Reply-to email address (required) and optional display name. Recipients will use this address when replying to the email.\n",
           "properties": {
             "email": {
-              "description": "(nested schema truncated)"
+              "description": "Email address in reply to",
+              "example": "ann6533@example.com",
+              "format": "email",
+              "type": "string"
             },
             "name": {
-              "description": "(nested schema truncated)"
+              "description": "Display name for the reply-to address. Maximum length is 70 characters.\n",
+              "example": "Ann",
+              "type": "string"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            }
+            "email"
           ],
           "type": "object"
         },
@@ -133,13 +317,21 @@
           "description": "Sender information. Required when `templateId` is not provided. Specify either an email address (with optional name) or a sender ID. The `name` field is ignored when `id` is provided.\n",
           "properties": {
             "email": {
-              "description": "(nested schema truncated)"
+              "description": "Sender email address. Required when `id` is not provided.",
+              "example": "no-reply@myshop.com",
+              "format": "email",
+              "type": "string"
             },
             "id": {
-              "description": "(nested schema truncated)"
+              "description": "Sender identifier. Required when `email` is not provided. Use this field to select a sender with a specific IP pool (dedicated IP users only).",
+              "example": 2,
+              "format": "int64",
+              "type": "integer"
             },
             "name": {
-              "description": "(nested schema truncated)"
+              "description": "Display name of the sender. Maximum length is 70 characters. Only applicable when `email` is provided.\n",
+              "example": "Mary from MyShop",
+              "type": "string"
             }
           },
           "type": "object"
@@ -152,12 +344,8 @@
         "tags": {
           "description": "Array of tags for categorizing and filtering emails",
           "items": {
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "example": "tag1",
+            "type": "string"
           },
           "type": "array"
         },
@@ -176,14 +364,32 @@
           "description": "Array of recipient objects. Each object contains an email address and an optional display name. Required when `messageVersions` is not provided. Ignored when `messageVersions` is provided. Example: `[{\"name\":\"Jimmy\", \"email\":\"jimmy@example.com\"}, {\"name\":\"Joe\", \"email\":\"joe@example.com\"}]`\n",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "contactPixelTrackingConsent": {
+                "description": "Consent of the recipient for open (pixel) and click tracking, resolved by the sender at send time. Considered only if the per-contact pixel tracking consent feature is enabled for your account. Pass `true` if this recipient has consented to open and click tracking, in which case the open pixel and tracked links identify the recipient. Pass `false` to anonymise the open and click events (counted in aggregate statistics only). If it is not passed, the recipient is treated as unknown consent status and the email is still sent (the open and click are anonymised unless your account tracks unknown-consent contacts). A value other than `true`/`false` is rejected. Ignored when the feature is not enabled for your account.\n",
+                "example": true,
+                "type": "boolean"
+              },
+              "email": {
+                "description": "Email address of the recipient",
+                "example": "jimmy98@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "name": {
+                "description": "Display name of the recipient. Maximum length is 70 characters.\n",
+                "example": "Jimmy",
+                "type": "string"
+              },
+              "removeTrackingPixel": {
+                "description": "Pass `true` to send the recipient no open pixel, so no open is recorded for them, not even in aggregate statistics. Only available to Enterprise plans: for other accounts the field is accepted but ignored. Considered only if the recipient is not tracked: `contactPixelTrackingConsent` is `false`, or not passed and your account does not track unknown-consent contacts. Click tracking is unchanged. If `false` or not passed, the open pixel is added as usual. A value other than `true`/`false` is rejected.\n",
+                "example": false,
+                "type": "boolean"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "email"
+            ],
+            "type": "object"
           },
           "type": "array"
         }
@@ -202,15 +408,12 @@
         },
         "messageIds": {
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Message ID for each version of the transactional email sent",
+            "example": [
+              "<201798300811.5787683@relay.domain.com>",
+              "<201798300811.5787683@relay.domain.com>"
+            ],
+            "type": "string"
           },
           "type": "array"
         }

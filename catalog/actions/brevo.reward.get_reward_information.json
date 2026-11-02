@@ -110,15 +110,9 @@
           "default": "noModification",
           "description": "Select startOfPeriod to configure rewards expiry on start of day/week/month/year. Select endOfPeriod to configure reward expiry on end of day/week/month/year, else select noModification",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "startOfPeriod",
+            "endOfPeriod",
+            "noModification"
           ],
           "type": "string"
         },
@@ -133,7 +127,35 @@
         "generator": {
           "allOf": [
             {
-              "description": "(nested schema truncated)"
+              "properties": {
+                "createdAt": {
+                  "description": "Timestamp when the reward was created",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "Public facing description of the reward",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "Unique identifier for the reward",
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the reward",
+                  "type": "string"
+                },
+                "pattern": {
+                  "description": "Generated pattern",
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "description": "Timestamp when the reward was created",
+                  "format": "date-time",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             }
           ],
           "description": "object"
@@ -147,11 +169,42 @@
           "description": "Attribution / Redeem Limits for the reward",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "createdAt": {
+                "description": "Timestamp when the reward limit was created",
+                "format": "date-time",
+                "type": "string"
+              },
+              "durationUnit": {
+                "description": "Unit of time for the reward limit's availability (e.g., day/week/month/year).",
+                "type": "string"
+              },
+              "durationValue": {
+                "description": "Number of days/weeks/month/year for reward limit",
+                "type": "integer"
+              },
+              "limitValue": {
+                "description": "Value of the limit",
+                "type": "integer"
+              },
+              "rewardLimitId": {
+                "description": "Unique identifier for the reward limit",
+                "type": "string"
+              },
+              "slidingSchedule": {
+                "description": "Select true to calculate all redeems/attributions from the previous value of selected durationUnit to the current time",
+                "type": "boolean"
+              },
+              "type": {
+                "description": "Type of reward",
+                "type": "string"
+              },
+              "updatedAt": {
+                "description": "Timestamp when the reward limit was created",
+                "format": "date-time",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
@@ -173,11 +226,24 @@
           "description": "Selected products for reward definition",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "createdAt": {
+                "description": "Timestamp when the product was created",
+                "type": "string"
+              },
+              "imageRef": {
+                "description": "URL of the product image",
+                "type": "string"
+              },
+              "productId": {
+                "description": "Unique identifier for the product",
+                "type": "string"
+              },
+              "value": {
+                "description": "string",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
@@ -200,16 +266,28 @@
         "redeemRules": {
           "description": "Rules defined to redeem a reward",
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         },
         "rewardConfigs": {
           "allOf": [
             {
-              "description": "(nested schema truncated)"
+              "properties": {
+                "attribution": {
+                  "description": "Attribution config of the reward",
+                  "type": "string"
+                },
+                "code": {
+                  "description": "Code config of the reward",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Value config of the reward",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             }
           ],
           "description": "object"
@@ -217,7 +295,403 @@
         "rule": {
           "allOf": [
             {
-              "description": "(nested schema truncated)"
+              "properties": {
+                "condition": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "and": {
+                          "description": "Metric to indicate AND between rules",
+                          "items": {
+                            "description": "(recursive reference to ruleConditionResponse)"
+                          },
+                          "type": "array"
+                        },
+                        "lhs": {
+                          "allOf": [
+                            {
+                              "properties": {
+                                "array": {
+                                  "description": "Array values to define the rule",
+                                  "items": {
+                                    "description": "(recursive reference to valueResponse)"
+                                  },
+                                  "type": "array"
+                                },
+                                "boolean": {
+                                  "description": "Boolean values for rule definition",
+                                  "type": "boolean"
+                                },
+                                "contactProperty": {
+                                  "description": "string",
+                                  "type": "string"
+                                },
+                                "date": {
+                                  "description": "Selected date for rule definition",
+                                  "type": "string"
+                                },
+                                "eventProperty": {
+                                  "description": "Selected event property for rule definition",
+                                  "type": "string"
+                                },
+                                "expression": {
+                                  "allOf": [
+                                    {
+                                      "properties": {
+                                        "args": {
+                                          "description": "array[object]",
+                                          "items": {
+                                            "description": "(recursive reference to nodeResponse)"
+                                          },
+                                          "type": "array"
+                                        },
+                                        "array": {
+                                          "description": "Array values for rule definition",
+                                          "items": {
+                                            "description": "(recursive reference to nodeResponse)"
+                                          },
+                                          "type": "array"
+                                        },
+                                        "boolean": {
+                                          "description": "Boolean values for rule definition",
+                                          "type": "boolean"
+                                        },
+                                        "description": {
+                                          "description": "Description for rule definition",
+                                          "type": "string"
+                                        },
+                                        "float": {
+                                          "description": "Float values for rule definition",
+                                          "format": "float64",
+                                          "type": "number"
+                                        },
+                                        "int": {
+                                          "description": "int64",
+                                          "format": "int64",
+                                          "type": "integer"
+                                        },
+                                        "op": {
+                                          "description": "Operator selected for rule definition",
+                                          "type": "string"
+                                        },
+                                        "string": {
+                                          "description": "Boolean values for rule definition",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  ],
+                                  "description": "Created expression for rule definition"
+                                },
+                                "number": {
+                                  "description": "Boolean values for rule definition",
+                                  "format": "float64",
+                                  "type": "number"
+                                },
+                                "string": {
+                                  "description": "String values for rule definition",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "description": "Condition of the rule"
+                        },
+                        "op": {
+                          "description": "Selected operator for the rule",
+                          "type": "string"
+                        },
+                        "or": {
+                          "description": "Metric to indicate OR between rules",
+                          "items": {
+                            "description": "(recursive reference to ruleConditionResponse)"
+                          },
+                          "type": "array"
+                        },
+                        "rhs": {
+                          "allOf": [
+                            {
+                              "properties": {
+                                "array": {
+                                  "description": "Array values to define the rule",
+                                  "items": {
+                                    "description": "(recursive reference to valueResponse)"
+                                  },
+                                  "type": "array"
+                                },
+                                "boolean": {
+                                  "description": "Boolean values for rule definition",
+                                  "type": "boolean"
+                                },
+                                "contactProperty": {
+                                  "description": "string",
+                                  "type": "string"
+                                },
+                                "date": {
+                                  "description": "Selected date for rule definition",
+                                  "type": "string"
+                                },
+                                "eventProperty": {
+                                  "description": "Selected event property for rule definition",
+                                  "type": "string"
+                                },
+                                "expression": {
+                                  "allOf": [
+                                    {
+                                      "properties": {
+                                        "args": {
+                                          "description": "array[object]",
+                                          "items": {
+                                            "description": "(recursive reference to nodeResponse)"
+                                          },
+                                          "type": "array"
+                                        },
+                                        "array": {
+                                          "description": "Array values for rule definition",
+                                          "items": {
+                                            "description": "(recursive reference to nodeResponse)"
+                                          },
+                                          "type": "array"
+                                        },
+                                        "boolean": {
+                                          "description": "Boolean values for rule definition",
+                                          "type": "boolean"
+                                        },
+                                        "description": {
+                                          "description": "Description for rule definition",
+                                          "type": "string"
+                                        },
+                                        "float": {
+                                          "description": "Float values for rule definition",
+                                          "format": "float64",
+                                          "type": "number"
+                                        },
+                                        "int": {
+                                          "description": "int64",
+                                          "format": "int64",
+                                          "type": "integer"
+                                        },
+                                        "op": {
+                                          "description": "Operator selected for rule definition",
+                                          "type": "string"
+                                        },
+                                        "string": {
+                                          "description": "Boolean values for rule definition",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  ],
+                                  "description": "Created expression for rule definition"
+                                },
+                                "number": {
+                                  "description": "Boolean values for rule definition",
+                                  "format": "float64",
+                                  "type": "number"
+                                },
+                                "string": {
+                                  "description": "String values for rule definition",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "description": "Action of the rule"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "description": "Selected rule condition"
+                },
+                "createdAt": {
+                  "description": "Timestamp when the rule was created",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "Description of the rule",
+                  "type": "string"
+                },
+                "event": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "name": {
+                          "description": "Name of the event",
+                          "type": "string"
+                        },
+                        "source": {
+                          "description": "Source of the event",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "description": "Selected event in the rule"
+                },
+                "isInternal": {
+                  "description": "Metric to identify if it's an internal rule or not",
+                  "type": "boolean"
+                },
+                "loyaltyProgramId": {
+                  "description": "Loyalty Program id to which current rule is associated",
+                  "type": "string"
+                },
+                "loyaltyVersionId": {
+                  "description": "Loyalty Version id to which current rule is associated",
+                  "format": "int16",
+                  "type": "integer"
+                },
+                "meta": {
+                  "additionalProperties": true,
+                  "description": "Additional data to define the rule",
+                  "type": "object"
+                },
+                "name": {
+                  "description": "Rule name",
+                  "type": "string"
+                },
+                "results": {
+                  "description": "Results of the rule definition",
+                  "items": {
+                    "properties": {
+                      "action": {
+                        "description": "Action for the defined rule",
+                        "type": "string"
+                      },
+                      "parameters": {
+                        "description": "Parameters to define the reward",
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "description": "Name of the rule",
+                              "type": "string"
+                            },
+                            "value": {
+                              "allOf": [
+                                {
+                                  "properties": {
+                                    "array": {
+                                      "description": "Array values to define the rule",
+                                      "items": {
+                                        "description": "(recursive reference to valueResponse)"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "boolean": {
+                                      "description": "Boolean values for rule definition",
+                                      "type": "boolean"
+                                    },
+                                    "contactProperty": {
+                                      "description": "string",
+                                      "type": "string"
+                                    },
+                                    "date": {
+                                      "description": "Selected date for rule definition",
+                                      "type": "string"
+                                    },
+                                    "eventProperty": {
+                                      "description": "Selected event property for rule definition",
+                                      "type": "string"
+                                    },
+                                    "expression": {
+                                      "allOf": [
+                                        {
+                                          "properties": {
+                                            "args": {
+                                              "description": "array[object]",
+                                              "items": {
+                                                "description": "(recursive reference to nodeResponse)"
+                                              },
+                                              "type": "array"
+                                            },
+                                            "array": {
+                                              "description": "Array values for rule definition",
+                                              "items": {
+                                                "description": "(recursive reference to nodeResponse)"
+                                              },
+                                              "type": "array"
+                                            },
+                                            "boolean": {
+                                              "description": "Boolean values for rule definition",
+                                              "type": "boolean"
+                                            },
+                                            "description": {
+                                              "description": "Description for rule definition",
+                                              "type": "string"
+                                            },
+                                            "float": {
+                                              "description": "Float values for rule definition",
+                                              "format": "float64",
+                                              "type": "number"
+                                            },
+                                            "int": {
+                                              "description": "int64",
+                                              "format": "int64",
+                                              "type": "integer"
+                                            },
+                                            "op": {
+                                              "description": "Operator selected for rule definition",
+                                              "type": "string"
+                                            },
+                                            "string": {
+                                              "description": "Boolean values for rule definition",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      ],
+                                      "description": "Created expression for rule definition"
+                                    },
+                                    "number": {
+                                      "description": "Boolean values for rule definition",
+                                      "format": "float64",
+                                      "type": "number"
+                                    },
+                                    "string": {
+                                      "description": "String values for rule definition",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                }
+                              ],
+                              "description": "Selected value of the parameter to define the rule"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "service": {
+                        "description": "Selected service to define the reward",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "ruleId": {
+                  "description": "Unique identifier for the rule",
+                  "type": "string"
+                },
+                "ruleType": {
+                  "description": "Type of the rule",
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "description": "Timestamp when the rule was updated",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             }
           ],
           "description": "Rule to define the reward"

@@ -13,15 +13,9 @@
         "attributes": {
           "description": "Attributes for company creation",
           "example": {
-            "domain": {
-              "description": "(nested schema truncated)"
-            },
-            "industry": {
-              "description": "(nested schema truncated)"
-            },
-            "owner": {
-              "description": "(nested schema truncated)"
-            }
+            "domain": "https://example.com",
+            "industry": "Fabric",
+            "owner": "60e68d60582a3b006f524197"
           },
           "type": "object"
         },
@@ -34,46 +28,26 @@
         "linkedContactsIds": {
           "description": "Contact ids to be linked with company",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            1,
+            2,
+            3
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },
         "linkedDealsIds": {
           "description": "Deal ids to be linked with company",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "objectID",
+            "type": "string"
           },
           "type": "array"
         },

@@ -77,10 +77,41 @@
         {
           "properties": {
             "batches": {
-              "description": "(nested schema truncated)"
+              "items": {
+                "properties": {
+                  "createdAt": {
+                    "description": "Datetime on which the batch was scheduled",
+                    "format": "date-time",
+                    "type": "string"
+                  },
+                  "scheduledAt": {
+                    "description": "Datetime for which the batch was scheduled",
+                    "format": "date-time",
+                    "type": "string"
+                  },
+                  "status": {
+                    "description": "Current status of the scheduled batch",
+                    "enum": [
+                      "inProgress",
+                      "queued",
+                      "processed",
+                      "error"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "scheduledAt",
+                  "createdAt",
+                  "status"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "count": {
-              "description": "(nested schema truncated)"
+              "description": "Total number of batches",
+              "type": "integer"
             }
           },
           "type": "object"
@@ -88,25 +119,30 @@
         {
           "properties": {
             "createdAt": {
-              "description": "(nested schema truncated)"
+              "description": "Datetime on which the email was scheduled",
+              "format": "date-time",
+              "type": "string"
             },
             "scheduledAt": {
-              "description": "(nested schema truncated)"
+              "description": "Datetime for which the email was scheduled",
+              "format": "date-time",
+              "type": "string"
             },
             "status": {
-              "description": "(nested schema truncated)"
+              "description": "Current status of the scheduled email",
+              "enum": [
+                "inProgress",
+                "queued",
+                "processed",
+                "error"
+              ],
+              "type": "string"
             }
           },
           "required": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "scheduledAt",
+            "createdAt",
+            "status"
           ],
           "type": "object"
         }

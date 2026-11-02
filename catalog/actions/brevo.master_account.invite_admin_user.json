@@ -13,12 +13,8 @@
         "all_features_access": {
           "description": "All access to the features",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            true,
+            false
           ],
           "example": true,
           "type": "boolean"
@@ -32,37 +28,113 @@
         "groupIds": {
           "description": "Ids of Group",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "2baxxxxxxxxxxxxxxxxxxxxxcaa",
+            "65axxxxxxxxxxxxxxxxxxxxxc5a"
           ],
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "description": "Group Id",
+            "type": "string"
           },
           "type": "array"
         },
         "privileges": {
           "items": {
-            "description": {
-              "description": "(nested schema truncated)"
-            },
-            "example": {
-              "description": "(nested schema truncated)"
-            },
+            "description": "Privileges given to the user",
+            "example": [
+              {
+                "feature": "my_plan",
+                "permissions": [
+                  "all"
+                ]
+              },
+              {
+                "feature": "api",
+                "permissions": [
+                  "none"
+                ]
+              },
+              {
+                "feature": "user_management",
+                "permissions": [
+                  "all"
+                ]
+              },
+              {
+                "feature": "app_management",
+                "permissions": [
+                  "all"
+                ]
+              },
+              {
+                "feature": "sub_organization_groups",
+                "permissions": [
+                  "create",
+                  "edit_delete"
+                ]
+              },
+              {
+                "feature": "create_sub_organizations",
+                "permissions": [
+                  "all"
+                ]
+              },
+              {
+                "feature": "manage_sub_organizations",
+                "permissions": [
+                  "all"
+                ]
+              },
+              {
+                "feature": "analytics",
+                "permissions": [
+                  "download_data",
+                  "create_alerts",
+                  "my_looks",
+                  "explore_create"
+                ]
+              },
+              {
+                "feature": "security",
+                "permissions": [
+                  "all"
+                ]
+              }
+            ],
             "properties": {
-              "description": "(nested schema truncated)"
+              "feature": {
+                "description": "Feature name",
+                "enum": [
+                  "my_plan",
+                  "api",
+                  "user_management",
+                  "app_management",
+                  "sub_organization_groups",
+                  "create_sub_organizations",
+                  "manage_sub_organizations",
+                  "analytics",
+                  "security"
+                ],
+                "example": "user_management",
+                "type": "string"
+              },
+              "permissions": {
+                "description": "Permissions for a given feature",
+                "items": {
+                  "enum": [
+                    "all",
+                    "none",
+                    "create",
+                    "edit_delete",
+                    "download_data",
+                    "create_alerts"
+                  ],
+                  "example": "'all', 'none', 'create', 'edit_delete', 'download_data', 'create_alerts'",
+                  "type": "string"
+                },
+                "type": "array"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         }

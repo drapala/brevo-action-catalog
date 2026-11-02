@@ -36,11 +36,24 @@
           "description": "List of attachments of the email. This will be present only after the processing is done.",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "contentId": {
+                "description": "value of the Content-ID header of the attachment.",
+                "type": "string"
+              },
+              "contentLength": {
+                "description": "size of the attachment in bytes",
+                "type": "integer"
+              },
+              "contentType": {
+                "description": "value of the Content-Type header of the attachment",
+                "type": "string"
+              },
+              "name": {
+                "description": "filename specified in the Content-Disposition header of the attachment",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },
@@ -54,11 +67,23 @@
           "description": "List of events/logs that describe the lifecycle of the email on the Brevo platform",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "date": {
+                "description": "Date of the event",
+                "format": "date-time",
+                "type": "string"
+              },
+              "type": {
+                "description": "Type of the event",
+                "enum": [
+                  "received",
+                  "processed",
+                  "webhookFailed",
+                  "webhookDelivered"
+                ],
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         },

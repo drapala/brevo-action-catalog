@@ -44,7 +44,88 @@
       "properties": {
         "items": {
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "accessConditions": {
+                "description": "Conditions required to access this tier",
+                "items": {
+                  "properties": {
+                    "balanceDefinitionId": {
+                      "description": "Balance definition identifier",
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "minimumValue": {
+                      "description": "Minimum value required to access this tier",
+                      "type": "integer"
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "createdAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "groupId": {
+                "description": "Associated group Id",
+                "format": "uuid",
+                "type": "string"
+              },
+              "imageRef": {
+                "description": "Tier image reference",
+                "type": "string"
+              },
+              "loyaltyProgramId": {
+                "description": "Associated loyalty program Id",
+                "format": "uuid",
+                "type": "string"
+              },
+              "name": {
+                "description": "Tier name",
+                "type": "string"
+              },
+              "tierId": {
+                "description": "Tier id",
+                "format": "uuid",
+                "type": "string"
+              },
+              "tierRewards": {
+                "description": "Rewards associated with this tier",
+                "items": {
+                  "properties": {
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "rewardId": {
+                      "description": "Reward to be attributed on tier assignment",
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "updatedAt": {
+                "format": "date-time",
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
           "type": "array"
         }

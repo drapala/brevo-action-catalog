@@ -63,26 +63,50 @@
       "description": "Response containing a list of events and the total count for pagination",
       "properties": {
         "events": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "List of matching events ordered by event_date descending",
           "items": {
-            "description": "(nested schema truncated)"
+            "properties": {
+              "contact_id": {
+                "description": "Contact ID associated with the event",
+                "format": "int64",
+                "type": "integer"
+              },
+              "event_date": {
+                "description": "Date and time of the event",
+                "format": "date-time",
+                "type": "string"
+              },
+              "event_name": {
+                "description": "Name of the event",
+                "type": "string"
+              },
+              "event_filter_id": {
+                "description": "Filter ID of the event",
+                "type": "string"
+              },
+              "object_type": {
+                "description": "Object type associated with the event",
+                "type": "string"
+              },
+              "event_properties": {
+                "additionalProperties": true,
+                "description": "Event-level custom properties",
+                "type": "object"
+              },
+              "contact_properties": {
+                "additionalProperties": true,
+                "description": "Contact-level properties at time of event",
+                "type": "object"
+              }
+            },
+            "type": "object"
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "array"
         },
         "count": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Total count of events matching the filters (use for pagination)",
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [

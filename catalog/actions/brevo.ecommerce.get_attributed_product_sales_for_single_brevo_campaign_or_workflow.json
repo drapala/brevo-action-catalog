@@ -54,14 +54,45 @@
           "description": "List of attributed products",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "id": {
+                "example": "1",
+                "type": "string"
+              },
+              "imageUrl": {
+                "example": "http://mydomain.com/product-absoulte-url/img.jpeg",
+                "type": "string"
+              },
+              "name": {
+                "example": "Milky Way Galaxy",
+                "type": "string"
+              },
+              "ordersCount": {
+                "example": 200,
+                "type": "integer"
+              },
+              "price": {
+                "example": 1000,
+                "format": "float",
+                "type": "number"
+              },
+              "revenue": {
+                "example": 999.99,
+                "format": "float",
+                "type": "number"
+              },
+              "sku": {
+                "example": "sku-1",
+                "type": "string"
+              },
+              "url": {
+                "example": "https://mydomain.com/products/alpina-panoma-classic",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "id"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

@@ -14,14 +14,36 @@
           "description": "array of categories objects",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "deletedAt": {
+                "description": "UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) of the category deleted from the shop's database",
+                "example": "2017-05-12T12:30:00Z",
+                "type": "string"
+              },
+              "id": {
+                "description": "Unique Category ID as saved in the shop\n",
+                "example": "CAT123",
+                "type": "string"
+              },
+              "isDeleted": {
+                "description": "category deleted from the shop's database",
+                "example": true,
+                "type": "boolean"
+              },
+              "name": {
+                "description": "**Mandatory in case of creation**. Name of the Category, as displayed in the shop\n",
+                "example": "Electronics",
+                "type": "string"
+              },
+              "url": {
+                "description": "URL to the category",
+                "example": "http://mydomain.com/category/electronics",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "id"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -84,7 +106,7 @@
     "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

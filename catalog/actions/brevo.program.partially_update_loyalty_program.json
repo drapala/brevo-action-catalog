@@ -46,135 +46,69 @@
     "schema": {
       "properties": {
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Loyalty Program unique identifier.",
+          "format": "uuid",
+          "type": "string"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Loyalty Program name.",
+          "type": "string"
         },
         "description": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Loyalty Program description.",
+          "type": "string"
         },
         "meta": {
-          "additionalProperties": {
-            "description": "(nested schema truncated)"
-          },
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "additionalProperties": {},
+          "description": "Loyalty Program metadata.",
+          "type": "object"
         },
         "state": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "enum": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Current state of the loyalty program.",
+          "enum": [
+            "inactive",
+            "active",
+            "draft"
+          ],
+          "type": "string"
         },
         "subscriptionPoolId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Loyalty Program subscription pool ID.",
+          "format": "uuid",
+          "type": "string"
         },
         "subscriptionGeneratorId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Loyalty Program subscription generator ID.",
+          "format": "uuid",
+          "type": "string"
         },
         "pattern": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Subscription code pattern.",
+          "type": "string"
         },
         "codeCount": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Number of available subscription codes.",
+          "format": "int64",
+          "type": "integer"
         },
         "documentId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Associated document identifier.",
+          "format": "uuid",
+          "type": "string"
         },
         "birthdayAttribute": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Contact attribute name used for birthday tracking.",
+          "type": "string"
         },
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the loyalty program was created.",
+          "format": "date-time",
+          "type": "string"
         },
         "updatedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Timestamp when the loyalty program was last modified.",
+          "format": "date-time",
+          "type": "string"
         }
       },
       "type": "object"

@@ -21,14 +21,87 @@
           "description": "Listing of available contact attributes in your account",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "calculatedValue": {
+                "description": "Calculated value formula",
+                "example": "COUNT[ORDER_ID,ORDER_DATE,==,NOW(-1)]",
+                "type": "string"
+              },
+              "category": {
+                "description": "Category of the attribute",
+                "enum": [
+                  "normal",
+                  "transactional",
+                  "category",
+                  "calculated",
+                  "global"
+                ],
+                "example": "category",
+                "type": "string"
+              },
+              "enumeration": {
+                "description": "Parameter only available for \"category\" type attributes.",
+                "items": {
+                  "properties": {
+                    "label": {
+                      "description": "Label of the \"category\" type attribute",
+                      "example": "Women",
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "Numeric ID of the \"category\" type attribute value. Set to 0 when the raw value cannot be converted to an integer (for example non-numeric values such as \"en\" or \"fr\"). Refer to `valueStr` for the original string representation.",
+                      "example": 1,
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "valueStr": {
+                      "description": "String representation of the \"category\" type attribute value. Always contains the original value as stored. Use this field when the attribute value is non-numeric (e.g. \"en\", \"fr\") or when you need the exact string form alongside the numeric `value`.",
+                      "example": "1",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "value",
+                    "valueStr"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "multiCategoryOptions": {
+                "description": "Parameter only available for \"multiple-choice\" type attributes.",
+                "items": {
+                  "description": "Options of the \"multiple-choice\" type attribute",
+                  "example": "USA",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "name": {
+                "description": "Name of the attribute",
+                "example": "LASTNAME",
+                "type": "string"
+              },
+              "type": {
+                "description": "Type of the attribute",
+                "enum": [
+                  "text",
+                  "date",
+                  "float",
+                  "id",
+                  "boolean",
+                  "multiple-choice",
+                  "user"
+                ],
+                "example": "text",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "category",
+              "name"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

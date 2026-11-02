@@ -39,12 +39,97 @@
       "properties": {
         "webhooks": {
           "items": {
-            "allOf": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "allOf": [
+              {
+                "properties": {
+                  "auth": {
+                    "description": "Authentication header to be send with the webhook requests",
+                    "example": {
+                      "token": "test-auth-token1234",
+                      "type": "bearer"
+                    },
+                    "type": "object"
+                  },
+                  "batched": {
+                    "description": "Batching configuration of the webhook, we send batched webhooks if its\ntrue",
+                    "example": true,
+                    "type": "boolean"
+                  },
+                  "createdAt": {
+                    "description": "Creation UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                    "example": "2016-12-01T12:50:00Z",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "Description of the webhook",
+                    "example": "Webhook triggered on campaign openings",
+                    "type": "string"
+                  },
+                  "events": {
+                    "items": {
+                      "description": "Events which will trigger the webhook when they occure",
+                      "example": "opens,clicks",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "headers": {
+                    "items": {
+                      "description": "Headers send with the requests to the webhook",
+                      "example": {
+                        "key": "cf-secret",
+                        "value": "test-header-value"
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "id": {
+                    "description": "ID of the webhook",
+                    "example": 654,
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "modifiedAt": {
+                    "description": "Last modification UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                    "example": "2017-05-12T13:15:00Z",
+                    "type": "string"
+                  },
+                  "type": {
+                    "description": "Type of webhook (marketing, transactional, or inbound)",
+                    "enum": [
+                      "marketing",
+                      "transactional",
+                      "inbound"
+                    ],
+                    "example": "marketing",
+                    "type": "string"
+                  },
+                  "domain": {
+                    "description": "Inbound domain of the webhook, only returned for inbound type webhooks",
+                    "example": "example.com",
+                    "type": "string"
+                  },
+                  "url": {
+                    "description": "URL of the webhook",
+                    "example": "http://requestb.in/173lyyx1",
+                    "format": "url",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "createdAt",
+                  "description",
+                  "events",
+                  "id",
+                  "modifiedAt",
+                  "type",
+                  "url"
+                ],
+                "type": "object"
+              }
+            ],
+            "type": "object"
           },
           "type": "array"
         }

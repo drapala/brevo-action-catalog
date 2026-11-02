@@ -21,40 +21,24 @@
         "companiesIds": {
           "description": "Companies ids for companies a task is linked to",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
           ],
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         },
         "contactsIds": {
           "description": "Contact ids for contacts linked to this task",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            1,
+            2,
+            3
           ],
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "integer"
           },
           "type": "array"
         },
@@ -67,20 +51,12 @@
         "dealsIds": {
           "description": "Deal ids for deals a task is linked to",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
           ],
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "string"
           },
           "type": "array"
         },
@@ -106,18 +82,44 @@
           "type": "string"
         },
         "reminder": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Task reminder date/time for a task",
           "properties": {
-            "description": "(nested schema truncated)"
+            "types": {
+              "description": "Type of task reminder e.g email, push",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "email",
+                  "push"
+                ]
+              },
+              "example": [
+                "email"
+              ]
+            },
+            "unit": {
+              "description": "Unit of time before reminder is to be sent",
+              "enum": [
+                "minutes",
+                "hours",
+                "weeks",
+                "days"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "description": "Value of time unit before reminder is to be sent",
+              "example": 10,
+              "type": "integer"
+            }
           },
-          "required": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "required": [
+            "value",
+            "unit",
+            "types"
+          ],
+          "type": "object"
         },
         "taskTypeId": {
           "description": "Id for type of task e.g Call / Email / Meeting etc.",

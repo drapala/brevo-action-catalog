@@ -21,16 +21,52 @@
           "description": "Billing details of the master account organization",
           "properties": {
             "address": {
-              "description": "(nested schema truncated)"
+              "description": "Billing address of master account",
+              "properties": {
+                "countryCode": {
+                  "description": "Country code",
+                  "type": "string"
+                },
+                "locality": {
+                  "description": "Locality",
+                  "type": "string"
+                },
+                "postalCode": {
+                  "description": "Postal code",
+                  "type": "string"
+                },
+                "stateCode": {
+                  "description": "State code",
+                  "type": "string"
+                },
+                "streetAddress": {
+                  "description": "Street address",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             },
             "companyName": {
-              "description": "(nested schema truncated)"
+              "description": "Company name of master account",
+              "type": "string"
             },
             "email": {
-              "description": "(nested schema truncated)"
+              "description": "Billing email id of master account",
+              "type": "string"
             },
             "name": {
-              "description": "(nested schema truncated)"
+              "description": "Billing name of master account holder",
+              "properties": {
+                "familyName": {
+                  "description": "Last name for billing",
+                  "type": "string"
+                },
+                "givenName": {
+                  "description": "First name for billing",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             }
           },
           "type": "object"
@@ -56,22 +92,71 @@
           "description": "Plan details",
           "properties": {
             "currencyCode": {
-              "description": "(nested schema truncated)"
+              "description": "Plan currency",
+              "type": "string"
             },
             "features": {
-              "description": "(nested schema truncated)"
+              "description": "List of provided features in the plan",
+              "items": {
+                "properties": {
+                  "name": {
+                    "description": "Name of the feature",
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "description": "Quantity provided in the plan",
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "quantityWithOverages": {
+                    "description": "Quantity with overages provided in the plan (only\napplicable on ENTv2)",
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "remaining": {
+                    "description": "Quantity remaining in the plan",
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "unitValue": {
+                    "description": "Unit value of the feature",
+                    "type": "string"
+                  },
+                  "used": {
+                    "description": "Quantity consumed by master",
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "usedOverages": {
+                    "description": "Quantity consumed by sub-organizations over the\nadmin plan limit (only applicable on ENTv2)",
+                    "format": "int64",
+                    "type": "integer"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
             },
             "nextBillingAt": {
-              "description": "(nested schema truncated)"
+              "description": "Timestamp of next billing date",
+              "format": "int64",
+              "type": "integer"
             },
             "planPeriod": {
-              "description": "(nested schema truncated)"
+              "description": "Plan period type",
+              "enum": [
+                "month",
+                "year"
+              ],
+              "type": "string"
             },
             "price": {
-              "description": "(nested schema truncated)"
+              "description": "Plan amount",
+              "type": "number"
             },
             "subAccounts": {
-              "description": "(nested schema truncated)"
+              "description": "Number of sub-accounts",
+              "type": "integer"
             }
           },
           "type": "object"

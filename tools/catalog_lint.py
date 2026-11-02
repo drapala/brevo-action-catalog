@@ -14,6 +14,9 @@ import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
+from jsonschema import Draft7Validator
+from jsonschema.exceptions import SchemaError
+
 ROOT = Path(__file__).resolve().parent.parent
 ID_FILLERS = {"a", "an", "the"}
 WEAK_ENTITY_NAMES = {"detail", "metric", "request", "group", "limit", "object", "message", "data", "info", "report"}
@@ -94,6 +97,23 @@ def check_destructive_needs_confirmation(action: dict) -> list[Finding]:
     return []
 
 
+def check_irreversible_needs_confirmation(action: dict) -> list[Finding]:
+    """L008: a write that the catalog cannot undo asks first."""
+    se = action["side_effects"]
+    if action["operation_class"] != "read" and not se["reversible"] and not se["requires_confirmation"]:
+        return [Finding("L008", action["id"], "error", "irreversible write without requires_confirmation")]
+    return []
+
+
+def check_input_schema_is_valid(action: dict) -> list[Finding]:
+    """L009: the input schema is a valid JSON Schema, so the executor can check inputs against it."""
+    try:
+        Draft7Validator.check_schema(action["inputs"]["schema"])
+    except SchemaError as error:
+        return [Finding("L009", action["id"], "error", f"input schema is not valid JSON Schema: {error.message}")]
+    return []
+
+
 def check_verified_has_evidence(action: dict) -> list[Finding]:
     """L004: no 'verified' status without an evidence pointer and a date."""
     v = action["verification"]
@@ -137,6 +157,8 @@ def lint(actions: dict[str, dict]) -> list[Finding]:
         findings += check_finder_is_callable(action, actions)
         findings += check_effect_needs_confirmation(action)
         findings += check_destructive_needs_confirmation(action)
+        findings += check_irreversible_needs_confirmation(action)
+        findings += check_input_schema_is_valid(action)
         findings += check_verified_has_evidence(action)
         findings += check_undo_points_to_real_action(action, actions)
         findings += check_write_has_postcondition(action)
@@ -160,7 +182,9 @@ def as_dicts(findings: list[Finding]) -> list[dict]:
 
 
 def main() -> int:
-    actions = {a["id"]: a for a in (json.loads(f.read_text()) for f in sorted((ROOT / "catalog/actions").glob("*.json")))}
+    actions = {
+        a["id"]: a for a in (json.loads(f.read_text()) for f in sorted((ROOT / "catalog/actions").glob("*.json")))
+    }
     findings = lint(actions)
     for f in findings:
         if f.severity == "error":

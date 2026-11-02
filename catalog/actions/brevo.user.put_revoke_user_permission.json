@@ -35,12 +35,8 @@
         "credit_notes": {
           "description": "Credit note",
           "items": {
-            "example": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "example": "TEST-123",
+            "type": "string"
           },
           "type": "array"
         },

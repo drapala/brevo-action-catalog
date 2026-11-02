@@ -52,14 +52,111 @@
         "campaigns": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "campaignName": {
+                "description": "Name of the WhatsApp Campaign",
+                "example": "Test Campaign",
+                "type": "string"
+              },
+              "campaignStatus": {
+                "description": "Status of the Whatsapp Campaign",
+                "enum": [
+                  "draft",
+                  "scheduled",
+                  "pending",
+                  "approved",
+                  "running",
+                  "suspended",
+                  "rejected",
+                  "sent"
+                ],
+                "example": "draft",
+                "type": "string"
+              },
+              "createdAt": {
+                "description": "Creation UTC date-time of the WhatsApp campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2017-06-01T12:30:00Z",
+                "type": "string"
+              },
+              "errorReason": {
+                "description": "Error Reason associated with the WhatsApp campaign sending",
+                "type": "string"
+              },
+              "id": {
+                "description": "ID of the WhatsApp Campaign",
+                "example": 1672035851100690,
+                "format": "int64",
+                "type": "integer"
+              },
+              "invalidatedContacts": {
+                "description": "Count of invalidated contacts",
+                "example": 0,
+                "format": "int64",
+                "type": "integer"
+              },
+              "modifiedAt": {
+                "description": "UTC date-time of last modification of the WhatsApp campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+                "example": "2017-05-01T12:30:00Z",
+                "type": "string"
+              },
+              "readPercentage": {
+                "description": "Read percentage of the the whatsapp campaign created",
+                "example": 28.57,
+                "format": "float",
+                "type": "number"
+              },
+              "scheduledAt": {
+                "description": "UTC date-time on which WhatsApp campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format",
+                "example": "2017-06-01T12:30:00Z",
+                "type": "string"
+              },
+              "stats": {
+                "properties": {
+                  "delivered": {
+                    "example": 3,
+                    "type": "integer"
+                  },
+                  "notSent": {
+                    "example": 4,
+                    "type": "integer"
+                  },
+                  "read": {
+                    "example": 2,
+                    "type": "integer"
+                  },
+                  "sent": {
+                    "example": 3,
+                    "type": "integer"
+                  },
+                  "unsubscribe": {
+                    "example": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "sent",
+                  "delivered",
+                  "read",
+                  "unsubscribe",
+                  "notSent"
+                ],
+                "type": "object"
+              },
+              "templateId": {
+                "description": "Id of the WhatsApp template",
+                "example": 637660278078655,
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "id",
+              "campaignName",
+              "campaignStatus",
+              "templateId",
+              "scheduledAt",
+              "createdAt",
+              "modifiedAt"
+            ],
+            "type": "object"
           },
           "type": "array"
         },

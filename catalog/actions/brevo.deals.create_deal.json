@@ -13,58 +13,34 @@
         "attributes": {
           "description": "Attributes for deal creation To assign owner of a Deal you can send attributes.deal_owner and utilize the account email or ID. If you want to create a deal on a specific pipeline and stage you can use the following attributes `pipeline` and `deal_stage`. Pipeline and deal_stage are ids you can fetch using this endpoint `/crm/pipeline/details/{pipelineID}`\n",
           "example": {
-            "amount": {
-              "description": "(nested schema truncated)"
-            },
-            "deal_owner": {
-              "description": "(nested schema truncated)"
-            }
+            "amount": 12,
+            "deal_owner": "6093d2425a9b436e9519d034"
           },
           "type": "object"
         },
         "linkedCompaniesIds": {
           "description": "Company ids to be linked with deal",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "61a5ce58c5d4795761045990",
+            "61a5ce58c5d4795761045991",
+            "61a5ce58c5d4795761045992"
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "objectID",
+            "type": "string"
           },
           "type": "array"
         },
         "linkedContactsIds": {
           "description": "Contact ids to be linked with deal",
           "example": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            1,
+            2,
+            3
           ],
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },

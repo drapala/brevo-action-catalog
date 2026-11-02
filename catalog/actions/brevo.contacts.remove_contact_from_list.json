@@ -20,7 +20,16 @@
             {
               "properties": {
                 "emails": {
-                  "description": "(nested schema truncated)"
+                  "description": "**Required if 'all' is false and 'ids', 'extIds' are empty.** Emails to remove from a list. You can pass a **maximum of 150 emails** for removal in one request.\n",
+                  "items": {
+                    "description": "Email to remove from a list",
+                    "example": "john.smith@contact.com",
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "maxItems": 150,
+                  "minItems": 1,
+                  "type": "array"
                 }
               },
               "type": "object"
@@ -28,7 +37,16 @@
             {
               "properties": {
                 "ids": {
-                  "description": "(nested schema truncated)"
+                  "description": "**Required if 'all' is false and 'emails', 'extIds' are empty.** IDs to remove from a list. You can pass a **maximum of 150 IDs** for removal in one request.\n",
+                  "items": {
+                    "description": "ID to remove from a list",
+                    "example": 10,
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "maxItems": 150,
+                  "minItems": 1,
+                  "type": "array"
                 }
               },
               "type": "object"
@@ -36,7 +54,9 @@
             {
               "properties": {
                 "all": {
-                  "description": "(nested schema truncated)"
+                  "description": "**Required if 'emails', 'extIds' and 'ids' are empty.** Remove all existing contacts from a list. A process will be created in this scenario. You can fetch the process details to know about the progress\n",
+                  "example": true,
+                  "type": "boolean"
                 }
               },
               "type": "object"
@@ -44,7 +64,15 @@
             {
               "properties": {
                 "extIds": {
-                  "description": "(nested schema truncated)"
+                  "description": "**Required if 'all' is false, 'ids' and 'emails' are empty.** EXT_ID attributes to remove from a list. You can pass a **maximum of 150 EXT_ID attributes** for removal in one request.\n",
+                  "items": {
+                    "description": "EXT_ID to remove from a list",
+                    "example": "ext132",
+                    "type": "string"
+                  },
+                  "maxItems": 150,
+                  "minItems": 1,
+                  "type": "array"
                 }
               },
               "type": "object"
@@ -72,11 +100,64 @@
       "properties": {
         "contacts": {
           "properties": {
-            "description": "(nested schema truncated)"
+            "failure": {
+              "oneOf": [
+                {
+                  "items": {
+                    "description": "Email addresses which can not be imported/removed, could be already in/out list and/or doesn't exist",
+                    "example": "jeff32@example.com, jim56@example.com",
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "description": "IDs which can not be imported/removed, could be already in/out list and/or doesn't exist",
+                    "example": "5, 6",
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "processId": {
+              "description": "Id of the process created to remove contacts from list when user opts for \"all\" option.",
+              "example": 78,
+              "format": "int64",
+              "type": "integer"
+            },
+            "success": {
+              "oneOf": [
+                {
+                  "example": "jeff32@example.com, jim56@example.com",
+                  "items": {
+                    "description": "Email addresses which are successfully imported/removed",
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "example": "1, 2",
+                  "items": {
+                    "description": "IDs which are successfully imported/removed",
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "total": {
+              "description": "Displays the count of total number of contacts removed from list when user opts for \"all\" option.",
+              "example": 27,
+              "format": "int64",
+              "type": "integer"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         }
       },
       "required": [

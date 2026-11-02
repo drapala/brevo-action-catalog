@@ -54,7 +54,24 @@
           "type": "integer",
           "description": "Index of the first document in the page"
         }
-      }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "email"
+          ]
+        },
+        {
+          "required": [
+            "messageId"
+          ]
+        },
+        {
+          "required": [
+            "templateId"
+          ]
+        }
+      ]
     },
     "entity_refs": [],
     "credential_ref": "brevo_api_key"
@@ -71,14 +88,61 @@
         "transactionalEmails": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "date": {
+                "description": "Date on which transactional email was sent",
+                "example": "2017-03-12T12:30:00Z",
+                "type": "string"
+              },
+              "email": {
+                "description": "Email address to which transactional email has been sent",
+                "example": "john.smith@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "from": {
+                "description": "Email address of the sender from which the email was sent",
+                "example": "diana.doe@example.com",
+                "format": "email",
+                "type": "string"
+              },
+              "messageId": {
+                "description": "Message Id of the sent email",
+                "example": "<201798300811.5700093@relay.domain.com>",
+                "type": "string"
+              },
+              "subject": {
+                "description": "Subject of the sent email",
+                "example": "Summer Camp",
+                "type": "string"
+              },
+              "tags": {
+                "description": "Tags used for your email",
+                "items": {
+                  "example": "tag1",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "templateId": {
+                "description": "Id of the template",
+                "example": 2,
+                "format": "int64",
+                "type": "integer"
+              },
+              "uuid": {
+                "description": "Unique id of the email sent to a particular contact",
+                "example": "5a78c-209ok98262910-s99a341",
+                "type": "string"
+              }
             },
-            "required": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "required": [
+              "date",
+              "email",
+              "messageId",
+              "subject",
+              "uuid"
+            ],
+            "type": "object"
           },
           "type": "array"
         }

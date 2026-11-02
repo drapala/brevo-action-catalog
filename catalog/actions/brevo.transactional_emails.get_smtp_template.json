@@ -41,161 +41,92 @@
     "schema": {
       "properties": {
         "createdAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Creation UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2017-05-01T12:30:00Z",
+          "type": "string"
         },
         "doiTemplate": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "It is true if template is a valid Double opt-in (DOI) template, otherwise it is false. This field will be available only in case of single template detail call.",
+          "example": false,
+          "type": "boolean"
         },
         "htmlContent": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "HTML content of the template",
+          "example": "Your order n°xxxxx has been confirmed. Thanks for your purchase.",
+          "type": "string"
         },
         "id": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "ID of the template",
+          "example": 4,
+          "format": "int64",
+          "type": "integer"
         },
         "isActive": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Status of template (true=active, false=inactive)",
+          "example": true,
+          "type": "boolean"
         },
         "modifiedAt": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Last modification UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)",
+          "example": "2017-05-12T12:30:00Z",
+          "type": "string"
         },
         "name": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Name of the template",
+          "example": "Order Confirmation - EN",
+          "type": "string"
         },
         "replyTo": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "format": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Email defined as the \"Reply to\" for the template",
+          "example": "replyto@domain.com",
+          "format": "email",
+          "type": "string"
         },
         "sender": {
           "properties": {
-            "description": "(nested schema truncated)"
+            "email": {
+              "description": "From email for the template",
+              "example": "contact@myshop.fr",
+              "format": "email",
+              "type": "string"
+            },
+            "id": {
+              "description": "Sender id of the template",
+              "example": 43,
+              "type": "string"
+            },
+            "name": {
+              "description": "Sender name for the template",
+              "example": "Mary from MyShop",
+              "type": "string"
+            }
           },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "type": "object"
         },
         "subject": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Subject of the template",
+          "example": "Thanks for your order !",
+          "type": "string"
         },
         "tag": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Tag of the template",
+          "example": "sports",
+          "type": "string"
         },
         "testSent": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Status of test sending for the template (true=test email has been sent, false=test email has not been sent)",
+          "example": true,
+          "type": "boolean"
         },
         "toField": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Customisation of the \"to\" field for the template",
+          "example": "{FIRSTNAME} {LASTNAME}",
+          "type": "string"
         },
         "customTemplateId": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
-          "example": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "description": "Custom template identifier, if one was assigned during template creation. Only present when the template has a custom ID.",
+          "example": "my-custom-template-001",
+          "type": "string"
         }
       },
       "required": [

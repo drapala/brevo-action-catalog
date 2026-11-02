@@ -33,29 +33,42 @@
     "schema": {
       "properties": {
         "cart": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Specify the payment currency and amount.\n",
           "properties": {
-            "description": "(nested schema truncated)"
+            "currency": {
+              "description": "Currency code for the payment amount.\n",
+              "enum": [
+                "EUR"
+              ],
+              "example": "EUR",
+              "type": "string"
+            },
+            "specificAmount": {
+              "description": "Payment amount, in cents. e.g. if you want to request €12.00, then the amount in cents is 1200.\n",
+              "example": 1200,
+              "format": "int64",
+              "type": "integer"
+            }
           },
-          "required": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "required": [
+            "currency",
+            "specificAmount"
+          ],
+          "type": "object"
         },
         "configuration": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Optional. Redirect contact to a custom success page once payment is successful. If empty the default Brevo page will be displayed once a payment is validated\n",
           "properties": {
-            "description": "(nested schema truncated)"
+            "customSuccessUrl": {
+              "description": "Absolute URL of the custom success page.\n",
+              "example": "https://my-company.com/payment-success",
+              "format": "url",
+              "type": "string"
+            }
           },
-          "required": {
-            "description": "(nested schema truncated)"
-          }
+          "required": [
+            "customSuccessUrl"
+          ]
         },
         "contactId": {
           "description": "Brevo ID of the contact requested to pay.\n",
@@ -64,18 +77,27 @@
           "type": "integer"
         },
         "notification": {
-          "description": {
-            "description": "(nested schema truncated)"
-          },
+          "description": "Optional. Use this object if you want to let Brevo send an email to the contact, with the payment request URL. If empty, no notifications (message and reminders) will be sent.\n",
           "properties": {
-            "description": "(nested schema truncated)"
+            "channel": {
+              "description": "Channel used to send the notifications.\n",
+              "enum": [
+                "email"
+              ],
+              "example": "email",
+              "type": "string"
+            },
+            "text": {
+              "description": "Use this field if you want to give more context to your contact about the payment request.\n",
+              "example": "Please pay for your yoga class.",
+              "type": "string"
+            }
           },
-          "required": {
-            "description": "(nested schema truncated)"
-          },
-          "type": {
-            "description": "(nested schema truncated)"
-          }
+          "required": [
+            "channel",
+            "text"
+          ],
+          "type": "object"
         },
         "numberOfRemindersSent": {
           "description": "number of reminders sent.\n",
@@ -91,18 +113,10 @@
         "status": {
           "description": "Status of the payment request.",
           "enum": [
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            },
-            {
-              "description": "(nested schema truncated)"
-            }
+            "created",
+            "sent",
+            "reminderSent",
+            "paid"
           ],
           "example": "paid",
           "type": "string"

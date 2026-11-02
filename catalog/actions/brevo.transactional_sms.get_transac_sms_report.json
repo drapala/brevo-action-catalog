@@ -47,11 +47,74 @@
         "reports": {
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "accepted": {
+                "description": "Number of accepted SMS for the date",
+                "example": 85,
+                "format": "int64",
+                "type": "integer"
+              },
+              "blocked": {
+                "description": "Number of blocked contact for the date",
+                "example": 0,
+                "format": "int64",
+                "type": "integer"
+              },
+              "date": {
+                "description": "Date for which statistics are retrieved",
+                "example": "2017-03-17",
+                "format": "date",
+                "type": "string"
+              },
+              "delivered": {
+                "description": "Number of delivered SMS for the date",
+                "example": 85,
+                "format": "int64",
+                "type": "integer"
+              },
+              "hardBounces": {
+                "description": "Number of hardbounces for the date",
+                "example": 1,
+                "format": "int64",
+                "type": "integer"
+              },
+              "rejected": {
+                "description": "Number of rejected SMS for the date",
+                "example": 1,
+                "format": "int64",
+                "type": "integer"
+              },
+              "replied": {
+                "description": "Number of answered SMS for the date",
+                "example": 2,
+                "format": "int64",
+                "type": "integer"
+              },
+              "requests": {
+                "description": "Number of requests for the date",
+                "example": 87,
+                "format": "int64",
+                "type": "integer"
+              },
+              "skipped": {
+                "description": "Number of skipped SMS for the date",
+                "example": 1,
+                "format": "int64",
+                "type": "integer"
+              },
+              "softBounces": {
+                "description": "Number of softbounces for the date",
+                "example": 1,
+                "format": "int64",
+                "type": "integer"
+              },
+              "unsubscribed": {
+                "description": "Number of unsubscription for the date",
+                "example": 1,
+                "format": "int64",
+                "type": "integer"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         }

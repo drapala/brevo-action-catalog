@@ -19,10 +19,45 @@
           "description": "Either `ids` or `ext_ids` must be provided, but not both in the same request.",
           "oneOf": [
             {
-              "description": "(nested schema truncated)"
+              "type": "object",
+              "required": [
+                "ids"
+              ],
+              "properties": {
+                "ids": {
+                  "type": "array",
+                  "maxItems": 1000,
+                  "description": "List of object record IDs",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "example": [
+                    101,
+                    102,
+                    103
+                  ]
+                }
+              }
             },
             {
-              "description": "(nested schema truncated)"
+              "type": "object",
+              "required": [
+                "ext_ids"
+              ],
+              "properties": {
+                "ext_ids": {
+                  "type": "array",
+                  "maxItems": 1000,
+                  "description": "List of external record identifiers",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "ext-001",
+                    "ext-002"
+                  ]
+                }
+              }
             }
           ]
         }

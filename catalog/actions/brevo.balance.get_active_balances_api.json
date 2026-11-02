@@ -101,11 +101,28 @@
           "description": "List of active balances.",
           "items": {
             "properties": {
-              "description": "(nested schema truncated)"
+              "id": {
+                "description": "Unique identifier of the balance entry.",
+                "format": "uuid",
+                "type": "string"
+              },
+              "amount": {
+                "description": "Current balance amount.",
+                "type": "number",
+                "format": "float"
+              },
+              "createdAt": {
+                "description": "Timestamp when the balance was created.",
+                "format": "date-time",
+                "type": "string"
+              },
+              "expiresAt": {
+                "description": "Timestamp when the balance expires (if applicable).",
+                "format": "date-time",
+                "type": "string"
+              }
             },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "object"
           },
           "type": "array"
         }

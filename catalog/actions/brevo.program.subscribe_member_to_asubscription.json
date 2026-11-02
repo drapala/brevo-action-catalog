@@ -27,9 +27,7 @@
         "memberContactIds": {
           "description": "Required, each item must be greater than or equal to 1",
           "items": {
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "type": "integer"
           },
           "minItems": 1,
           "type": "array"
@@ -66,12 +64,8 @@
         "memberContactIds": {
           "description": "List of unique member contact IDs.",
           "items": {
-            "format": {
-              "description": "(nested schema truncated)"
-            },
-            "type": {
-              "description": "(nested schema truncated)"
-            }
+            "format": "int64",
+            "type": "integer"
           },
           "type": "array"
         },
