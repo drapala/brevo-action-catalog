@@ -3475,8 +3475,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "failed",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3800,8 +3800,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "failed",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {

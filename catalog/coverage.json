@@ -1,11 +1,11 @@
 {
   "total_actions": 302,
   "by_verification": {
-    "verified": 79,
+    "verified": 81,
     "gated": 17,
     "observed": 9,
     "documented": 194,
-    "failed": 3
+    "failed": 1
   },
   "by_route_kind": {
     "documented_api": 292,
@@ -136,8 +136,7 @@
     },
     "Transactional emails": {
       "documented": 11,
-      "verified": 10,
-      "failed": 1
+      "verified": 11
     },
     "User": {
       "documented": 5,
@@ -147,9 +146,8 @@
       "documented": 2
     },
     "Webhooks": {
-      "verified": 4,
-      "documented": 1,
-      "failed": 1
+      "verified": 5,
+      "documented": 1
     },
     "WhatsApp Campaigns": {
       "documented": 6,

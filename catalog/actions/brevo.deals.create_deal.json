@@ -138,7 +138,8 @@
     "status": "verified",
     "route_kind": "documented_api",
     "checked_at": "2026-11-02T16:23:46+00:00",
-    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793636622"
+    "evidence": "evidence/runs.jsonl#run=crm-lifecycle-1793636622",
+    "notes": "The spec documents 201, the live API returns 200."
   },
   "sources": [
     {

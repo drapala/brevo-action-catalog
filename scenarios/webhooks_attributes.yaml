@@ -3,6 +3,7 @@ description: A transactional webhook and a contact attribute. Everything created
 steps:
   - {name: create_webhook, action: brevo.webhooks.create_webhook, inputs: {url: "https://example.com/${prefix}-${ts}", events: [delivered], type: transactional, description: "${prefix} webhook"}, assert: {status: 201}}
   - {name: read_webhook, action: brevo.webhooks.get_webhook, inputs: {webhookId: "${create_webhook.response.id}"}, assert: {status: 200, equals: {url: "https://example.com/${prefix}-${ts}"}}}
+  - {name: webhooks_listed, postcondition_of: brevo.webhooks.create_webhook, action: brevo.webhooks.get_webhooks, inputs: {type: transactional}, assert: {status: 200, list_contains: {path: webhooks, field: url, value: "https://example.com/${prefix}-${ts}"}}}
   - {name: update_webhook, action: brevo.webhooks.update_webhook, inputs: {webhookId: "${create_webhook.response.id}", description: "${prefix} webhook updated"}, assert: {status: 204}}
   - {name: read_webhook_after_update, postcondition_of: brevo.webhooks.update_webhook, action: brevo.webhooks.get_webhook, inputs: {webhookId: "${create_webhook.response.id}"}, assert: {status: 200, equals: {description: "${prefix} webhook updated"}}}
   - {name: delete_webhook, action: brevo.webhooks.delete_webhook, inputs: {webhookId: "${create_webhook.response.id}"}, assert: {status: 204}, stop_on_fail: false}

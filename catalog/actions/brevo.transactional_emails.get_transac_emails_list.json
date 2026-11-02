@@ -118,15 +118,15 @@
     "requires_confirmation": false
   },
   "availability": {
-    "free_plan": "unknown",
+    "free_plan": "available",
     "requires": []
   },
   "verification": {
-    "status": "failed",
+    "status": "verified",
     "route_kind": "documented_api",
-    "checked_at": "2026-11-02T16:06:11+00:00",
-    "evidence": "evidence/runs.jsonl#run=probe-reads-1793635547",
-    "notes": "HTTP 400: {\"code\": \"missing_parameter\", \"message\": \"Please pass atleast one of the following filters: email, messageId, templateId\"}"
+    "checked_at": "2026-11-02T16:30:38+00:00",
+    "evidence": "evidence/runs.jsonl#run=templates-and-campaigns-1793637036",
+    "notes": "The spec marks every filter optional, but the API needs one of email, messageId or templateId. The call with no inputs returned HTTP 400: {\"code\": \"missing_parameter\", \"message\": \"Please pass atleast one of the following filters: email, messageId, templateId\"}."
   },
   "sources": [
     {

@@ -2,6 +2,7 @@ name: templates-and-campaigns
 description: Transactional template and a draft email campaign. Nothing is sent. Everything created is deleted.
 steps:
   - {name: account, action: brevo.account.get_account, assert: {status: 200}}
+  - {name: transac_log_by_email, action: brevo.transactional_emails.get_transac_emails_list, inputs: {email: "${account.response.email}", limit: 10}, assert: {status: 200}, note: "the spec marks every filter optional, but the API needs one of email, messageId or templateId"}
   - {name: create_template, action: brevo.transactional_emails.create_smtp_template, inputs: {templateName: "${prefix}-template-${ts}", subject: "Catalog test ${ts}", sender: {email: "${account.response.email}"}, htmlContent: "<p>Hello {{ params.name }}</p>"}, assert: {status: 201}}
   - {name: read_template, action: brevo.transactional_emails.get_smtp_template, inputs: {templateId: "${create_template.response.id}"}, assert: {status: 200, equals: {name: "${prefix}-template-${ts}", subject: "Catalog test ${ts}"}}}
   - {name: update_template, action: brevo.transactional_emails.update_smtp_template, inputs: {templateId: "${create_template.response.id}", subject: "Catalog test updated ${ts}", isActive: false}, assert: {status: 204}}
