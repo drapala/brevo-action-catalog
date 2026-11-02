@@ -4,3 +4,4 @@ __pycache__/
 *.har
 .env
 build/
+.claude/

@@ -1,5 +1,7 @@
 # Plan: an agent-ready catalog of Brevo business actions
 
+This is the plan I wrote before the work started. `README.md` has the results, and `docs/AI_LOG.md` has what changed along the way.
+
 ## The problem, from the agent's side
 
 An agent that operates Brevo must do five things for every action:
