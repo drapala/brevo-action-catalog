@@ -11,7 +11,15 @@ A catalog of 348 Brevo actions that an AI agent can find, fill, run and check. I
 | `seen` | 42 | Seen in the web app (a button or a menu item) and not run. The entry gives the UI steps. These actions have no public API. |
 | `documented` | 194 | In the official API spec only. Not run. |
 
-The 81 verified actions include 31 writes (create, update, delete, link). Every write was read back after it ran. The evidence is in `evidence/runs.jsonl` (377 live API calls). Coverage by area is in `catalog/coverage.json`.
+The 81 verified actions include 31 writes (create, update, delete, link). Every write was read back after it ran. The evidence is in `evidence/runs.jsonl` (400 live API calls). Coverage by area is in `catalog/coverage.json`.
+
+## Review in 2 minutes
+
+1. [`demo/agent-demo-2026-11-02.md`](demo/agent-demo-2026-11-02.md): a fresh Claude agent gets four user requests and only the catalog's three MCP tools. Every tool call and reply is in the file.
+2. [`catalog/coverage.json`](catalog/coverage.json): the counts in this README, built by `tools/build_catalog.py`.
+3. Three entries: a verified write ([`add_contact_to_list`](catalog/actions/brevo.contacts.add_contact_to_list.json)), a failed one ([`update_task`](catalog/actions/brevo.tasks.update_task.json)) and a web-app-only one ([`create_form`](catalog/actions/brevo.forms.create_form.json)).
+4. [`docs/AI_LOG.md`](docs/AI_LOG.md): every mistake the AI made while building this, what caught it, and the fix.
+5. [`sources/ui/ui_map.yaml`](sources/ui/ui_map.yaml): every action seen in the web app, joined to the catalog.
 
 ## Coverage of the web app
 
@@ -63,8 +71,27 @@ Each action is one JSON file in `catalog/actions/`, valid against `catalog/schem
 2. Open the action file. Prefer `verified`, then `observed`. Treat `documented` as untested. Treat `seen` as a pointer: a browser agent can follow its UI steps, but its inputs and exact effect are not known. Do not offer `gated` actions on a free account.
 3. For each ID input, call the `find_with` action first.
 4. If `requires_confirmation` is true, ask the user before the call. This covers sends, invitations, deletes, cancels and account settings (111 actions).
-5. Run the action: `tools/brevo_exec.py call <action_id> '<json inputs>'` runs any `documented_api` route.
+5. Run the action through the MCP server (next section), or with `tools/brevo_exec.py call <action_id> '<json inputs>'` for any `documented_api` route.
 6. Run the `postcondition` read and check the effect before telling the user it is done.
+
+## An agent using it
+
+`tools/mcp_server.py` serves the catalog to any MCP client with three tools: `find_actions`, `get_action` and `run_action`. The server enforces the catalog's rules, so an agent cannot skip them:
+
+- An action that needs confirmation runs only with `confirmed=true`.
+- A `gated` or `seen` action, or one with no public API, does not run. The reply gives the UI steps.
+- Every run returns the read-back the agent must do before it reports success.
+
+`demo/run_agent_demo.py` gave four requests to a fresh Claude agent in headless mode, with only these three tools and no other context. The full transcript is in `demo/agent-demo-2026-11-02.md`.
+
+| Request | What the agent did |
+|---|---|
+| Add a contact to the list named zz-catalog-test-demo-list | It found the list ID with the finder that the entry names, created the contact on that list, and read the contact back before it said done. |
+| Mark the task as done | It saw that `update_task` is `failed`, tried once, read the task back, and reported that the task is still open. |
+| Delete the list | It stopped before the delete and wrote the confirmation question for the user. |
+| Create a segment of the contacts who opened last week's campaign | It found no campaigns on the account, saw that segments exist only in the web app, and asked the user what they meant instead of guessing. |
+
+`confirmed=true` is the agent's statement that the user agreed. In the demo the agent also set it on reads, where it has no effect. With an MCP client that asks a person before each tool call, a person checks that statement.
 
 ## Approach
 
@@ -138,6 +165,7 @@ uv venv && uv pip install -r pyproject.toml pytest
 .venv/bin/python tools/catalog_lint.py              # catalog checks
 .venv/bin/python -m pytest -q                       # tests
 .venv/bin/python tools/presubmit_check.py           # secrets, schema, ledger, scenario IDs
+.venv/bin/python demo/run_agent_demo.py             # needs the claude CLI and a Brevo key
 ```
 
 Live calls need a Brevo API key. The key is never stored in this repository. Give it in one of two ways:
@@ -154,6 +182,12 @@ Then:
 
 Scenarios create items with the prefix `zz-catalog-test-` and delete them at the end.
 
+To give the catalog to an MCP client, for example Claude Code or Claude Desktop:
+
+```json
+{"mcpServers": {"brevo-catalog": {"command": "<repo>/.venv/bin/python", "args": ["<repo>/tools/mcp_server.py"]}}}
+```
+
 ## Layout
 
 ```
@@ -161,7 +195,8 @@ catalog/      actions/*.json, index.json, coverage.json, lint.json, schema/
 sources/      openapi/ (spec), ui/ (web app walk and ui_map.yaml), ui_actions/ (UI-only actions)
 scenarios/    live create, read, update, delete flows
 evidence/     runs.jsonl (every live call), ui-capture-*.json and ui-walk-*.json (browser)
-tools/        generator, builder, executor, lint, ledger, presubmit
+tools/        generator, builder, executor, MCP server, lint, ledger, presubmit
+demo/         agent demo runner and its transcript
 docs/         AI_LOG.md, corrections.jsonl
 tests/        one test per past error
 ```
