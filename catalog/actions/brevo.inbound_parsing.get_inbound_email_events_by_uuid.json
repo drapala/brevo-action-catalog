@@ -2,7 +2,7 @@
   "id": "brevo.inbound_parsing.get_inbound_email_events_by_uuid",
   "product": "brevo",
   "area": "Inbound Parsing",
-  "entity": "event",
+  "entity": "inbound_email_event",
   "operation_class": "read",
   "label": "Fetch all events history for one particular received email.",
   "description": "This endpoint will show the list of all events history for one particular received email.",
@@ -22,9 +22,9 @@
     "entity_refs": [
       {
         "input": "uuid",
-        "entity": "event",
-        "find_with": "brevo.event.get_events",
-        "create_with": "brevo.event.create_event"
+        "entity": "inbound_email_event",
+        "find_with": "brevo.inbound_parsing.get_inbound_email_events",
+        "create_with": null
       }
     ],
     "credential_ref": "brevo_api_key"

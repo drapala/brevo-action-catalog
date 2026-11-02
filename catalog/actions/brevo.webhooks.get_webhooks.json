@@ -87,9 +87,9 @@
   "verification": {
     "status": "verified",
     "route_kind": "documented_api",
-    "checked_at": "2026-11-02T16:31:53+00:00",
-    "evidence": "evidence/runs.jsonl#run=webhooks-and-attributes-1793637111",
-    "notes": "The call with no inputs returned HTTP 400: {\"code\": \"document_not_found\", \"message\": \"Webhook record does not exist\"}."
+    "checked_at": "2026-11-02T16:36:18+00:00",
+    "evidence": "evidence/runs.jsonl#run=webhooks-and-attributes-1793637376",
+    "notes": "Type defaults to transactional, so call once per type (transactional, marketing, inbound) to list every webhook. A type with no webhooks returns 400 Webhook record does not exist, which means none. A call with no inputs, made before any test data existed, returned HTTP 400: {\"code\": \"document_not_found\", \"message\": \"Webhook record does not exist\"}."
   },
   "sources": [
     {

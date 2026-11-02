@@ -104,11 +104,11 @@
   "preconditions": [],
   "postcondition": null,
   "side_effects": {
-    "reversible": false,
-    "undo_with": null,
+    "reversible": true,
+    "undo_with": "brevo.contacts.add_contact_to_list",
     "external_effect": "none",
     "idempotent": null,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "available",

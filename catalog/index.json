@@ -105,7 +105,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.balance.complete_transaction",
@@ -833,7 +833,7 @@
     ],
     "verification": "verified",
     "free_plan": "available",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.contacts.request_contact_export",
@@ -1119,7 +1119,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.custom_objects.get_associated_records",
@@ -1999,7 +1999,7 @@
     "id": "brevo.inbound_parsing.get_inbound_email_events",
     "label": "Get the list of all the events for the received emails.",
     "area": "Inbound Parsing",
-    "entity": "event",
+    "entity": "inbound_email_event",
     "operation_class": "read",
     "route_kinds": [
       "documented_api"
@@ -2012,7 +2012,7 @@
     "id": "brevo.inbound_parsing.get_inbound_email_events_by_uuid",
     "label": "Fetch all events history for one particular received email.",
     "area": "Inbound Parsing",
-    "entity": "event",
+    "entity": "inbound_email_event",
     "operation_class": "read",
     "route_kinds": [
       "documented_api"
@@ -2123,7 +2123,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.master_account.dissociate_ip_to_sub_accounts",
@@ -3308,7 +3308,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.transactional_emails.delete_scheduled_email_by_id",
@@ -3698,7 +3698,7 @@
     ],
     "verification": "documented",
     "free_plan": "unknown",
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   {
     "id": "brevo.user.putresendcancelinvitation",

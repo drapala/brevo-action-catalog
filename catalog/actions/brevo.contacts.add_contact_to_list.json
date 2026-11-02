@@ -96,8 +96,8 @@
   "preconditions": [],
   "postcondition": null,
   "side_effects": {
-    "reversible": false,
-    "undo_with": null,
+    "reversible": true,
+    "undo_with": "brevo.contacts.remove_contact_from_list",
     "external_effect": "none",
     "idempotent": null,
     "requires_confirmation": false

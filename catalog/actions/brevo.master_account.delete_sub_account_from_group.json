@@ -84,7 +84,7 @@
     "undo_with": "brevo.master_account.delete_sub_account_from_group",
     "external_effect": "none",
     "idempotent": true,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

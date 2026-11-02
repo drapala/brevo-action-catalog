@@ -12,13 +12,14 @@ Rule I followed: the model drafts and explores, and code checks. Nothing enters 
 | Spec discovery | Found the official OpenAPI spec and wrote the generator | Checked the counts mechanically (292 operations, 35 areas) and read samples of the output |
 | UI walk | Visited every menu area with a browser agent and recorded the buttons and the internal calls | Created the account and handled the steps that need a person (phone, support) |
 | Verification | Wrote the executor and the scenarios | Decided what may run on a live account and what must never send to anyone |
+| Review | A reviewer agent with no memory of the build tried 8 user requests using only the catalog | Checked each finding against the files before fixing it |
 
 ## Corrections ledger
 
 Every time something went wrong, it gets a line in `docs/corrections.jsonl` with what happened, what caught it, and the fix. The table below is rendered from that file by `tools/corrections.py render`, and `tools/presubmit_check.py` fails if the two disagree.
 
 <!-- corrections:start -->
-15 corrections: 6 caught by automated checks, 7 by the agent during the session, 1 by a human, 1 by Brevo itself. Open: 0.
+19 corrections: 10 caught by automated checks, 7 by the agent during the session, 1 by a human, 1 by Brevo itself. Open: 0.
 
 | ID | Phase | What went wrong | Caught by | Status | Fix |
 |---|---|---|---|---|---|
@@ -37,4 +38,8 @@ Every time something went wrong, it gets a line in `docs/corrections.jsonl` with
 | C013 | scenario authoring | The CRM scenario named two action IDs that do not exist in the catalog: the task-types read and the deal-link action. The executor stopped with 'unknown action'. | live verifier | fixed | Every scenario action ID was checked against catalog/index.json. tools/presubmit_check.py now fails on an unknown ID. A negative control with a wrong ID failed as expected. |
 | C014 | catalog build | The builder showed brevo.tasks.update_task as verified, because the write returned 204. Its read-back failed, but the failure was filed under the read action (get_task), which had passed in other steps. Evidence: `catalog/actions/brevo.tasks.update_task.json`. | agent self check | fixed | Read-back steps now name the write they check (postcondition_of). A failed read-back marks that write failed. tests/test_postcondition_attribution.py replays the case. |
 | C015 | catalog build | The builder marked two list actions failed (get_webhooks, get_transac_emails_list) because a call with no inputs returned 400. Both work with data present or with a filter. The 400 is what an agent gets with no setup, not a broken action. | agent self check | fixed | Both now run in a scenario with setup and are verified. The builder keeps the bare-call error in the entry notes, so an agent knows to pass a filter or to expect 400 on an empty account. |
+| C016 | fresh-context review | Two actions that delete data had no confirmation flag: delete_hardbounces (an empty call clears every hard bounce) and batch_delete_object_records. The generator asked for confirmation only on the delete class, and both are class 'action'. | reviewer agent | fixed | The generator now asks for confirmation on any action whose name deletes, removes, cancels, revokes or clears. New lint check L007 catches the class, with a test. 73 actions now ask first (was 67). |
+| C017 | fresh-context review | get_inbound_email_events_by_uuid told the agent to find the uuid with brevo.event.get_events, a different product (custom contact events). The path /inbound/events was named 'event'. | reviewer agent | fixed | The entity is now inbound_email_event, so the finder is brevo.inbound_parsing.get_inbound_email_events. The same mix-up had given create_event a wrong read-back (the inbound uuid read), so create_event and create_batch_events now show as lint gaps G001 instead of a wrong check. add_contact_to_list and remove_contact_from_list are now each other's undo. |
+| C018 | fresh-context review | get_webhooks hid two facts an agent needs: the type input defaults to transactional, so other webhook types stay hidden, and its note did not say that the 400 meant no webhooks existed. | reviewer agent | fixed | The note now says to call once per type and that the 400 means none. The builder states when the bare call ran (before any test data existed). |
+| C019 | fresh-context review | create_segment had no input for the segment rules, and its read-back passes for a segment with no rules. An agent could save a segment of all contacts and report success. | reviewer agent | fixed | The entry now says the rule format is unknown (the request body was not captured), that a browser agent must set the rules, and that the read-back proves the name only. Capturing the body is in the next steps. |
 <!-- corrections:end -->

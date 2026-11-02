@@ -78,7 +78,7 @@
     "undo_with": "brevo.user.put_revoke_user_permission",
     "external_effect": "none",
     "idempotent": true,
-    "requires_confirmation": false
+    "requires_confirmation": true
   },
   "availability": {
     "free_plan": "unknown",

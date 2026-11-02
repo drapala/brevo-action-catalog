@@ -130,6 +130,9 @@ PARAM_ENTITY = {
 
 STOPWORDS = {"a", "an", "the", "s", "its", "your", "based"}
 
+# An action whose name says it deletes or cancels something asks the user first.
+DESTRUCTIVE_NAME = re.compile(r"(^|_)(delete|remove|cancel|revoke|clear|purge)(_|$)")
+
 
 def slug(text: str) -> str:
     text = re.sub(r"([a-z])([A-Z])", r"\1_\2", text)
@@ -196,6 +199,7 @@ def entity_from_path(path: str, area: str) -> str:
         ("crm", "files"): "file",
         ("crm", "tasktypes"): "task_type",
         ("orders", "status"): "order",
+        ("inbound", "events"): "inbound_email_event",
     }
     if (prev, last) in special:
         return special[(prev, last)]
@@ -376,6 +380,8 @@ def main() -> None:
         best = min(candidates, key=lambda d: (d["path"].count("{"), len(d["path"])))
         return best["id"]
 
+    ids = {d["id"].split(".")[-1]: d for d in drafts}
+
     OUT.mkdir(parents=True, exist_ok=True)
     for old in OUT.glob("*.json"):
         old.unlink()
@@ -415,10 +421,17 @@ def main() -> None:
             undo, reversible = d["id"], True
         else:
             undo, reversible = None, False
+        name = d["id"].split(".")[-1]
+        if name.startswith("add_") and "_to_" in name:
+            undo = ids.get(name.replace("add_", "remove_", 1).replace("_to_", "_from_", 1), {}).get("id")
+            reversible = undo is not None
+        elif name.startswith("remove_") and "_from_" in name:
+            undo = ids.get(name.replace("remove_", "add_", 1).replace("_from_", "_to_", 1), {}).get("id")
+            reversible = undo is not None
         if effect != "none":
             reversible, undo = False, None
-        destructive_delete = d["oclass"] == "delete"
-        requires_confirmation = effect != "none" or destructive_delete or "and all its" in d["summary"].lower()
+        destructive = d["oclass"] == "delete" or DESTRUCTIVE_NAME.search(name) is not None
+        requires_confirmation = effect != "none" or destructive or "and all its" in d["summary"].lower()
 
         produces = None
         out = d["out"] or {}

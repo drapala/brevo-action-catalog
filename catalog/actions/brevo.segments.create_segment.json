@@ -5,7 +5,7 @@
   "entity": "segment",
   "operation_class": "create",
   "label": "Create a segment",
-  "description": "Create a saved segment, a dynamic group of contacts defined by filters, from scratch or from a template. The public API can only read segments; creating one needs the web app.",
+  "description": "Save a segment: a set of contacts that match rules, kept up to date by Brevo. The public API has no route for this. The rules are set in the web app's filter editor. This entry does not define the rule format, because the request body was not captured. Do not use it to build a segment with rules without a browser agent that follows ui_steps, and check the contact count in the web app before you report success.",
   "intent_examples": [
     "make a segment of contacts who signed up in the last 30 days",
     "save these filters as a segment"
@@ -66,7 +66,7 @@
   "preconditions": [],
   "postcondition": {
     "check_with": "brevo.contacts.get_segments",
-    "assert": "the list holds a segment with this name"
+    "assert": "the list holds a segment with this name. This does not prove the rules are right: the public read returns the name and folder only"
   },
   "side_effects": {
     "reversible": true,

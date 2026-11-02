@@ -118,8 +118,8 @@
   ],
   "postcondition": null,
   "side_effects": {
-    "reversible": true,
-    "undo_with": "brevo.tier.delete_tier",
+    "reversible": false,
+    "undo_with": null,
     "external_effect": "none",
     "idempotent": null,
     "requires_confirmation": false

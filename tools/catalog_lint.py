@@ -80,6 +80,19 @@ def check_effect_needs_confirmation(action: dict) -> list[Finding]:
     return []
 
 
+DESTRUCTIVE_NAME = re.compile(r"(^|_)(delete|remove|cancel|revoke|clear|purge)(_|$)")
+
+
+def check_destructive_needs_confirmation(action: dict) -> list[Finding]:
+    """L007: an action that deletes or cancels something asks first, whatever its operation class."""
+    name = action["id"].split(".")[-1]
+    if action["operation_class"] == "read" or action["side_effects"]["requires_confirmation"]:
+        return []
+    if action["operation_class"] == "delete" or DESTRUCTIVE_NAME.search(name):
+        return [Finding("L007", action["id"], "error", "deletes or cancels without requires_confirmation")]
+    return []
+
+
 def check_verified_has_evidence(action: dict) -> list[Finding]:
     """L004: no 'verified' status without an evidence pointer and a date."""
     v = action["verification"]
@@ -122,6 +135,7 @@ def lint(actions: dict[str, dict]) -> list[Finding]:
         findings += check_id_keeps_words(action)
         findings += check_finder_is_callable(action, actions)
         findings += check_effect_needs_confirmation(action)
+        findings += check_destructive_needs_confirmation(action)
         findings += check_verified_has_evidence(action)
         findings += check_undo_points_to_real_action(action, actions)
         findings += check_write_has_postcondition(action)

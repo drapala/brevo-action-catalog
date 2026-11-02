@@ -128,7 +128,7 @@ def apply_evidence(actions: dict[str, dict]) -> None:
             if probes and probes[-1]["status"] not in (probes[-1].get("expected") or [200]):
                 bare = probes[-1]
                 message = json.dumps(bare.get("response"), ensure_ascii=False)
-                notes.append(f"the call with no inputs returned HTTP {bare['status']}: {message[:200]}")
+                notes.append(f"a call with no inputs, made before any test data existed, returned HTTP {bare['status']}: {message[:200]}")
             if notes:
                 v["notes"] = " ".join(n[0].upper() + n[1:].rstrip(".") + "." for n in notes)
         elif probes:

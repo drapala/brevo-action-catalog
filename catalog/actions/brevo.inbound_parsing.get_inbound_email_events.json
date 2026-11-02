@@ -2,7 +2,7 @@
   "id": "brevo.inbound_parsing.get_inbound_email_events",
   "product": "brevo",
   "area": "Inbound Parsing",
-  "entity": "event",
+  "entity": "inbound_email_event",
   "operation_class": "read",
   "label": "Get the list of all the events for the received emails.",
   "description": "This endpoint will show the list of all the events for the received emails. When no date range is provided, the last 30 days of events are returned by default.",

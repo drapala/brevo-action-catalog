@@ -180,6 +180,18 @@
     "message": "write with no postcondition"
   },
   {
+    "check": "G001",
+    "target": "brevo.event.create_batch_events",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
+    "check": "G001",
+    "target": "brevo.event.create_event",
+    "severity": "gap",
+    "message": "write with no postcondition"
+  },
+  {
     "check": "G002",
     "target": "brevo.files.get_file_details",
     "severity": "gap",

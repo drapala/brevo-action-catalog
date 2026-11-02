@@ -10,7 +10,7 @@ A catalog of 302 Brevo actions that an AI agent can find, fill, run and check. E
 | `failed` | 1 | Ran, returned success, and did nothing. |
 | `documented` | 194 | In the official API spec only. Not run. |
 
-The 81 verified actions include 31 writes (create, update, delete, link). Every write was read back after it ran. The evidence is in `evidence/runs.jsonl` (280 live API calls in 16 scenario runs and one read probe). Coverage by area is in `catalog/coverage.json`.
+The 81 verified actions include 31 writes (create, update, delete, link). Every write was read back after it ran. The evidence is in `evidence/runs.jsonl` (290 live API calls in 17 scenario runs and one read probe). Coverage by area is in `catalog/coverage.json`.
 
 ## What the live checks found
 
@@ -50,7 +50,7 @@ Each action is one JSON file in `catalog/actions/`, valid against `catalog/schem
 1. Read `catalog/index.json`. Pick candidates by area, entity and label.
 2. Open the action file. Prefer `verified`, then `observed`. Treat `documented` as untested. Do not offer `gated` actions on a free account.
 3. For each ID input, call the `find_with` action first.
-4. If `requires_confirmation` is true, ask the user before the call. This covers sends, invitations and deletes (67 actions).
+4. If `requires_confirmation` is true, ask the user before the call. This covers sends, invitations, deletes and cancels (73 actions).
 5. Run the action: `tools/brevo_exec.py call <action_id> '<json inputs>'` runs any `documented_api` route.
 6. Run the `postcondition` read and check the effect before telling the user it is done.
 
@@ -76,7 +76,7 @@ The main agent was Claude Code (Claude Opus 5.5). It used subagents for parallel
 
 The rule: the model drafts and explores, and code checks. No model output can set `verified`.
 
-`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 15 corrections: what went wrong, what caught it, and the fix. Examples:
+`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 19 corrections: what went wrong, what caught it, and the fix. Examples:
 
 - The ID generator dropped words, so `addContactToList` became `add_contact_list`. Lint check L001 now catches this.
 - The builder showed `update_task` as verified, because the failed read-back was filed under the read action. A test now replays this case.
@@ -85,6 +85,8 @@ The rule: the model drafts and explores, and code checks. No model output can se
 
 Most corrections led to a check that stops the same error from coming back: lint checks in `tools/catalog_lint.py`, tests in `tests/`, and `tools/presubmit_check.py`.
 
+As a last step, a reviewer agent with no memory of the build tried to complete 8 user requests from the catalog alone, for example "add jane@example.com to the Newsletter list" and "which webhooks do we have?". It found 4 severe problems. Two delete actions did not ask for confirmation. One ID pointed to the wrong finder. Two entries left out facts that an agent needs. I checked each finding against the files, fixed all 4, and logged them (C016 to C019). The minor findings are in the gaps below.
+
 ## Known gaps and limits
 
 1. **194 actions are `documented` only.** They come from the spec and were not run. The largest groups are master accounts (22), loyalty balance (18), e-commerce (13) and transactional email (11).
@@ -92,8 +94,9 @@ Most corrections led to a check that stops the same error from coming back: lint
 3. **Request bodies of internal calls are not captured.** The browser log kept headers and responses only. The internal routes give the method, URL and response, but not the body shape.
 4. **The executor runs only public API routes.** A script cannot replay the internal routes, because they need the browser's session. A UI-only action needs a browser agent that follows `ui_steps`.
 5. **Descriptions of `documented` actions are the spec summaries.** Only the UI-only actions have descriptions written for an agent.
-6. **64 lint gaps remain.** 39 writes have no postcondition yet (G001), and 25 entity names are weak, for example `detail` (G002). They are listed in `catalog/lint.json`.
-7. **Free plan only.** Paid features are listed as `gated`, not tested.
+6. **Some inputs still need extra lookups.** 123 ID inputs have no finder, because the API has no plain list route for them. In 93 actions, a deeply nested input schema is cut at depth 6. Some list actions cannot filter by name, so an agent must page through results to find "Newsletter".
+7. **66 lint gaps remain.** 41 writes have no postcondition yet (G001), and 25 entity names are weak, for example `detail` (G002). They are listed in `catalog/lint.json`.
+8. **Free plan only.** Paid features are listed as `gated`, not tested.
 
 ## Next steps
 
