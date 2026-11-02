@@ -104,16 +104,18 @@
     "requires_confirmation": false
   },
   "availability": {
-    "free_plan": "unknown",
+    "free_plan": "gated",
     "requires": [
       "WhatsApp Business account connected"
-    ]
+    ],
+    "evidence": "HTTP 403 on the free plan"
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "gated",
+    "route_kind": "documented_api",
+    "checked_at": "2026-11-02T16:06:15+00:00",
+    "evidence": "evidence/runs.jsonl#run=probe-reads-1793635547",
+    "notes": "HTTP 403: {\"message\": \"plan not eligible for using whatsapp\"}"
   },
   "sources": [
     {

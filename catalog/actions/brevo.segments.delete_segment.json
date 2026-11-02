@@ -1,0 +1,94 @@
+{
+  "id": "brevo.segments.delete_segment",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "segment",
+  "operation_class": "delete",
+  "label": "Delete a segment",
+  "description": "Delete a saved segment. The contacts in it are not deleted. The public API has no route for this.",
+  "intent_examples": [
+    "delete the segment I made yesterday"
+  ],
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "required": [
+        "segmentId"
+      ],
+      "properties": {
+        "segmentId": {
+          "type": "integer",
+          "description": "Segment ID, shown as #N in the segment list"
+        }
+      }
+    },
+    "entity_refs": [
+      {
+        "input": "segmentId",
+        "entity": "segment",
+        "find_with": "brevo.contacts.get_segments",
+        "create_with": "brevo.segments.create_segment"
+      }
+    ],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": null
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/segment",
+        "On the segment row, click 'more segment actions'",
+        "Click 'Delete segment'",
+        "Confirm with 'Delete segment'"
+      ]
+    },
+    {
+      "kind": "undocumented_api",
+      "method": "DELETE",
+      "url": "https://segments-api.brevo.com/segment/{segmentId}",
+      "auth": "web session cookie",
+      "params": {
+        "segmentId": "path"
+      },
+      "success_status": [
+        204
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.contacts.get_segments",
+    "assert": "the list no longer holds the segment"
+  },
+  "side_effects": {
+    "reversible": false,
+    "undo_with": null,
+    "external_effect": "none",
+    "idempotent": true,
+    "requires_confirmation": true
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "observed",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T16:19:00+00:00",
+    "evidence": "evidence/ui-capture-2026-11-02-segments.json",
+    "notes": "Done in the web app; the internal DELETE and the public read-back were captured."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/areas-2026-10-30.yaml (Segments: create, edit and delete exist only in the web app)"
+    },
+    {
+      "kind": "network_capture",
+      "ref": "evidence/ui-capture-2026-11-02-segments.json"
+    }
+  ]
+}

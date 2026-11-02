@@ -122,10 +122,11 @@
     "requires": []
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "failed",
+    "route_kind": "documented_api",
+    "checked_at": "2026-11-02T16:06:11+00:00",
+    "evidence": "evidence/runs.jsonl#run=probe-reads-1793635547",
+    "notes": "HTTP 400: {\"code\": \"missing_parameter\", \"message\": \"Please pass atleast one of the following filters: email, messageId, templateId\"}"
   },
   "sources": [
     {

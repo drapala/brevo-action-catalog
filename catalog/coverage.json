@@ -1,115 +1,150 @@
 {
-  "total_actions": 292,
+  "total_actions": 294,
   "by_verification": {
-    "documented": 292
+    "verified": 79,
+    "gated": 16,
+    "documented": 194,
+    "observed": 2,
+    "failed": 3
   },
   "by_route_kind": {
-    "documented_api": 292
+    "documented_api": 292,
+    "ui_path": 2,
+    "undocumented_api": 2
   },
-  "without_public_api": 0,
+  "without_public_api": 2,
   "curated_entries": 0,
   "by_area": {
     "Account": {
-      "documented": 2
+      "verified": 1,
+      "gated": 1
     },
     "Balance": {
       "documented": 18
     },
     "Companies": {
-      "documented": 11
-    },
-    "ConsentGroups": {
+      "verified": 6,
       "documented": 5
     },
+    "ConsentGroups": {
+      "documented": 4,
+      "gated": 1
+    },
     "Contacts": {
-      "documented": 30
+      "verified": 21,
+      "documented": 9,
+      "observed": 2
     },
     "Conversations": {
       "documented": 10
     },
     "Coupons": {
-      "documented": 5
+      "documented": 4,
+      "gated": 1
     },
     "Custom Objects": {
       "documented": 4
     },
     "Deals": {
-      "documented": 11
+      "verified": 8,
+      "documented": 3
     },
     "Domains": {
-      "documented": 5
+      "documented": 4,
+      "verified": 1
     },
     "Ecommerce": {
-      "documented": 18
+      "documented": 13,
+      "gated": 5
     },
     "Email Campaigns": {
-      "documented": 13
+      "verified": 5,
+      "documented": 8
     },
     "Event": {
-      "documented": 3
+      "documented": 2,
+      "verified": 1
     },
     "External Feeds": {
-      "documented": 5
+      "documented": 4,
+      "gated": 1
     },
     "Files": {
-      "documented": 5
+      "documented": 4,
+      "verified": 1
     },
     "Inbound Parsing": {
-      "documented": 3
+      "documented": 2,
+      "verified": 1
     },
     "Master account": {
-      "documented": 26
+      "documented": 22,
+      "gated": 4
     },
     "Notes": {
-      "documented": 5
+      "verified": 4,
+      "documented": 1
     },
     "Payments": {
       "documented": 3
     },
     "Process": {
-      "documented": 2
+      "documented": 1,
+      "verified": 1
     },
     "Program": {
-      "documented": 12
+      "documented": 11,
+      "verified": 1
     },
     "Reward": {
       "documented": 10
     },
     "SMS Campaigns": {
-      "documented": 10
+      "documented": 9,
+      "verified": 1
     },
     "SMS Templates": {
-      "documented": 1
+      "verified": 1
     },
     "Senders": {
-      "documented": 7
+      "documented": 5,
+      "verified": 2
     },
     "Tasks": {
-      "documented": 6
+      "verified": 5,
+      "failed": 1
     },
     "Tier": {
       "documented": 10
     },
     "Transactional SMS": {
-      "documented": 5
-    },
-    "Transactional WhatsApp": {
+      "verified": 3,
       "documented": 2
     },
+    "Transactional WhatsApp": {
+      "verified": 1,
+      "documented": 1
+    },
     "Transactional emails": {
-      "documented": 22
+      "documented": 11,
+      "verified": 10,
+      "failed": 1
     },
     "User": {
-      "documented": 6
+      "documented": 5,
+      "verified": 1
     },
     "Wallet": {
       "documented": 2
     },
     "Webhooks": {
-      "documented": 6
+      "verified": 4,
+      "documented": 1,
+      "failed": 1
     },
     "WhatsApp Campaigns": {
-      "documented": 9
+      "documented": 6,
+      "gated": 3
     }
   },
   "lint": {

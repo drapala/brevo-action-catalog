@@ -1,26 +1,26 @@
 name: crm-lifecycle
 description: Company, deal, note and task, linked together. Each write is read back. Everything created is deleted.
 steps:
-  - {name: task_types, action: brevo.tasks.get_task_types, assert: {status: 200}}
+  - {name: task_types, action: brevo.tasks.get_all_task_types, assert: {status: 200}}
   - {name: create_company, action: brevo.companies.create_company, inputs: {name: "${prefix}-company-${ts}"}, assert: {status: [200, 201]}}
   - {name: read_company, action: brevo.companies.get_company, inputs: {id: "${create_company.response.id}"}, assert: {status: 200, equals: {attributes.name: "${prefix}-company-${ts}"}}}
   - {name: update_company, action: brevo.companies.update_company, inputs: {id: "${create_company.response.id}", name: "${prefix}-company-renamed-${ts}"}, assert: {status: [200, 204]}}
-  - {name: read_company_after_update, action: brevo.companies.get_company, inputs: {id: "${create_company.response.id}"}, assert: {status: 200, equals: {attributes.name: "${prefix}-company-renamed-${ts}"}}}
-  - {name: create_deal, action: brevo.deals.create_deal, inputs: {name: "${prefix}-deal-${ts}"}, assert: {status: 201}}
+  - {name: read_company_after_update, postcondition_of: brevo.companies.update_company, action: brevo.companies.get_company, inputs: {id: "${create_company.response.id}"}, assert: {status: 200, equals: {attributes.name: "${prefix}-company-renamed-${ts}"}}}
+  - {name: create_deal, action: brevo.deals.create_deal, inputs: {name: "${prefix}-deal-${ts}"}, assert: {status: [200, 201]}, note: "the spec documents 201, the live API returns 200"}
   - {name: read_deal, action: brevo.deals.get_deal, inputs: {id: "${create_deal.response.id}"}, assert: {status: 200, equals: {attributes.deal_name: "${prefix}-deal-${ts}"}}}
-  - {name: link_deal_to_company, action: brevo.deals.link_and_unlink_deal_contacts_and_companies, inputs: {id: "${create_deal.response.id}", linkCompanyIds: ["${create_company.response.id}"]}, assert: {status: 204}}
-  - {name: read_deal_linked, action: brevo.deals.get_deal, inputs: {id: "${create_deal.response.id}"}, assert: {status: 200, equals: {linkedCompaniesIds.0: "${create_company.response.id}"}}, proves: the link call took effect}
+  - {name: link_deal_to_company, action: brevo.deals.link_and_unlink_deal_with_contacts_and_companies, inputs: {id: "${create_deal.response.id}", linkCompanyIds: ["${create_company.response.id}"]}, assert: {status: 204}}
+  - {name: read_deal_linked, postcondition_of: brevo.deals.link_and_unlink_deal_with_contacts_and_companies, action: brevo.deals.get_deal, inputs: {id: "${create_deal.response.id}"}, assert: {status: 200, equals: {linkedCompaniesIds.0: "${create_company.response.id}"}}, proves: the link call took effect}
   - {name: create_note, action: brevo.notes.create_note, inputs: {text: "${prefix} note ${ts}", dealIds: ["${create_deal.response.id}"]}, assert: {status: [200, 201]}}
   - {name: read_note, action: brevo.notes.get_note, inputs: {id: "${create_note.response.id}"}, assert: {status: 200, equals: {text: "${prefix} note ${ts}"}}}
   - {name: create_task, action: brevo.tasks.create_task, inputs: {name: "${prefix}-task-${ts}", taskTypeId: "${task_types.response.0.id}", date: "2030-01-15T10:00:00Z", dealsIds: ["${create_deal.response.id}"]}, assert: {status: 201}}
   - {name: read_task, action: brevo.tasks.get_task, inputs: {id: "${create_task.response.id}"}, assert: {status: 200, equals: {name: "${prefix}-task-${ts}"}}}
   - {name: complete_task, action: brevo.tasks.update_task, inputs: {id: "${create_task.response.id}", done: true}, assert: {status: [200, 204]}}
-  - {name: read_task_done, action: brevo.tasks.get_task, inputs: {id: "${create_task.response.id}"}, assert: {status: 200, equals: {done: true}}}
+  - {name: read_task_done, postcondition_of: brevo.tasks.update_task, action: brevo.tasks.get_task, inputs: {id: "${create_task.response.id}"}, assert: {status: 200, equals: {done: true}}, known_defect: "update_task answers 204 to done=true but the task stays not done; the same call does update name"}
   - {name: delete_task, action: brevo.tasks.delete_task, inputs: {id: "${create_task.response.id}"}, assert: {status: 204}, stop_on_fail: false}
-  - {name: task_gone, action: brevo.tasks.get_task, inputs: {id: "${create_task.response.id}"}, assert: {status: 404}, stop_on_fail: false}
+  - {name: task_gone, postcondition_of: brevo.tasks.delete_task, action: brevo.tasks.get_task, inputs: {id: "${create_task.response.id}"}, assert: {status: 404}, stop_on_fail: false}
   - {name: delete_note, action: brevo.notes.delete_note, inputs: {id: "${create_note.response.id}"}, assert: {status: 204}, stop_on_fail: false}
-  - {name: note_gone, action: brevo.notes.get_note, inputs: {id: "${create_note.response.id}"}, assert: {status: 404}, stop_on_fail: false}
+  - {name: note_gone, postcondition_of: brevo.notes.delete_note, action: brevo.notes.get_note, inputs: {id: "${create_note.response.id}"}, assert: {status: 404}, stop_on_fail: false}
   - {name: delete_deal, action: brevo.deals.delete_deal, inputs: {id: "${create_deal.response.id}"}, assert: {status: 204}, stop_on_fail: false}
-  - {name: deal_gone, action: brevo.deals.get_deal, inputs: {id: "${create_deal.response.id}"}, assert: {status: 404}, stop_on_fail: false}
+  - {name: deal_gone, postcondition_of: brevo.deals.delete_deal, action: brevo.deals.get_deal, inputs: {id: "${create_deal.response.id}"}, assert: {status: 404}, stop_on_fail: false}
   - {name: delete_company, action: brevo.companies.delete_company, inputs: {id: "${create_company.response.id}"}, assert: {status: 204}, stop_on_fail: false}
-  - {name: company_gone, action: brevo.companies.get_company, inputs: {id: "${create_company.response.id}"}, assert: {status: 404}, stop_on_fail: false}
+  - {name: company_gone, postcondition_of: brevo.companies.delete_company, action: brevo.companies.get_company, inputs: {id: "${create_company.response.id}"}, assert: {status: 404}, stop_on_fail: false}

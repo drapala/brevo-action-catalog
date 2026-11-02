@@ -85,10 +85,11 @@
     "requires": []
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "failed",
+    "route_kind": "documented_api",
+    "checked_at": "2026-11-02T16:06:15+00:00",
+    "evidence": "evidence/runs.jsonl#run=probe-reads-1793635547",
+    "notes": "HTTP 400: {\"code\": \"document_not_found\", \"message\": \"Webhook record does not exist\"}"
   },
   "sources": [
     {

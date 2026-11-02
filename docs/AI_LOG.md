@@ -18,7 +18,7 @@ Rule I followed: the model drafts and explores, and code checks. Nothing enters 
 Every time something went wrong, it gets a line in `docs/corrections.jsonl` with what happened, what caught it, and the fix. The table below is rendered from that file by `tools/corrections.py render`, and `tools/presubmit_check.py` fails if the two disagree.
 
 <!-- corrections:start -->
-10 corrections: 3 caught by automated checks, 5 by the agent during the session, 1 by a human, 1 by Brevo itself. Open: 0.
+12 corrections: 5 caught by automated checks, 5 by the agent during the session, 1 by a human, 1 by Brevo itself. Open: 0.
 
 | ID | Phase | What went wrong | Caught by | Status | Fix |
 |---|---|---|---|---|---|
@@ -32,4 +32,6 @@ Every time something went wrong, it gets a line in `docs/corrections.jsonl` with
 | C008 | presubmit | The secret scanner flagged its own file, because the file holds the patterns it searches for. | agent self check | fixed | The scanner skips its own file. A drift test showed the ledger check fails when the table is stale and passes after a render. |
 | C009 | automated check | Check L001 failed on 7 entries, for example: ID drops ['by'] from operationId getExternalFeedByUUID; ID drops ['all'] from operationId getAllExternalFeeds; ID drops ['by'] from operationId getInboundEmailEventsByUuid. | catalog lint | fixed | The ID builder now drops only a, an, the and plural s. 'getScheduledEmailById' becomes get_scheduled_email_by_id. Closed by L001 on the next build. |
 | C010 | automated check | Check L002 failed on 14 entries, for example: finder brevo.contacts.get_contact_stats itself needs ['identifier']; finder brevo.conversations.get_automated_message itself needs ['id']; finder brevo.conversations.get_message itself needs ['id']. | catalog lint | fixed | A finder must list the entity without any other ID. When the API has no such route, find_with is empty, so the agent takes the ID from the create response instead of a circular lookup. Closed by L002 on the next build. |
+| C011 | automated check | Check V-contacts-lifecycle failed on 1 entries, for example: step list_has_contact (brevo.contacts.get_contacts_from_list): no item with email='zz-catalog-test-1793635604@example.com' in contacts. | live verifier | fixed | Check V-contacts-lifecycle passes again at commit 9b16cb4. |
+| C012 | automated check | Check V-crm-lifecycle failed on 1 entries, for example: step read_task_done (brevo.tasks.get_task): done = False, expected True. | live verifier | fixed | Not a code error: Brevo accepts done=true and ignores it (a direct curl and a positive control on name confirmed it). The catalog marks brevo.tasks.update_task as failed with this evidence. The step is now a known_defect, so it is still recorded on every run but no longer reopens this entry. |
 <!-- corrections:end -->

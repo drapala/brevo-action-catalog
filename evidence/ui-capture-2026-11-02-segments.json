@@ -1,0 +1,43 @@
+{
+  "captured_at": "2026-11-02T16:15:57+00:00",
+  "method": "Playwright browser session on the free plan account; requests read from the browser network log; cookies and auth headers not stored",
+  "calls": [
+    {
+      "step": "create segment from the 'New email contacts' template, name zz-catalog-test-segment, folder 'My segments'",
+      "request": "POST https://segments-api.brevo.com/segment",
+      "status": 201,
+      "response": {
+        "data": {
+          "id": 1
+        },
+        "message": "Segment successfully created"
+      },
+      "request_body": "not captured (the browser log kept headers only)"
+    },
+    {
+      "step": "public API read-back",
+      "request": "GET https://api.brevo.com/v3/contacts/segments",
+      "status": 200,
+      "response_summary": "one segment, id 1, segmentName zz-catalog-test-segment, categoryName My segments"
+    },
+    {
+      "step": "delete the segment from the row menu, confirm 'Delete segment'",
+      "request": "DELETE https://segments-api.brevo.com/segment/1",
+      "status": 204
+    },
+    {
+      "step": "public API read-back",
+      "request": "GET https://api.brevo.com/v3/contacts/segments",
+      "status": 200,
+      "response_summary": "no segments"
+    }
+  ],
+  "row_menu_actions_seen": [
+    "Rename",
+    "Duplicate",
+    "Move segment",
+    "Split into lists",
+    "Refresh data",
+    "Delete segment"
+  ]
+}

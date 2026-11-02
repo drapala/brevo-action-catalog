@@ -88,10 +88,13 @@ def apply_evidence(actions: dict[str, dict]) -> None:
         return
     calls: dict[str, list[dict]] = defaultdict(list)
     verdicts: dict[str, list[dict]] = defaultdict(list)
+    postconditions: dict[str, list[dict]] = defaultdict(list)
     for line in EVIDENCE.read_text().splitlines():
         entry = json.loads(line)
         if "verdict" in entry:
             verdicts[entry["action"]].append(entry)
+            if entry.get("postcondition_of"):
+                postconditions[entry["postcondition_of"]].append(entry)
         elif "status" in entry:
             calls[entry["action"]].append(entry)
     for action_id, action in actions.items():
@@ -99,6 +102,18 @@ def apply_evidence(actions: dict[str, dict]) -> None:
         passed = [e for e in verdicts.get(action_id, []) if e["verdict"] == "pass"]
         failed = [e for e in verdicts.get(action_id, []) if e["verdict"] == "fail"]
         probes = [c for c in calls.get(action_id, []) if c["run"].startswith("probe-reads")]
+        checks = postconditions.get(action_id, [])
+        if checks and checks[-1]["verdict"] == "fail":
+            last = checks[-1]
+            v.update(
+                status="failed",
+                route_kind="documented_api",
+                checked_at=last["at"],
+                evidence=f"evidence/runs.jsonl#run={last['run']}",
+                notes=f"the call returns success but the read-back check failed: {last.get('note') or last.get('why', '')}",
+            )
+            action["availability"]["free_plan"] = "available"
+            continue
         if passed:
             v.update(
                 status="verified",

@@ -76,14 +76,14 @@
     "requires_confirmation": true
   },
   "availability": {
-    "free_plan": "unknown",
+    "free_plan": "available",
     "requires": []
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "verified",
+    "route_kind": "documented_api",
+    "checked_at": "2026-11-02T16:13:19+00:00",
+    "evidence": "evidence/runs.jsonl#run=webhooks-and-attributes-1793635993"
   },
   "sources": [
     {

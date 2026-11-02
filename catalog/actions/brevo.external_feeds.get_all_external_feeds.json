@@ -123,14 +123,16 @@
     "requires_confirmation": false
   },
   "availability": {
-    "free_plan": "unknown",
-    "requires": []
+    "free_plan": "gated",
+    "requires": [],
+    "evidence": "HTTP 403 on the free plan"
   },
   "verification": {
-    "status": "documented",
-    "route_kind": null,
-    "checked_at": null,
-    "evidence": null
+    "status": "gated",
+    "route_kind": "documented_api",
+    "checked_at": "2026-11-02T16:05:59+00:00",
+    "evidence": "evidence/runs.jsonl#run=probe-reads-1793635547",
+    "notes": "HTTP 403: {\"code\": \"permission_denied\", \"message\": \"This feature is only available to customers with an Enterprise plan. To enable it, please contact your customer success manager.\"}"
   },
   "sources": [
     {

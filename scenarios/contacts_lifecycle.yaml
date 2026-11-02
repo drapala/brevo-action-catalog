@@ -24,6 +24,7 @@ steps:
     inputs: {listId: "${create_list.response.id}", name: "${prefix}-list-renamed-${ts}"}
     assert: {status: 204}
   - name: read_list_after_update
+    postcondition_of: brevo.contacts.update_list
     action: brevo.contacts.get_list
     inputs: {listId: "${create_list.response.id}"}
     assert: {status: 200, equals: {name: "${prefix}-list-renamed-${ts}"}}
@@ -40,6 +41,7 @@ steps:
     inputs: {identifier: "${prefix}-${ts}@example.com", attributes: {FIRSTNAME: "Catalog2"}}
     assert: {status: 204}
   - name: read_contact_after_update
+    postcondition_of: brevo.contacts.update_contact
     action: brevo.contacts.get_contact_info
     inputs: {identifier: "${prefix}-${ts}@example.com"}
     assert: {status: 200, equals: {attributes.FIRSTNAME: "Catalog2"}}
@@ -48,9 +50,11 @@ steps:
     inputs: {listId: "${create_list.response.id}", body: {emails: ["${prefix}-${ts}@example.com"]}}
     assert: {status: 201}
   - name: list_has_contact
+    postcondition_of: brevo.contacts.add_contact_to_list
     action: brevo.contacts.get_contacts_from_list
     inputs: {listId: "${create_list.response.id}"}
     assert: {status: 200, list_contains: {path: contacts, field: email, value: "${prefix}-${ts}@example.com"}}
+    retry: {times: 6, every: 2}
     proves: add_contact_to_list took effect
   - name: remove_contact_from_list
     action: brevo.contacts.remove_contact_from_list
@@ -61,6 +65,7 @@ steps:
     inputs: {identifier: "${prefix}-${ts}@example.com"}
     assert: {status: 204}
   - name: contact_gone
+    postcondition_of: brevo.contacts.delete_contact
     action: brevo.contacts.get_contact_info
     inputs: {identifier: "${prefix}-${ts}@example.com"}
     assert: {status: 404}
@@ -70,6 +75,7 @@ steps:
     inputs: {listId: "${create_list.response.id}"}
     assert: {status: 204}
   - name: list_gone
+    postcondition_of: brevo.contacts.delete_list
     action: brevo.contacts.get_list
     inputs: {listId: "${create_list.response.id}"}
     assert: {status: 404}
@@ -78,6 +84,7 @@ steps:
     inputs: {folderId: "${create_folder.response.id}"}
     assert: {status: 204}
   - name: folder_gone
+    postcondition_of: brevo.contacts.delete_folder
     action: brevo.contacts.get_folder
     inputs: {folderId: "${create_folder.response.id}"}
     assert: {status: 404}

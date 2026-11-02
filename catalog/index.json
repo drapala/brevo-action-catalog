@@ -8,8 +8,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -21,8 +21,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -268,8 +268,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -307,8 +307,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -320,8 +320,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -333,8 +333,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -346,8 +346,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -398,8 +398,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -450,8 +450,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -476,8 +476,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -489,8 +489,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -502,8 +502,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -528,8 +528,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -541,8 +541,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -554,8 +554,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -567,8 +567,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -580,8 +580,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -593,8 +593,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -619,8 +619,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -632,8 +632,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -658,8 +658,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -671,8 +671,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -684,8 +684,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -710,8 +710,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -723,8 +723,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -736,8 +736,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -749,8 +749,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -775,8 +775,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -827,8 +827,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -853,8 +853,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1035,8 +1035,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -1113,8 +1113,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1126,8 +1126,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -1139,8 +1139,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1152,8 +1152,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1165,8 +1165,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1178,8 +1178,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1204,8 +1204,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1230,8 +1230,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1308,8 +1308,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1438,8 +1438,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -1451,8 +1451,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -1490,8 +1490,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -1503,8 +1503,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -1529,8 +1529,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -1555,8 +1555,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1568,8 +1568,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -1607,8 +1607,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1620,8 +1620,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1698,8 +1698,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1750,8 +1750,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1789,8 +1789,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -1854,8 +1854,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -1906,8 +1906,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2088,8 +2088,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -2114,8 +2114,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -2166,8 +2166,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -2192,8 +2192,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -2270,8 +2270,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2283,8 +2283,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -2296,8 +2296,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2309,8 +2309,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2387,8 +2387,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2465,8 +2465,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2678,6 +2678,34 @@
     "requires_confirmation": false
   },
   {
+    "id": "brevo.segments.create_segment",
+    "label": "Create a segment",
+    "area": "Contacts",
+    "entity": "segment",
+    "operation_class": "create",
+    "route_kinds": [
+      "ui_path",
+      "undocumented_api"
+    ],
+    "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": false
+  },
+  {
+    "id": "brevo.segments.delete_segment",
+    "label": "Delete a segment",
+    "area": "Contacts",
+    "entity": "segment",
+    "operation_class": "delete",
+    "route_kinds": [
+      "ui_path",
+      "undocumented_api"
+    ],
+    "verification": "observed",
+    "free_plan": "available",
+    "requires_confirmation": true
+  },
+  {
     "id": "brevo.senders.create_sender",
     "label": "Create email sender",
     "area": "Senders",
@@ -2712,8 +2740,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2738,8 +2766,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2816,8 +2844,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2907,8 +2935,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2920,8 +2948,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2933,8 +2961,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -2946,8 +2974,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2959,8 +2987,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2972,8 +3000,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -2985,8 +3013,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "failed",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3141,8 +3169,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3193,8 +3221,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -3219,8 +3247,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3232,8 +3260,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3245,8 +3273,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3271,8 +3299,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3284,8 +3312,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3297,8 +3325,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3310,8 +3338,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3336,7 +3364,7 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
+    "verification": "failed",
     "free_plan": "unknown",
     "requires_confirmation": false
   },
@@ -3401,8 +3429,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3414,8 +3442,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3427,8 +3455,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3440,8 +3468,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3479,8 +3507,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3518,8 +3546,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3609,8 +3637,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3622,8 +3650,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": true
   },
   {
@@ -3648,8 +3676,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3661,7 +3689,7 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
+    "verification": "failed",
     "free_plan": "unknown",
     "requires_confirmation": false
   },
@@ -3674,8 +3702,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "verified",
+    "free_plan": "available",
     "requires_confirmation": false
   },
   {
@@ -3739,8 +3767,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -3752,8 +3780,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {
@@ -3765,8 +3793,8 @@
     "route_kinds": [
       "documented_api"
     ],
-    "verification": "documented",
-    "free_plan": "unknown",
+    "verification": "gated",
+    "free_plan": "gated",
     "requires_confirmation": false
   },
   {

@@ -1,0 +1,99 @@
+{
+  "id": "brevo.segments.create_segment",
+  "product": "brevo",
+  "area": "Contacts",
+  "entity": "segment",
+  "operation_class": "create",
+  "label": "Create a segment",
+  "description": "Create a saved segment, a dynamic group of contacts defined by filters, from scratch or from a template. The public API can only read segments; creating one needs the web app.",
+  "intent_examples": [
+    "make a segment of contacts who signed up in the last 30 days",
+    "save these filters as a segment"
+  ],
+  "inputs": {
+    "schema": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Name of the segment"
+        },
+        "folder": {
+          "type": "string",
+          "description": "Segment folder, 'My segments' by default"
+        },
+        "template": {
+          "type": "string",
+          "description": "Optional template from the 'Create a segment' page, for example 'New email contacts'; otherwise filters are added one by one"
+        }
+      }
+    },
+    "entity_refs": [],
+    "credential_ref": "brevo_web_session"
+  },
+  "outputs": {
+    "produces_entity": {
+      "entity": "segment",
+      "id_field": "data.id"
+    }
+  },
+  "routes": [
+    {
+      "kind": "ui_path",
+      "ui_steps": [
+        "Open https://app.brevo.com/contact/segment",
+        "Click 'Create a segment'",
+        "Pick 'Create segment from scratch' or a template",
+        "Set the filters",
+        "Click 'Save as segment'",
+        "Type the name, keep or pick the folder, click 'Create'"
+      ]
+    },
+    {
+      "kind": "undocumented_api",
+      "method": "POST",
+      "url": "https://segments-api.brevo.com/segment",
+      "auth": "web session cookie",
+      "success_status": [
+        201
+      ]
+    }
+  ],
+  "preconditions": [],
+  "postcondition": {
+    "check_with": "brevo.contacts.get_segments",
+    "assert": "the list holds a segment with this name"
+  },
+  "side_effects": {
+    "reversible": true,
+    "undo_with": "brevo.segments.delete_segment",
+    "external_effect": "none",
+    "idempotent": false,
+    "requires_confirmation": false
+  },
+  "availability": {
+    "free_plan": "available",
+    "requires": []
+  },
+  "verification": {
+    "status": "observed",
+    "route_kind": "ui_path",
+    "checked_at": "2026-11-02T16:15:57+00:00",
+    "evidence": "evidence/ui-capture-2026-11-02-segments.json",
+    "notes": "Done in the web app; the internal call and the public read-back were captured. The internal request body was not captured, so the undocumented route is a pointer, not a ready call."
+  },
+  "sources": [
+    {
+      "kind": "ui_walk",
+      "ref": "sources/ui/areas-2026-10-30.yaml (Segments: create, edit and delete exist only in the web app)"
+    },
+    {
+      "kind": "network_capture",
+      "ref": "evidence/ui-capture-2026-11-02-segments.json"
+    }
+  ]
+}

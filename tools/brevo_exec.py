@@ -8,6 +8,10 @@ Usage:
   brevo_exec.py call <action_id> '<json inputs>'
   brevo_exec.py probe-reads            # every read action that needs no ID
   brevo_exec.py scenario <file.yaml>   # create, read back, update, delete flows
+
+A scenario step can carry `known_defect: <text>` when Brevo itself misbehaves. The
+failure is still recorded as evidence, so the catalog marks the write action
+failed, but it does not stop the run or open a correction.
 """
 
 from __future__ import annotations
@@ -192,8 +196,14 @@ def scenario(file: str) -> int:
     with client() as c:
         for step in spec["steps"]:
             inputs = render(step.get("inputs") or {}, ctx)
-            status, payload = call(step["action"], inputs, c, run)
-            ok, why = check(step.get("assert") or {}, status, payload, ctx)
+            retry = step.get("retry") or {}
+            attempts = 1 + int(retry.get("times", 0))
+            for attempt in range(1, attempts + 1):
+                status, payload = call(step["action"], inputs, c, run)
+                ok, why = check(step.get("assert") or {}, status, payload, ctx)
+                if ok or attempt == attempts:
+                    break
+                time.sleep(float(retry.get("every", 2)))
             ctx[step["name"]] = {"status": status, "response": payload}
             record(
                 {
@@ -201,15 +211,27 @@ def scenario(file: str) -> int:
                     "step": step["name"],
                     "action": step["action"],
                     "verdict": "pass" if ok else "fail",
+                    "attempts": attempt,
                     "why": why,
                     "proves": step.get("proves"),
+                    "postcondition_of": step.get("postcondition_of"),
+                    "note": step.get("note") or step.get("known_defect"),
                 }
             )
-            print(f"{'PASS' if ok else 'FAIL'} {step['name']:28} {step['action']} {status} {'' if ok else why}")
-            if not ok:
+            label = "PASS" if ok else ("KNOWN" if step.get("known_defect") else "FAIL")
+            print(f"{label:5} {step['name']:28} {step['action']} {status} {'' if ok else why}")
+            # A known_defect is a Brevo defect, already recorded as failed in the catalog. The run
+            # continues and the ledger stays closed, because no change on our side can fix it.
+            if not ok and not step.get("known_defect"):
                 failures += 1
-                findings.append({"check": f"V-{spec['name']}", "target": step["action"], "severity": "error",
-                                 "message": f"step {step['name']} ({step['action']}): {why}"})
+                findings.append(
+                    {
+                        "check": f"V-{spec['name']}",
+                        "target": step["action"],
+                        "severity": "error",
+                        "message": f"step {step['name']} ({step['action']}): {why}",
+                    }
+                )
                 if step.get("stop_on_fail", True):
                     break
             time.sleep(step.get("wait", 0.3))
