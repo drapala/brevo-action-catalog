@@ -6,6 +6,7 @@ server applies the catalog's rules on every call:
   - an action that needs confirmation runs only with confirmed=true;
   - a gated, seen or UI-only action does not run, and the reply says why;
   - a run returns the read-back to do before reporting success, when the entry has one.
+  - a write that was sent but got no answer is reported as unknown, with the check to do before a retry.
 confirmed=true is the agent's statement that the user agreed. The server cannot check
 it, so the MCP client's approval prompt for each tool call is where a person checks it.
 
@@ -147,8 +148,20 @@ def run_action(action_id: str, inputs: dict, confirmed: bool = False) -> dict:
             code, payload = brevo_exec.call(action_id, inputs, c, RUN, action=action)
     except (RuntimeError, ValueError) as error:
         return {"ran": False, "reason": str(error)}
-    except httpx.HTTPError as error:
-        return {"ran": False, "reason": f"the request to Brevo did not complete: {error!r}"}
+    except (httpx.ConnectError, httpx.ConnectTimeout) as error:
+        return {"ran": False, "reason": f"the request did not reach Brevo: {error!r}"}
+    except httpx.TransportError as error:
+        # The request was sent, so a write may have landed. A blind retry can create a duplicate.
+        if action["operation_class"] == "read":
+            return {"ran": False, "reason": f"no answer from Brevo: {error!r}. A read is safe to retry."}
+        check = action.get("postcondition") or {}
+        return {
+            "ran": "unknown",
+            "reason": f"the request was sent but no answer came back: {error!r}. The action may have run.",
+            "next_step": f"Before any retry, run {check['check_with']} and check: {check['assert']}"
+            if check
+            else "Before any retry, look the item up and check whether the action already took effect.",
+        }
     reply = {"ran": True, "http_status": code, "response": payload, "catalog_status": status}
     if status == "failed":
         reply["warning"] = action["verification"].get("notes")

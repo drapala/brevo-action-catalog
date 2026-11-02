@@ -77,6 +77,7 @@ Each action is one JSON file in `catalog/actions/`, valid against `catalog/schem
 - The inputs must match the entry's input schema. An unknown input or a missing required one stops the call before it reaches Brevo.
 - An action that needs confirmation runs only with `confirmed=true`.
 - A `gated` or `seen` action, or one with no public API, does not run. The reply gives the UI steps.
+- A write that was sent but got no answer returns `ran: "unknown"` and the check to run before any retry, because Brevo has no idempotency keys and a blind retry can create a duplicate.
 - A `failed` action still runs, and the reply repeats the defect note. Its only member, `update_task`, fails on `done=true` but renames a task correctly.
 - A run returns the read-back the agent must do before it reports success, when the entry has one. All 31 verified writes have one. Most `documented` writes do not yet (see the gaps).
 
@@ -113,7 +114,7 @@ The main agent was Claude Code (Claude Opus 5.5). It used subagents for parallel
 
 The rule: the model drafts and explores, and code checks. No model output can set `verified`.
 
-`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 35 corrections: what went wrong, what caught it, and the fix. Examples:
+`docs/AI_LOG.md` has the full record, built from `docs/corrections.jsonl`. It lists 36 corrections: what went wrong, what caught it, and the fix. Examples:
 
 - The ID generator dropped words, so `addContactToList` became `add_contact_list`. Lint check L001 now catches this.
 - The builder showed `update_task` as verified, because the failed read-back was filed under the read action. A test now replays this case.
@@ -121,7 +122,7 @@ The rule: the model drafts and explores, and code checks. No model output can se
 - A scenario named action IDs that do not exist. The presubmit check now fails on an unknown ID.
 - The first version was built API-first. A check of every requirement in the brief showed that the first walk listed only 24 buttons, and a full walk found that the catalog had only 58 of the 106 web app actions (55%). The full walk and the map above came from that check.
 
-21 of the 35 corrections name the check that now catches the same error: a lint check in `tools/catalog_lint.py`, a live scenario, a test in `tests/`, or `tools/presubmit_check.py`. The other 14 fixed single entries, claims in the write-up, or how the agent worked.
+22 of the 36 corrections name the check that now catches the same error: a lint check in `tools/catalog_lint.py`, a live scenario, a test in `tests/`, or `tools/presubmit_check.py`. The other 14 fixed single entries, claims in the write-up, or how the agent worked.
 
 A reviewer agent with no memory of the build tried to complete 8 user requests from the catalog alone, for example "add jane@example.com to the Newsletter list" and "which webhooks do we have?". It found 4 severe problems. Two delete actions did not ask for confirmation. One ID pointed to the wrong finder. Two entries left out facts that an agent needs. I checked each finding against the files, fixed all 4, and logged them (C016 to C019). The minor findings are in the gaps below.
 

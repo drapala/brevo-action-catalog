@@ -4,7 +4,8 @@
 2. Every action in the catalog validates against the schema.
 3. The corrections table in docs/AI_LOG.md matches docs/corrections.jsonl.
 4. Every action a scenario calls exists in the catalog.
-5. The public repository URL answers 200 to a client that is not logged in.
+5. The catalog lint finds no error.
+6. The public repository URL answers 200 to a client that is not logged in.
 
 Usage: presubmit_check.py [repo_url]
 """
@@ -69,6 +70,15 @@ def check_ledger() -> list[str]:
     return [] if out.returncode == 0 else [out.stdout.strip()]
 
 
+def check_lint() -> list[str]:
+    sys.path.insert(0, str(ROOT / "tools"))
+    import catalog_lint
+
+    files = sorted((ROOT / "catalog/actions").glob("*.json"))
+    actions = {a["id"]: a for a in (json.loads(f.read_text()) for f in files)}
+    return [f"lint {f.check} {f.target}: {f.message}" for f in catalog_lint.lint(actions) if f.severity == "error"]
+
+
 def check_scenarios() -> list[str]:
     import yaml
 
@@ -83,7 +93,7 @@ def check_scenarios() -> list[str]:
 
 
 def main() -> int:
-    problems = check_secrets() + check_schema() + check_ledger() + check_scenarios()
+    problems = check_secrets() + check_schema() + check_ledger() + check_scenarios() + check_lint()
     if len(sys.argv) > 1:
         problems += check_public(sys.argv[1])
     for problem in problems:

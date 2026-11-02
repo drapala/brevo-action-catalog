@@ -22,6 +22,10 @@ ID_FILLERS = {"a", "an", "the"}
 WEAK_ENTITY_NAMES = {"detail", "metric", "request", "group", "limit", "object", "message", "data", "info", "report"}
 
 
+# Checks the catalog build runs and syncs to the ledger. L006 runs in the generator, which has the previous output.
+BUILD_CHECKS = {"L001", "L002", "L003", "L004", "L005", "L007", "L008", "L009"}
+
+
 @dataclass(frozen=True)
 class Finding:
     check: str

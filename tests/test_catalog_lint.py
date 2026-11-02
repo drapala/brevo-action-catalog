@@ -142,3 +142,10 @@ def test_resolver_keeps_keyword_values_behind_several_references():
 def test_g001_counts_writes_of_the_action_class():
     # add_contact_to_list is class "action": a missing read-back must still count as a gap.
     assert [f.check for f in lint.check_write_has_postcondition(action())] == ["G001"]
+
+
+def test_the_built_catalog_has_no_lint_error():
+    # Reverting a generator or builder rule (for example confirmation on writes nothing undoes) fails here.
+    files = sorted((Path(__file__).resolve().parent.parent / "catalog/actions").glob("*.json"))
+    actions = {a["id"]: a for a in (json.loads(f.read_text()) for f in files)}
+    assert [f for f in lint.lint(actions) if f.severity == "error"] == []

@@ -383,7 +383,7 @@ def main() -> None:
     (ROOT / "catalog/lint.json").write_text(json.dumps(findings, indent=2, ensure_ascii=False) + "\n")
     (ROOT / "catalog/coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
     print(json.dumps({k: v for k, v in coverage.items() if k != "by_area"}, indent=2))
-    for change in corrections.sync(findings, "catalog_lint", {"L001", "L002", "L003", "L004", "L005"}):
+    for change in corrections.sync(findings, "catalog_lint", catalog_lint.BUILD_CHECKS):
         print("ledger:", change)
     corrections.render()
 

@@ -6,10 +6,28 @@ import sys
 from pathlib import Path
 
 import httpx
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 
 import mcp_server  # noqa: E402
+
+
+def refuse_request(request):
+    raise AssertionError(f"a test tried to call Brevo: {request.method} {request.url}")
+
+
+@pytest.fixture(autouse=True)
+def offline(tmp_path, monkeypatch):
+    """A regression must fail the test, not reach the live account or the evidence log."""
+    real_api_key = mcp_server.brevo_exec.api_key
+
+    def offline_client():
+        real_api_key()  # a missing key still raises, as in the real client()
+        return httpx.Client(transport=httpx.MockTransport(refuse_request))
+
+    monkeypatch.setattr(mcp_server.brevo_exec, "client", offline_client)
+    monkeypatch.setattr(mcp_server.brevo_exec, "EVIDENCE", tmp_path / "runs.jsonl")
 
 
 def test_action_that_needs_confirmation_does_not_run_without_it():
@@ -88,26 +106,44 @@ def test_a_rule_seen_live_is_checked_before_the_call():
     assert reply["ran"] is False and reply["errors"] == ["inputs: needs one of: email; messageId; templateId"]
 
 
-def test_bodies_that_the_spec_writes_as_one_of_overlapping_branches_pass():
-    action = mcp_server.load("brevo.contacts.add_contact_to_list")
-    inputs = {"listId": 2, "body": {"emails": ["zz-catalog-test@example.com"]}}
-    assert mcp_server.brevo_exec.input_errors(action, inputs) == []
+def test_one_of_bodies_accept_one_named_field_and_refuse_the_rest():
+    # The spec branches each name one field and require none, so before the fix every object passed.
+    add = mcp_server.load("brevo.contacts.add_contact_to_list")
+    remove = mcp_server.load("brevo.contacts.remove_contact_from_list")
+    errors = mcp_server.brevo_exec.input_errors
+    assert errors(add, {"listId": 2, "body": {"emails": ["zz-catalog-test@example.com"]}}) == []
+    assert errors(add, {"listId": 2, "body": {"ids": [7]}}) == []
+    assert errors(remove, {"listId": 2, "body": {"all": True}}) == []
+    for body in ({}, {"emails": "x"}, {"emial": ["zz@example.com"]}, {"emails": []}, {"ids": ["abc"]}):
+        assert errors(add, {"listId": 2, "body": body}), body
+    assert errors(add, {"listId": 2, "body": {}}) == ["body: needs exactly one of: emails; ids; extIds"]
 
 
-def test_path_values_are_encoded_except_email_characters(tmp_path, monkeypatch):
-    monkeypatch.setattr(mcp_server.brevo_exec, "EVIDENCE", tmp_path / "runs.jsonl")
+def test_path_values_are_encoded_except_the_at_sign():
     seen = []
     transport = httpx.MockTransport(lambda request: seen.append(request.url.raw_path) or httpx.Response(404))
     with httpx.Client(transport=transport) as client:
         mcp_server.brevo_exec.call("brevo.contacts.get_contact_info", {"identifier": "a+b@example.com"}, client, "test")
         mcp_server.brevo_exec.call("brevo.contacts.get_contact_info", {"identifier": "x/../y"}, client, "test")
-    assert seen[0].endswith(b"/contacts/a+b@example.com") and seen[1].endswith(b"/contacts/x%2F..%2Fy")
+    assert seen[0].endswith(b"/contacts/a%2Bb@example.com") and seen[1].endswith(b"/contacts/x%2F..%2Fy")
 
 
-def test_a_network_error_is_a_refusal_not_a_crash(monkeypatch):
-    def broken():
-        return httpx.Client(transport=httpx.MockTransport(lambda request: (_ for _ in ()).throw(httpx.ConnectError("down"))))
+def failing_client(error):
+    def handler(request):
+        raise error
 
-    monkeypatch.setattr(mcp_server.brevo_exec, "client", broken)
+    return lambda: httpx.Client(transport=httpx.MockTransport(handler))
+
+
+def test_a_request_that_never_left_is_a_refusal(monkeypatch):
+    monkeypatch.setattr(mcp_server.brevo_exec, "client", failing_client(httpx.ConnectError("down")))
     reply = mcp_server.run_action("brevo.contacts.get_lists", {})
-    assert reply["ran"] is False and "did not complete" in reply["reason"]
+    assert reply["ran"] is False and "did not reach Brevo" in reply["reason"]
+
+
+def test_a_write_with_no_answer_is_unknown_and_names_the_check_before_a_retry(monkeypatch):
+    monkeypatch.setattr(mcp_server.brevo_exec, "client", failing_client(httpx.ReadTimeout("slow")))
+    reply = mcp_server.run_action("brevo.contacts.create_list", {"name": "zz-catalog-test-x", "folderId": 1})
+    assert reply["ran"] == "unknown" and "brevo.contacts.get_list" in reply["next_step"]
+    reply = mcp_server.run_action("brevo.contacts.get_lists", {})
+    assert reply["ran"] is False and "safe to retry" in reply["reason"]

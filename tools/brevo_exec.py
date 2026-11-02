@@ -90,27 +90,34 @@ def input_errors(action: dict, inputs: dict) -> list[str]:
     unknown = sorted(set(inputs) - set(schema.get("properties") or {}))
     if unknown:
         return [f"unknown inputs {unknown}. This action takes {sorted(schema.get('properties') or {})}"]
-    return [describe(e) for e in Draft7Validator(any_of(schema)).iter_errors(inputs)]
+    return [describe(e) for e in Draft7Validator(pin_branches(schema)).iter_errors(inputs)]
 
 
 def describe(error) -> str:
     where = ".".join(map(str, error.path)) or "inputs"
-    if error.validator == "anyOf":
+    if error.validator in ("anyOf", "oneOf"):
         needs = [
             " and ".join(b["required"]) for b in error.validator_value if isinstance(b, dict) and b.get("required")
         ]
         if needs:
-            return f"{where}: needs one of: {'; '.join(needs)}"
+            exactly = "exactly " if error.validator == "oneOf" else ""
+            return f"{where}: needs {exactly}one of: {'; '.join(needs)}"
     return f"{where}: {error.message}"
 
 
-def any_of(node):
-    """The Brevo spec writes oneOf over branches that share fields and require none, so a valid
-    body such as {"emails": [...]} matches every branch. Read oneOf as anyOf."""
+def pin_branches(node):
+    """The spec writes oneOf branches that each name one field but require none, so any object
+    matches every branch. Each such branch now requires its field: {"emails": [...]} passes, {} does not."""
     if isinstance(node, dict):
-        return {("anyOf" if k == "oneOf" else k): any_of(v) for k, v in node.items()}
+        out = {k: pin_branches(v) for k, v in node.items()}
+        for key in ("oneOf", "anyOf"):
+            for branch in out.get(key) or []:
+                fields = list((branch.get("properties") or {}) if isinstance(branch, dict) else [])
+                if len(fields) == 1 and not branch.get("required"):
+                    branch["required"] = fields
+        return out
     if isinstance(node, list):
-        return [any_of(v) for v in node]
+        return [pin_branches(v) for v in node]
     return node
 
 
@@ -124,7 +131,7 @@ def call(
     for name, value in inputs.items():
         loc = route["params"].get(name)
         if loc == "path":
-            url = url.replace("{" + name + "}", quote(str(value), safe="@+"))
+            url = url.replace("{" + name + "}", quote(str(value), safe="@"))
         elif loc == "query":
             query[name] = value
         elif loc == "body" and name == "body":
@@ -134,7 +141,11 @@ def call(
     missing = re.findall(r"\{(\w+)\}", url)
     if missing:
         raise ValueError(f"{action_id}: missing path inputs {missing}")
-    response = client.request(route["method"], url, params=query or None, json=body or None)
+    try:
+        response = client.request(route["method"], url, params=query or None, json=body or None)
+    except httpx.TransportError as error:
+        record({"run": run, "action": action_id, "method": route["method"], "url": url, "error": repr(error)})
+        raise
     try:
         payload = response.json() if response.content else None
     except ValueError:
