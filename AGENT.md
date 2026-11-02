@@ -69,7 +69,7 @@ The server reads the Brevo API key from `BREVO_API_KEY` or the macOS keychain (`
 | `brevo.transactional_emails.get_transac_emails_list` | Needs one of `email`, `messageId`, `templateId`. The spec marks all three optional. The input schema now has this rule. | same |
 | `brevo.webhooks.get_webhooks` | Returns 400 "Webhook record does not exist" on an account with no webhooks. | same |
 | Reads right after a write | Can miss the change for a few seconds. The scenarios retry a read-back before they fail it. | `scenarios/contacts_lifecycle.yaml` |
-| Loyalty actions (`Balance`, `Program`, `Tier`, `Reward`, `Wallet` areas) | Answer 422 "Invalid loyalty program id" to a fake ID. The free plan cannot create a loyalty program (`brevo.program.create_new_lp` is `gated`), so these cannot run on a free account. | `evidence/runs.jsonl`, `run=probe-gates-*` |
+| Loyalty actions (`Balance`, `Program`, `Tier`, `Reward`, `Wallet` areas) | 49 of the 50 answer 422 "Invalid loyalty program id" to a fake ID. The free plan cannot create a loyalty program (`brevo.program.create_new_lp` is `gated`), so these cannot run on a free account. | `evidence/runs.jsonl`, `run=probe-gates-*` |
 
 ## 6. How to check the submission
 
